@@ -14,5 +14,5 @@ router.post('/change-password', changePassword);
 router.post('/verify-pass-reset-token',isValidPassResetToken,sendResetPasswordTokenStatus);
 router.post('/reset-password', validatePassword, validate,isValidPassResetToken,resetPassword);
 router.put("/update/:id", updateUser);
-//router.post("/delete/:id", deleterUser)
+router.post("/delete/:id", deleterUser)
 module.exports = router;

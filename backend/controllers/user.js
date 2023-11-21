@@ -40,15 +40,15 @@ exports.updateUser = async (req,res)=>{
 };
 
 
-// exports.deleterUser = async (req,res)=>{
-//     let userId = req.params.id;
+exports.deleterUser = async (req,res)=>{
+    let userId = req.params.id;
 
-//     await user.findByIdAndDelete(userId).then(()=>{
-//         res.status(200).send({status:"User deleted"}).catch((err)=>{
-//             res.status(500).send({status: "Error with delete user"})
-//         })
-//     });
-// };
+    await user.findByIdAndDelete(userId).then(()=>{
+        res.status(200).send({status:"User deleted"}).catch((err)=>{
+            res.status(500).send({status: "Error with delete user"})
+        })
+    });
+};
 
 
 
