@@ -4,6 +4,7 @@ const PasswordResetToken = require("../Models/PasswordResetToken");
 
 
 const { generateRandomByte, sendError } = require('../Utils/helper');
+const user = require('../Models/user');
 // request from the frontend
 exports.create = async (req,res) =>{
     const {username,name,email, password,role} = req.body;
@@ -14,6 +15,42 @@ await newUser.save()
 
     res.json({user: newUser});
 };
+
+
+exports.updateUser = async (req,res)=>{
+    let userId = req.params.id;
+
+    const { username, name, email, password,role } = req.body;
+
+    const updateUser = {
+       username,
+       name,
+       email,
+       password,
+       role
+    };
+
+    try {
+        const updatedUser = await user.findByIdAndUpdate(userId, updateUser, { new: true });
+        res.status(200).json({ status: "User updated", user: updatedUser });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "Error with updating User", error: err.message });
+    }
+};
+
+
+// exports.deleterUser = async (req,res)=>{
+//     let userId = req.params.id;
+
+//     await user.findByIdAndDelete(userId).then(()=>{
+//         res.status(200).send({status:"User deleted"}).catch((err)=>{
+//             res.status(500).send({status: "Error with delete user"})
+//         })
+//     });
+// };
+
+
 
 exports.changePassword = async(req,res)=>{
 const {email} = req.body;
@@ -90,7 +127,9 @@ res.json({ message: 'Password reset sucessfully, Now you can use new Password' }
 };
 
 exports.signIn = async (req,res) =>{
-    const {email,password} = req.body;
+
+   
+        const {email,password} = req.body;
 
         const user = await User.findOne({email})
         if (!user) {
@@ -105,6 +144,8 @@ exports.signIn = async (req,res) =>{
    // const jwtToken = jwt.sign({userId: _id}, 'dfjjjjlkhf5454ggmnkfkj8787')
 
    res.json({user: {id: _id, name,  role}});
+   
+   
 }
 
 

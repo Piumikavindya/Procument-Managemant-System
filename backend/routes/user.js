@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
-const { create, changePassword, sendResetPasswordTokenStatus, resetPassword, signIn } = require('../controllers/user');
+const { create, changePassword, sendResetPasswordTokenStatus, resetPassword, signIn,updateUser, deleterUser } = require('../controllers/user');
 const { userValidator, validate, validatePassword, signInValidator } = require('../middlewares/validator');
 const {isValidPassResetToken} =require("../middlewares/user");
 
@@ -13,5 +13,6 @@ router.post("/signIn",signInValidator, validate, signIn);
 router.post('/change-password', changePassword);
 router.post('/verify-pass-reset-token',isValidPassResetToken,sendResetPasswordTokenStatus);
 router.post('/reset-password', validatePassword, validate,isValidPassResetToken,resetPassword);
-
+router.put("/update/:id", updateUser);
+//router.post("/delete/:id", deleterUser)
 module.exports = router;

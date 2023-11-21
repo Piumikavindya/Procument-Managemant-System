@@ -11,12 +11,14 @@ exports.generateOTP = (otp_length = 6)=>{
     return OTP;
 }
 
+// use Mailtrap.io website
 exports.generateMailTransporter =() => nodemailer.createTransport({
     host: "sandbox.smtp.mailtrap.io",
     port: 2525,
     auth: {
-      user: "b8b7ea7b896bb9",
-      pass: "b4ba0e8edb472f"
+        // user and pass inside .env file
+      user: process.env.MAIL_TRAP_USER,
+      pass: process.env.MAIL_TRAP_PASSWORD,
 
     },
 });
