@@ -74,7 +74,7 @@ await PasswordResetToken.findByIdAndDelete(req.resetToken._id);
 const transport = generateMailTransporter();
 
 const emailContent = `
-  <p>Password Reset Sucessfully</p>
+  <h1>Password Reset Sucessfully</h1>
   <p> Now you can use new Password </p>
 `;
 
@@ -88,6 +88,24 @@ transport.sendMail({
 res.json({ message: 'Password reset sucessfully, Now you can use new Password' });
  
 };
+
+exports.signIn = async (req,res) =>{
+    const {email,password} = req.body;
+
+        const user = await User.findOne({email})
+        if (!user) {
+            return res.status(401).json({ success: false, message: 'Invalid email or password' });
+          }
+
+
+    const matched= await user.comparePassword(password);
+    if(!matched) return sendError(res,'Email/Password mismatch!');
+
+    const {_id, name, role} = user;
+   // const jwtToken = jwt.sign({userId: _id}, 'dfjjjjlkhf5454ggmnkfkj8787')
+
+   res.json({user: {id: _id, name,  role}});
+}
 
 
 
