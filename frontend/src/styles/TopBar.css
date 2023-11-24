@@ -1,0 +1,56 @@
+.topBarStyle {
+    background-color: #800000;
+    width: 100%;
+    height: 120px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 0 15px; 
+  }
+  
+  
+  .logoutButton {
+    background-color: #800000; /* Background color */
+    color: #F5BD34; 
+    font-weight: 700;
+    border: 2px solid #F5BD34; /* Border color and width */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 20px; /* Add right margin to create space between the button and the text */
+  }
+  
+  .facultyTextStyle {
+    color: #F5BD34;
+    font-weight: 900;
+    text-align: center;
+  }
+  
+  .systemTextStyle {
+    color: #F5BD34;
+    font-weight: 900;
+    text-align: center;
+  }
+  
+  .imageStyle {
+    width: 100px;
+    height: 100px;
+    margin-right: -120px;
+  }
+  
+
+ /* 'TopBar.css' */
+/* ... (previous styles) */
+
+/* Move the top bar along with the sidebar */
+.topBarResponsive {
+  transition: all .5s ease;
+}
+
+#check:checked ~ .topBarResponsive {
+  transform: translateX(250px);
+}

@@ -1,12 +1,16 @@
 const router = require('express').Router();
 const passport = require('passport');
-const { create, changePassword, sendResetPasswordTokenStatus, resetPassword, signIn,updateUser, deleterUser } = require('../controllers/user');
+const { create, changePassword, sendResetPasswordTokenStatus, resetPassword, signIn,updateUser, viewUsers,deleterUser } = require('../controllers/user');
 const { userValidator, validate, validatePassword, signInValidator } = require('../middlewares/validator');
 const {isValidPassResetToken} =require("../middlewares/user");
 
 
 // Add user create route
-router.post("/create",userValidator, validate, create);
+router.post("/create", userValidator, validate,create, (req, res) => {
+    console.log("Received a request to create a user:", req.body);
+    create(req, res);
+  });
+router.get('/view-users', viewUsers);
 // add signIn route
 router.post("/signIn",signInValidator, validate, signIn);
 //Add forget Password route

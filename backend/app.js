@@ -8,9 +8,13 @@ require('express-async-errors');
 require('dotenv').config();
 require('./database/database');
 require('./middlewares/error');
-
+const userRouter = require("./routes/user");
+const { errorHandler } = require('./middlewares/error');
 
 const PORT = process.env.PORT || 8000;
+
+
+
 
 app.use(express.json());
 app.use(cors());
@@ -33,8 +37,7 @@ app.get("/about",(req,res) =>{
     res.send("<h1> Hello illllllllj</h1>");
 });
 
-const userRouter = require("./routes/user");
-const { errorHandler } = require('./middlewares/error');
+
 app.use('/user', userRouter);
 app.use(errorHandler);
 app.listen(PORT, () => {

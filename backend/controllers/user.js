@@ -6,15 +6,33 @@ const PasswordResetToken = require("../Models/PasswordResetToken");
 const { generateRandomByte, sendError } = require('../Utils/helper');
 const user = require('../Models/user');
 // request from the frontend
+
 exports.create = async (req,res) =>{
     const {username,name,email, password,role} = req.body;
 // response will send to frontend
 const newUser= new User({username,name,email, password,role})
 //save the data in the database
-await newUser.save()
 
-    res.json({user: newUser});
+try {
+    console.log('New User:', newUser);
+    await newUser.save();
+    
+    res.json({ user: newUser });
+} catch (error) {
+    console.error('Error saving user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+}
 };
+
+exports.viewUsers = async (req,res) =>{
+   User.find().then((Users)=>{
+    res.json(Users)
+   }).catch((err)=>{
+    console.log(err);
+   })
+
+};
+
 
 
 exports.updateUser = async (req,res)=>{

@@ -1,0 +1,56 @@
+/* ReservationTable.css */
+
+/* Style for the table */
+.reservation-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Arial', sans-serif;
+    border: 1px solid #005a9e;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+}
+
+/* Style for table header */
+.reservation-header {
+    background-color: #005a9e;
+    color: #ffffff;
+    text-align: center;
+    padding: 12px; /* Increase the header cell padding */
+    border: 2px solid black; /* Increase the header cell border size */
+}
+.reservation-table th:nth-child(9),
+.reservation-table td:nth-child(9) {
+    width: 20%; /* Adjust the width as needed */
+}
+
+/* Style for table rows */
+/* .reservation-row {
+    background-color: #0ad12b;
+} */
+
+/* Style for table data cells */
+.reservation-data {
+  font-size: 14px;
+    text-align: center; /* Center align the cell content */
+
+    /* Increase cell padding and height */
+    
+}
+
+/* Style for table icons within data cells */
+.reservation-icon {
+    color: #2f009e;
+    text-decoration: none;
+    transition: color 0.3s;
+    margin-right: 20px; /* Add margin to the right of each icon for spacing */
+
+    /* Center align the icons */
+    text-align: center;
+    display: inline-block; /* Ensure the icon takes the full width */
+    width: 100%; /* Set the width of the icon to 100% of the cell */
+}
+
+
+.reservation-icon:hover {
+    color: red;
+}
