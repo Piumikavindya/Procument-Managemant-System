@@ -42,6 +42,8 @@ import axios from 'axios';
           console.error('Error:', error);
         });
         console.log(newUser);
+
+        
     };
   return (
     <div>

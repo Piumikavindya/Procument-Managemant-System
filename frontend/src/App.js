@@ -5,7 +5,6 @@ import SideBar from './components/SideBar';
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
 import AdminHome from './pages/AdminHome';
-import AdminAccount from './pages/AdminAccount';
 import AllUsers from './pages/AllUsers';
 import CreateUsers from './pages/CreateUsers';
 import DeleteUsers from './pages/DeleteUsers';
@@ -38,7 +37,6 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/loginpage" element={<LoginPage />} />
         <Route path="/adminhome" element={<AdminHome />} />
-        <Route path="/adminaccount" element={<AdminAccount />} />
         <Route path="/AllUsers" element={<AllUsers />} />
         <Route path="/createusers" element={<CreateUsers />} />
         { /*<Route path="/user/create" element={<CreateUsers/>} /> 

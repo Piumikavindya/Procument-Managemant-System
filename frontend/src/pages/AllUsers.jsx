@@ -33,7 +33,7 @@ const AllUsers = () => {
         
         {/*These two buttons should be removed later */}
         <div className="button-container">
-              <Link to={'/createusers'} className="delete-button">
+              <Link to={'/createusers'} className="create-button">
                Add user
               </Link>
              
