@@ -43,9 +43,9 @@ const App = () => {
         { /*<Route path="/user/create" element={<CreateUsers/>} /> 
        <Route path="/users/delete/:id" element={<DeleteUsers/>} />     */}
 
-       <Route path="/deleteusers" element={<DeleteUsers />} />
-       <Route path="/updateusers" element={<UpdateUsers />} />
-       <Route path="/changePassword" element={<ChangePassword />} />
+       <Route path="/deleteusers/:id" element={<DeleteUsers />} />
+       <Route path="/updateusers/:id" element={<UpdateUsers />} />
+       <Route path="/changePassword/:id" element={<ChangePassword />} />
       </Routes>
     </div>
   );
