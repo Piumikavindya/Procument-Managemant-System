@@ -41,7 +41,7 @@ const UpdateUsers = () => {
 
   // Handle updating user data
   const handleUpdateUsers = () => {
-    const data = {
+    const newUser = {
       role,
       email,
       name,
@@ -51,11 +51,18 @@ const UpdateUsers = () => {
 
     setLoading(true);
     axios
-      .put(`http://localhost:8000/user/update/${id}`, data)
+      .put(`http://localhost:8000/user/update/${id}`, newUser)
       .then(() => {
+        alert('User Updated');
+        // Clear the form
+        setRole();
+        setEmail();
+        setName();
+        setPassword();
+        setUsername();
         setLoading(false);
         enqueueSnackbar('User account is updated successfully', { variant: 'success' });
-        navigate('/createusershome');
+        navigate('/AllUsers');
       })
       .catch((error) => {
         setLoading(false);
