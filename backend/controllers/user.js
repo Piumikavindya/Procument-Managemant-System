@@ -24,6 +24,7 @@ try {
 }
 };
 
+
 // get the all the users
 exports.viewUsers = async (req,res) =>{
    User.find().then((Users)=>{
@@ -33,6 +34,9 @@ exports.viewUsers = async (req,res) =>{
    })
 
 };
+
+
+
 
 exports.previewUser = async (req,res) =>{
     const userId = req.params.id;
