@@ -11,6 +11,7 @@ import CreateUsers from './pages/CreateUsers';
 import DeleteUsers from './pages/DeleteUsers';
 import UpdateUsers from './pages/UpdateUsers';
 import ChangePassword from './pages/ChangePassword';
+import PreviewUser from './pages/PreviewUser';
 
 const App = () => {
   const location = useLocation();
@@ -42,7 +43,7 @@ const App = () => {
         <Route path="/createusers" element={<CreateUsers />} />
         { /*<Route path="/user/create" element={<CreateUsers/>} /> 
        <Route path="/users/delete/:id" element={<DeleteUsers/>} />     */}
-
+  <Route path="/previewuser/:id" element={<PreviewUser />} />
        <Route path="/deleteusers/:id" element={<DeleteUsers />} />
        <Route path="/updateusers/:id" element={<UpdateUsers />} />
        <Route path="/changePassword/:id" element={<ChangePassword />} />

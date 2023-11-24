@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import BackButton from '../components/BackButton';
 
 const DeleteUsers = () => {
   const [loading, setLoading] = useState(false);
@@ -27,6 +28,7 @@ const DeleteUsers = () => {
 
   return (
     <div className='p-4'>
+        <BackButton destination={'/AllUsers'}/>
       <h1
         className='text-3xl my-4'
         style={{

@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import { BsArrowLeft } from 'react-icons/bs';
 
-const BackButton = ({ destination = '/AllUsers' }) => {
+
+
+const BackButton = ({ destination }) => {
   return (
     <div className='flex' style={{ marginTop: '100px' }}>
       <Link
@@ -15,3 +17,6 @@ const BackButton = ({ destination = '/AllUsers' }) => {
 };
 
 export default BackButton;
+
+
+

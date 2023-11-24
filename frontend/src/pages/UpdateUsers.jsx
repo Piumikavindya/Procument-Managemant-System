@@ -6,10 +6,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 const UpdateUsers = () => {
-  const [Role, setRole] = useState('');
-  const [Email, setEmail] = useState('');
-  const [Password, setPassword] = useState('');
-  const [Username, setUsername] = useState('');
+  const [role, setRole] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
 
   // React Router Hook to get the parameter from the URL
@@ -24,10 +25,11 @@ const UpdateUsers = () => {
     axios
       .get(`http://localhost:8000/user/${id}`)
       .then((response) => {
-        setRole(response.data.Role);
-        setEmail(response.data.Email);
-        setPassword(response.data.Password);
-        setUsername(response.data.Username);
+        setRole(response.data.role);
+        setEmail(response.data.email);
+        setName(response.data.name);
+        setPassword(response.data.password);
+        setUsername(response.data.username);
         setLoading(false);
       })
       .catch((error) => {
@@ -40,15 +42,16 @@ const UpdateUsers = () => {
   // Handle updating user data
   const handleUpdateUsers = () => {
     const data = {
-      Role,
-      Email,
-      Password,
-      Username,
+      role,
+      email,
+      name,
+      password,
+      username,
     };
 
     setLoading(true);
     axios
-      .put(`http://localhost:8000/users/${id}`, data)
+      .put(`http://localhost:8000/user/update/${id}`, data)
       .then(() => {
         setLoading(false);
         enqueueSnackbar('User account is updated successfully', { variant: 'success' });
@@ -66,7 +69,7 @@ const UpdateUsers = () => {
 
   return (
     <div className='p-4'>
-      <BackButton />
+      <BackButton destination={'/AllUsers'}/>
       <h1 className='text-3xl my-4' style={{ color: 'red', fontWeight: 'bold', fontStyle: 'italic', fontSize: '32px', textAlign: 'center' }}>
         Update Your Account
       </h1>
@@ -77,7 +80,7 @@ const UpdateUsers = () => {
           <label className='text-xl mr-4 text-gray-500'>Role</label>
           <input
             type='text'
-            value={Role}
+            value={role}
             onChange={(e) => setRole(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2 w-full'
           />
@@ -86,8 +89,17 @@ const UpdateUsers = () => {
           <label className='text-xl mr-4 text-gray-500'>Email</label>
           <input
             type='text'
-            value={Email}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className='border-2 border-gray-500 px-4 py-2 w-full'
+          />
+        </div>
+        <div className='my-4'>
+          <label className='text-xl mr-4 text-gray-500'>Name</label>
+          <input
+            type='text'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2 w-full'
           />
         </div>
@@ -95,7 +107,7 @@ const UpdateUsers = () => {
           <label className='text-xl mr-4 text-gray-500'>Password</label>
           <input
             type='password'
-            value={Password}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2 w-full'
           />
@@ -104,7 +116,7 @@ const UpdateUsers = () => {
           <label className='text-xl mr-4 text-gray-500'>Username</label>
           <input
             type='text'
-            value={Username}
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2 w-full'
           />

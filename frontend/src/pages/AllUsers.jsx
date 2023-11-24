@@ -33,16 +33,12 @@ const AllUsers = () => {
         
         {/*These two buttons should be removed later */}
         <div className="button-container">
-              <Link to={'/deleteusers'} className="delete-button">
-                Delete User
+              <Link to={'/createusers'} className="delete-button">
+               Add user
               </Link>
-              <Link to={'/updateusers'} className="update-button">
-                Update User
-              </Link>
+             
             </div>
-        <Link to='/createusers' className='add-user-link'>
-          <MdOutlineAddBox />
-        </Link>
+      
       </div>
       {loading ? (
         <p>Loading...</p>

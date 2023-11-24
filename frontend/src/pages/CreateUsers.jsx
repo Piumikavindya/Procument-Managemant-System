@@ -45,8 +45,9 @@ import axios from 'axios';
     };
   return (
     <div>
-       <BackButton/>
-    
+      
+       <BackButton destination='/AllUsers'/>
+
     <div className="admin-account-container">
     
     <div className='header' >
