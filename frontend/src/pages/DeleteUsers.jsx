@@ -16,12 +16,12 @@ const DeleteUsers = () => {
       .delete(`http://localhost:8000/user/delete/${id}`)
       .then(() => {
         setLoading(false);
-        enqueueSnackbar('Reservation deleted', { variant: 'success' });
-        navigate('/createdepartmentshome');
+        enqueueSnackbar('User deleted', { variant: 'success' });
+        navigate('/AllUsers');
       })
       .catch((error) => {
         setLoading(false);
-        enqueueSnackbar('Error deleting reservation', { variant: 'error' });
+        enqueueSnackbar('Error deleting user', { variant: 'error' });
         console.log(error);
       });
   };

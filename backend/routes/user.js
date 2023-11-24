@@ -13,7 +13,7 @@ router.post("/create", userValidator, validate,create, (req, res) => {
 router.get('/view-users', viewUsers);
 router.get("/preview-user/:id", previewUser)
 router.put("/update/:id", updateUser);
-router.post("/delete/:id", deleterUser)
+router.delete("/delete/:id", deleterUser)
 // add signIn route
 router.post("/signIn",signInValidator, validate, signIn);
 //Add forget Password route
