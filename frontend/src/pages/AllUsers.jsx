@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { MdOutlineAddBox } from 'react-icons/md';
 import UserTable from '../components/home/UserTable';
-import '../styles/CreateUsersHome.css';
+import '../styles/Allusers.css';
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
@@ -33,7 +33,7 @@ const AllUsers = () => {
         
         {/*These two buttons should be removed later */}
         <div className="button-container">
-              <Link to={'/createusers'} className="create-button">
+              <Link to={'/createusers'} className="button">
                Add user
               </Link>
              

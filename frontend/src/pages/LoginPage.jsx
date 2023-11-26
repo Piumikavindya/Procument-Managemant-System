@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../styles/LoginPage.css';
 import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const LoginPage = ({ setIsAuthenticated }) => {
+    const [loggedInUser, setLoggedInUser] = useState(null);
+
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -12,6 +14,7 @@ const LoginPage = () => {
   });
 
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials({
@@ -21,18 +24,39 @@ const LoginPage = () => {
   };
 
   const handleSignIn = async () => {
+    
     try {
       const response = await axios.post('http://localhost:8000/user/signIn', {
         email: credentials.email,
         password: credentials.password,
         role: credentials.role,
       });
-
+      console.log('User details:', response.data.user);
       if (response.data.user) {
         // Authentication successful
-        console.log('User signed in successfully');
-        navigate('/');
-        // Add logic to handle authentication, e.g., store user data in state or localStorage
+        console.log('User signed in successfully:', response.data.user);
+ // Update your state or localStorage with user details
+ setLoggedInUser(response.data.user);
+
+ // Update authentication state
+ setIsAuthenticated(true);
+       
+
+        // Redirect based on user role
+        switch (response.data.user.role) {
+          case 'admin':
+            navigate('/adminhome/' + response.data.user.id);
+            break;
+          case 'user':
+            // Add logic for user redirection
+            break;
+          case 'guest':
+            // Add logic for guest redirection
+            break;
+          // Add more roles as needed
+          default:
+            console.log('Invalid role');
+        }
       } else {
         // Authentication failed
         console.log('Invalid email or password');
@@ -43,6 +67,7 @@ const LoginPage = () => {
       console.error('Signin failed:', error);
     }
   };
+
   return (
     <div className="wrapper">
       <form action="" onSubmit={handleSignIn}>
@@ -55,7 +80,7 @@ const LoginPage = () => {
         <h3>LOGIN</h3>
 
         <div className="input-div">
-          {/* Role Dropdown */}
+         
           <div className="input-box">
             {/* Label for accessibility */}
             <select
@@ -65,7 +90,7 @@ const LoginPage = () => {
               onChange={handleChange}
               className="role-select"
             >
-              <option value="role" disabled selected>
+              <option value="role" disabled defaultValue>
                 Select your role
               </option>
               <option value="admin">Admin</option>
@@ -119,4 +144,5 @@ const LoginPage = () => {
     </div>
   );
 };
+
 export default LoginPage;

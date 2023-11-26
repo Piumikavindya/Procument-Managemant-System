@@ -37,7 +37,7 @@ const UserTable = ({ users }) => {
                 <Link to={`/previewuser/${user._id}`}>
                   <MdPreview className="text-2xl text-green-600" />
                 </Link>
-                <Link to={`/updateusers/${user._id}`}><AiOutlineEdit className="text-2xl text-blue-800"/>
+                <Link to={`/updateusers/${user._id}`}><AiOutlineEdit className="text-2xl text-blue-800 "/>
 
                         </Link>
                 <Link to={`/deleteusers/${user._id}`}>

@@ -1,0 +1,72 @@
+/* Default styles */
+.button {
+  background-color: #ad1f8a;
+  color: #ffffff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-user-link {
+  color: #ff69b4;
+  font-size: 24px;
+}
+
+.button:hover {
+  background-color: #2196F3;
+}
+
+.title {
+  font-size: 24px;
+  margin: 16px 0;
+  color: red;
+}
+
+.add-user-link {
+  color: #3b0606;
+  font-size: 30px;
+}
+
+.reservation-list-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.custom-button {
+  background-color: #ff69b4;
+  color: #ffffff;
+  padding: 8px 4px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  width: 100px;
+  margin: 0 auto;
+  display: block;
+}
+
+.custom-button:hover {
+  background-color: #ff1493;
+}
+
+
+  /* Buttons */
+  @media screen and (max-width: 600px) {
+    .button {
+      padding: 8px 12px; /* Adjust padding for smaller screens */
+      align-items: left;
+    }
+  }
+  
+  @media screen and (max-width: 400px) {
+    .button {
+      font-size: 12px; /* Adjust font size for even smaller screens */
+      align-items: left;
+    }
+  }
+
+  
