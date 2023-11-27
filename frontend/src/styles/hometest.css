@@ -48,16 +48,18 @@ body {
   margin:0;
 }
 
-body.sidebar-collapsed #content {
-    width: 100vw;
+body#sidebar.hide #content {
+  width: calc(100vw - 60px);
+  left: 60px;
   }
   
-  body.sidebar-collapsed #content nav {
-    margin: 0px 0 -9px 60px;
-  }
+  body#sidebar.hide #content nav {
+    width: calc(100vw - 60px);
+  left: 60px;}
   
-  body.sidebar-collapsed #sidebar.hide ~ #content {
-    left: 60px;
+  body#sidebar.hide #sidebar.hide ~ #content {
+    width: calc(100vw - 60px);
+  left: 60px;
   }
 
 
@@ -88,9 +90,8 @@ body.sidebar-collapsed #content {
     transition: width 0.3s ease;
   }
   
-  #sidebar.hide ~ #content {
-    width: calc(100% - 60px);
-    left: 60px;
+  #sidebar.hide #content {
+    width: 100vw;
   }
   
 #sidebar .brand {
@@ -198,10 +199,15 @@ body.sidebar-collapsed #content {
     width: 60px;
 }
 #sidebar.hide ~ #content {
-    width: calc(100% - 60px);
-  left: 0px;
+  width: calc(100vw - 60px);
+  left: -245px;
+  right: -220px;
 }
-
+#sidebar.hide ~ #content main {
+  width: calc(100vw - 60px);
+  left: -245px;
+  right: -220px;
+}
 
 
 
@@ -211,7 +217,7 @@ body.sidebar-collapsed #content {
   background: #00072D;
   padding: 0 24px;
   display: flex;
-    width: calc(100% - 280px);
+    width: 100vw;
   align-items: center;
   grid-gap: 24px;
   font-family: var(--lato);
@@ -570,17 +576,24 @@ body.sidebar-collapsed #content {
   }
 
   #content {
-    width:100vw; 
+    width: 100vw;
     left: 0px;
   }
-  body.sidebar-collapsed #content {
+  #content nav {
     width: 100vw;
-    left: 60px; /* Adjust the value based on your design */
-}
+    left: -150px;
+  }
 
-body.sidebar-collapsed #content nav {
-    margin: -100px 0 -9px 60px;
-}
+  #sidebar.hide ~ #content {
+    width: calc(100vw - 60px);
+    left: -245px;
+    right: -220px;
+  }
+  #sidebar.hide ~ #content main {
+    width: calc(100vw - 60px);
+    left: -285px;
+    right: -220px;
+  }
   #content nav .nav-link {
     display: none;
   }

@@ -12,6 +12,8 @@ import UpdateUsers from './pages/UpdateUsers';
 import ChangePassword from './pages/ChangePassword';
 import PreviewUser from './pages/PreviewUser';
 import  Hm from './pages/Hm';
+import reportWebVitals from './reportWebVitals';
+
 
 const App = () => {
   // const location = useLocation();
@@ -69,9 +71,10 @@ const App = () => {
         <Route path="/updateusers/:id" element={<UpdateUsers />} />
         <Route path="/changePassword/:id" element={<ChangePassword />} />
         <Route path="/hometest" element={<Hm/>} />
+        
       </Routes>
     </div>
   );
 };
-
+reportWebVitals();
 export default App;
