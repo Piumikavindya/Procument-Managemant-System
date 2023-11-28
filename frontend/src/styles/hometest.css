@@ -406,18 +406,18 @@ body#sidebar.hide #content {
 
 #content main .box-info {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(470px, 1fr));
   grid-gap: 24px;
-  margin-top: 36px;
+  margin-top: 5px;
 }
-#content main .box-info li {
+/* #content main .box-info li {
   padding: 24px;
   background: var(--light);
   border-radius: 20px;
   display: flex;
   align-items: center;
   grid-gap: 24px;
-}
+} */
 #content main .box-info li .bx {
   width: 80px;
   height: 80px;
@@ -682,3 +682,98 @@ body#sidebar.hide #content {
   }
 }
 
+.commonOpt {
+  position: relative;
+  overflow: hidden;
+  padding: 100px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  grid-gap: 24px;
+  background-size: cover;
+ 
+  background-repeat: no-repeat;
+  height: min-content;
+  transition: background 0.3s ease; /* Add a smooth transition effect for the background color */
+}
+
+
+.commonOpt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: left 0.3s ease, opacity 0.3s ease; /* Add a smooth transition effect for left position and opacity */
+}
+
+.commonOpt:hover::before {
+  left: 0;
+  opacity: 0.6;
+}
+
+.commonOpt a,
+.commonOpt i,
+.commonOpt h4 {
+  color: white; /* Text color is initially black */
+  transition: transform 0.3s ease, color 0.3s ease; /* Add a smooth transition effect for transform and color */
+  transform: translateY(0%); /* Initially position text in the center */
+  display: block;
+  font-size: larger;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+}
+
+.commonOpt:hover a,
+.commonOpt:hover i,
+.commonOpt:hover h4 {
+  color: #000; /* Text color is black on hover */
+  transform: translateY(-300%) translateX(-40%); /* Move text to the center on hover */
+  text-align: center;
+  font-size: large;
+}
+
+
+.commonOpt .explanation {
+  max-width: 300px; /* Adjust the maximum width of the explanation box */
+  padding: 16px;
+  color: #000;
+  background: #fff;
+  border-radius: 8px;
+  position: absolute;
+  left: -100%;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  opacity: 0;
+  align-items: center;
+  transition: left 0.3s ease, opacity 0.3s ease; /* Add a smooth transition effect for left position and opacity */
+}
+
+.commonOpt:hover .explanation {
+  left: 50%;
+  opacity: 1;
+}
+
+#guideline{
+  background-image: url(https://images.tech.co/wp-content/uploads/2022/04/20072923/AdobeStock_133001441_38-min-640x427.jpeg);
+  background-position: center;
+}
+
+#vendors{
+  background-image: url(https://comprara.com.au/wp-content/uploads/2022/08/WEI207_SeptemberCompraraBlogPostBlog-04.jpg);
+}
+
+#notice{
+  background-image: url(https://www.fsca.co.za/PublishingImages/Pages/Procurement-Notices/Notices.jpg);
+  background-position:left;
+}
+
+#yrPlanner{
+  background-image: url(https://boxcleverpress.com/cdn/shop/files/WC_YL-24-Website-3_1024x1024@2x.jpg?v=1699442338);
+}
