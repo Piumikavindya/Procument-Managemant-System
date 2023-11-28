@@ -49,7 +49,7 @@ const App = () => {
 
   return (
     <div>
-      {/* <TopBar isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} /> */}
+      <TopBar isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />
    
       <Routes>
         <Route path="/" element={<Home/>} />
