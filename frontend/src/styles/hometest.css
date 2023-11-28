@@ -209,12 +209,10 @@ body#sidebar.hide #content {
   right: -220px;
 }
 
-
-
 /* NAVBAR */
 #content nav {
   height: 124px;
-  background: #00072D;
+  background: c;
   padding: 0 24px;
   display: flex;
     width: 100vw;

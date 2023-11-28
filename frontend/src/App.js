@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import TopBar from './components/TopBar';
 import SideBar from './components/SideBar';
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
@@ -49,8 +48,9 @@ const App = () => {
 
   return (
     <div>
-      <TopBar isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />
-   
+
+
+     {/* <TopBar isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} /> */}
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route
@@ -63,7 +63,7 @@ const App = () => {
             )
           }
         />
-        <Route path="/adminhome/:id" element={<AdminHome />} />
+        <Route path="/adminhome/" element={<AdminHome />} />
         <Route path="/AllUsers" element={<AllUsers />} />
         <Route path="/createusers" element={<CreateUsers />} />
         <Route path="/previewuser/:id" element={<PreviewUser />} />
