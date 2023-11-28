@@ -34,7 +34,7 @@ const AllUsers = () => {
         {/*These two buttons should be removed later */}
         <div className="button-container">
               <Link to={'/createusers'} className="button">
-               Add user
+               Add User
               </Link>
              
             </div>
