@@ -78,11 +78,9 @@ h1, h3 {
 .login-btn {
     width: 20%;
     height: 45px;
-    background-color: #800000;
-    color: #ffffff;
-    border: none;
-    outline: none;
-    cursor: pointer;
+   background-color: #F5BD34;
+   
+   border:  2px solid #800000;
     font-size: 16px;
     font-weight: 600;
 }
