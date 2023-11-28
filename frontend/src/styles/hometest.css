@@ -212,7 +212,7 @@ body#sidebar.hide #content {
 /* NAVBAR */
 #content nav {
   height: 124px;
-  background: c;
+  background: #00072D;
   padding: 0 24px;
   display: flex;
     width: 100vw;
