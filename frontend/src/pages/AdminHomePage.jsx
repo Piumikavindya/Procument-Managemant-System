@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Footer from '../components/footer';
+import React, { useState } from "react";
+import '../styles/home.css';
 
-function Home() {
+
+function AdminHomePage() {
   
-  const { id } = useParams();
+ 
   return (
     <div className="App">
       <section id="content">
@@ -43,12 +43,13 @@ function Home() {
               </h5>
             </li>
           </ul>
-          <Footer/>
         </main>
+       
+       
         
       </section>
     </div>
   );
 }
 
-export default Home;
+export default AdminHomePage;

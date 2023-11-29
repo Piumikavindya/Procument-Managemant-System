@@ -1,11 +1,10 @@
 import React from "react";
-import '../styles/hometest.css';
+import '../styles/Navbar.css';
 
 const Navbar = ({ toggleClass }) => {
   return (
     <nav>
       <i className='bx bx-menu' onClick={() => toggleClass()}></i>
-     
       <a href="#" className="logo">
     <img   src="http://www.eng.ruh.ac.lk/img/unilogo.png" alt="FoE,UoR-"/>
     </a>

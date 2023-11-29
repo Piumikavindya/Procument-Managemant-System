@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../styles/hometest.css';
+import '../styles/SideBar.css';
 
 const SideBar = ({ isActive }) => {
   return (

@@ -72,7 +72,8 @@ const LoginPage = ({ setIsAuthenticated }) => {
    
     <div className="wrapper">
       <form action="" onSubmit={handleSignIn}>
-        <div>
+      <div >
+          <img   src="http://www.eng.ruh.ac.lk/img/unilogo.png" alt="FoE,UoR-"/>
           <h1>Procurement Management System</h1>
           <h1>Faculty of Engineering</h1>
           <h1>University of Ruhuna</h1>
@@ -92,7 +93,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
               onChange={handleChange}
               className="role-select"
             >
-              <option value="role" disabled defaultValue>
+              <option value="role" >
                 Select your role
               </option>
               <option value="admin">Admin</option>
