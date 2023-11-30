@@ -37,7 +37,6 @@ export default function NavbarMain({ isAuthenticated, handleSignOut, loggedInUse
   return (
     <div className="App">
       <section id="content">
-    
       <nav>
         <a href="#" className="logo">
           <img src="http://www.eng.ruh.ac.lk/img/unilogo.png" alt="FoE,UoR-" />

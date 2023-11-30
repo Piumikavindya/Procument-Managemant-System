@@ -10,12 +10,13 @@ const Footer = () => {
     width: '100%',
     position: 'fixed',
     bottom: 0,
+    
   };
 
   return (
     <footer style={footerStyle}>
       <p style={{ margin: 0 }}>
-        © 2023 Procurement Management System - Faculty of Engineering - University of R. All rights reserved.
+        © 2023 Procurement Management System - Faculty of Engineering 
       </p>
     </footer>
   );

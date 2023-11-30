@@ -90,8 +90,6 @@ body#sidebar.hide #content {
   right: -220px;
 }
 
-
-
 /* NAVBAR */
 #content nav {
   height: 124px;
@@ -102,9 +100,9 @@ body#sidebar.hide #content {
   align-items: center;
   grid-gap: 24px;
   font-family: var(--lato);
-  position: sticky;
+  position: fixed;
   top: 0;
-   margin: -100px 0 -9px 0px; /* notice  */
+  margin: 0px 0 -9px 0px; /* notice  */
   z-index: 1000;
   transition: .3s ease;
 }

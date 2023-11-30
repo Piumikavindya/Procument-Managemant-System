@@ -1,6 +1,6 @@
+// Import the Navbar and Sidebar components
 import React, { useState } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import SideBar from './components/SideBar';
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
 import AllUsers from './pages/AllUsers';
@@ -9,43 +9,20 @@ import DeleteUsers from './pages/DeleteUsers';
 import UpdateUsers from './pages/UpdateUsers';
 import ChangePassword from './pages/ChangePassword';
 import PreviewUser from './pages/PreviewUser';
-import AdminHomePage from './pages/AdminHomePage';
+import AdminHome from './pages/AdminHome';
 import reportWebVitals from './reportWebVitals';
-import Navbar from './components/Navbar';
 import NavbarMain from './components/NavbarMain';
-import Footer from './components/footer';
+
 
 const App = () => {
   const location = useLocation();
-  const [isActive, setActive] = useState(false);
-
-  const toggleClass = () => {
-    setActive(!isActive);
-  };
-
-  const renderSidebar = () => {
-    if (
-      location.pathname.startsWith('/hometest') ||
-      location.pathname.startsWith('/adminaccount') ||
-      location.pathname.startsWith('/createusershome') 
-     
-    ) {
-      
-      return <SideBar isActive={isActive} />;
-    }
-    return null;
-  };
-
   const renderNavbar = () => {
-    if (location.pathname === '/'  ) {
+    if (location.pathname === '/' || location.pathname === '/AllUsers' || location.pathname === '/createusers') {
       return <NavbarMain />;
     }
-    if(location.pathname === '/loginpage') {
-      return null;
-    }
-    return <Navbar toggleClass={toggleClass} />;
-
-    
+  
+    return null;
+   
   };
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -61,11 +38,9 @@ const App = () => {
     setLoggedInUser(null);
   };
 
- 
   return (
     <div>
       {renderNavbar()}
-      {renderSidebar()}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -85,14 +60,10 @@ const App = () => {
         <Route path="/deleteusers/:id" element={<DeleteUsers />} />
         <Route path="/updateusers/:id" element={<UpdateUsers />} />
         <Route path="/changePassword/:id" element={<ChangePassword />} />
-        <Route path="/hometest" element={<AdminHomePage />} />
+        <Route path="/adminhome" element={<AdminHome />} />
       </Routes>
-     
-     
     </div>
-    
   );
 };
-
 reportWebVitals();
 export default App;
