@@ -17,11 +17,13 @@ import NavbarMain from './components/NavbarMain';
 const App = () => {
   const location = useLocation();
   const renderNavbar = () => {
-    if (location.pathname === '/' || location.pathname === '/AllUsers' || location.pathname === '/createusers') {
-      return <NavbarMain />;
+    if (location.pathname === '/adminhome' )
+    {
+        return null;
+    
     }
   
-    return null;
+    return <NavbarMain />;
    
   };
 
@@ -56,7 +58,7 @@ const App = () => {
        
         <Route path="/AllUsers" element={<AllUsers />} />
         <Route path="/createusers" element={<CreateUsers />} />
-        <Route path="/previewuser/:id" element={<PreviewUser />} />
+        <Route path="/previewuser" element={<PreviewUser />} />
         <Route path="/deleteusers/:id" element={<DeleteUsers />} />
         <Route path="/updateusers/:id" element={<UpdateUsers />} />
         <Route path="/changePassword/:id" element={<ChangePassword />} />
