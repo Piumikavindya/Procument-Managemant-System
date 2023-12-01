@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/AdminHome.css";
 import Footer from '../components/footer';
 
+
 function HomePg() {
   const [isActive, setActive] = useState(false);
   const toggleClass = () => {
@@ -10,7 +11,7 @@ function HomePg() {
   return (
     <div className="App">
       <section id="sidebar" className={isActive ? "hide" : null}>
-        <a href="#" className="brand">
+        <a className="brand">
           <i className="bx bxs-smile"></i>
           <span className="text">AdminHub</span>
         </a>
@@ -22,37 +23,44 @@ function HomePg() {
             </a>
           </li>
           <li>
-            <a href="/adminhome">
+            <a >
               <i className="fa fa-user-circle" aria-hidden="true"></i>
               <span className="text">My account</span>
             </a>
           </li>
           <li>
-            <a href="/adminhome">
+  
+            <a href="/AllUsers">
               <i className="fa fa-users" aria-hidden="true"></i>
-              <span className="text">Manage Users</span>
+              <span className="text">User Regestration</span>
             </a>
           </li>
           <li>
             <a href="/adminhome">
               <i className="bx bxs-message-dots"></i>
-              <span className="text">View Request</span>
+              <span className="text">Add Department</span>
             </a>
           </li>
           <li>
             <a href="/adminhome">
               <i class="fa fa-file-text" aria-hidden="true"></i>
-              <span className="text">View Documents</span>
+              <span className="text">Add Vendor</span>
+            </a>
+          </li>
+          <li>
+            <a href="/adminhome">
+              <i class="fa fa-file-text" aria-hidden="true"></i>
+              <span className="text">Add Item</span>
+            </a>
+          </li>
+          <li>
+            <a href="/adminhome">
+              <i class="fa fa-file-text" aria-hidden="true"></i>
+              <span className="text">Add Budget</span>
             </a>
           </li>
         </ul>
         <ul className="side-menu">
-          <li>
-            <a href="adminhome">
-              <i className="bx bxs-cog"></i>
-              <span className="text">Settings</span>
-            </a>
-          </li>
           <li>
             <a href="adminhome" className="logout">
               <i className="bx bxs-log-out-circle"></i>
@@ -120,7 +128,7 @@ function HomePg() {
               </h5>
             </li>
           </ul>
-          <Footer/>
+          
         </main>
       </section>
     </div>
