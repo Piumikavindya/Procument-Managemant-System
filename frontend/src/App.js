@@ -12,12 +12,13 @@ import PreviewUser from './pages/PreviewUser';
 import AdminHome from './pages/AdminHome';
 import reportWebVitals from './reportWebVitals';
 import NavbarMain from './components/NavbarMain';
+import AdminAccSetting from './pages/AdminAccountEdit'
 
 
 const App = () => {
   const location = useLocation();
   const renderNavbar = () => {
-    if (location.pathname === '/adminhome' )
+    if (location.pathname === '/adminhome' ||location.pathname === '/loginpage' )
     {
         return null;
     
@@ -61,8 +62,9 @@ const App = () => {
         <Route path="/previewuser" element={<PreviewUser />} />
         <Route path="/deleteusers" element={<DeleteUsers />} />
         <Route path="/updateuser" element={<UpdateUsers />} />
-        <Route path="/changePassword/:id" element={<ChangePassword />} />
+        <Route path="/changePassword" element={<ChangePassword />} />
         <Route path="/adminhome" element={<AdminHome />} />
+        <Route path="/adminaccountsetting" element={<AdminAccSetting />} />
       </Routes>
     </div>
   );

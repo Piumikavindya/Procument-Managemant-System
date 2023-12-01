@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import "../styles/AdminHome.css";
 import Footer from '../components/footer';
-
+import Profile from '../components/Profile';
 
 function HomePg() {
   const [isActive, setActive] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const toggleClass = () => {
     setActive(!isActive);
+    
+
+  };
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
   };
   return (
     <div className="App">
@@ -22,14 +28,9 @@ function HomePg() {
               <span className="text">Home</span>
             </a>
           </li>
+          
           <li>
-            <a >
-              <i className="fa fa-user-circle" aria-hidden="true"></i>
-              <span className="text">My account</span>
-            </a>
-          </li>
-          <li>
-  
+
             <a href="/AllUsers">
               <i className="fa fa-users" aria-hidden="true"></i>
               <span className="text">User Regestration</span>
@@ -84,13 +85,12 @@ function HomePg() {
             University of Ruhuna
           </a>
 
-          <a href="/adminhome" className="notification">
-            <i className="bx bxs-bell"></i>
-            <span className="num">8</span>
-          </a>
-          <a href="/adminhome" className="profile">
-            <img src="https://secure.gravatar.com/avatar/d09eaad01aea86c51b4f892b4f8abf6f?s=100&d=wavatar&r=g" />
-          </a>
+        
+          <div className="profile" onClick={toggleDropdown}>
+          <img src="https://secure.gravatar.com/avatar/d09eaad01aea86c51b4f892b4f8abf6f?s=100&d=wavatar&r=g" />
+          {/* Render the dropdown only if showDropdown is true */}
+          {showDropdown && <Profile />}
+        </div>
         </nav>
 
         <main>
@@ -128,7 +128,7 @@ function HomePg() {
               </h5>
             </li>
           </ul>
-          
+          <Footer/>
         </main>
       </section>
     </div>
