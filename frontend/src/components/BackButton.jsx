@@ -1,22 +1,18 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { BsArrowLeft } from 'react-icons/bs';
-
-
+import '../styles/BackButton.css'; // Import the new stylesheet
 
 const BackButton = ({ destination }) => {
   return (
-    <div className='flex' style={{ marginTop: '100px' }}>
-      <Link
-        to={destination}
-        className='bg-sky-800 text-white px-4 py-1 rounded-lg w-fit'
-      >
-        <BsArrowLeft className='text-2xl' />
+    <div className='back-button-container'>
+      <Link to={destination} className='back-button'>
+        <div >
+          <BsArrowLeft className='arrow-icon' />
+        </div>
       </Link>
     </div>
   );
 };
 
 export default BackButton;
-
-
-
