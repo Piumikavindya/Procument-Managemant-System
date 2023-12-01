@@ -15,7 +15,7 @@
     background-color: #005a9e;
     color: #ffffff;
     text-align: center;
-    padding: 12px; /* Increase the header cell padding */
+    padding: 8px; /* Increase the header cell padding */
     border: 2px solid black; /* Increase the header cell border size */
 }
 
@@ -30,7 +30,7 @@
 
 /* Style for table data cells */
 .reservation-data {
-    font-size: 14px;
+    font-size: 10px;
     text-align: center; /* Center align the cell content */
 
     /* Increase cell padding and height */

@@ -10,6 +10,7 @@ router.post("/create", userValidator, validate,create, (req, res) => {
     console.log("Received a request to create a user:", req.body);
     create(req, res);
   });
+  // virw all users
 router.get('/view-users', viewUsers);
 router.get("/preview-user/:id", previewUser)
 router.put("/update/:id", updateUser);

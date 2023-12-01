@@ -11,6 +11,8 @@ import axios from 'axios';
     const [role, setRole] = useState('');
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
+    const [department, setDepartment] = useState('');
+    const [employeeNumber, setEmpNo] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -22,6 +24,8 @@ import axios from 'axios';
         role,
         email,
         name,
+        department,
+        employeeNumber,
         username,
         password,
       };
@@ -34,6 +38,8 @@ import axios from 'axios';
           setRole('');
           setEmail('');
           setName('');
+          setDepartment('');
+          setEmpNo('');
           setUsername('');
           setPassword('');
      
@@ -87,6 +93,24 @@ import axios from 'axios';
             type='text'
             value={name}
             onChange={(e) => setName(e.target.value)}
+            className='border-2 border-gray-500 px-4 py-2  w-full '
+          />
+      </div>
+      <div className="input-container">
+      <label className='text-xl mr-4 text-gray-500'>Department</label>
+          <input
+            type='text'
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
+            className='border-2 border-gray-500 px-4 py-2  w-full '
+          />
+      </div>
+      <div className="input-container">
+      <label className='text-xl mr-4 text-gray-500'>Employee Number</label>
+          <input
+            type='text'
+            value={employeeNumber}
+            onChange={(e) => setEmpNo(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2  w-full '
           />
       </div>

@@ -1,18 +1,15 @@
 const User = require('../Models/user');
 const {generateMailTransporter} = require('../Utils/mail');
 const PasswordResetToken = require("../Models/PasswordResetToken");
-
-
 const { generateRandomByte, sendError } = require('../Utils/helper');
 const user = require('../Models/user');
+
 // request from the frontend
-
 exports.create = async (req,res) =>{
-    const {username,name,email, password,role} = req.body;
+    const {username,name,email, password,role,department,employeeNumber} = req.body;
 // response will send to frontend
-const newUser= new User({username,name,email, password,role})
+const newUser= new User({username,name,email, password,role,department,employeeNumber})
 //save the data in the database
-
 try {
     console.log('New User:', newUser);
     await newUser.save();
@@ -37,7 +34,7 @@ exports.viewUsers = async (req,res) =>{
 
 
 
-
+// view details of perticular user
 exports.previewUser = async (req,res) =>{
     const userId = req.params.id;
 
@@ -58,18 +55,20 @@ exports.previewUser = async (req,res) =>{
  };
 
 
-
+//update user details
 exports.updateUser = async (req,res)=>{
     let userId = req.params.id;
 
-    const { username, name, email, password,role } = req.body;
+    const { username, name, email, password,role,department,employeeNumber} = req.body;
 
     const updateUser = {
        username,
        name,
        email,
        password,
-       role
+       role,
+       department,
+       employeeNumber,
     };
 
     try {
@@ -81,7 +80,7 @@ exports.updateUser = async (req,res)=>{
     }
 };
 
-
+//delete user
 exports.deleterUser = async (req,res)=>{
     let userId = req.params.id;
 
@@ -93,7 +92,7 @@ exports.deleterUser = async (req,res)=>{
 };
 
 
-
+// change the password of particular user
 exports.changePassword = async(req,res)=>{
 const {email} = req.body;
 if(!email) return sendError(res, 'email is missing');
@@ -168,6 +167,7 @@ res.json({ message: 'Password reset sucessfully, Now you can use new Password' }
  
 };
 
+//user signin
 exports.signIn = async (req,res) =>{
 
    

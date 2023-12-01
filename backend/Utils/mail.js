@@ -11,7 +11,7 @@ exports.generateOTP = (otp_length = 6)=>{
     return OTP;
 }
 
-// use Mailtrap.io website
+// used Mailtrap.io website
 exports.generateMailTransporter =() => nodemailer.createTransport({
     host: "sandbox.smtp.mailtrap.io",
     port: 2525,

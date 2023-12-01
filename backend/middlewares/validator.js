@@ -1,4 +1,5 @@
 const { check, validationResult } = require("express-validator");
+
 // pass some validations to name, email and passwords
 
 exports.userValidator = [

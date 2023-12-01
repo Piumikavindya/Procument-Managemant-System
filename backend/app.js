@@ -20,8 +20,6 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 
-
-//app.use(express.json());
 // const URL = process.env.MONGODB_URL;
 
 // mongoose.connect(URL, {
@@ -32,14 +30,13 @@ app.use(bodyParser.json());
 
 //const connection = mongoose.connection;
 
-
-app.get("/about",(req,res) =>{
-    res.send("<h1> Hello illllllllj</h1>");
-});
-
-
+//this is user route
 app.use('/user', userRouter);
 app.use(errorHandler);
+
+
+
+
 app.listen(PORT, () => {
     console.log(`The server is listening on port: ${PORT}`);
   });

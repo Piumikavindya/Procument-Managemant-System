@@ -21,10 +21,18 @@ const userSchema = new Schema({
     type: String,
 
   }, 
+ employeeNumber:{
+    type: String,
+
+  }, 
+  department:{
+    type: String,
+
+  }, 
   role:{
     type: String,
     default: 'admin',
-    enum: ['admin', 'department','SuplyOfficer','TECofficer']
+    enum: ['admin', 'department','procurementOfficer','TECofficer','approver','Finance officers']
   }
 });
 

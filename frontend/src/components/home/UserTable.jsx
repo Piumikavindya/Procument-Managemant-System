@@ -18,6 +18,8 @@ const UserTable = ({ users }) => {
           <th className='reservation-header border border-slate-600 rounded-md text-center'>Role</th>
           <th className='reservation-header border border-slate-600 rounded-md text-center'>Email</th>
           <th className='reservation-header border border-slate-600 rounded-md text-center'>Name</th>
+          <th className='reservation-header border border-slate-600 rounded-md text-center'>Department</th>
+          <th className='reservation-header border border-slate-600 rounded-md text-center'>Employee Number</th>
           <th className='reservation-header border border-slate-600 rounded-md text-center'>Username</th>
           <th className='reservation-header border border-slate-600 rounded-md text-center'>Password</th>
           <th className='reservation-header border border-slate-600 rounded-md text-center'>Operations</th>
@@ -30,6 +32,8 @@ const UserTable = ({ users }) => {
             <td className='reservation-data border border-slate-600 rounded-md text-center'>{user.role}</td>
             <td className='reservation-data border border-slate-600 rounded-md text-center'>{user.email}</td>
             <td className='reservation-data border border-slate-600 rounded-md text-center'>{user.name}</td>
+            <td className='reservation-data border border-slate-600 rounded-md text-center'>{user.department}</td>
+            <td className='reservation-data border border-slate-600 rounded-md text-center'>{user.employeeNumber}</td>
             <td className='reservation-data border border-slate-600 rounded-md text-center'>{user.username}</td>
             <td className='reservation-data border border-slate-600 rounded-md text-center'>{user.password}</td>
             <td className='reservation-data border border-slate-600 rounded-md text-center'>

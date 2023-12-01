@@ -17,7 +17,7 @@ function HomePg() {
           <li className="active">
             <a href="#">
               <i className="bx bxs-dashboard"></i>
-              <span className="text">Dashboard</span>
+              <span className="text">Home</span>
             </a>
           </li>
           <li>
