@@ -18,7 +18,7 @@ import AdminAccSetting from './pages/AdminAccountEdit'
 const App = () => {
   const location = useLocation();
   const renderNavbar = () => {
-    if (location.pathname === '/adminhome' ||location.pathname === '/loginpage' )
+    if (location.pathname === '/adminhome' || location.pathname === '/loginpage' )
     {
         return null;
     

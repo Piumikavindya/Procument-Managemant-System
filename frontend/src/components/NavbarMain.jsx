@@ -43,9 +43,9 @@ export default function NavbarMain({ isAuthenticated, handleSignOut, loggedInUse
         </a>
         <a href="#" className="nav-link">Faculty of Engineering<br/>University of Ruhuna</a>
        
-        <ul className="flex items-center space-x-6">
+        <ul className="flex items-center space-x-6" >
           <li>
-            <Link className="text-red-400 Navtext font-semibold text-lg logoutButton" to='/'>
+            <Link className="text-red-400 Navtext font-semibold text-lg logoutButton  " to='/'>
               {/* Home */}
             </Link>
           </li>
@@ -64,12 +64,13 @@ export default function NavbarMain({ isAuthenticated, handleSignOut, loggedInUse
               </button>
             ) : (
               <Link
-              className="text-red-400 Navtext font-semibold text-lg underline"
+              className=" Navtext-signin "
               to="/loginpage"
-              style={{ marginLeft: '680px', textDecoration: 'underline' }}
+           
             >
               Sign In
             </Link>
+            
             )}
           </li>
         </ul>
