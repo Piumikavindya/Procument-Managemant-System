@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import "../styles/AdminHome.css";
 import Footer from '../components/footer';
+import Profile from '../components/Profile';
 
 function HomePg() {
   const [isActive, setActive] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const toggleClass = () => {
     setActive(!isActive);
+    
+
+  };
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
   };
   return (
     <div className="App">
       <section id="sidebar" className={isActive ? "hide" : null}>
-        <a href="#" className="brand">
+        <a className="brand">
           <i className="bx bxs-smile"></i>
           <span className="text">AdminHub</span>
         </a>
@@ -21,38 +28,40 @@ function HomePg() {
               <span className="text">Home</span>
             </a>
           </li>
+          
           <li>
-            <a href="/adminhome">
-              <i className="fa fa-user-circle" aria-hidden="true"></i>
-              <span className="text">My account</span>
-            </a>
-          </li>
-          <li>
-            <a href="/adminhome">
+
+            <a href="/AllUsers">
               <i className="fa fa-users" aria-hidden="true"></i>
-              <span className="text">Manage Users</span>
+              <span className="text">User Regestration</span>
             </a>
           </li>
           <li>
             <a href="/adminhome">
               <i className="bx bxs-message-dots"></i>
-              <span className="text">View Request</span>
+              <span className="text">Add Department</span>
             </a>
           </li>
           <li>
             <a href="/adminhome">
               <i class="fa fa-file-text" aria-hidden="true"></i>
-              <span className="text">View Documents</span>
+              <span className="text">Add Vendor</span>
+            </a>
+          </li>
+          <li>
+            <a href="/adminhome">
+              <i class="fa fa-file-text" aria-hidden="true"></i>
+              <span className="text">Add Item</span>
+            </a>
+          </li>
+          <li>
+            <a href="/adminhome">
+              <i class="fa fa-file-text" aria-hidden="true"></i>
+              <span className="text">Add Budget</span>
             </a>
           </li>
         </ul>
         <ul className="side-menu">
-          <li>
-            <a href="adminhome">
-              <i className="bx bxs-cog"></i>
-              <span className="text">Settings</span>
-            </a>
-          </li>
           <li>
             <a href="adminhome" className="logout">
               <i className="bx bxs-log-out-circle"></i>
@@ -76,13 +85,12 @@ function HomePg() {
             University of Ruhuna
           </a>
 
-          <a href="/adminhome" className="notification">
-            <i className="bx bxs-bell"></i>
-            <span className="num">8</span>
-          </a>
-          <a href="/adminhome" className="profile">
-            <img src="https://secure.gravatar.com/avatar/d09eaad01aea86c51b4f892b4f8abf6f?s=100&d=wavatar&r=g" />
-          </a>
+        
+          <div className="profile" onClick={toggleDropdown}>
+          <img src="https://secure.gravatar.com/avatar/d09eaad01aea86c51b4f892b4f8abf6f?s=100&d=wavatar&r=g" />
+          {/* Render the dropdown only if showDropdown is true */}
+          {showDropdown && <Profile />}
+        </div>
         </nav>
 
         <main>
