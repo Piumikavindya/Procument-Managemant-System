@@ -1,10 +1,10 @@
 import React from 'react'
-import "../styles/AdminHome.css";
-
+ import "../styles/Sidebar.css";
+// import "../styles/AdminHome.css";
 export default function Sidebar({ isActive }) {
   return (
-    <section id="sidebar">
-   <section id="sidebar" className={isActive ? "hide" : null}>
+
+   <section id="sidebar" className={isActive ? 'hide' :null}>
         <a className="brand">
           <i className="bx bxs-smile"></i>
           <span className="text">AdminHub</span>
@@ -32,19 +32,19 @@ export default function Sidebar({ isActive }) {
           </li>
           <li>
             <a href="/adminhome">
-              <i class="fa fa-file-text" aria-hidden="true"></i>
+              <i className="fa fa-file-text" aria-hidden="true"></i>
               <span className="text">Add Vendor</span>
             </a>
           </li>
           <li>
             <a href="/adminhome">
-              <i class="fa fa-file-text" aria-hidden="true"></i>
+              <i className="fa fa-file-text" aria-hidden="true"></i>
               <span className="text">Add Item</span>
             </a>
           </li>
           <li>
             <a href="/adminhome">
-              <i class="fa fa-file-text" aria-hidden="true"></i>
+              <i className="fa fa-file-text" aria-hidden="true"></i>
               <span className="text">Add Budget</span>
             </a>
           </li>
@@ -58,6 +58,7 @@ export default function Sidebar({ isActive }) {
           </li>
         </ul>
       </section>
-  </section>
+
+  
   )
 }

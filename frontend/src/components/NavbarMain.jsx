@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import '../styles/NavbarMain.css';
-import "../styles/AdminHome.css";
+
 
 export default function NavbarMain({ isAuthenticated, handleSignOut, loggedInUser }) {
   const [user, setUser] = useState({});
@@ -36,8 +36,8 @@ export default function NavbarMain({ isAuthenticated, handleSignOut, loggedInUse
   }, [loggedInUser]);
 
   return (
-    <div className="App">
-      <section id="content">
+   
+      <section id="content1">
       <nav>
         <a href="#" className="logo">
           <img src="http://www.eng.ruh.ac.lk/img/unilogo.png" alt="FoE,UoR-" />
@@ -76,6 +76,6 @@ export default function NavbarMain({ isAuthenticated, handleSignOut, loggedInUse
         </ul>
       </nav>
       </section>
-    </div>
+    
   );
 }

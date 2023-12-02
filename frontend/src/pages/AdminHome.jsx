@@ -1,22 +1,22 @@
 import React, { useState } from "react";
-import "../styles/AdminHome.css";
+
 // import Footer from '../components/footer';
 // import Profile from '../components/Profile';
-import NavbarMain from "../components/NavbarMain";
-
 import HomeContent from "../components/HomeContent";
-import Sidebar from "../components/SideBar";
+import Navbar from "../components/Navbar";
+import '../styles/Navbar.css';
 
 function AdminHome() {
   const [isActive, setActive] = useState(false);
 
-  // const toggleClass = () => {
-  //   setActive(!isActive);
-  // };
+  const toggleClass = () => {
+    setActive(!isActive);
+  };
   return (
     <div className="App">
-    <Sidebar isActive={isActive} />
-    {/* <NavbarMain toggleClass={toggleClass} /> */}
+  
+    <Navbar toggleClass={toggleClass}></Navbar>
+    
     <HomeContent></HomeContent>
   </div>
   );

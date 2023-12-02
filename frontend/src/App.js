@@ -11,8 +11,8 @@ import ChangePassword from './pages/ChangePassword';
 import PreviewUser from './pages/PreviewUser';
 import AdminHome from './pages/AdminHome';
 import reportWebVitals from './reportWebVitals';
-import NavbarMain from './components/NavbarMain';
 import AdminAccountEdit from './pages/AdminAccountEdit'
+
 
 
 const App = () => {
@@ -22,16 +22,7 @@ const App = () => {
     setActive(!isActive);
   };
   const location = useLocation();
-  const renderNavbar = () => {
-    if (location.pathname === '/loginpage')
-    {
-        return null;
-    
-    }
-  
-    return <NavbarMain toggleClass={toggleClass} isAuthenticated={isAuthenticated} handleSignOut={handleSignOut} loggedInUser={loggedInUser} />;
-   
-  };
+ 
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -48,7 +39,7 @@ const App = () => {
 
   return (
     <div>
-      {renderNavbar()}
+     
       <Routes>
         <Route path="/" element={<Home />} />
         <Route

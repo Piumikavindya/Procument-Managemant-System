@@ -1,41 +1,15 @@
 import React, { useState } from "react";
 import Footer from '../components/footer';
  import Profile from '../components/Profile';
- import "../styles/AdminHome.css";
+ import "../styles/MainContent.css";
+// import "../styles/AdminHome.css";
 export default function HomeContent() {
-    const [isActive, setActive] = useState(false);
-    const [showDropdown, setShowDropdown] = useState(false);
-    const toggleClass = () => {
-        setActive(!isActive);
-        
-    
-      };
-      const toggleDropdown = () => {
-        setShowDropdown(!showDropdown);
-      };
+   
+  
   return (
   
     <section id="content">
-        <nav>
-          <i className="bx bx-menu" onClick={toggleClass}></i>
-          <a href="#" className="logo">
-            <img
-              src="http://www.eng.ruh.ac.lk/img/unilogo.png"
-              alt="FoE,UoR-"
-            />
-          </a>
-          <a href="/adminhome" className="nav-link">
-            Faculty of Engineering <br />
-            University of Ruhuna
-          </a>
-
         
-          <div className="profile" onClick={toggleDropdown}>
-          <img src="https://secure.gravatar.com/avatar/d09eaad01aea86c51b4f892b4f8abf6f?s=100&d=wavatar&r=g" />
-          {/* Render the dropdown only if showDropdown is true */}
-          {showDropdown && <Profile />}
-        </div>
-        </nav>
 
         <main>
           <div className="head-title">

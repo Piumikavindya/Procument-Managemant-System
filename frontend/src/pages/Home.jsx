@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Footer from '../components/footer';
+import NavbarMain from '../components/NavbarMain';
 
 function Home() {
   
   const { id } = useParams();
   return (
+ 
     <div className="App">
+      <NavbarMain></NavbarMain>
       <section id="content">
+       
         <main>
           <div className="head-title">
             <div className="left">
