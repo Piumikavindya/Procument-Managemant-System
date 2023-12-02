@@ -8,10 +8,12 @@ import '../styles/CreateUsers.css';
     const [role, setRole] = useState('');
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
+    const [employeeNumber, setEmpNo] = useState('');
+    const [department, setDepartment] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const roles = ['admin', 'User', 'Department', 'Lorry', 'Jeep'];
+    const roles = ['admin', 'procurmentofficer', 'financeofficers', 'userdepartment', 'approver'];
   
     function handleSaveCreateUsers(e){ e.preventDefault(); 
       
@@ -19,6 +21,8 @@ import '../styles/CreateUsers.css';
         role,
         email,
         name,
+        employeeNumber,
+        department,
         username,
         password,
       };
@@ -31,6 +35,8 @@ import '../styles/CreateUsers.css';
           setRole('');
           setEmail('');
           setName('');
+          setDepartment('');
+          setEmpNo('');
           setUsername('');
           setPassword('');
      
@@ -99,11 +105,20 @@ import '../styles/CreateUsers.css';
           />
       </div>
       <div className="input-container">
-      <label className='text-xl mr-4 text-gray-500'> Username</label>
+      <label className='text-xl mr-4 text-gray-500'> Employee Number</label>
       <input
             type='text'
             value={employeeNumber}
             onChange={(e) => setEmpNo(e.target.value)}
+            className='border-2 border-gray-500 px-4 py-2  w-full '
+          />
+        </div>
+        <div className="input-container">
+      <label className='text-xl mr-4 text-gray-500'> Department</label>
+      <input
+            type='text'
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2  w-full '
           />
         </div>

@@ -17,7 +17,7 @@ import NavbarMain from './components/NavbarMain';
 const App = () => {
   const location = useLocation();
   const renderNavbar = () => {
-    if (location.pathname === '/adminhome' )
+    if (location.pathname === '/adminhome'|| location.pathname === '/loginpage' )
     {
         return null;
     
@@ -62,7 +62,7 @@ const App = () => {
         <Route path="/deleteusers/:id" element={<DeleteUsers />} />
         <Route path="/updateusers/:id" element={<UpdateUsers />} />
         <Route path="/changePassword/:id" element={<ChangePassword />} />
-        <Route path="/adminhome" element={<AdminHome />} />
+        <Route path="/adminhome/:id" element={<AdminHome />} />
       </Routes>
     </div>
   );
