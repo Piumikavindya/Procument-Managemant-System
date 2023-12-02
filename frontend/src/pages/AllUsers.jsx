@@ -24,31 +24,24 @@ const AllUsers = () => {
       });
   }, []);
 
-
-
   return (
     <div className='p-4'>
       <div className='flex justify-between items-center'>
         <h1 className='title'>User Login Data List</h1>
         
-        {/*These two buttons should be removed later */}
+        {/* These two buttons should be removed later */}
         <div className="button-container">
-              <Link to={'/createusers'} className="button">
-               Add User
-              </Link>
-             
-            </div>
-      
+          <Link to={'/createusers'} className="button">
+            Add User
+          </Link>
+        </div>
       </div>
+
       {loading ? (
         <p>Loading...</p>
       ) : (
         <div className="reservation-list-container">
           <UserTable users={users} />
-        
-        
-           
-        
         </div>
       )}
     </div>

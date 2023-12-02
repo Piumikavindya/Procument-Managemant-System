@@ -1,0 +1,29 @@
+/* Your existing styles... */
+
+.card {
+    width: 600px;
+    height: fit-content;
+    margin: auto;
+    background-color: #fff;
+    border: 2px solid #87ceeb;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .remember-me {
+    display: flex;
+    align-items: center;
+    margin-top: 10px; 
+    /* Adjust as needed */
+  }
+  
+  .remember-me input {
+    margin-right: -230px; /* Adjust as needed */
+  }
+  
+  .label {
+    margin: 0;
+    margin-left: 0px;
+  
+  }
+  
