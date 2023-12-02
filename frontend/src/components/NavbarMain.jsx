@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
-// import '../styles/NavbarMain.css';
+import '../styles/NavbarMain.css';
+import "../styles/AdminHome.css";
 
 export default function NavbarMain({ isAuthenticated, handleSignOut, loggedInUser }) {
   const [user, setUser] = useState({});
