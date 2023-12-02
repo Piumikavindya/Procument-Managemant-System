@@ -47,7 +47,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
           case 'admin':
             navigate('/adminhome/' + response.data.user.id);
             break;
-          case 'user':
+          case '':
             // Add logic for user redirection
             break;
           case 'guest':
@@ -69,15 +69,18 @@ const LoginPage = ({ setIsAuthenticated }) => {
   };
 
   return (
+   
     <div className="wrapper">
       <form action="" onSubmit={handleSignIn}>
-        <div>
+      <div >
+          <img   src="http://www.eng.ruh.ac.lk/img/unilogo.png" alt="FoE,UoR-"/>
           <h1>Procurement Management System</h1>
           <h1>Faculty of Engineering</h1>
           <h1>University of Ruhuna</h1>
         </div>
 
         <h3>LOGIN</h3>
+        
 
         <div className="input-div">
          
@@ -90,12 +93,14 @@ const LoginPage = ({ setIsAuthenticated }) => {
               onChange={handleChange}
               className="role-select"
             >
-              <option value="role" disabled defaultValue>
+              <option value="role" >
                 Select your role
               </option>
               <option value="admin">Admin</option>
-              <option value="user">User</option>
-              <option value="guest">Guest</option>
+              <option value="procurmentofficer">Procurement Officer</option>
+              <option value="financeofficers">Finance Officers</option>
+              <option value="userdepartment">User Department</option>
+              <option value="approver">Approver</option>
               {/* Add more options as needed */}
             </select>
             <i className="bx bxs-user"></i>
@@ -109,9 +114,9 @@ const LoginPage = ({ setIsAuthenticated }) => {
               value={credentials.email}
               onChange={handleChange}
               placeholder="Email"  
-              required
+              requir 
             />
-            <i className="bx bxs-user"></i>
+            <i className="fa-solid fa-envelope"></i>
           </div>
 
           {/* Password Input */}
@@ -125,13 +130,13 @@ const LoginPage = ({ setIsAuthenticated }) => {
               required
             />
             <i className="bx bxs-lock-alt"></i>
-            <i className="bx bxs-show" style={{ marginLeft: '16px' }}></i>
-            <i className="bx bxs-low-vision" style={{ marginLeft: '16px' }}></i>
+           
+           
           </div>
         </div>
 
         <div className="remember-forgot">
-          <label style={{ color: '#800000' }}>
+          <label style={{ color: '#00072D' }}>
             <input type="checkbox" />Remember me
           </label>
           <Link to="/changePassword">Forgot password?</Link>
