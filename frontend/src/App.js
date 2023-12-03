@@ -11,19 +11,29 @@ import ChangePassword from './pages/ChangePassword';
 import PreviewUser from './pages/PreviewUser';
 import AdminHome from './pages/AdminHome';
 import reportWebVitals from './reportWebVitals';
-import AdminAccountEdit from './pages/AdminAccountEdit'
+import AdminAccSetting from './pages/AdminAccountEdit';
+import NavbarMain from './components/NavbarMain';
 
 
 
 const App = () => {
+
   const [isActive, setActive] = useState(false);
 
   const toggleClass = () => {
     setActive(!isActive);
   };
   const location = useLocation();
- 
 
+  const renderNavbar = () => {
+    if (location.pathname === '/adminhome' || location.pathname === '/loginpage' )
+    {
+        return null;
+    
+    }
+  
+    return <NavbarMain />;
+  }
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
 
@@ -39,7 +49,7 @@ const App = () => {
 
   return (
     <div>
-     
+    {<renderNavbar/>}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -60,7 +70,7 @@ const App = () => {
         <Route path="/updateusers/:id" element={<UpdateUsers />} />
         <Route path="/changePassword/:id" element={<ChangePassword />} />
         <Route path="/adminhome/:id" element={<AdminHome />} />
-        <Route path="/adminaccountsetting" element={<AdminAccountEdit />} />
+        <Route path="/adminaccountsetting" element={<AdminAccSetting />} />
       </Routes>
     </div>
   );

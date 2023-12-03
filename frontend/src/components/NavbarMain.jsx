@@ -45,11 +45,11 @@ export default function NavbarMain({ isAuthenticated, handleSignOut, loggedInUse
         <a href="#" className="nav-link">Faculty of Engineering<br/>University of Ruhuna</a>
        
         <ul className="flex items-center space-x-6">
-          {/* <li>
+          <li>
             <Link className="text-red-400 Navtext font-semibold text-lg logoutButton" to='/'>
           
             </Link>
-          </li> */}
+          </li>
           {/* <li>
             <span className="text-black Navtext font-semibold text-lg">
               Welcome, {user?.name}
