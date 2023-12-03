@@ -13,7 +13,10 @@ import AdminHome from './pages/AdminHome';
 import reportWebVitals from './reportWebVitals';
 import AdminAccSetting from './pages/AdminAccountEdit';
 import NavbarMain from './components/NavbarMain';
-
+import AddVendors from './pages/AddVendors';
+import AllVendors from './pages/AllVendors';
+import DeleteVendors from './pages/DeleteVendor';
+import PreviewVendors from './pages/PreviewVendors';
 
 
 const App = () => {
@@ -71,6 +74,11 @@ const App = () => {
         <Route path="/changePassword/:id" element={<ChangePassword />} />
         <Route path="/adminhome/:id" element={<AdminHome />} />
         <Route path="/adminaccountsetting" element={<AdminAccSetting />} />
+
+        <Route path="/AllVendor" element={<AllVendors />} />
+        <Route path="/addvendor" element={<AddVendors/>} />
+        <Route path="/deletevendor" element={<DeleteVendors/>} />
+        <Route path="/previewvendor" element={<PreviewVendors/>} />
       </Routes>
     </div>
   );

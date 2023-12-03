@@ -47,7 +47,7 @@ export default function NavbarMain({ isAuthenticated, handleSignOut, loggedInUse
         <ul className="flex items-center space-x-6">
           <li>
             <Link className="text-red-400 Navtext font-semibold text-lg logoutButton" to='/'>
-          
+             {/* Home */}
             </Link>
           </li>
           {/* <li>
