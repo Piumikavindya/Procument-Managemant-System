@@ -48,20 +48,6 @@ body {
   margin:0;
 }
 
-body#sidebar.hide #content {
-  width: calc(100vw - 60px);
-  left: 60px;
-  }
-/*   
-  body#sidebar.hide #content nav {
-    width: calc(100vw  60px);
-  left: 60px;} */
-  
-  body#sidebar.hide #sidebar.hide ~ #content {
-    width: calc(100vw - 60px);
-  left: 60px;
-  }
-
 
 
 
@@ -73,26 +59,8 @@ body#sidebar.hide #content {
   left: 0px;
   top: 70px;
   transition: .3s ease;
- 
 }
-#sidebar.hide{
-    width: 60px;
-}
-#sidebar.hide ~ #content {
-  width: calc(100vw - 60px);
-  left: -245px;
-  right: -220px;
-}
-#sidebar.hide ~ #content main {
-  width: calc(100vw - 60px);
-  left: -245px;
-  right: -220px;
-}
-#sidebar.hide ~ #content nav {
-  width: calc(100vw - 60px);
-  left: -245px;
-  right: -220px;
-}
+
 
 
 /* NAVBAR */
@@ -101,13 +69,13 @@ body#sidebar.hide #content {
   background: #00072D;
   padding: 0px;
   display: flex;
-  width: calc(100vw - 280px);
+  width: 100vw;
   align-items: center;
   grid-gap: 24px;
   font-family: var(--lato);
   position: sticky;
   top: 0;
-  margin: -100px 0 -9px 280px;
+  margin: -100px 0 -9px 576px;
   z-index: 1000;
   transition: .3s ease;
 }
@@ -121,11 +89,13 @@ body#sidebar.hide #content {
   border-radius: 50%;
   box-shadow: -20px -20px 0 var(--light);
 } */
-#sidebar.hide ~ #content nav {
+#sidebar.hide ~ #content {
   width: calc(100vw - 60px);
-  left: -2425px;
-  right: -220px;
-  transition: width 0.3s ease, left 0.3s ease, right 0.3s ease; /* Add transitions for smooth effects */
+  left: 60px;
+}
+
+#sidebar.hide ~ #content nav {
+  width: 100%;
 }
 
 
@@ -243,16 +213,8 @@ body#sidebar.hide #content {
 
 
 @media screen and (max-width: 768px) {
-  #sidebar {
-    width: 200px;
-  }
-
-  #content {
-    width: 100vw;
-    left: 0px;
-  }
   #content nav {
-    width: calc(100vw -300px);
+    width: calc(100vw - 300px);
     left: -150px;
   }
 
@@ -261,16 +223,19 @@ body#sidebar.hide #content {
     left: -245px;
     right: -220px;
   }
+
   #sidebar.hide ~ #content nav {
     width: calc(100vw - 60px);
     left: -245px;
     right: -220px;
   }
+
   #sidebar.hide ~ #content main {
     width: calc(100vw - 60px);
     left: -285px;
     right: -220px;
   }
+
   #content nav .nav-link {
     display: none;
   }
@@ -295,7 +260,12 @@ body#sidebar.hide #content {
       #sidebar.hide {
         width: 60px;
       }
-    
+      #sidebar.hide ~ #content nav {
+        width: calc(100% - 60px);
+        left: 60px;
+        right: 0;
+        transition: width 0.3s ease, left 0.3s ease, right 0.3s ease;
+      }
       #sidebar .side-menu li a {
         width: 60px;
         transition: width 0.3s ease;

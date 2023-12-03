@@ -48,23 +48,6 @@ body {
   margin:0;
 }
 
-body#sidebar.hide #content {
-  width: calc(100vw - 60px);
-  left: 60px;
-
-  }
-  body#sidebar.hide  {
-    width: calc(100vw - 60px);
-  left: 60px;}
-  body#sidebar.hide #content nav {
-    width: calc(100vw - 60px);
-  left: 60px;}
-  
-  body#sidebar.hide #sidebar.hide ~ #content {
-    width: calc(100vw - 60px);
-  left: 60px;
-  }
-
 
 
 /* SIDEBAR */
@@ -85,15 +68,14 @@ body#sidebar.hide #content {
 #sidebar::--webkit-scrollbar {
   display: none; /* Chrome, Safari */
 }
-#sidebar.hide,
+#sidebar,
 #sidebar.hide .side-menu li a,
-#sidebar.hide #content,
-#sidebar.hide ~ #content {
-  width: 60px;
-  transition: width 0.3s ease;
+#sidebar.hide #content {
+  width: 280px;
+  /* ... (your existing styles) */
 }
-  
- 
+
+
 #sidebar .brand {
   font-size: 24px;
   font-weight: 700;

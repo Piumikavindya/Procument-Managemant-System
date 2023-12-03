@@ -52,6 +52,7 @@ export default function Navbar({ isAuthenticated, handleSignOut, loggedInUser })
 
 
   return (
+    <div className="App">
        <section id="content">
     <nav>
     <i className="bx bx-menu" onClick={toggleClass}></i>
@@ -105,5 +106,6 @@ export default function Navbar({ isAuthenticated, handleSignOut, loggedInUser })
         </ul>
   </nav>
   <Sidebar isActive={isActive} />
-  </section>  )
+  </section>  
+  </div>)
 }

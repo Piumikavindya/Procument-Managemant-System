@@ -7,7 +7,7 @@ export default function HomeContent() {
    
   
   return (
-  
+    <div className="App">
     <section id="content">
         
 
@@ -50,5 +50,6 @@ export default function HomeContent() {
         </main>
    
     </section>
+    </div>
   )
 }

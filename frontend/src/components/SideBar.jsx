@@ -3,7 +3,7 @@ import React from 'react'
 // import "../styles/AdminHome.css";
 export default function Sidebar({ isActive }) {
   return (
-
+    <div className="App">
    <section id="sidebar" className={isActive ? 'hide' :null}>
         <a className="brand">
           <i className="bx bxs-smile"></i>
@@ -58,7 +58,7 @@ export default function Sidebar({ isActive }) {
           </li>
         </ul>
       </section>
-
+      </div>
   
   )
 }

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { MdOutlineAddBox } from 'react-icons/md';
 import UserTable from '../components/home/UserTable';
 import '../styles/Allusers.css';
+import NavbarMain from '../components/NavbarMain';
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
@@ -25,7 +26,9 @@ const AllUsers = () => {
   }, []);
 
   return (
+
     <div className='p-4'>
+          <NavbarMain></NavbarMain>
       <div className='flex justify-between items-center'>
         <h1 className='title'>User Login Data List</h1>
         

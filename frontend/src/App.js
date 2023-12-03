@@ -60,7 +60,7 @@ const App = () => {
         <Route path="/updateusers/:id" element={<UpdateUsers />} />
         <Route path="/changePassword/:id" element={<ChangePassword />} />
         <Route path="/adminhome/:id" element={<AdminHome />} />
-        <Route path="/adminaccountsetting/:id" element={<AdminAccountEdit />} />
+        <Route path="/adminaccountsetting" element={<AdminAccountEdit />} />
       </Routes>
     </div>
   );
