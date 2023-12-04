@@ -12,7 +12,8 @@ import PreviewUser from './pages/PreviewUser';
 import AdminHome from './pages/AdminHome';
 import reportWebVitals from './reportWebVitals';
 import NavbarMain from './components/NavbarMain';
-import AdminAccountEdit from './pages/AdminAccountEdit'
+import AdminAccountEdit from './pages/AdminAccountEdit';
+import YearPlanner from './pages/YearPlanner';
 
 
 const App = () => {
@@ -70,6 +71,7 @@ const App = () => {
         <Route path="/changePassword/:id" element={<ChangePassword />} />
         <Route path="/adminhome/:id" element={<AdminHome />} />
         <Route path="/adminaccountsetting/:id" element={<AdminAccountEdit />} />
+        <Route path="/yearplanner" element={<YearPlanner />} />
       </Routes>
     </div>
   );

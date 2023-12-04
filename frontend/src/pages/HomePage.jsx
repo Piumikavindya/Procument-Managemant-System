@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/hometest.css";
+import { Link } from "react-router-dom";
 
 function HomePg() {
   const [isActive, setActive] = useState(false);
@@ -112,8 +113,8 @@ function HomePg() {
                 This  section contains all procurement notices  up to date.
               </h5>
             </li>
-            <li className="commonOpt" id="yrPlanner">
-              <h4>Year Planner</h4>
+            <li className="commonOpt" id="yrPlanner" >
+              <h4 >Year Planner</h4>
               <h5 className="explanation">
                  All the events which are planned to conduct this year are scheduled here.
               </h5>
