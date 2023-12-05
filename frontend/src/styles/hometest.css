@@ -74,9 +74,10 @@ body#sidebar.hide #content {
   background: #00072D;
   z-index: 2000;
   font-family: var(--lato);
-  transition: .3s ease;
+  
   overflow-x: hidden;
   scrollbar-width: none;
+  transition:  0.3s ease;
    /* Use percentage or vw units */
 }
 #sidebar::--webkit-scrollbar {
@@ -87,7 +88,7 @@ body#sidebar.hide #content {
 }
 #sidebar.hide .side-menu li a {
     width: 60px;
-    transition: width 0.3s ease;
+    transition:  0.3s ease;
   }
   
   #sidebar.hide #content {
@@ -192,21 +193,30 @@ body#sidebar.hide #content {
   width: 100vw;
   left: 0px;
   top: 70px;
-  transition: .3s ease;
+  transition:  0.3s ease;
  
 }
 #sidebar.hide{
     width: 60px;
+    transition:  0.3s ease;
 }
 #sidebar.hide ~ #content {
-  width: calc(100vw - 60px);
-  left: -245px;
-  right: -220px;
+  width: 115vw;
+  left: -110px;
+  
+  transition:  0.3s ease;
+ 
 }
+#sidebar.hide ~ #content nav {
+    width: calc(100vw - 60px);
+    left:-520px;
+    transition:  0.3s ease;
+   
+  }
 #sidebar.hide ~ #content main {
-  width: calc(100vw - 60px);
-  left: -245px;
-  right: -220px;
+  width:100vw;
+  left: -500px;
+  transition:  0.3s ease;
 }
 
 
@@ -222,8 +232,8 @@ body#sidebar.hide #content {
   grid-gap: 24px;
   font-family: var(--lato);
   position: fixed;
-  top: 0;
-  margin: 0px 0 -9px 280px;
+  top: 100px;
+  margin: -100px 0 -9px 575px;
   z-index: 1000;
   transition: .3s ease;
 }
@@ -350,7 +360,7 @@ body#sidebar.hide #content {
 
 /* MAIN */
 #content main {
-    width: calc(100% - 280px);
+    width: 100vw;
   padding: 36px 24px;
   font-family: var(--poppins);
   max-height: calc(100vh - 56px);

@@ -45,7 +45,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
         // Redirect based on user role
         switch (response.data.user.role) {
           case 'admin':
-            navigate('/adminhome/' + response.data.user.id);
+            navigate('/admin/' + response.data.user.id);
             break;
           case '':
             // Add logic for user redirection

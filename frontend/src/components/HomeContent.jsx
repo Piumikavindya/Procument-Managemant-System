@@ -8,12 +8,12 @@ import "../styles/AdminHome.css";
 
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
-// import "../styles/AdminHome.css";
+import "../styles/AdminHome.css";
+
+
 export default function HomeContent() {
   const [isActive, setActive] = useState(false);
 
-
-  
   const toggleClass = () => {
     setActive(!isActive);
     
@@ -24,9 +24,9 @@ export default function HomeContent() {
   
   return (
 
-    <div className={`App ${isActive ? 'hide' : ''}`}>
+    <div className="App" >
        <Navbar toggleClass={toggleClass}></Navbar>
-    <section id="content">
+    <section id="content" className={isActive ? 'hide' :'null'}>
        
    
         <main>

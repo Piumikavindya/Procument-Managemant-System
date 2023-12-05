@@ -18,6 +18,7 @@ import AllVendors from './pages/AllVenders';
 import DeleteVendors from './pages/DeleteVendors';
 import PreviewVendors from './pages/PreviewVendors';
 import YearPlanner from './pages/YearPlanner';
+import Admin from './pages/admin';
 
 
 const App = () => {
@@ -25,15 +26,15 @@ const App = () => {
  
   const location = useLocation();
 
-  // const renderNavbar = () => {
-  //   if (location.pathname === '/adminhome/:id' || location.pathname === '/loginpage' )
-  //   {
-  //       return null;
+  const renderNavbar = () => {
+    if (location.pathname === '/admin/:id' || location.pathname === '/loginpage' )
+    {
+        return null;
     
-  //   }
+    }
   
-  //   return <NavbarMain />;
-  // }
+    return <NavbarMain  sAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn}/>;
+  }
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
 
@@ -49,7 +50,7 @@ const App = () => {
 
   return (
     <div>
-    {/* {renderNavbar()} */}
+    {renderNavbar()}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -69,13 +70,14 @@ const App = () => {
         <Route path="/deleteusers/:id" element={<DeleteUsers />} />
         <Route path="/updateusers/:id" element={<UpdateUsers />} />
         <Route path="/changePassword/:id" element={<ChangePassword />} />
-        <Route path="/adminhome/:id" element={<AdminHome />} />
+        {/* <Route path="/adminhome/:id" element={<AdminHome />} /> */}
         <Route path="/adminaccountsetting" element={<AdminAccSetting />} />
         <Route path="/AllVendor" element={<AllVendors />} />
         <Route path="/addvendor" element={<AddVendors/>} />
         <Route path="/deletevendor" element={<DeleteVendors/>} />
         <Route path="/previewvendor" element={<PreviewVendors/>} />
         <Route path="/yearplanner" element={<YearPlanner />} />
+        <Route path="/admin/:id" element={<Admin isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
       </Routes>
     </div>
   );

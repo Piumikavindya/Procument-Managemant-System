@@ -52,14 +52,7 @@ export default function Sidebar({ isActive }) {
             </a>
           </li>
         </ul>
-        <ul className="side-menu">
-          <li>
-            <a href="adminhome" className="logout">
-              <i className="bx bxs-log-out-circle"></i>
-              <span className="text">Logout</span>
-            </a>
-          </li>
-        </ul>
+       
       </section>
       </div>
   

@@ -238,6 +238,11 @@ body {
   left: -245px;
   right: -220px;
 }
+#sidebar.hide ~ #content nav {
+  width: calc(100vw - 60px);
+  left: -245px;
+  right: -220px;
+}
 #content.hide {
   width: 280px;
   margin-left: 20px; 
@@ -261,7 +266,7 @@ body {
   font-family: var(--lato);
   position: fixed;
   top: 82px;
-  margin: -100px 0 0px 570px;
+  margin: 100px 0 0px 570px;
   z-index: 1000;
   transition: .3s ease;
 }

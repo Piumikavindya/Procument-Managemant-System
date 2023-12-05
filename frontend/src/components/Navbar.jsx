@@ -54,8 +54,8 @@ export default function Navbar({ isAuthenticated, handleSignOut, loggedInUser}) 
 
 
   return (
-    <div className={`App ${isActive ? 'hide' : ''}`}>
-       <section id="content">
+    <div className="App" >
+       <section id="content" className={isActive ? 'hide' :'null'}>
     <nav>
     <i className="bx bx-menu" onClick={toggleClass}></i>
     <a href="#" className="logo">
@@ -99,7 +99,7 @@ export default function Navbar({ isAuthenticated, handleSignOut, loggedInUser}) 
               <Link
               className="text-red-400 Navtext font-semibold text-lg underline"
               to="/loginpage"
-              style={{ marginLeft: '680px', textDecoration: 'underline' }}
+              style={{ marginLeft: '20px', textDecoration: 'underline' }}
             >
               Sign In
             </Link>
