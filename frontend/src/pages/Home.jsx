@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Footer from '../components/footer';
 import NavbarMain from '../components/NavbarMain';
 
@@ -10,7 +10,7 @@ function Home() {
  
     <div className="App">
       <NavbarMain></NavbarMain>
-      <section id="content">
+      <section id="content1">
        
         <main>
           <div className="head-title">
@@ -40,12 +40,14 @@ function Home() {
                 This  section contains all procurement notices  up to date.
               </h5>
             </li>
-            <li className="commonOpt" id="yrPlanner">
-              <h4>Year Planner</h4>
-              <h5 className="explanation">
-                 All the events which are planned to conduct this year are scheduled here.
-              </h5>
-            </li>
+            <Link to="/yearplanner" className="custom-link">
+        <li className="commonOpt" id="yrPlanner">
+          <h4>Year Planner</h4>
+          <h5 className="explanation">
+            All the events which are planned to conduct this year are scheduled here.
+          </h5>
+        </li>
+      </Link>
           </ul>
           <Footer/>
         </main>

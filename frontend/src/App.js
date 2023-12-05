@@ -17,26 +17,23 @@ import AddVendors from './pages/AddVenders';
 import AllVendors from './pages/AllVenders';
 import DeleteVendors from './pages/DeleteVendors';
 import PreviewVendors from './pages/PreviewVendors';
+import YearPlanner from './pages/YearPlanner';
 
 
 const App = () => {
 
-  const [isActive, setActive] = useState(false);
-
-  const toggleClass = () => {
-    setActive(!isActive);
-  };
+ 
   const location = useLocation();
 
-  const renderNavbar = () => {
-    if (location.pathname === '/adminhome' || location.pathname === '/loginpage' )
-    {
-        return null;
+  // const renderNavbar = () => {
+  //   if (location.pathname === '/adminhome/:id' || location.pathname === '/loginpage' )
+  //   {
+  //       return null;
     
-    }
+  //   }
   
-    return <NavbarMain />;
-  }
+  //   return <NavbarMain />;
+  // }
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
 
@@ -52,7 +49,7 @@ const App = () => {
 
   return (
     <div>
-    {<renderNavbar/>}
+    {/* {renderNavbar()} */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -78,7 +75,7 @@ const App = () => {
         <Route path="/addvendor" element={<AddVendors/>} />
         <Route path="/deletevendor" element={<DeleteVendors/>} />
         <Route path="/previewvendor" element={<PreviewVendors/>} />
-       
+        <Route path="/yearplanner" element={<YearPlanner />} />
       </Routes>
     </div>
   );

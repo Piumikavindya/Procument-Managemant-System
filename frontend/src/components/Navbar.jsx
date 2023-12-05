@@ -1,13 +1,15 @@
 import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
- import "../styles/Navbar.css";
-
+//  import "../styles/Navbar.css";
+//  import "../styles/Sidebar.css";
+//  import "../styles/MainContent.css";
+import "../styles/AdminHome.css";
 import Profile from '../components/Profile';
 import Sidebar from "./SideBar";
 
 
-export default function Navbar({ isAuthenticated, handleSignOut, loggedInUser }) {
+export default function Navbar({ isAuthenticated, handleSignOut, loggedInUser}) {
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
   
@@ -52,7 +54,7 @@ export default function Navbar({ isAuthenticated, handleSignOut, loggedInUser })
 
 
   return (
-    <div className="App">
+    <div className={`App ${isActive ? 'hide' : ''}`}>
        <section id="content">
     <nav>
     <i className="bx bx-menu" onClick={toggleClass}></i>

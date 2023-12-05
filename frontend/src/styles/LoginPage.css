@@ -16,8 +16,9 @@ body {
 }
 
 img {
+   
     width: 80px;
-    margin-left: 180px;
+    margin-left: 188px;
 }
 
 h1{
@@ -95,12 +96,26 @@ h3 {
 }
 
 .login-btn:hover {
-    background-color: #F5BD34;
-    color: #800000;
-    border: 2px solid #800000;
+    background-color: white;
+    color: #00072D;
+    border: 2px solid #00072D;
 }
-
 .input-div {
     margin-top: 35px;
 }
 
+@media screen and (max-width: 576px) {
+    img {
+   
+        width: 80px;
+        margin-left: 125px;
+    }
+    
+}
+
+@media screen and (max-width: 768px) {
+    .input-div {
+        margin-top: 20px;
+    }
+    
+}

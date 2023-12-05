@@ -54,9 +54,9 @@ body {
 
 /* CONTENT */
 #content {
-  position: relative;
-  width: 100vw;
-  left: 0px;
+
+  width:calc(100vw-280px);
+  left: 280px;
   top: 70px;
   transition: .3s ease;
 }
@@ -69,7 +69,7 @@ body {
   background: #00072D;
   padding: 0px;
   display: flex;
-  width: 100vw;
+  width: 100%;
   align-items: center;
   grid-gap: 24px;
   font-family: var(--lato);
@@ -90,12 +90,8 @@ body {
   box-shadow: -20px -20px 0 var(--light);
 } */
 #sidebar.hide ~ #content {
-  width: calc(100vw - 60px);
+  width: 500px;
   left: 60px;
-}
-
-#sidebar.hide ~ #content nav {
-  width: 100%;
 }
 
 

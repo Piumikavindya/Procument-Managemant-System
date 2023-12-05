@@ -3,20 +3,20 @@ import React, { useState } from "react";
 // import Footer from '../components/footer';
 // import Profile from '../components/Profile';
 import HomeContent from "../components/HomeContent";
+
 import Navbar from "../components/Navbar";
-import '../styles/Navbar.css';
+
 
 function AdminHome() {
-  const [isActive, setActive] = useState(false);
+  // const [isActive, setActive] = useState(false);
 
-  const toggleClass = () => {
-    setActive(!isActive);
-  };
+  // const toggleClass = () => {
+  //   setActive(!isActive);
+  // };
   return (
     <div className="App">
-  
-    <Navbar toggleClass={toggleClass}></Navbar>
     
+    {/* <Navbar toggleClass={toggleClass}></Navbar> */}
     <HomeContent></HomeContent>
   </div>
   );

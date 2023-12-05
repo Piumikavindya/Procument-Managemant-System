@@ -1,10 +1,13 @@
 import React from 'react'
- import "../styles/Sidebar.css";
-// import "../styles/AdminHome.css";
+//  import "../styles/Sidebar.css";
+//  import "../styles/MainContent.css";
+// import "../styles/Navbar.css";
+import "../styles/AdminHome.css";
+
 export default function Sidebar({ isActive }) {
   return (
     <div className="App">
-   <section id="sidebar" className={isActive ? 'hide' :null}>
+   <section id="sidebar" className={isActive ? 'hide' :'null'}>
         <a className="brand">
           <i className="bx bxs-smile"></i>
           <span className="text">AdminHub</span>

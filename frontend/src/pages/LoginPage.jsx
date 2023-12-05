@@ -137,8 +137,10 @@ const LoginPage = ({ setIsAuthenticated }) => {
 
         <div className="remember-forgot">
           <label style={{ color: '#00072D' }}>
-            <input type="checkbox" />Remember me
+            <input type="checkbox" />
+           
           </label>
+          <p style={{margin:"0px 200px 0px 0px",color:"#00072D", fontSize:"13.5px"}}>Remember me</p>
           <Link to="/changePassword">Forgot password?</Link>
         </div>
         {/* Should be changed */}
