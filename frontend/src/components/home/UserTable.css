@@ -12,10 +12,10 @@
 
 /* Style for table header */
 .reservation-header {
-    background-color: #005a9e;
+    background-color: #1290f0;
     color: #ffffff;
     text-align: center;
-    padding: 8px; /* Increase the header cell padding */
+    padding: 12px; /* Increase the header cell padding */
     border: 2px solid black; /* Increase the header cell border size */
 }
 
@@ -30,8 +30,10 @@
 
 /* Style for table data cells */
 .reservation-data {
-    font-size: 10px;
-    text-align: center; /* Center align the cell content */
+    font-size: 14px;
+    text-align: center; 
+    border: 1px;
+    border-radius: 10%;/* Center align the cell content */
 
     /* Increase cell padding and height */
 }

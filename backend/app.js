@@ -10,6 +10,7 @@ require('./database/database');
 require('./middlewares/error');
 const userRouter = require("./routes/user");
 const { errorHandler } = require('./middlewares/error');
+const supplyerRouter = require('./routes/supplyer');
 
 const PORT = process.env.PORT || 8000;
 
@@ -33,6 +34,8 @@ app.use(bodyParser.json());
 //this is user route
 app.use('/user', userRouter);
 app.use(errorHandler);
+// this is supplyer route
+app.use('/supplyer',supplyerRouter);
 
 
 

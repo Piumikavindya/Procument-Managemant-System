@@ -1,28 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
 import axios from 'axios';
 import '../styles/CreateUsers.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
-const AddVendors = () => {
-  const [username, setUsername] = useState('');
-  const [supplierName, setSupplierName] = useState('');
-  const [address, setAddress] = useState('');
-  const [contactOfficer, setContactOfficer] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [faxNumber, setFaxNumber] = useState('');
-  const [typeofBusiness,  setTypesOFBusiness] = useState('');
-  const [classOfAssets, setClassOfAssets] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-  const types= ['SoleImporter','SoleDistributor','LocalAgent','contractors'];
+
+const UpdateVendors = () => {
+    const [username, setUsername] = useState('');
+    const [supplierName, setSupplierName] = useState('');
+    const [address, setAddress] = useState('');
+    const [contactOfficer, setContactOfficer] = useState('');
+    const [contactNumber, setContactNumber] = useState('');
+    const [email, setEmail] = useState('');
+    const [faxNumber, setFaxNumber] = useState('');
+    const [typeofBusiness,  setTypesOFBusiness] = useState('');
+    const [classOfAssets, setClassOfAssets] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
+    const types= ['SoleImporter','SoleDistributor','LocalAgent','contractors'];
  
+  // React Router Hook to get the parameter from the URL
+  const { id } = useParams();
 
-  function handleSaveAddVendors(e){ 
-    e.preventDefault();
+  // Snackbar Hook for displaying notifications
+  const { enqueueSnackbar } = useSnackbar();
 
-    const newSupplyer = {
+  // Fetch user data from the API based on the ID
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`http://localhost:8000/supplyer/${id}`)
+      .then((response) => {
+        setUsername(response.data.username);
+        setSupplierName(response.data.supplierName);
+        setAddress(response.data.address);
+        setContactOfficer(response.data.contactOfficer);
+        setContactNumber(response.data.contactNumber);
+        setEmail(response.data.email);
+        setFaxNumber(response.data.faxNumber);
+        setTypesOFBusiness(response.data.typeofBusiness);
+        setClassOfAssets(response.data.classOfAssets);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        enqueueSnackbar('An error occurred. Please check the console.', { variant: 'error' });
+        console.error(error);
+      });
+  }, [id]);
+
+  const handleUpdateVendors = () => {
+ 
+    const UpdateSupplyer = {
     username,
     supplierName,
     address,
@@ -36,10 +67,10 @@ const AddVendors = () => {
 
     setLoading(true);
 
-    axios.post('http://localhost:8000/supplyer/create', newSupplyer) // changed
-      .then((res) => {
-        setMessage("Vendor added successfully");
-        setLoading(false);
+    axios
+      .put(`http://localhost:8000/supplyer/update/${id}`, UpdateSupplyer)
+      .then(() => {
+        alert('User Updated');
         // Reset form fields
         setUsername('');
         setSupplierName('');
@@ -50,15 +81,20 @@ const AddVendors = () => {
         setFaxNumber('');
         setTypesOFBusiness('');
         setClassOfAssets('');
+        setLoading(false);
+        enqueueSnackbar('Vendor is updated successfully', { variant: 'success' });
+        navigate('/AllVendors');
       })
       .catch((error) => {
-        console.error('Error:', error);
-        setMessage("Error adding supplyer");
         setLoading(false);
+        enqueueSnackbar('Error updating user account', { variant: 'error' });
+        console.error(error);
       });
 
-    console.log(newSupplyer);
+
   };
+   // React Router Hook for navigation
+   const navigate = useNavigate();
 
   return (
     <div className="App">
@@ -75,11 +111,11 @@ const AddVendors = () => {
                 textAlign: 'center',
               }}
             >
-             Add Vendor
+            Update Vendor
             </h1>
             {loading ? <Spinner /> : ''}
             <div className='card'>
-            <form onSubmit={handleSaveAddVendors}>
+            <form onSubmit={handleUpdateVendors}>
               <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto'>
             
          <div className='my-4'>
@@ -182,7 +218,7 @@ const AddVendors = () => {
                   <button
                     type="submit"
                   >
-                    Add
+                    Save
                   </button>
                 </div>
               </div>
@@ -195,4 +231,4 @@ const AddVendors = () => {
   );
 };
 
-export default AddVendors;
+export default UpdateVendors;

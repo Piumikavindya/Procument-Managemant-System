@@ -79,7 +79,7 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
             </a>
           </li>
           <li>
-            <a href="/adminhome">
+            <a href="/AllVenders">
               <i className="fa fa-file-text" aria-hidden="true"></i>
               <span className="text">Add Vendor</span>
             </a>
@@ -166,12 +166,14 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
                  & other finance division staffs.
               </h5>
             </li>
+            <Link to="/homevendors" className="custom-link">
             <li className="commonOpt" id="vendors">
               <h4>Registered Vendors</h4>
               <h5 className="explanation">
                 Here more than 1000 vendors are registered up to now.
               </h5>
             </li>
+            </Link>
             <li className="commonOpt" id="notice">
               <h4>Procurement Notices</h4>
               <h5 className="explanation">

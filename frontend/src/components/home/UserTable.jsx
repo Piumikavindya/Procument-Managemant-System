@@ -21,7 +21,6 @@ const UserTable = ({ users }) => {
           <th className='reservation-header border border-slate-600 rounded-md text-center'>Department</th>
           <th className='reservation-header border border-slate-600 rounded-md text-center'>Employee Number</th>
           <th className='reservation-header border border-slate-600 rounded-md text-center'>Username</th>
-          <th className='reservation-header border border-slate-600 rounded-md text-center'>Password</th>
           <th className='reservation-header border border-slate-600 rounded-md text-center'>Operations</th>
         </tr>
       </thead>
@@ -35,7 +34,6 @@ const UserTable = ({ users }) => {
             <td className='reservation-data border border-slate-600 rounded-md text-center'>{user.department}</td>
             <td className='reservation-data border border-slate-600 rounded-md text-center'>{user.employeeNumber}</td>
             <td className='reservation-data border border-slate-600 rounded-md text-center'>{user.username}</td>
-            <td className='reservation-data border border-slate-600 rounded-md text-center'>{user.password}</td>
             <td className='reservation-data border border-slate-600 rounded-md text-center'>
               <div className='icon-link flex justify-center gap-x-4'>
                 <Link to={`/previewuser/${user._id}`}>

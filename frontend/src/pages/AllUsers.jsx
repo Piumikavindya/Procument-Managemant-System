@@ -28,7 +28,7 @@ const AllUsers = () => {
   return (
 
     <div className='p-4'>
-          <NavbarMain></NavbarMain>
+       
       <div className='flex justify-between items-center'>
         <h1 className='title'>User Login Data List</h1>
         

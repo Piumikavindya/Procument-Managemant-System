@@ -67,7 +67,7 @@ export default function PreviewUser() {
                       </div>
                       <div className='my-4'>
                         <span className='text-xl mr-4 text-gray-500'>Password:</span>
-                        <span style={{ textAlign: 'left' }}>{user.password}</span>
+                        <span style={{ textAlign: 'left' ,overflow: 'hidden', textOverflow: 'ellipsis',maxWidth: '800px'}}>{user.password}</span>
                       </div>
                       <div className='my-4'>
                         <span className='text-xl mr-4 text-gray-500'>Create Time:</span>
@@ -79,9 +79,7 @@ export default function PreviewUser() {
                       </div>
                     </div>
   
-                    <div className='my-4 flex items-center justify-center'>
-                      <button type="submit">Save</button>
-                    </div>
+                    
                   </form>
                 </div>
               )}
