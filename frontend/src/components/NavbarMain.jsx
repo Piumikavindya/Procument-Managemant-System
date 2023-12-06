@@ -42,19 +42,11 @@ export default function NavbarMain({ isAuthenticated, handleSignOut, loggedInUse
         <a href="#" className="logo">
           <img src="http://www.eng.ruh.ac.lk/img/unilogo.png" alt="FoE,UoR-" />
         </a>
-        <a href="#" className="nav-link">Faculty of Engineering<br/>University of Ruhuna</a>
+        <a href="#" className="nav-link"><div className="foe" >Faculty of Engineering </div>University of Ruhuna</a>
        
         <ul className="flex items-center space-x-6">
-          <li>
-            <Link className="text-red-400 Navtext font-semibold text-lg logoutButton" to='/'>
-             {/* Home */}
-            </Link>
-          </li>
-          {/* <li>
-            <span className="text-black Navtext font-semibold text-lg">
-              Welcome, {user?.name}
-            </span>
-          </li> */}
+         
+       
           <li>
             {isAuthenticated ? (
               <button
@@ -67,7 +59,7 @@ export default function NavbarMain({ isAuthenticated, handleSignOut, loggedInUse
               <Link
               className="text-red-400 Navtext font-semibold text-lg underline"
               to="/loginpage"
-              style={{ marginLeft: '680px', textDecoration: 'underline' }}
+              style={{ marginLeft: '178px', textDecoration: 'none' }}
             >
               Sign In
             </Link>

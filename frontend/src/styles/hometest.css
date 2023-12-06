@@ -229,7 +229,7 @@ body#sidebar.hide #content {
   display: flex;
     width: 100vw;
   align-items: center;
-  grid-gap: 24px;
+  grid-gap: 0px;
   font-family: var(--lato);
   position: fixed;
   top: 100px;
@@ -249,6 +249,7 @@ body#sidebar.hide #content {
 } */
 #content nav a {
   color: white;
+  text-align: center;
 }
 #content nav .bx.bx-menu {
   cursor: pointer;
@@ -256,6 +257,7 @@ body#sidebar.hide #content {
 }
 #content nav .nav-link {
   font-size: 20px;
+  width: 887px;
   
 }
 
@@ -306,6 +308,7 @@ body#sidebar.hide #content {
 #content nav .notification {
   font-size: 20px;
   position: relative;
+  margin-right: 20px;
 }
 #content nav .notification .num {
   position: absolute;
@@ -787,3 +790,23 @@ body#sidebar.hide #content {
 #yrPlanner{
   background-image: url(https://boxcleverpress.com/cdn/shop/files/WC_YL-24-Website-3_1024x1024@2x.jpg?v=1699442338);
 }
+
+img{
+  width: 70px;
+    margin-left: 50px;
+}
+
+.nav-link{
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+ 
+
+}
+
+.foe{
+  font-size: 35px;
+  flex-wrap: wrap;
+  width: 900px;
+  
+  }

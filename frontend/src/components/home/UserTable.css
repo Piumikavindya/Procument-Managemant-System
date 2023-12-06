@@ -30,9 +30,9 @@
 
 /* Style for table data cells */
 .reservation-data {
-    font-size: 10px;
+    font-size: 15px;
     text-align: center; /* Center align the cell content */
-
+    height: 48px;
     /* Increase cell padding and height */
 }
 

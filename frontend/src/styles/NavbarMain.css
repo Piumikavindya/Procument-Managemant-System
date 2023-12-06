@@ -98,7 +98,7 @@ body#sidebar.hide #content1 {
   display: flex;
   width: 100vw;
   align-items: center;
-  grid-gap: 24px;
+  grid-gap: 100px;
   font-family: var(--lato);
   position: fixed;
   top: 0;
@@ -558,3 +558,7 @@ body#sidebar.hide #content1 {
   }
 }
 
+img{
+  margin-left: 122px;
+}
+  

@@ -324,3 +324,29 @@ body {
     object-fit: cover;
   }
 }
+
+
+/* #content nav a {
+  color: white;
+}
+#content nav .bx.bx-menu {
+  cursor: pointer;
+  color: white;
+}
+#content nav .nav-link {
+  font-size: 20px;
+  
+} */
+
+.foe{
+  font-size: larger;
+  flex-wrap: wrap;
+  
+  }
+  
+.nav-link{
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+}
