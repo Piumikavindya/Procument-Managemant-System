@@ -80,7 +80,7 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
           </li>
           <li>
             <a href="/AllVenders">
-              <i className="fa fa-file-text" aria-hidden="true"></i>
+            <i class="fa-sharp fa-solid fa-person-circle-plus fa-2xl"></i>
               <span className="text">Add Vendor</span>
             </a>
           </li>
@@ -106,7 +106,7 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
           <a href="#" className="logo">
           <img   src="http://www.eng.ruh.ac.lk/img/unilogo.png" alt="FoE,UoR-"/>
           </a>
-          <a href="#" className="nav-link">Faculty of Engineering <br/>University of Ruhuna</a>
+          <a href="#" className="nav-link"><div className="foe" >Faculty of Engineering </div>University of Ruhuna</a>
          
           <a href="#" className="notification">
             <i className='bx bxs-bell' ></i>
@@ -131,17 +131,19 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
           </li> */}
           <li>
             {isAuthenticated ? (
-              <button
+              
+              <Link
                 onClick={handleSignOut}
-                className="text-red-400 Navtext font-semibold text-lg "
+                className="text-red-400 Navtext font-semibold text-lg underline "
+                to="/"
               >
                 Sign Out
-              </button>
+              </Link>
             ) : (
               <Link
               className="text-red-400 Navtext font-semibold text-lg underline"
               to="/loginpage"
-              style={{ marginLeft: '680px', textDecoration: 'underline' }}
+              style={{ marginLeft: '20px', textDecoration: 'underline' }}
             >
               Sign In
             </Link>

@@ -54,7 +54,7 @@ const DeleteUsers = () => {
 
                 <div className='flex items-center justify-center my-4'>
                   <button
-                    className='p-2 bg-red-600 text-white w-40 rounded-full'
+                    className='p-5 bg-red-600 text-white w-40 rounded-full'
                     onClick={handleDeleteUser}
                   >
                     Delete

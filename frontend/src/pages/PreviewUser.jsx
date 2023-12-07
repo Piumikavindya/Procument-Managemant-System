@@ -65,10 +65,7 @@ export default function PreviewUser() {
                         <span className='text-xl mr-4 text-gray-500'>Username:</span>
                         <span style={{ textAlign: 'left' }}>{user.username}</span>
                       </div>
-                      <div className='my-4'>
-                        <span className='text-xl mr-4 text-gray-500'>Password:</span>
-                        <span style={{ textAlign: 'left' ,overflow: 'hidden', textOverflow: 'ellipsis',maxWidth: '800px'}}>{user.password}</span>
-                      </div>
+                     
                       <div className='my-4'>
                         <span className='text-xl mr-4 text-gray-500'>Create Time:</span>
                         <span style={{ textAlign: 'left' }}>{new Date(user.createdAt).toString()}</span>

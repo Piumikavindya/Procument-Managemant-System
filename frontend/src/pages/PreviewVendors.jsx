@@ -49,11 +49,11 @@ export default function PreviewVendor() {
                   <form onSubmit={PreviewVendor}>
                     <div className='flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4'>
                       <div className='my-4'>
-                        <span className='text-xl mr-4 text-gray-500'>Supplier ID :</span>
+                        <span className='text-xl mr-4 text-gray-500' style={{ alignItems: 'left'}}>Supplier ID :</span>
                         <span style={{ textAlign: 'left'}}>{supplyer.username}</span>
                       </div>
                       <div className='my-4'>
-                        <span className='text-xl mr-4 text-gray-500'>Supplier Name:</span>
+                        <span className='text-xl mr-4 text-gray-500' style={{ alignItems: 'left'}}>Supplier Name:</span>
                         <span style={{ textAlign: 'left' }}>{supplyer.supplierName}</span>
                       </div>
                       <div className='my-4'>
@@ -84,21 +84,10 @@ export default function PreviewVendor() {
                         <span className='text-xl mr-4 text-gray-500'>Class of Assets Supplies: </span>
                         <span style={{ textAlign: 'left' }}>{supplyer.classOfAssets}</span>
                       </div>
-                      <div className='my-4'>
-                        <span className='text-xl mr-4 text-gray-500'>Create Time:</span>
-                        <span style={{ textAlign: 'left' }}>{new Date(supplyer.createdAt).toString()}</span>
-                      </div>
                       
-                      
-                      <div className='my-4'>
-                        <span className='text-xl mr-4 text-gray-500'>Last Update Time:</span>
-                        <span style={{ textAlign: 'left' }}>{new Date(supplyer.updatedAt).toString()}</span>
-                      </div>
                     </div>
   
-                    <div className='my-4 flex items-center justify-center'>
-                      <button type="submit">Save</button>
-                    </div>
+                    
                   </form>
                 </div>
               )}

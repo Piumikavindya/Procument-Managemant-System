@@ -12,6 +12,8 @@ const userRouter = require("./routes/user");
 const { errorHandler } = require('./middlewares/error');
 const supplyerRouter = require('./routes/supplyer');
 
+const itemRouter = require('./routes/item');
+
 const PORT = process.env.PORT || 8000;
 
 
@@ -36,7 +38,8 @@ app.use('/user', userRouter);
 app.use(errorHandler);
 // this is supplyer route
 app.use('/supplyer',supplyerRouter);
-
+//thsi is item route
+app.use('/item',itemRouter);
 
 
 

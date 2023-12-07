@@ -13,7 +13,7 @@ import '../styles/CreateUsers.css';
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const roles = ['admin', 'procurmentofficer', 'financeofficers', 'department', 'approver'];
+    const roles = ['admin', 'procurement Officer', 'financeofficers', 'department', 'approver'];
   
     function handleSaveCreateUsers(e){ e.preventDefault(); 
       

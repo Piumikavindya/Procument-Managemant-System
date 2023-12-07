@@ -21,6 +21,7 @@ import AllVenders from './pages/AllVenders';
 import UpdateVendors from './pages/UpdateVendors';
 import DeleteVendor from './pages/DeleteVendor';
 import HomeVenders from './pages/HomeVenders';
+import DepartmentHome from './pages/DepartmentHome';
 
 
 const App = () => {
@@ -29,7 +30,7 @@ const App = () => {
   const location = useLocation();
 
   const renderNavbar = () => {
-    if (location.pathname === '/admin/:id' || location.pathname === '/loginpage' )
+    if (location.pathname === '/admin/:id' || location.pathname === '/loginpage' ||location.pathname === '/department')
     {
         return null;
     
@@ -82,7 +83,7 @@ const App = () => {
         <Route path="/yearplanner" element={<YearPlanner />} />
         <Route path="/homevendors" element={<HomeVenders />} />
         <Route path="/admin/:id" element={<Admin isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
-        <Route path="/department/:id" element={<Admin isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
+        <Route path="/department/:id" element={<DepartmentHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
       </Routes>
       
     </div>

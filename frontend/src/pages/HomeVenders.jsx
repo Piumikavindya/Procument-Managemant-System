@@ -5,6 +5,7 @@ import { MdOutlineAddBox } from 'react-icons/md';
 
 import '../styles/Allusers.css';
 import { MdOutlineDelete, MdPreview } from 'react-icons/md';
+import BackButton from '../components/BackButton';
 
 const HomeVenders = () => {
   const [supplyers, setVendors] = useState([]);
@@ -27,15 +28,12 @@ const HomeVenders = () => {
 
   return (
     <div className='p-4'>
+        
       <div className='flex justify-between items-center'>
+   
         <h1 className='title'>Venodrs Data List</h1>
         
-        {/* These two buttons should be removed later */}
-        <div className="button-container">
-          <Link to={'/addvendeors'} className="button">
-            Add Vendor
-          </Link>
-        </div>
+        <BackButton destination='/admin' />
       </div>
 
       {loading ? (
