@@ -39,7 +39,7 @@ exports.previewItem = async (req,res) =>{
     const itemId = req.params.id;
 
     try {
-        const item = await Item.findById(supplyerId);
+        const item = await Item.findById(itemId);
         if (!item) {
             
             return res.status(404).json({ status: "item not found" });
@@ -70,8 +70,8 @@ exports.updateItem = async (req,res)=>{
     };
 
     try {
-        const updatedItem = await supplyer.findByIdAndUpdate(itemId, updateItem, { new: true });
-        res.status(200).json({ status: "item updated", item: updatedItem });
+        const updatedItem = await Item.findByIdAndUpdate(itemId, updateItem, { new: true });
+        res.status(200).json({ status: "item updated", Item: updatedItem });
     } catch (err) {
         console.error(err);
         res.status(500).json({ status: "Error with updating item", error: err.message });
@@ -84,7 +84,7 @@ exports.deleterItem = async (req,res)=>{
     let itemId = req.params.id;
     try {
         // Use await here to wait for the deletion to complete
-        await item.findByIdAndDelete(itemId);
+        await Item.findByIdAndDelete(itemId);
         res.status(200).send({ status: "Item deleted" });
       } catch (err) {
         // Use status 500 for server errors
