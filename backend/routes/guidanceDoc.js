@@ -12,6 +12,6 @@ router.post("/upload", uploads.single('file'), (req, res) => {
 // Separate route for GET request to view guidance
 router.get('/view-guidance', viewGuidance);
 
-  router.put("/download/:id", downloadGuidance);
+  router.get("/download/:id", downloadGuidance);
  
   module.exports = router;

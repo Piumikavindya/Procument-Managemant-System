@@ -44,17 +44,15 @@ exports.upload = async (req, res) => {
 
 
 // get the all the guidance documents
-
 exports.viewGuidance = async (req, res) => {
     try {
-        const guidanceItems = await Guidance.find();
-        res.json(guidanceItems);
+      const guidanceItems = await Guidance.find();
+      res.json({ guidance: guidanceItems });
     } catch (error) {
-        console.error('Error fetching guidance:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+      console.error('Error fetching guidance:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
-};
-
+  };
 
 exports.downloadGuidance = async (req, res) => {
     try {

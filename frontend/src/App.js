@@ -22,6 +22,7 @@ import UpdateVendors from './pages/UpdateVendors';
 import DeleteVendor from './pages/DeleteVendor';
 import HomeVenders from './pages/HomeVenders';
 import DepartmentHome from './pages/DepartmentHome';
+import UploadGuidance from './pages/UploadGuidance';
 
 
 const App = () => {
@@ -82,6 +83,7 @@ const App = () => {
         <Route path="/previewvendor/:id" element={<PreviewVendors/>} />
         <Route path="/yearplanner" element={<YearPlanner />} />
         <Route path="/homevendors" element={<HomeVenders />} />
+        <Route path="/guidance" element={<UploadGuidance />} />
         <Route path="/admin/:id" element={<Admin isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
         <Route path="/department/:id" element={<DepartmentHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
       </Routes>
