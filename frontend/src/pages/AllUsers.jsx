@@ -5,6 +5,7 @@ import { MdOutlineAddBox } from 'react-icons/md';
 import UserTable from '../components/home/UserTable';
 import '../styles/Allusers.css';
 import NavbarMain from '../components/NavbarMain';
+import BackButton from '../components/BackButton';
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
@@ -28,12 +29,17 @@ const AllUsers = () => {
   return (
 
     <div className='p-4'>
-          <NavbarMain></NavbarMain>
+      <div className="button-container p-8">
+          <Link to={'/admin/:id'} className="button">
+           Go Back
+          </Link>
+        </div>
       <div className='flex justify-between items-center'>
+  
         <h1 className='title'>User Login Data List</h1>
-        
-        {/* These two buttons should be removed later */}
-        <div className="button-container">
+       
+       
+        <div className="button-container p-8">
           <Link to={'/createusers'} className="button">
             Add User
           </Link>

@@ -34,6 +34,8 @@ const UpdateUsers = () => {
         setName(response.data.name);
         setPassword(response.data.password);
         setUsername(response.data.username);
+        setDepartment(response.data.department);
+        setEmpNo(response.data.employeeNumber);
         setLoading(false);
       })
       .catch((error) => {
@@ -44,13 +46,16 @@ const UpdateUsers = () => {
   }, [id]);
 
   // Handle updating user data
-  const handleUpdateUsers = () => {
+  function handleUpdateUsers (e) {
+    e.preventDefault();
     const newUser = {
       role,
       email,
       name,
       password,
       username,
+      department,
+      employeeNumber,
     };
 
     setLoading(true);
@@ -64,6 +69,8 @@ const UpdateUsers = () => {
         setName('');
         setPassword('');
         setUsername('');
+        setDepartment('');
+        setEmpNo('');
         setLoading(false);
         enqueueSnackbar('User account is updated successfully', { variant: 'success' });
         navigate('/AllUsers');

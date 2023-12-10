@@ -47,15 +47,27 @@ const LoginPage = ({ setIsAuthenticated }) => {
           case 'admin':
             navigate('/admin/' + response.data.user.id);
             break;
-          case '':
-            // Add logic for user redirection
+          case 'department':
+            navigate('/department/' + response.data.user.id);
             break;
-          case 'guest':
-            // Add logic for guest redirection
+          case 'procurement Officer':
+            navigate('/procurementOfficer/' + response.data.user.id);
+            break;
+            case 'TECofficer':
+            navigate('/TECofficer/' + response.data.user.id);
+            break;
+            case 'Finance officers':
+            navigate('/Finance officers/' + response.data.user.id);
+            break;
+            case 'approver':
+            navigate('/approver/' + response.data.user.id);
             break;
           // Add more roles as needed
           default:
             console.log('Invalid role');
+
+
+           
         }
       } else {
         // Authentication failed
@@ -99,7 +111,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
               <option value="admin">Admin</option>
               <option value="procurmentofficer">Procurement Officer</option>
               <option value="financeofficers">Finance Officers</option>
-              <option value="userdepartment">User Department</option>
+              <option value="department">User Department</option>
               <option value="approver">Approver</option>
               {/* Add more options as needed */}
             </select>

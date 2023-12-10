@@ -32,7 +32,7 @@ const userSchema = new Schema({
   role:{
     type: String,
     default: 'admin',
-    enum: ['admin', 'department','procurementOfficer','TECofficer','approver','Finance officers']
+    enum: ['admin', 'department','procurement Officer','TECofficer','approver','Finance officers']
   }
 });
 

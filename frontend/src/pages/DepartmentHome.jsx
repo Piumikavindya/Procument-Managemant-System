@@ -5,11 +5,9 @@ import axios from 'axios';
 // import "../styles/AdminHome.css";
 import Profile from '../components/Profile';
 import Footer from "../components/footer";
-// import '../styles/NavbarMain.css';
 
 
-
-function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
+function DepartmentHome({ isAuthenticated, handleSignOut, loggedInUser}) {
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
   
@@ -57,45 +55,50 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
   <section id="sidebar" className={isActive ? 'hide' :'null'}>
         <a className="brand">
           <i className="bx bxs-smile"></i>
-          <span className="text">AdminHub</span>
+          <span className="text">Department</span>
         </a>
         <ul className="side-menu top">
           <li className="active">
-            <a href="/adminhome">
+            <a href="/department">
               <i className="bx bxs-dashboard"></i>
               <span className="text">Home</span>
             </a>
           </li>
-          
+        
           <li>
 
-            <a href="/AllUsers">
-              <i className="fa fa-users" aria-hidden="true"></i>
-              <span className="text">User Regestration</span>
+          <a href="/department">
+                <i className="fa-solid fa-building-columns" aria-hidden="true" style={{ fontSize: '24px', marginRight: '12px' }}></i>
+                <span className="text">DCEE</span>
+            </a>
+
+          </li>
+          <li>
+            <a href="/department">
+            <i className="fa-solid fa-building-columns" aria-hidden="true" style={{ fontSize: '24px', marginRight: '12px' }}></i>
+
+              <span className="text"> DEIE</span>
             </a>
           </li>
           <li>
-            <a href="/adminhome">
-              <i className="bx bxs-message-dots"></i>
-              <span className="text">Add Department</span>
+            <a href="/department">
+            <i className="fa-solid fa-building-columns" aria-hidden="true" style={{ fontSize: '24px', marginRight: '12px' }}></i>
+
+              <span className="text">MME</span>
             </a>
           </li>
           <li>
-            <a href="/AllVenders">
-            <i class="fa-sharp fa-solid fa-person-circle-plus fa-2xl"></i>
-              <span className="text">Add Vendor</span>
+            <a href="/department">
+            <i className="fa-solid fa-building-columns" aria-hidden="true" style={{ fontSize: '24px', marginRight: '12px' }}></i>
+
+              <span className="text">MENA</span>
             </a>
           </li>
           <li>
-            <a href="/adminhome">
-              <i className="fa fa-file-text" aria-hidden="true"></i>
-              <span className="text">Add Item</span>
-            </a>
-          </li>
-          <li>
-            <a href="/adminhome">
-              <i className="fa fa-file-text" aria-hidden="true"></i>
-              <span className="text">Add Budget</span>
+            <a href="/department">
+            <i className="fa-solid fa-building-columns" aria-hidden="true" style={{ fontSize: '24px', marginRight: '12px' }}></i>
+
+              <span className="text">IS</span>
             </a>
           </li>
         </ul>
@@ -105,7 +108,7 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
        
         <nav>
           <i  className='bx bx-menu'  onClick={toggleClass}  ></i>
-          <div className="logo">
+          <a href="#" className="logo">
           <img   src="http://www.eng.ruh.ac.lk/img/unilogo.png" alt="FoE,UoR-"/>
           </a>
           <a href="#" className="nav-link">Faculty of Engineering <br/>University of Ruhuna</a>
@@ -114,7 +117,12 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
             <i className='bx bxs-bell' ></i>
             <span className="num">8</span>
           </a>
-          
+          <div className="profile" onClick={toggleDropdown}>
+    <img src="https://secure.gravatar.com/avatar/d09eaad01aea86c51b4f892b4f8abf6f?s=100&d=wavatar&r=g" />
+    {/* Render the dropdown only if showDropdown is true */}
+    {showDropdown && <Profile />}
+   
+  </div>
   <ul className="flex items-left space-x-1 p-5">
           {/* <li>
             <Link className="text-red-400 Navtext font-semibold text-lg logoutButton" to='/'>
@@ -128,14 +136,12 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
           </li> */}
           <li>
             {isAuthenticated ? (
-              
-              <Link
+              <button
                 onClick={handleSignOut}
-                className="text-red-400 Navtext font-semibold text-lg underline "
-                to="/"
+                className="text-red-400 Navtext font-semibold text-lg "
               >
                 Sign Out
-              </Link>
+              </button>
             ) : (
               <Link
               className="text-red-400 Navtext font-semibold text-lg underline"
@@ -165,14 +171,12 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
                  & other finance division staffs.
               </h5>
             </li>
-            <Link to="/homevendors" className="custom-link">
             <li className="commonOpt" id="vendors">
               <h4>Registered Vendors</h4>
               <h5 className="explanation">
                 Here more than 1000 vendors are registered up to now.
               </h5>
             </li>
-            </Link>
             <li className="commonOpt" id="notice">
               <h4>Procurement Notices</h4>
               <h5 className="explanation">
@@ -198,4 +202,4 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
   );
 }
 
-export default Admin;
+export default DepartmentHome;

@@ -14,11 +14,15 @@ import reportWebVitals from './reportWebVitals';
 import AdminAccSetting from './pages/AdminAccountEdit';
 import NavbarMain from './components/NavbarMain';
 import AddVendors from './pages/AddVenders';
-import AllVendors from './pages/AllVenders';
-import DeleteVendors from './pages/DeleteVendors';
 import PreviewVendors from './pages/PreviewVendors';
 import YearPlanner from './pages/YearPlanner';
 import Admin from './pages/admin';
+import AllVenders from './pages/AllVenders';
+import UpdateVendors from './pages/UpdateVendors';
+import DeleteVendor from './pages/DeleteVendor';
+import HomeVenders from './pages/HomeVenders';
+import DepartmentHome from './pages/DepartmentHome';
+import UploadGuidance from './pages/UploadGuidance';
 
 
 const App = () => {
@@ -27,7 +31,7 @@ const App = () => {
   const location = useLocation();
 
   const renderNavbar = () => {
-    if (location.pathname === '/admin/:id' || location.pathname === '/loginpage' )
+    if (location.pathname === '/admin/:id' || location.pathname === '/loginpage' ||location.pathname === '/department')
     {
         return null;
     
@@ -66,21 +70,29 @@ const App = () => {
        
         <Route path="/AllUsers" element={<AllUsers />} />
         <Route path="/createusers" element={<CreateUsers />} />
-        <Route path="/previewuser" element={<PreviewUser />} />
+        <Route path="/previewuser/:id" element={<PreviewUser />} />
         <Route path="/deleteusers/:id" element={<DeleteUsers />} />
         <Route path="/updateusers/:id" element={<UpdateUsers />} />
         <Route path="/changePassword/:id" element={<ChangePassword />} />
         {/* <Route path="/adminhome/:id" element={<AdminHome />} /> */}
         <Route path="/adminaccountsetting" element={<AdminAccSetting />} />
-        <Route path="/AllVendor" element={<AllVendors />} />
-        <Route path="/addvendor" element={<AddVendors/>} />
-        <Route path="/deletevendor" element={<DeleteVendors/>} />
-        <Route path="/previewvendor" element={<PreviewVendors/>} />
+        <Route path="/AllVenders" element={<AllVenders />} />
+        <Route path="/addvendeors" element={<AddVendors/>} />
+        <Route path="/updatevendor/:id" element={<UpdateVendors/>} />
+        <Route path="/deletevendor/:id" element={<DeleteVendor/>} />
+        <Route path="/previewvendor/:id" element={<PreviewVendors/>} />
         <Route path="/yearplanner" element={<YearPlanner />} />
+        <Route path="/homevendors" element={<HomeVenders />} />
+        <Route path="/guidance" element={<UploadGuidance />} />
         <Route path="/admin/:id" element={<Admin isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
+        <Route path="/department/:id" element={<DepartmentHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
       </Routes>
+      
     </div>
   );
 };
 reportWebVitals();
 export default App;
+
+
+
