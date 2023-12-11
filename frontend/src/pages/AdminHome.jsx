@@ -1,28 +1,25 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import React, { useState } from "react";
 
-const AdminHome = () => {
+// import Footer from '../components/footer';
+// import Profile from '../components/Profile';
+import HomeContent from "../components/HomeContent";
+ import "../styles/AdminHome.css";
+import Navbar from "../components/Navbar";
 
-  const { id } = useParams();
+
+function AdminHome() {
+  // const [isActive, setActive] = useState(false);
+
+  // const toggleClass = () => {
+  //   setActive(!isActive);
+  // };
   return (
-    <div>
-      <p>Welcome to the Admin Home page!</p>
-      <div className="button-container">
-        <button> <Link to={`/AllUsers`} className="create-button">
-            Manage Users
-          </Link></button>
-              
-          <button> 
-            <Link to={`/changePassword/${id}`} className="create-button p-3">
-            Change Password
-          </Link>
-          </button>
-                
-            </div>
-      
-    </div>
+    <div className="App">
+    
+    {/* <Navbar toggleClass={toggleClass}></Navbar> */}
+    <HomeContent></HomeContent>
+  </div>
   );
-};
+}
 
 export default AdminHome;

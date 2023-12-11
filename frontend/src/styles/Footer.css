@@ -1,0 +1,21 @@
+.footerStyle {
+    background-color: white;
+    color: red;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: fit-content;
+    font-size: 12px;
+  };
+
+  @media screen and (max-width: 768px) {
+    .footerStyle  {
+    font-size: 10px;
+      height: fit-content;
+      /* Adjust the reduced padding as needed */
+    };
+  }

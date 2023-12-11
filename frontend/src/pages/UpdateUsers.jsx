@@ -9,9 +9,13 @@ const UpdateUsers = () => {
   const [role, setRole] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [department, setDepartment] = useState('');
+  const [employeeNumber, setEmpNo] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
+  const roles = ['Admin', 'Procurment Officer', 'Finance Officers', 'User Department', 'Approver'];
+  const departments = ['DCEE', 'DEIE', 'MENA', 'MME', 'IS', 'NONE'];
 
   // React Router Hook to get the parameter from the URL
   const { id } = useParams();
@@ -30,6 +34,8 @@ const UpdateUsers = () => {
         setName(response.data.name);
         setPassword(response.data.password);
         setUsername(response.data.username);
+        setDepartment(response.data.department);
+        setEmpNo(response.data.employeeNumber);
         setLoading(false);
       })
       .catch((error) => {
@@ -40,13 +46,16 @@ const UpdateUsers = () => {
   }, [id]);
 
   // Handle updating user data
-  const handleUpdateUsers = () => {
+  function handleUpdateUsers (e) {
+    e.preventDefault();
     const newUser = {
       role,
       email,
       name,
       password,
       username,
+      department,
+      employeeNumber,
     };
 
     setLoading(true);
@@ -55,11 +64,13 @@ const UpdateUsers = () => {
       .then(() => {
         alert('User Updated');
         // Clear the form
-        setRole();
-        setEmail();
-        setName();
-        setPassword();
-        setUsername();
+        setRole('');
+        setEmail('');
+        setName('');
+        setPassword('');
+        setUsername('');
+        setDepartment('');
+        setEmpNo('');
         setLoading(false);
         enqueueSnackbar('User account is updated successfully', { variant: 'success' });
         navigate('/AllUsers');
@@ -75,69 +86,119 @@ const UpdateUsers = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='p-4'>
-      <BackButton destination={'/AllUsers'}/>
-      <h1 className='text-3xl my-4' style={{ color: 'red', fontWeight: 'bold', fontStyle: 'italic', fontSize: '32px', textAlign: 'center' }}>
-        Update Your Account
-      </h1>
+    <div className="App">
+      <section id="content">
+        <main>
+          <div className='p-4'>
+            <BackButton destination='/AllUsers' />
+            <h1
+              className='text-3xl my-4'
+              style={{
+                color: 'blue',
+                fontWeight: 'bold',
+                fontSize: '20px',
+                textAlign: 'center',
+              }}
+            >
+              Update User
+            </h1>
+            {loading ? <Spinner /> : ''}
+            <div className='card'>
+              <form onSubmit={handleUpdateUsers}>
+                <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto'>
+                  <div className='my-4'>
+                    <label className='text-xl mr-4 text-gray-500'>Role:</label>
+                    <select
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
+                      className='border-2 border-gray-500 px-4 py-2 w-full'
+                    >
+                      <option value=''>Select Your Role</option>
+                      {roles.map((type, index) => (
+                        <option key={index} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-      {loading ? <Spinner /> : ''}
-      <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto'>
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Role</label>
-          <input
-            type='text'
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div>
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Email</label>
-          <input
-            type='text'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div>
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Name</label>
-          <input
-            type='text'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div>
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Password</label>
-          <input
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div>
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Username</label>
-          <input
-            type='text'
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div>
-        <div className='my-4 flex items-center justify-center'>
-          <button
-            className='p-2 bg-pink-500 text-white rounded-lg hover:bg-pink-700'
-            style={{ width: '100px' }}
-            onClick={handleUpdateUsers}
-          >
-            Save
-          </button>
-        </div>
-      </div>
+                  <div className='my-4'>
+                    <label className='text-xl mr-4 text-gray-500'>Email :</label>
+                    <input
+                      type='email'
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className='border-2 border-gray-500 px-4 py-2  w-full '
+                    />
+                  </div>
+
+                  <div className='my-4'>
+                    <label className='text-xl mr-4 text-gray-500'>Name :</label>
+                    <input
+                      type='text'
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className='border-2 border-gray-500 px-4 py-2  w-full '
+                    />
+                  </div>
+
+                  <div className='my-4'>
+                    <label className='text-xl mr-4 text-gray-500'>Department :</label>
+                    <select
+                      value={department}
+                      onChange={(e) => setDepartment(e.target.value)}
+                      className='border-2 border-gray-500 px-4 py-2 w-full'
+                    >
+                      <option value=''>Select Your Department</option>
+                      {departments.map((type, index) => (
+                        <option key={index} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className='my-4'>
+                    <label className='text-xl mr-4 text-gray-500'>Employee Number :</label>
+                    <input
+                      type='text'
+                      value={employeeNumber}
+                      onChange={(e) => setEmpNo(e.target.value)}
+                      className='border-2 border-gray-500 px-4 py-2  w-full '
+                    />
+                  </div>
+
+                  <div className='my-4'>
+                    <label className='text-xl mr-4 text-gray-500'>Username :</label>
+                    <input
+                      type='username'
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      className='border-2 border-gray-500 px-4 py-2  w-full '
+                    />
+                  </div>
+
+                  <div className='my-4'>
+                    <label className='text-xl mr-4 text-gray-500'>Password :</label>
+                    <input
+                      type='password'
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className='border-2 border-gray-500 px-4 py-2  w-full '
+                    />
+                  </div>
+
+                  <div className='my-4 flex items-center justify-center'>
+                    <button type="submit">
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </main>
+      </section>
     </div>
   );
 };

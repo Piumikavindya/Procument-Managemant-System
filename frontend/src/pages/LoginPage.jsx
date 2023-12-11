@@ -45,17 +45,29 @@ const LoginPage = ({ setIsAuthenticated }) => {
         // Redirect based on user role
         switch (response.data.user.role) {
           case 'admin':
-            navigate('/adminhome/' + response.data.user.id);
+            navigate('/admin/' + response.data.user.id);
             break;
-          case 'user':
-            // Add logic for user redirection
+          case 'department':
+            navigate('/department/' + response.data.user.id);
             break;
-          case 'guest':
-            // Add logic for guest redirection
+          case 'procurement Officer':
+            navigate('/procurementOfficer/' + response.data.user.id);
+            break;
+            case 'TECofficer':
+            navigate('/TECofficer/' + response.data.user.id);
+            break;
+            case 'Finance officers':
+            navigate('/Finance officers/' + response.data.user.id);
+            break;
+            case 'approver':
+            navigate('/approver/' + response.data.user.id);
             break;
           // Add more roles as needed
           default:
             console.log('Invalid role');
+
+
+           
         }
       } else {
         // Authentication failed
@@ -69,15 +81,18 @@ const LoginPage = ({ setIsAuthenticated }) => {
   };
 
   return (
+   
     <div className="wrapper">
       <form action="" onSubmit={handleSignIn}>
-        <div>
+      <div >
+          <img   src="http://www.eng.ruh.ac.lk/img/unilogo.png" alt="FoE,UoR-"/>
           <h1>Procurement Management System</h1>
           <h1>Faculty of Engineering</h1>
           <h1>University of Ruhuna</h1>
         </div>
 
         <h3>LOGIN</h3>
+        
 
         <div className="input-div">
          
@@ -90,12 +105,14 @@ const LoginPage = ({ setIsAuthenticated }) => {
               onChange={handleChange}
               className="role-select"
             >
-              <option value="role" disabled defaultValue>
+              <option value="role" >
                 Select your role
               </option>
               <option value="admin">Admin</option>
-              <option value="user">User</option>
-              <option value="guest">Guest</option>
+              <option value="procurmentofficer">Procurement Officer</option>
+              <option value="financeofficers">Finance Officers</option>
+              <option value="department">User Department</option>
+              <option value="approver">Approver</option>
               {/* Add more options as needed */}
             </select>
             <i className="bx bxs-user"></i>
@@ -109,9 +126,9 @@ const LoginPage = ({ setIsAuthenticated }) => {
               value={credentials.email}
               onChange={handleChange}
               placeholder="Email"  
-              required
+              requir 
             />
-            <i className="bx bxs-user"></i>
+            <i className="fa-solid fa-envelope"></i>
           </div>
 
           {/* Password Input */}
@@ -125,15 +142,17 @@ const LoginPage = ({ setIsAuthenticated }) => {
               required
             />
             <i className="bx bxs-lock-alt"></i>
-            <i className="bx bxs-show" style={{ marginLeft: '16px' }}></i>
-            <i className="bx bxs-low-vision" style={{ marginLeft: '16px' }}></i>
+           
+           
           </div>
         </div>
 
         <div className="remember-forgot">
-          <label style={{ color: '#800000' }}>
-            <input type="checkbox" />Remember me
+          <label style={{ color: '#00072D' }}>
+            <input type="checkbox" />
+           
           </label>
+          <p style={{margin:"0px 200px 0px 0px",color:"#00072D", fontSize:"13.5px"}}>Remember me</p>
           <Link to="/changePassword">Forgot password?</Link>
         </div>
         {/* Should be changed */}

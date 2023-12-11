@@ -1,76 +1,93 @@
-@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Kanit:wght@500&family=Poppins&display=swap');
+/* NavbarMain.css */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+/* General styles */
+
+#content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-image: linear-gradient(180deg, #F5BD34, #FFFFFF);
+main {
+  text-align: center;
 }
 
-.admin-account-container {
-    width: 500px;
-    height: 350px;
-    margin-top: 100px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #FFFFFF;
+/* Card styles */
+.card {
+  width: 500px;
+  height: fit-content;
+  margin: auto;
+  background-color: #fff; /* Set your desired card background color */
+  border: 2px solid #87ceeb;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a box shadow for depth */
 }
 
-.input-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+/* Form styles */
+form {
+  padding: 1rem; /* Adjusted padding */
 }
 
+.my-4 {
+  margin-bottom: 1rem;
+}
+
+/* Label styles */
 label {
-    margin-right: 10px;
-    width: 150px;
-    color: #e43838;
-    text-align: right; /* Align the text to the right */
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.25rem; /* Adjusted margin */
+  color: black;
+  text-align: left; /* Add this line to align text to the left */
 }
 
-input {
-    flex: 1;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #e43838;
-    border-radius: 4px;
-    margin-bottom: 10px; /* Adjust as needed */
+/* Input and select styles */
+input,
+select {
+  width: 100%;
+  padding: 0.25rem; /* Adjusted padding */
+  border: 2px solid #00072d;
+  border-radius: 0.25rem;
 }
 
-.button-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 15px;
-}
-
+/* Button styles */
 button {
-    margin-left: 10px;
-    padding: 10px;
-    background-color: #800000;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  width: 20%; /* Adjusted width */
+  height: 45px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #00072d;
+  color: #fff;
+  border-radius: 0.5rem;
+  margin-top: 1rem; /* Add some space between input and button */
 }
 
 button:hover {
-    background-color: #8b4040;
+  background-color: #f5bd34;
+  color: #800000;
+  border: 2px solid #800000;
 }
 
-.header {
-    color: #800000;
-    font-weight: bold;
-    margin-left: 0; /* Reset the margin */
-    margin-bottom: 30px; /* Adjust as needed */
-    text-align: center; /* Center the text */
+/* Message styles */
+p {
+  color: #ff0000;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+/* Spinner styles (adjust as needed) */
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #000;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
