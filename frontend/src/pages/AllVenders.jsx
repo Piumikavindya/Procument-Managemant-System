@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { MdOutlineAddBox } from 'react-icons/md';
 import VendorTable from '../components/home/VendorTable.jsx';
-import '../styles/Allusers.css';
+//import '../styles/Allusers.css';
 import BackButton from '../components/BackButton.jsx';
 
 const AllVenders = () => {

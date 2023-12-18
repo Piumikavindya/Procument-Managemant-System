@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineEdit  } from 'react-icons/ai';
 import { MdOutlineDelete, MdPreview } from 'react-icons/md';
-// import './UserTable.css';
+import './UserTable.css';
 
 const VendorTable = ({ supplyers }) => {
   

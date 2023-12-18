@@ -1,113 +1,120 @@
-import React, { useState,useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from 'axios';
-//  import "../styles/Navbar.css";
-//  import "../styles/Sidebar.css";
-//  import "../styles/MainContent.css";
-import "../styles/AdminHome.css";
-import Profile from '../components/Profile';
-import Sidebar from "./SideBar";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // Import Link from React Router
+import logo from "../assets/unilogo.png";
+import { FaXmark, FaBars } from "react-icons/fa6";
+import '../Styles/Navbar.css'
 
+const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
 
-export default function Navbar({ isAuthenticated, handleSignOut, loggedInUser}) {
-    const [user, setUser] = useState({});
-    const [isLoading, setIsLoading] = useState(true);
-  
-    useEffect(() => {
-      const getUser = async () => {
-        try {
-          // Check if loggedInUser and loggedInUser.id are available, use them; otherwise, set userId to an empty string
-          const userId = loggedInUser?.id || '';
-          console.log('User ID:', userId); // Add this line
-          const response = await axios.get(`http://localhost:8000/user/preview-user/${userId}`);
-          
-          console.log("User Data:", response.data);
-          setUser(response.data);
-        } catch (error) {
-          console.log("Error fetching user:", error);
-          console.log("Request config:", error.config);
-          console.log("Response data:", error.response ? error.response.data : null);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-  
-      getUser();
-    }, [loggedInUser]);
-  
-    useEffect(() => {
-      console.log("loggedInUser changed:", loggedInUser);
-    }, [loggedInUser]);
-
-    const [isActive, setActive] = useState(false);
-
-
-    const [showDropdown, setShowDropdown] = useState(false);
-    const toggleClass = () => {
-      setActive(!isActive);
-      
-  
+  // set toggle Menu
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
     };
-    const toggleDropdown = () => {
-      setShowDropdown(!showDropdown);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll); // Change to removeEventListener
     };
+  }, []); // Add an empty dependency array to useEffect
 
-
+  //NAVITEMS ARRAY
+  const navItems = [
+    { link: "Home", path: "home" },
+    { link: "Guidelines", path: "guidelines" },
+    { link: "Notices", path: "notices" },
+    { link: "Budget", path: "budget" },
+    { link: "Events", path: "events" },
+  ];
   return (
-    <div className="App" >
-       <section id="content" className={isActive ? 'hide' :'null'}>
-    <nav>
-    <i className="bx bx-menu" onClick={toggleClass}></i>
-    <a href="#" className="logo">
-      <img
-        src="http://www.eng.ruh.ac.lk/img/unilogo.png"
-        alt="FoE,UoR-"
-      />
-    </a>
-    <a href="/adminhome" className="nav-link">
-      Faculty of Engineering <br />
-      University of Ruhuna
-    </a>
+    <header className="w-full bg-white md:bg-transparent fixed top-0 left-0 right-0 ${isSticky ? 'sticky' : ''}">
+      <nav
+        className={`py-4 lg:px-14 px-4 ${
+          isSticky
+            ? "sticky top-0 left-0 right-0 border-b bg-white duration-300"
+            : ""
+        }`}
+      >
+        <div className="flex justify-between items-center text-base gap-8">
+          <a
+            href="/"
+            className="text-2xl font-semibold flex items-center space-x-3"
+          >
+            <span className="text-[#2194F3]">ENG</span>
+            <img
+              src={logo}
+              alt=" "
+              className="w-10 inline-block item-center "
+            />
+            <span className="text-[#2194F3]">PMS</span>
+          </a>
 
-  
-    <div className="profile" onClick={toggleDropdown}>
-    <img src="https://secure.gravatar.com/avatar/d09eaad01aea86c51b4f892b4f8abf6f?s=100&d=wavatar&r=g" />
-    {/* Render the dropdown only if showDropdown is true */}
-    {showDropdown && <Profile />}
-   
-  </div>
-  <ul className="flex items-left space-x-6">
-          {/* <li>
-            <Link className="text-red-400 Navtext font-semibold text-lg logoutButton" to='/'>
-          
-            </Link>
-          </li> */}
-          {/* <li>
-            <span className="text-black Navtext font-semibold text-lg">
-              Welcome, {user?.name}
-            </span>
-          </li> */}
-          <li>
-            {isAuthenticated ? (
-              <button
-                onClick={handleSignOut}
-                className="text-red-400 Navtext font-semibold text-lg "
-              >
-                Sign Out
-              </button>
-            ) : (
+          {/* Nav bar items for large devices */}
+          <ul className="md:flex space-x-12 hidden">
+            {navItems.map(({ link, path }) => (
               <Link
-              className="text-red-400 Navtext font-semibold text-lg underline"
-              to="/loginpage"
-              style={{ marginLeft: '20px', textDecoration: 'underline' }}
-            >
+                to={path}
+                spy={true}
+                smooth={true}
+                offset={-100}
+                key={path}
+                className="block text-base text-gray900 hover:text-brandPrimary first:font-medium"
+              >
+                {link}
+              </Link>
+            ))}
+          </ul>
+          <div className="space-x-12 hidden lg:flex items-center">
+            <button className="bg-brandPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-neutralDGrey">
               Sign In
+            </button>
+          </div>
+
+          {/*menu btn for only mobile devices */}
+          <div className="md:hidden">
+            <button
+              onClick={toggleMenu}
+              className=" text-neutralDGrey focus:outline-none focus:text-gray-500"
+            >
+              {isMenuOpen ? (
+                <FaXmark className="h-6 w-6 " />
+              ) : (
+                <FaBars className="h-6 w-6" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/*nav items for mobile devices */}
+        <div
+          className={`space-y-4 px-4 mt-16  py-7 bg-brandPrimary ${
+            isMenuOpen ? "block fixed top-6 right-0 left-0" : "hidden"
+          }`}
+        >
+          {navItems.map(({ link, path }) => (
+            <Link
+              to={path}
+              spy={true}
+              smooth={true}
+              offset={-100}
+              key={path}
+              className="block text-base text-white   hover:text-black first:font-medium"
+            >
+              {link}
             </Link>
-            )}
-          </li>
-        </ul>
-  </nav>
-  <Sidebar isActive={isActive} />
-  </section>  
-  </div>)
-}
+          ))}
+        </div>
+      </nav>
+    </header>
+  );
+};
+
+export default Navbar;

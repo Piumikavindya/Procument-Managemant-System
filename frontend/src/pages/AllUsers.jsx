@@ -3,9 +3,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { MdOutlineAddBox } from 'react-icons/md';
 import UserTable from '../components/home/UserTable';
-import '../styles/Allusers.css';
-import NavbarMain from '../components/NavbarMain';
-import BackButton from '../components/BackButton';
+//import '../styles/Allusers.css';
+
+
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);

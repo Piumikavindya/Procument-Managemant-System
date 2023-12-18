@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
 import axios from 'axios';
-import '../styles/ChangePassword.css';
+//import '../styles/ChangePassword.css';
 
 export default function ChangePassword() {
   const [oldPassword, setOldPassword] = useState('');

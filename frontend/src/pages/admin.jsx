@@ -1,5 +1,4 @@
 import React, { useState,useEffect } from "react";
-import '../styles/hometest.css';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 // import "../styles/AdminHome.css";
@@ -107,7 +106,7 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
           <i  className='bx bx-menu'  onClick={toggleClass}  ></i>
           <div className="logo">
           <img   src="http://www.eng.ruh.ac.lk/img/unilogo.png" alt="FoE,UoR-"/>
-          </a>
+          </div>
           <a href="#" className="nav-link">Faculty of Engineering <br/>University of Ruhuna</a>
          
           <a href="#" className="notification">

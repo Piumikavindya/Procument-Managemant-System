@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import '../styles/GuidanceDoc.css';
+//import '../styles/GuidanceDoc.css';
 
 export default function UploadGuidance() {
   const [guidance, setGuidance] = useState([]);

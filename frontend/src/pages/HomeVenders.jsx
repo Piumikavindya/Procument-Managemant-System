@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { MdOutlineAddBox } from 'react-icons/md';
 
-import '../styles/Allusers.css';
+//import '../styles/Allusers.css';
 import { MdOutlineDelete, MdPreview } from 'react-icons/md';
 import BackButton from '../components/BackButton';
 
