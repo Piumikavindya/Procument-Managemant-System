@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BsArrowLeft } from 'react-icons/bs';
-import '../Styles/BackButton.css'; // Import the new stylesheet
+import '../styles/BackButton.css'; // Import the new stylesheet
 
 const BackButton = ({ destination }) => {
   return (

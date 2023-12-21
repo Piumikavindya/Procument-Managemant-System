@@ -1,6 +1,6 @@
 import React from "react";
 import guide from "../assets/guideline.png";
-import "../Styles/Buttons.css";
+import "../styles/Buttons.css";
 
 function GuideDiv() {
   return (
@@ -27,6 +27,20 @@ function GuideDiv() {
               operations.
             </p>
             <button className="btn-primary">View Guidelines</button>
+          </div>
+        </div>
+      </div>
+      
+      <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto bg-NeutralSilver py-16">
+        <div>
+          <div className="md:w-1/2">
+          <h2 className="text-4xl test-neutralDGrey font-semibold mb-4 md:w-4
+          2/3">
+          Managing Procurement<br/><span className="text-brandPrimary">Processes of FoE , UoR</span> 
+            </h2>
+            <p>
+            A procurement management system facilitates streamlined control and optimization of the end-to-end procurement process within an organization.
+            </p>
           </div>
         </div>
       </div>

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from React Router
 import logo from "../assets/unilogo.png";
 import { FaXmark, FaBars } from "react-icons/fa6";
-import '../Styles/Navbar.css'
+import '../styles/Navbar.css'
+import '../pages/Home';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,7 +29,7 @@ const Navbar = () => {
 
   //NAVITEMS ARRAY
   const navItems = [
-    { link: "Home", path: "home" },
+    { link: "Home", path: "Home" },
     { link: "Guidelines", path: "guidelines" },
     { link: "Notices", path: "notices" },
     { link: "Budget", path: "budget" },
