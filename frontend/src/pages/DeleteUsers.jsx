@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import BackButton from '../components/BackButton';
-import '../styles/DeleteUsers.css';
+//import '../styles/DeleteUsers.css';
 
 const DeleteUsers = () => {
   const [loading, setLoading] = useState(false);

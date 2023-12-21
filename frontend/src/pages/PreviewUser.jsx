@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
-import '../styles/PreviewUser.css';
+//import '../styles/PreviewUser.css';
 
 export default function PreviewUser() {
     // ... (existing code)

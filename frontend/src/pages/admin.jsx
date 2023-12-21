@@ -1,10 +1,11 @@
 import React, { useState,useEffect } from "react";
-import '../styles/hometest.css';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 // import "../styles/AdminHome.css";
 import Profile from '../components/Profile';
 import Footer from "../components/footer";
+// import '../styles/NavbarMain.css';
+
 
 
 function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
@@ -103,21 +104,16 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
        
         <nav>
           <i  className='bx bx-menu'  onClick={toggleClass}  ></i>
-          <a href="#" className="logo">
+          <div className="logo">
           <img   src="http://www.eng.ruh.ac.lk/img/unilogo.png" alt="FoE,UoR-"/>
-          </a>
-          <a href="#" className="nav-link"><div className="foe" >Faculty of Engineering </div>University of Ruhuna</a>
+          </div>
+          <a href="#" className="nav-link">Faculty of Engineering <br/>University of Ruhuna</a>
          
           <a href="#" className="notification">
             <i className='bx bxs-bell' ></i>
             <span className="num">8</span>
           </a>
-          <div className="profile" onClick={toggleDropdown}>
-    <img src="https://secure.gravatar.com/avatar/d09eaad01aea86c51b4f892b4f8abf6f?s=100&d=wavatar&r=g" />
-    {/* Render the dropdown only if showDropdown is true */}
-    {showDropdown && <Profile />}
-   
-  </div>
+          
   <ul className="flex items-left space-x-1 p-5">
           {/* <li>
             <Link className="text-red-400 Navtext font-semibold text-lg logoutButton" to='/'>
@@ -143,7 +139,7 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
               <Link
               className="text-red-400 Navtext font-semibold text-lg underline"
               to="/loginpage"
-              style={{ marginLeft: '20px', textDecoration: 'underline' }}
+              style={{ marginLeft: '680px', textDecoration: 'underline' }}
             >
               Sign In
             </Link>

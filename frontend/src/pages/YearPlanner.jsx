@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Calendar from "../components/calander/EventCalendar";
 import { MOCKEVENTS } from "../components/calander/CalendarConst";
-import NavbarMain from "../components/NavbarMain";
+
 
 export default function YearPlanner() {
     const [count, setCount] = useState(0);
@@ -19,7 +19,7 @@ export default function YearPlanner() {
     return (
         
       <div className="App">
-        <NavbarMain></NavbarMain>
+        
         <Calendar
          startingDate={new Date()} 
          eventsArr={events} 

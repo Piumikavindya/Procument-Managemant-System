@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import '../styles/Profile.css';
+import '../Styles/Profile.css';
 
 const UserProfileCard = ({ userData, editMode, onImageChange, onUsernameChange, onRoleChange }) => {
   return (

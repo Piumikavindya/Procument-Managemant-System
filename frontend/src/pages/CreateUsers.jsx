@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
 import axios from 'axios';
-import '../styles/CreateUsers.css';
+//import '../styles/CreateUsers.css';
 
   const CreateUsers = () => {
     const [role, setRole] = useState('');
