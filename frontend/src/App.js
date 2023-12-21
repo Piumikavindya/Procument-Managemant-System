@@ -23,6 +23,8 @@ import DepartmentHome from "./pages/DepartmentHome";
 import UploadGuidance from "./pages/UploadGuidance";
 import Navbar from "./components/Navbar";
 
+
+
 const App = () => {
   const location = useLocation();
 
@@ -90,6 +92,7 @@ const App = () => {
         <Route path="/yearplanner" element={<YearPlanner />} />
         <Route path="/homevendors" element={<HomeVenders />} />
         <Route path="/guidance" element={<UploadGuidance />} />
+        
         <Route
           path="/admin/:id"
           element={

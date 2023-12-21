@@ -6,6 +6,7 @@ import notice from "../assets/notice.png";
 import budget from "../assets/budget.png";
 import VenderList from "../components/VenderList";
 import GuideDiv from "../components/GuideDiv";
+import NoticesDiv from "../components/NoticesDiv";
 
 function Home() {
   // const { id } = useParams();
@@ -76,6 +77,7 @@ function Home() {
       </div>
       <VenderList />
       <GuideDiv />
+      <NoticesDiv/>
     </div>
   );
 }

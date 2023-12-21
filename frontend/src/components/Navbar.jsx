@@ -30,7 +30,7 @@ const Navbar = () => {
   //NAVITEMS ARRAY
   const navItems = [
     { link: "Home", path: "Home" },
-    { link: "Guidelines", path: "guidelines" },
+    { link: "Guidelines", path: "Guidelines" },
     { link: "Notices", path: "notices" },
     { link: "Budget", path: "budget" },
     { link: "Events", path: "events" },
