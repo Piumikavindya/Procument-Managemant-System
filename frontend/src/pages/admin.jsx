@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 // import "../styles/AdminHome.css";
 import Profile from '../components/Profile';
-import Footer from "../components/footer";
+
 // import '../styles/NavbarMain.css';
 
 
@@ -192,7 +192,7 @@ function Admin({ isAuthenticated, handleSignOut, loggedInUser}) {
         
        
       </section>
-      <Footer/>
+     
     </div>
   );
 }

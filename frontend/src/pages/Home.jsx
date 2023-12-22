@@ -8,13 +8,17 @@ import VenderList from "../components/VenderList";
 import GuideDiv from "../components/GuideDiv";
 import NoticesDiv from "../components/NoticesDiv";
 import SuppliersDiv from "../components/SuppliersDiv";
-import Budget_Guide_Notice from "../components/Budget_Guide_Notice";
+import BudgetGuideNotice from "../components/Budget_Guide_Notice";
+import CalendarDiv from "../components/CalendarDiv.jsx"
+import CommonFooter from "../components/CommonFooter.jsx";
+
+
 
 
 function Home() {
   // const { id } = useParams();
   return (
-    <div>
+    <div id="Home">
     
       <div className="bg-NeutralSilver">
         <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto min-h-screen h-screen">
@@ -83,7 +87,10 @@ function Home() {
       <GuideDiv />
       <NoticesDiv/>
       <SuppliersDiv/>
-      <Budget_Guide_Notice/>
+      <BudgetGuideNotice/>
+      <CalendarDiv/>
+      <CommonFooter/>
+ 
     </div>
   );
 }

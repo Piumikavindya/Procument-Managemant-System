@@ -30,7 +30,7 @@ const Navbar = () => {
   //NAVITEMS ARRAY
   const navItems = [
     { link: "Home", path: "Home" },
-    { link: "Guidelines", path: "Guidelines" },
+    { link: "Guidelines", path: "guidelines" },
     { link: "Notices", path: "notices" },
     { link: "Budget", path: "budget" },
     { link: "Events", path: "events" },
@@ -107,7 +107,7 @@ const Navbar = () => {
               smooth={true}
               offset={-100}
               key={path}
-              className="block text-base text-white   hover:text-black first:font-medium"
+              className="block  cursor-pointer text-base text-white   hover:text-black first:font-medium"
             >
               {link}
             </Link>

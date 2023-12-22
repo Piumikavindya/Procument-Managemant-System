@@ -13,7 +13,9 @@ module.exports = {
         'brandPrimary':'#2194F3',
         'NeutralGrey':'#717171',
         'gray900':'#717171',
-        
+        'NeutralBlack':'#263238',
+        'FooterFont':'#F5F7FA'
+
       }
     },
   },

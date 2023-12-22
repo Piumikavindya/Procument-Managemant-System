@@ -8,14 +8,14 @@ import purchasing from "../assets/purchasing.png";
 
 function GuideDiv() {
   return (
-    <div>
-      <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto my-8">
+    <div id="guidelines">
+      <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto my-8"  id="guidelines">
         <div className="md:w-11/12 mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
           <div className="w-100 h-100">
             <img src={guide} alt="" />
           </div>
           <div className="mdw-3/5 mx-auto">
-            <h2 className="text-4xl test-neutralDGrey font-semibold mb-4 md:w-4/5">
+            <h2 className="text-4xl text-neutralDGrey font-semibold mb-4 md:w-4/5">
               Guidelines on utilizing the Procurement Management system
             </h2>
             <p className="md:w-3/4 text-sm text-NeutralGrey mb-8 text-justify">
