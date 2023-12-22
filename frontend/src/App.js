@@ -25,6 +25,7 @@ import Navbar from "./components/Navbar";
 
 
 
+
 const App = () => {
   const location = useLocation();
 
@@ -44,6 +45,7 @@ const App = () => {
         handleSignOut={handleSignOut}
         handleSignIn={handleSignIn}
       />
+      
     );
   };
   const [isAuthenticated, setIsAuthenticated] = useState(true);

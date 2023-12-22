@@ -7,11 +7,15 @@ import budget from "../assets/budget.png";
 import VenderList from "../components/VenderList";
 import GuideDiv from "../components/GuideDiv";
 import NoticesDiv from "../components/NoticesDiv";
+import SuppliersDiv from "../components/SuppliersDiv";
+import Budget_Guide_Notice from "../components/Budget_Guide_Notice";
+
 
 function Home() {
   // const { id } = useParams();
   return (
     <div>
+    
       <div className="bg-NeutralSilver">
         <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto min-h-screen h-screen">
           <Carousel className="w-full mx-auto">
@@ -78,6 +82,8 @@ function Home() {
       <VenderList />
       <GuideDiv />
       <NoticesDiv/>
+      <SuppliersDiv/>
+      <Budget_Guide_Notice/>
     </div>
   );
 }
