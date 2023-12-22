@@ -33,7 +33,8 @@ exports.upload = async (req, res) => {
         await newGuidance.save();
 
         console.log('Saved to the database');
-        res.json({ guidance: newGuidance });
+        res.json({ guidance: newGuidance, message: 'File successfully uploaded' });
+
     } catch (error) {
         console.error('Error saving guidance:', error);
         res.status(500).json({ error: 'Internal Server Error' });

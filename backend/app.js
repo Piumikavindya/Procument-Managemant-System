@@ -14,6 +14,7 @@ const supplyerRouter = require('./routes/supplyer');
 const itemRouter = require('./routes/item');
 
 const guidanceRouter = require('./routes/guidanceDoc');
+const procReqestRouter = require('./routes/procReqest');
 
 
 const PORT = process.env.PORT || 8000;
@@ -22,8 +23,9 @@ const PORT = process.env.PORT || 8000;
 
 
 app.use(express.json());
-app.use(cors());
 app.use(bodyParser.json());
+app.use(cors());
+
 
 // const URL = process.env.MONGODB_URL;
 
@@ -44,7 +46,8 @@ app.use('/supplyer',supplyerRouter);
 app.use('/item',itemRouter);
 //this is gudance document route
 app.use('/guidance',guidanceRouter);
-
+//this is Procurement request route
+app.use('/procReqest',procReqestRouter);
 
 
 app.listen(PORT, () => {

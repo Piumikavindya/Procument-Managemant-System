@@ -38,7 +38,7 @@ const AddVendors = () => {
 
     axios.post('http://localhost:8000/supplyer/create', newSupplyer) // changed
       .then((res) => {
-        setMessage("Vendor added successfully");
+        alert("Vendor added successfully");
         setLoading(false);
         // Reset form fields
         setUsername('');
