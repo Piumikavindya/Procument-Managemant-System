@@ -1,8 +1,8 @@
 .upload{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  margin-top: 170px;
 }
 
 .guidances {
@@ -17,6 +17,11 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+  }
+
+  .upload-container {
+    display: flex;
+    flex-direction: column;
   }
   
   .guidances button:hover {

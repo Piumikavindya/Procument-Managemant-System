@@ -24,10 +24,16 @@ export default function UploadGuidance() {
     e.preventDefault();
 
     try {
-      const formData = new FormData(); // Fixed typo here (changed formData to FormData)
+      const formData = new FormData(); 
       formData.append('name', name);
-      formData.append('file', fileInputRef.current.files[0]); // Fixed typo here (changed files to files[0])
+      formData.append('file', fileInputRef.current.files[0]); 
       const res = await axios.post('http://localhost:8000/guidance/upload', formData);
+      alert("uploaded file");
+       // Clear the input fields
+       setName('');
+     
+    fileInputRef.current.value = ''; // Reset the file input va
+      
 
       console.log(res);
     } catch (error) {
@@ -74,18 +80,20 @@ export default function UploadGuidance() {
   }, []);
 
   return (
-    <div>
+    <div className='upload-container'>
       <div className='upload'>
-        <input type='text' placeholder='add name' onChange={(e) => setName(e.target.value)} />
+        <input type='text' className='p-5' placeholder='add name' onChange={(e) => setName(e.target.value)} />
         <input type='file' ref={fileInputRef} />
 
         <button onClick={upload}>Upload file</button>
+
       </div>
       <div className='guidance p-5'>
       {guidance &&
   guidance.map((guidance) => (
     <div key={guidance._id} className='guidances'>
       <h3>{guidance.name}</h3>
+      <button onClick={()=>viewGuidance(guidance._id)}>View Guidance</button>
       <button onClick={() => downloadGuidance(guidance._id)}>Download File</button>
     </div>
   ))}
