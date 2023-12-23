@@ -22,6 +22,11 @@ import HomeVenders from "./pages/HomeVenders";
 import DepartmentHome from "./pages/DepartmentHome";
 import UploadGuidance from "./pages/UploadGuidance";
 import Navbar from "./components/Navbar";
+import GuideDiv from "./components/GuideDiv";
+import NoticesDiv from "./components/NoticesDiv";
+import Budget_Guide_Notice from "./components/Budget_Guide_Notice";
+import SuppliersDiv from "./components/SuppliersDiv";
+import CalendarDiv from "./components/CalendarDiv";
 
 
 
@@ -66,7 +71,8 @@ const App = () => {
       {renderNavbar()}
       
       <Routes>
-        <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home/>} />
+        <Route path="/Home" element={<Home/>} />
         <Route
           path="/loginpage"
           element={
@@ -94,6 +100,13 @@ const App = () => {
         <Route path="/yearplanner" element={<YearPlanner />} />
         <Route path="/homevendors" element={<HomeVenders />} />
         <Route path="/guidance" element={<UploadGuidance />} />
+        <Route path="/guidelines" element={<GuideDiv />} />
+        <Route path="/notices" element={<NoticesDiv />} />
+        <Route path="/budget" element={<Budget_Guide_Notice />} />
+        <Route path="/vendors" element={<SuppliersDiv />} />
+        <Route path="/events" element={<CalendarDiv />} />
+        
+          
         
         <Route
           path="/admin/:id"

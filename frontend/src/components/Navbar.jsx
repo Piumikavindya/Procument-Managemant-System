@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from React Router
+import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 import logo from "../assets/unilogo.png";
 import { FaXmark, FaBars } from "react-icons/fa6";
-import '../styles/Navbar.css'
-import '../pages/Home';
+import "../styles/Navbar.css";
+import "../pages/Home";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,6 +13,10 @@ const Navbar = () => {
   // set toggle Menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
   useEffect(() => {
     const handleScroll = () => {
@@ -33,6 +38,7 @@ const Navbar = () => {
     { link: "Guidelines", path: "guidelines" },
     { link: "Notices", path: "notices" },
     { link: "Budget", path: "budget" },
+    { link: "Vendors", path: "vendors" },
     { link: "Events", path: "events" },
   ];
   return (
@@ -61,34 +67,73 @@ const Navbar = () => {
           {/* Nav bar items for large devices */}
           <ul className="md:flex space-x-12 hidden">
             {navItems.map(({ link, path }) => (
-              <Link
+              <ScrollLink
                 to={path}
                 spy={true}
                 smooth={true}
                 offset={-100}
                 key={path}
-                className="block text-base text-gray900 hover:text-brandPrimary first:font-medium"
+                className="block text-base text-gray900 hover:text-brandPrimary first:font-medium cursor-pointer"
               >
                 {link}
-              </Link>
+              </ScrollLink>
             ))}
           </ul>
           <div className="space-x-12 hidden lg:flex items-center">
-            <button className="bg-brandPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-neutralDGrey">
-              Sign In
+            <button className="bg-brandPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-neutralDGrey items-center mr-4 inline-block">
+              Sign In{""}
+              <svg
+                width="9"
+                height="6"
+                viewBox="0 0 9 6"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="inline-block  ml-3"
+              >
+                <path
+                  d="M6.52435 5.4707L8.24346 3.7516C8.44734 3.54772 8.44734 3.21716 8.24346 3.01328L6.52435 1.29418M8.09055 3.38244L0.433594 3.38244"
+                  stroke="white"
+                  stroke-width="1.3"
+                />
+              </svg>
             </button>
           </div>
 
           {/*menu btn for only mobile devices */}
           <div className="md:hidden">
+            <svg
+              className="inline-block  h-6 w-6 mr-4 mb-4 ml-4 text-brandPrimary cursor-pointer"
+              viewBox="0 0 20 22"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 15V17C6 19.2091 7.79086 21 10 21H15C17.2091 21 19 19.2091 19 17V5C19 2.79086 17.2091 1 15 1H10C7.79086 1 6 2.79086 6 5V7"
+                stroke="#2194F3"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M11 14L13.2929 11.7071C13.6834 11.3166 13.6834 10.6834 13.2929 10.2929L11 8"
+                stroke="#2194F3"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M13 11L1 11"
+                stroke-width="2.5"
+                stroke="#2194F3"
+                stroke-linecap="round"
+              />
+            </svg>
             <button
               onClick={toggleMenu}
-              className=" text-neutralDGrey focus:outline-none focus:text-gray-500"
+              className=" text-brandPrimary focus:outline-none focus:text-brandPrimary "
             >
               {isMenuOpen ? (
-                <FaXmark className="h-6 w-6 " />
+                <FaXmark className="h-6 w-6 items-center " />
               ) : (
-                <FaBars className="h-6 w-6" />
+                <FaBars className="h-6 w-6 items-center" />
               )}
             </button>
           </div>
@@ -96,21 +141,22 @@ const Navbar = () => {
 
         {/*nav items for mobile devices */}
         <div
-          className={`space-y-4 px-4 mt-16  py-7 bg-brandPrimary ${
+          className={`space-y-4 px-4 mt-16  py-7 bg-brandPrimary md:hidden ${
             isMenuOpen ? "block fixed top-6 right-0 left-0" : "hidden"
           }`}
         >
           {navItems.map(({ link, path }) => (
-            <Link
+            <ScrollLink
               to={path}
               spy={true}
               smooth={true}
               offset={-100}
               key={path}
+              onClick={closeMenu}
               className="block  cursor-pointer text-base text-white   hover:text-black first:font-medium"
             >
               {link}
-            </Link>
+            </ScrollLink>
           ))}
         </div>
       </nav>

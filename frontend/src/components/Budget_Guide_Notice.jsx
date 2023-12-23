@@ -2,6 +2,7 @@ import React from "react";
 import budget from "../assets/budget_img.png";
 import guide from "../assets/guideimg.png";
 import notice from "../assets/notice_img.png";
+import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 
 function Budget_Guide_Notice() {
   const budgets = [
@@ -10,8 +11,10 @@ function Budget_Guide_Notice() {
       id: 2,
       title: "Guidelines on Utilizing the PMS",
       image: guide,
+      link:"guidelines",
     },
-    { id: 3, title: "Procurement Notices", image: notice },
+    { id: 3, title: "Procurement Notices", image: notice ,
+  link:"notices"},
   ];
   return (
     <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto my-12" id="budget">
@@ -38,8 +41,8 @@ function Budget_Guide_Notice() {
               <h3 className="mb-3 text-NeutralGrey font-semibold">{budget.title}</h3>
 
               <div className="flex items-center justify-center gap-8">
-                <a
-                  href="/"
+              <ScrollLink to={budget.link} spy={true} smooth={true} duration={600}>
+                <p
                   className="font-bold text-brandPrimary hover:text-neutral-700"
                 >
                   Read More{""}
@@ -56,8 +59,9 @@ function Budget_Guide_Notice() {
                       stroke="#2194F3"
                     />
                   </svg>
-                </a>
-              </div>
+                </p>
+              </ScrollLink>
+            </div>
             </div>
           </div>
         ))}

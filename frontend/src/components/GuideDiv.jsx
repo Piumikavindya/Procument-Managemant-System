@@ -8,14 +8,17 @@ import purchasing from "../assets/purchasing.png";
 
 function GuideDiv() {
   return (
-    <div id="guidelines">
-      <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto my-8"  id="guidelines">
+    <div>
+      <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto my-8">
         <div className="md:w-11/12 mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
           <div className="w-100 h-100">
             <img src={guide} alt="" />
           </div>
           <div className="mdw-3/5 mx-auto">
-            <h2 className="text-4xl text-neutralDGrey font-semibold mb-4 md:w-4/5">
+            <h2
+              className="text-4xl text-neutralDGrey font-semibold mb-4 md:w-4/5"
+              id="guidelines"
+            >
               Guidelines on utilizing the Procurement Management system
             </h2>
             <p className="md:w-3/4 text-sm text-NeutralGrey mb-8 text-justify">
@@ -62,7 +65,7 @@ function GuideDiv() {
                 <img src={items} alt="items" />
                 <div>
                   <h4 className="text-2xl text-neutralDGrey font-semibold">
-                  828,867
+                    828,867
                   </h4>
                   <p>Items</p>
                 </div>
@@ -73,7 +76,7 @@ function GuideDiv() {
                 <img src={department} alt="departments" />
                 <div>
                   <h4 className="text-2xl text-neutralDGrey font-semibold">
-                  04
+                    04
                   </h4>
                   <p>Departments</p>
                 </div>
@@ -82,12 +85,11 @@ function GuideDiv() {
                 <img src={purchasing} alt="purchasing" />
                 <div>
                   <h4 className="text-2xl text-neutralDGrey font-semibold">
-                  1,926,436
+                    1,926,436
                   </h4>
                   <p>Purchasing</p>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
