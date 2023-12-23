@@ -1,12 +1,5 @@
 import React from "react";
 import { Footer } from "flowbite-react";
-import {
-  BsDribbble,
-  BsFacebook,
-  BsGithub,
-  BsInstagram,
-  BsTwitter,
-} from "react-icons/bs";
 import logo from "../assets/unilogo.png";
 
 function CommonFooter() {
@@ -24,9 +17,7 @@ function CommonFooter() {
           </div>
 
           <div className="justify-center mr-8">
-            <p
-              className="text-2xl font-semibold flex items-center space-x-1 mx-auto justify-center"
-            >
+            <p className="text-2xl font-semibold flex items-center space-x-1 mx-auto justify-center">
               <span className="text-[#2194F3] text-sm">ENG</span>
               <img
                 src={logo}
@@ -44,12 +35,21 @@ function CommonFooter() {
             </p>
           </div>
           <div className="text-left items-center w-1/2 my-4 text-sm">
-            <p className="text-FooterFont font-bold">Contact Us</p><br/>
+            <p className="text-FooterFont font-bold">Contact Us</p>
+            <br />
             <p col className="text-FooterFont">
               <ul>
                 <li>Faculty of Engineering, Hapugala, Galle, Sri Lanka.</li>
                 <li>Phone : +(94)0 91 2245765/6 </li>
-                <li>Email : <a href="mailto:webmaster@eng.ruh.ac.lk" className="text- underline">webmaster@eng.ruh.ac.lk</a></li>
+                <li>
+                  Email :{" "}
+                  <a
+                    href="mailto:webmaster@eng.ruh.ac.lk"
+                    className="text- underline"
+                  >
+                    webmaster@eng.ruh.ac.lk
+                  </a>
+                </li>
               </ul>
             </p>
           </div>
