@@ -6,11 +6,20 @@ import notice from "../assets/notice.png";
 import budget from "../assets/budget.png";
 import VenderList from "../components/VenderList";
 import GuideDiv from "../components/GuideDiv";
+import NoticesDiv from "../components/NoticesDiv";
+import SuppliersDiv from "../components/SuppliersDiv";
+import BudgetGuideNotice from "../components/Budget_Guide_Notice";
+import CalendarDiv from "../components/CalendarDiv.jsx"
+import CommonFooter from "../components/CommonFooter.jsx";
+
+
+
 
 function Home() {
   // const { id } = useParams();
   return (
-    <div>
+    <div id="Home">
+    
       <div className="bg-NeutralSilver">
         <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto min-h-screen h-screen">
           <Carousel className="w-full mx-auto">
@@ -76,6 +85,12 @@ function Home() {
       </div>
       <VenderList />
       <GuideDiv />
+      <NoticesDiv/>
+      <SuppliersDiv/>
+      <BudgetGuideNotice/>
+      <CalendarDiv/>
+      <CommonFooter/>
+ 
     </div>
   );
 }

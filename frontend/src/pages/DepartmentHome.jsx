@@ -1,10 +1,10 @@
 import React, { useState,useEffect } from "react";
-//import '../styles/hometest.css';
+
 import { Link } from "react-router-dom";
 import axios from 'axios';
-// import "../styles/AdminHome.css";
+
 import Profile from '../components/Profile';
-import Footer from "../components/footer";
+
 
 
 function DepartmentHome({ isAuthenticated, handleSignOut, loggedInUser}) {
@@ -197,7 +197,7 @@ function DepartmentHome({ isAuthenticated, handleSignOut, loggedInUser}) {
         
        
       </section>
-      <Footer/>
+     
     </div>
   );
 }
