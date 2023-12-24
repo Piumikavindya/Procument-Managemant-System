@@ -27,6 +27,7 @@ import NoticesDiv from "./components/NoticesDiv";
 import Budget_Guide_Notice from "./components/Budget_Guide_Notice";
 import SuppliersDiv from "./components/SuppliersDiv";
 import CalendarDiv from "./components/CalendarDiv";
+import AdminNavbar from "./components/AdminNavbar";
 
 
 
@@ -44,12 +45,21 @@ const App = () => {
     }
 
     return (
+      <>
+      <AdminNavbar
+        sAuthenticated={isAuthenticated}
+        loggedInUser={loggedInUser}
+        handleSignOut={handleSignOut}
+        handleSignIn={handleSignIn}
+      />
       <Navbar
         sAuthenticated={isAuthenticated}
         loggedInUser={loggedInUser}
         handleSignOut={handleSignOut}
         handleSignIn={handleSignIn}
       />
+      
+    </>
       
     );
   };
@@ -69,6 +79,7 @@ const App = () => {
   return (
     <div>
       {renderNavbar()}
+      
       
       <Routes>
       <Route path="/" element={<Home/>} />

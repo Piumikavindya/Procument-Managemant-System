@@ -141,8 +141,8 @@ const Navbar = () => {
 
         {/*nav items for mobile devices */}
         <div
-          className={`space-y-4 px-4 mt-16  py-7 bg-brandPrimary md:hidden ${
-            isMenuOpen ? "block fixed top-6 right-0 left-0" : "hidden"
+          className={`space-y-4 px-4 mt-24  py-7 bg-brandPrimary md:hidden ${
+            isMenuOpen ? "block fixed top-6 right-0 left-80" : "hidden"
           }`}
         >
           {navItems.map(({ link, path }) => (
