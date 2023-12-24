@@ -9,32 +9,32 @@ import GuideDiv from "../components/GuideDiv";
 import NoticesDiv from "../components/NoticesDiv";
 import SuppliersDiv from "../components/SuppliersDiv";
 import BudgetGuideNotice from "../components/Budget_Guide_Notice";
-import CalendarDiv from "../components/CalendarDiv.jsx"
+import CalendarDiv from "../components/CalendarDiv.jsx";
 import CommonFooter from "../components/CommonFooter.jsx";
-
-
-
 
 function Home() {
   // const { id } = useParams();
   return (
     <div id="Home">
-    
       <div className="bg-NeutralSilver">
         <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto min-h-screen h-screen">
-          <Carousel className="w-full mx-auto">
+          <Carousel className="w-full mx-auto ">
             <div className="my-28 md:my-8 py-12 flex flex-col md:flex-row-reverse items-center justify-between gap-12">
               <div>
-                <img src={guide} alt=""></img>
+                <img
+                  src={guide}
+                  alt=""
+                  className="max-w-full h-auto  md:max-w-md lg:max-w-full md:h-auto w-full"
+                ></img>
               </div>
-              <div className="md:w-1/2">
-                <h1 className="text-5xl font-semibold mb-4 text-neutralDGrey md:w-3/4 leading-snug">
+              <div className="md:w-1/2 pt-8">
+                <h1 className=" text-1xl md:text-3xl lg:text-5xl font-semibold mb-1 text-neutralDGrey md:w-3/4 leading-snug">
                   Guidelines{" "}
                   <span className="text-brandPrimary leading-snug">
                     on utilizing the system
                   </span>
                 </h1>
-                <p className="text-NeutralGrey text-base mb-8">
+                <p className="text-NeutralGrey text-base pt-8">
                   Follow the Instructions for operating the procurement
                   management system.
                 </p>
@@ -43,16 +43,20 @@ function Home() {
 
             <div className="my-28 md:my-8 py-12 flex flex-col md:flex-row-reverse items-center justify-between gap-12">
               <div>
-                <img src={notice} alt=""></img>
+                <img
+                  src={notice}
+                  alt=""
+                  className="max-w-full h-auto md:max-w-md lg:max-w-full md:h-auto w-full "
+                ></img>
               </div>
               <div className="md:w-3/4">
-                <h1 className="text-5xl font-semibold mb-4 text-neutralDGrey md:w-3/4 leading-snug">
+                <h1 className="text-1xl  md:text-3xl lg:text-5xl font-semibold  mb-16 text-neutralDGrey md:w-3/4 leading-snug">
                   Take a moment to read the{" "}
                   <span className="text-brandPrimary leading-snug">
                     procurement notices.
                   </span>
                 </h1>
-                <p className="text-NeutralGrey text-base mb-8">
+                <p className=" text-NeutralGrey text-base ">
                   Procurement notices give information about available
                   opportunities for purchasing goods or services.
                 </p>
@@ -61,10 +65,14 @@ function Home() {
 
             <div className="my-28 md:my-8 py-12 flex flex-col md:flex-row-reverse items-center justify-between gap-12">
               <div>
-                <img src={budget} alt=""></img>
+                <img
+                  src={budget}
+                  alt=""
+                  className="max-w-full h-auto  md:max-w-md lg:max-w-full md:h-auto w-full"
+                ></img>
               </div>
-              <div className="md:w-3/4">
-                <h1 className="text-5xl font-semibold mb-4 text-neutralDGrey md:w-3/4 leading-snug">
+              <div className="md:w-3/4 ">
+                <h1 className=" text-1xl md:text-3xl lg:text-5xl font-semibold mb-4 text-neutralDGrey md:w-3/4 leading-snug">
                   Manage the procurement{" "}
                   <span className="text-brandPrimary leading-snug">
                     Budget{" "}
@@ -74,7 +82,7 @@ function Home() {
                     Planning.
                   </span>
                 </h1>
-                <p className="text-NeutralGrey text-base mb-8">
+                <p className="text-NeutralGrey text-base mb-8  mt-8">
                   Plan and make the procurement budgets to guarantee optimal
                   resource allocation and cost-effective purchasing decisions.
                 </p>
@@ -85,12 +93,11 @@ function Home() {
       </div>
       <VenderList />
       <GuideDiv />
-      <NoticesDiv/>
-      <SuppliersDiv/>
-      <BudgetGuideNotice/>
-      <CalendarDiv/>
-      <CommonFooter/>
- 
+      <NoticesDiv />
+      <SuppliersDiv />
+      <BudgetGuideNotice />
+      <CalendarDiv />
+      <CommonFooter />
     </div>
   );
 }
