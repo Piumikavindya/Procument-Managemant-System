@@ -1,24 +1,106 @@
 import React, { useState } from "react";
-
-// import Footer from '../components/footer';
-// import Profile from '../components/Profile';
-import HomeContent from "../components/HomeContent";
-// import "../styles/AdminHome.css";
-import Navbar from "../components/Navbar";
-
+import { Carousel } from "flowbite-react";
+import guide from "../assets/guide.png";
+import notice from "../assets/notice.png";
+import budget from "../assets/budget.png";
+import VenderList from "../components/VenderList";
+import GuideDiv from "../components/GuideDiv";
+import NoticesDiv from "../components/NoticesDiv";
+import SuppliersDiv from "../components/SuppliersDiv";
+import BudgetGuideNotice from "../components/Budget_Guide_Notice";
+import CalendarDiv from "../components/CalendarDiv.jsx";
+import CommonFooter from "../components/CommonFooter.jsx";
+import UserTypeNavbar from "../components/UserTypeNavbar.jsx";
 
 function AdminHome() {
-  // const [isActive, setActive] = useState(false);
-
-  // const toggleClass = () => {
-  //   setActive(!isActive);
-  // };
+  // const { id } = useParams();
   return (
-    <div className="App">
     
-    {/* <Navbar toggleClass={toggleClass}></Navbar> */}
-    <HomeContent></HomeContent>
-  </div>
+    <div id="Home">
+    <UserTypeNavbar userType={"admin"}/>
+      <div className="bg-NeutralSilver">
+        <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto min-h-screen h-screen">
+          <Carousel className="w-full mx-auto ">
+            <div className="my-28 md:my-8 py-12 flex flex-col md:flex-row-reverse items-center justify-between gap-12">
+              <div>
+                <img
+                  src={guide}
+                  alt=""
+                  className="max-w-full h-auto  md:max-w-md lg:max-w-full md:h-auto w-full"
+                ></img>
+              </div>
+              <div className="md:w-1/2 pt-8">
+                <h1 className=" text-1xl md:text-3xl lg:text-5xl font-semibold mb-1 text-neutralDGrey md:w-3/4 leading-snug">
+                  Guidelines{" "}
+                  <span className="text-brandPrimary leading-snug">
+                    on utilizing the system
+                  </span>
+                </h1>
+                <p className="text-NeutralGrey text-base pt-8">
+                  Follow the Instructions for operating the procurement
+                  management system.
+                </p>
+              </div>
+            </div>
+
+            <div className="my-28 md:my-8 py-12 flex flex-col md:flex-row-reverse items-center justify-between gap-12">
+              <div>
+                <img
+                  src={notice}
+                  alt=""
+                  className="max-w-full h-auto md:max-w-md lg:max-w-full md:h-auto w-full "
+                ></img>
+              </div>
+              <div className="md:w-3/4">
+                <h1 className="text-1xl  md:text-3xl lg:text-5xl font-semibold  mb-16 text-neutralDGrey md:w-3/4 leading-snug">
+                  Take a moment to read the{" "}
+                  <span className="text-brandPrimary leading-snug">
+                    procurement notices.
+                  </span>
+                </h1>
+                <p className=" text-NeutralGrey text-base ">
+                  Procurement notices give information about available
+                  opportunities for purchasing goods or services.
+                </p>
+              </div>
+            </div>
+
+            <div className="my-28 md:my-8 py-12 flex flex-col md:flex-row-reverse items-center justify-between gap-12">
+              <div>
+                <img
+                  src={budget}
+                  alt=""
+                  className="max-w-full h-auto  md:max-w-md lg:max-w-full md:h-auto w-full"
+                ></img>
+              </div>
+              <div className="md:w-3/4 ">
+                <h1 className=" text-1xl md:text-3xl lg:text-5xl font-semibold mb-4 text-neutralDGrey md:w-3/4 leading-snug">
+                  Manage the procurement{" "}
+                  <span className="text-brandPrimary leading-snug">
+                    Budget{" "}
+                  </span>
+                  through meticulous{" "}
+                  <span className="text-brandPrimary leading-snug">
+                    Planning.
+                  </span>
+                </h1>
+                <p className="text-NeutralGrey text-base mb-8  mt-8">
+                  Plan and make the procurement budgets to guarantee optimal
+                  resource allocation and cost-effective purchasing decisions.
+                </p>
+              </div>
+            </div>
+          </Carousel>
+        </div>
+      </div>
+      <VenderList />
+      <GuideDiv />
+      <NoticesDiv />
+      <SuppliersDiv />
+      <BudgetGuideNotice />
+      <CalendarDiv />
+      <CommonFooter />
+    </div>
   );
 }
 

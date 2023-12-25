@@ -22,12 +22,8 @@ import HomeVenders from "./pages/HomeVenders";
 import DepartmentHome from "./pages/DepartmentHome";
 import UploadGuidance from "./pages/UploadGuidance";
 import Navbar from "./components/Navbar";
-import GuideDiv from "./components/GuideDiv";
-import NoticesDiv from "./components/NoticesDiv";
-import Budget_Guide_Notice from "./components/Budget_Guide_Notice";
-import SuppliersDiv from "./components/SuppliersDiv";
-import CalendarDiv from "./components/CalendarDiv";
-import AdminNavbar from "./components/AdminNavbar";
+import AdminHome from "./pages/AdminHome";
+import CommonFooter from "./components/CommonFooter";
 
 
 
@@ -46,18 +42,14 @@ const App = () => {
 
     return (
       <>
-      <AdminNavbar
-        sAuthenticated={isAuthenticated}
-        loggedInUser={loggedInUser}
-        handleSignOut={handleSignOut}
-        handleSignIn={handleSignIn}
-      />
+  
       <Navbar
         sAuthenticated={isAuthenticated}
         loggedInUser={loggedInUser}
         handleSignOut={handleSignOut}
         handleSignIn={handleSignIn}
       />
+      
       
     </>
       
@@ -81,6 +73,7 @@ const App = () => {
       {renderNavbar()}
       
       
+      
       <Routes>
       <Route path="/" element={<Home/>} />
         <Route path="/Home" element={<Home/>} />
@@ -101,7 +94,7 @@ const App = () => {
         <Route path="/deleteusers/:id" element={<DeleteUsers />} />
         <Route path="/updateusers/:id" element={<UpdateUsers />} />
         <Route path="/changePassword/:id" element={<ChangePassword />} />
-        {/* <Route path="/adminhome/:id" element={<AdminHome />} /> */}
+        <Route path="/admin/:id" element={<AdminHome/>} /> 
         <Route path="/adminaccountsetting" element={<AdminAccSetting />} />
         <Route path="/AllVenders" element={<AllVenders />} />
         <Route path="/addvenders" element={<AddVendors />} />
@@ -111,11 +104,7 @@ const App = () => {
         <Route path="/yearplanner" element={<YearPlanner />} />
         <Route path="/homevendors" element={<HomeVenders />} />
         <Route path="/guidance" element={<UploadGuidance />} />
-        <Route path="/guidelines" element={<GuideDiv />} />
-        <Route path="/notices" element={<NoticesDiv />} />
-        <Route path="/budget" element={<Budget_Guide_Notice />} />
-        <Route path="/vendors" element={<SuppliersDiv />} />
-        <Route path="/events" element={<CalendarDiv />} />
+       
         
           
         
