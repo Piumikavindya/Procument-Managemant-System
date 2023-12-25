@@ -91,9 +91,9 @@ const UserTypeNavbar = ({ userType }) => {
             : ""
         }`}
       >
-        <div className="flex justify-between items-center text-base gap-8 text-center">
+        <div className="flex justify-between items-center text-sm gap-8 text-center">
           {/* Nav bar items for large devices */}
-          <ul className="md:flex space-x-20 hidden ml-auto mr-auto">
+          <ul className="md:flex space-x-20 hidden ml-auto mr-auto text-sm">
             {userType === "admin" &&
               AdminOptions.map(({ link, path }) => (
                 <Link
@@ -102,7 +102,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block text-base text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block  text-white hover:text-black first:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -115,7 +115,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block text-base text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block  text-white hover:text-black first:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -128,7 +128,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block text-base text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block  text-white hover:text-black first:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -141,7 +141,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block text-base text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block  text-white hover:text-black first:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -154,7 +154,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block text-base text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block  text-white hover:text-black first:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -168,7 +168,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block text-base text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block  text-white hover:text-black first:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
