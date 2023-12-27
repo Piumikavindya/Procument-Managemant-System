@@ -3,7 +3,7 @@ const { check, validationResult } = require("express-validator");
 // pass some validations to name, email and passwords
 
 exports.userValidator = [
-    check("name").trim().not().isEmpty().withMessage("Name is missing!"),
+    check("role").trim().not().isEmpty().withMessage("Role is missing!"),
     check("email").normalizeEmail().isEmail().withMessage("Email is invalid!"),
     check("password").trim().not().isEmpty().withMessage("Password is missing!").isLength({ min: 4, max: 12 }).withMessage("Password must be 8 to 20 characters long!"),
 ];
