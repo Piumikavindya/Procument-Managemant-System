@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-white\/50{
+    background-color:#C7E4FC;
+}
+

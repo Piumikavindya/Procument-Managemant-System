@@ -1,7 +1,7 @@
 /*
   This example requires some changes to your config:
   
-  
+  ```
   // tailwind.config.js
   module.exports = {
     // ...
@@ -10,7 +10,7 @@
       require('@tailwindcss/forms'),
     ],
   }
-  
+  ```
 */
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom';
 //import '../styles/LoginPage.css';
 import { useNavigate } from 'react-router-dom';
 
-const LoginPage = ({ setIsAuthenticated }) => {
+const LoginPage = ({ setIsAuthenticated}) => {
 
 
     const [loggedInUser, setLoggedInUser] = useState(null);
@@ -93,6 +93,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
       } catch (error) {
         // Handle errors, e.g., network issues or server errors
         console.error('Signin failed:', error);
+        console.log('Axios response:', error.response);
       }
     };
   
@@ -101,10 +102,10 @@ const LoginPage = ({ setIsAuthenticated }) => {
       {/*
         This example requires updating your template:
 
-        
+        ```
         <html class="h-full bg-white">
         <body class="h-full">
-        
+        ```
       */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -168,7 +169,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
                     value={credentials.email}
                     onChange={handleChange}
                     placeholder="Email"  
-                    requir 
+                    requir="true"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
