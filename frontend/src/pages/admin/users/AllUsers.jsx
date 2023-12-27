@@ -5,6 +5,7 @@ import { MdOutlineAddBox } from "react-icons/md";
 import UserTable from "../../../components/Datatable.jsx";
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
 import "../../../styles/button.css";
+import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
@@ -31,16 +32,17 @@ const AllUsers = () => {
 
   return (
     <div className="p-4">
+      <UserTypeNavbar userType="admin" />
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/adminhome" },
+          { label: "Home", link: "/adminhome/:id" },
           { label: "User Registered List", link: "/allusers" },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />
 
       <div className="container mx-auto py-6 px-4 flex items-center justify-between">
-        <h1 class="text-3xl py-4 border-b mb-10">Registered User List</h1>
+        <h1 class="text-3xl py-4 border-b mb-15">Registered User List</h1>
 
         <div class="flex items-center">
         
