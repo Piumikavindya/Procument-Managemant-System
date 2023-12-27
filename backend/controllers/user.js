@@ -6,9 +6,9 @@ const user = require('../Models/user');
 
 // request from the frontend
 exports.create = async (req,res) =>{
-    const {username,name,email, password,role,department,employeeNumber} = req.body;
+    const {username,firstname,lastname,email, password,role,department,employeeNumber} = req.body;
 // response will send to frontend
-const newUser= new User({username,name,email, password,role,department,employeeNumber})
+const newUser= new User({username,firstname,lastname,email, password,role,department,employeeNumber})
 //save the data in the database
 try {
     console.log('New User:', newUser);
@@ -59,11 +59,12 @@ exports.previewUser = async (req,res) =>{
 exports.updateUser = async (req,res)=>{
     let userId = req.params.id;
 
-    const { username, name, email, password,role,department,employeeNumber} = req.body;
+    const { username, firstname,lastname, email, password,role,department,employeeNumber} = req.body;
 
     const updateUser = {
        username,
-       name,
+       firstname,
+       lastname,
        email,
        password,
        role,
@@ -182,13 +183,10 @@ exports.signIn = async (req,res) =>{
     const matched= await user.comparePassword(password);
     if(!matched) return sendError(res,'Email/Password mismatch!');
 
-    const {_id, name, role} = user;
+    const {_id, lastname, role} = user;
    // const jwtToken = jwt.sign({userId: _id}, 'dfjjjjlkhf5454ggmnkfkj8787')
 
-   res.json({user: {id: _id, name,  role}});
+   res.json({user: {id: _id, lastname,  role}});
    
    
 }
-
-
-
