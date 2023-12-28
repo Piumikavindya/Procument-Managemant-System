@@ -1,0 +1,144 @@
+/* CSS */
+.button-71 {
+  background-color: #0078d0;
+  border: 0;
+  border-radius: 28px; /* Reduce border-radius to make it less rounded */
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: system-ui, -apple-system, system-ui, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+  font-size: 12px; /* Reduce font size for a smaller button */
+  font-weight: 600;
+  outline: 0;
+  padding: 2px 16px; /* Reduce padding for a smaller button */
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-71:before {
+  background-color: initial;
+  background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+  border-radius: 75px; /* Adjust the border-radius accordingly */
+  content: "";
+  height: 40%; /* Adjust the height accordingly */
+  left: 8%; /* Adjust the left positioning */
+  opacity: .5;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s;
+  width: 84%; /* Adjust the width accordingly */
+}
+
+.button-71:hover {
+  box-shadow: rgba(255, 255, 255, .2) 0 2px 10px inset, rgba(0, 0, 0, .1) 0 2px 3px, rgba(0, 0, 0, .1) 0 5px 6.5px;
+  transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
+  .button-71 {
+    padding: 12px 32px; /* Adjust padding for larger screens */
+  }
+}
+
+
+
+
+
+
+
+.button-18 {
+  align-items: center;
+  background-color: #0A66C2;
+  border: 0;
+  border-radius: 100px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 20px;
+  max-width: 480px;
+  min-height: 40px;
+  min-width: 0px;
+  overflow: hidden;
+  padding: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  touch-action: manipulation;
+  transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+}
+
+.button-18:hover,
+.button-18:focus { 
+  background-color: #16437E;
+  color: #ffffff;
+}
+
+.button-18:active {
+  background: #09223b;
+  color: rgb(255, 255, 255, .7);
+}
+
+.button-18:disabled { 
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, .08);
+  color: rgba(0, 0, 0, .3);
+}
+
+
+
+/* CSS */
+.button-21 {
+  align-items: center;
+  appearance: none;
+  background-color: #3EB2FD;
+  background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  border-radius: 100px;
+  border-width: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: CircularStd,sans-serif;
+  font-size: 1rem;
+  height: auto;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 6px 20px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .2s,background-position .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.button-21:active,
+.button-21:focus {
+  outline: none;
+}
+
+.button-21:hover {
+  background-position: -20px -20px;
+}
+
+.button-21:focus:not(:active) {
+  box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 .125em;
+}

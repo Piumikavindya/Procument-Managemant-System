@@ -1,21 +1,10 @@
-.footerStyle {
-    background-color: white;
-    color: red;
-    text-align: center;
-    border-top: 1px solid #ccc;
-    width: 100%;
+@media only screen
+and (min-device-height: 768px)
+and (max-device-height: 1024px) {
+  .bg-NeutralBlack {
+    /* Add styles for iPad here */
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
-    height: fit-content;
-    font-size: 12px;
-  };
-
-  @media screen and (max-width: 768px) {
-    .footerStyle  {
-    font-size: 10px;
-      height: fit-content;
-      /* Adjust the reduced padding as needed */
-    };
+    width: 100%;
   }
+}
