@@ -4,6 +4,7 @@ import "../../../styles/Scroller.css";
 import "../../../styles/button.css";
 import "../../../styles/button2.css";
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
+import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
 
 const AddVendors = () => {
   const [username, setUsername] = useState("");
@@ -101,6 +102,7 @@ const AddVendors = () => {
 
   return (
     <div className="app-container p-8 rounded border border-gray-200">
+       <UserTypeNavbar userType="admin" />
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/adminhome/:id" },

@@ -6,11 +6,11 @@ const bcrypt =require("bcrypt");
 const guidancedocSchema = new Schema({
   username: {  // Add a unique username field
     type: String,
-   
+    
   },
   name:{
     type: String,
-    required: [true,"please provide a name"]
+    // required: [true,"please provide a name"]
   }, 
   file: {
     type: String,

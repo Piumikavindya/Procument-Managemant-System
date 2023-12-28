@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const breadcrumb = {
   backgroundColor: "white",
@@ -9,6 +9,8 @@ const breadcrumb = {
 };
 
 function Breadcrumb(props) {
+  const location = useLocation();
+
   function isLast(index) {
     return index === props.crumbs.length - 1;
   }
@@ -23,7 +25,9 @@ function Breadcrumb(props) {
       <div className="breadcrumb" style={breadcrumb}>
         {props.crumbs.map((crumb, ci) => {
           const disabled = isLast(ci) ? "disabled" : "";
-
+          const link = crumb.link.includes(":id")
+          ? crumb.link.replace(":id", location.pathname.split("/").pop())
+          : crumb.link;
           return (
             <React.Fragment key={ci}>
               <li className="breadcrumb-item align-items-center">
