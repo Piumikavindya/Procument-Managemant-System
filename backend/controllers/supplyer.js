@@ -7,9 +7,9 @@ const Supplyer = require('../Models/supplyer');
 
 // request from the frontend
 exports.create = async (req,res) =>{
-    const {username,supplierName,email, address,contactOfficer,contactNumber,faxNumber,typeofBusiness,classOfAssets} = req.body;
+    const {username,supplierId,supplierName,email, address,contactOfficer,contactNumber,faxNumber,typeofBusiness,classOfAssets} = req.body;
 // response will send to frontend
-const newSupplyer= new Supplyer({username,supplierName,email, address,contactOfficer,contactNumber,faxNumber,typeofBusiness,classOfAssets})
+const newSupplyer= new Supplyer({username,supplierId,supplierName,email, address,contactOfficer,contactNumber,faxNumber,typeofBusiness,classOfAssets})
 //save the data in the database
 try {
     console.log('New Supplyer:', newSupplyer);
@@ -65,6 +65,7 @@ exports.updateSupplyer = async (req,res)=>{
     const updateSupplyer = {
        username,
        supplierName,
+       supplierId,
        email,
        address,
        contactOfficer,

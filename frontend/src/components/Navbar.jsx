@@ -92,11 +92,11 @@ const Navbar = ({ isAuthenticated, handleSignOut, handleSignIn}) => {
               </ScrollLink>
             ))}
           </ul>
-          <div className="space-x-12 hidden lg:flex items-center">
+          <div className="space-x-12 lg:flex items-center">
       {isAuthenticated ? (
         <Link 
         onClick={handleSignOut}
-          className="bg-brandPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-neutralDGrey items-center mr-4 inline-block" 
+        className="bg-brandPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-neutralDGrey items-center mr-4 inline-block"
         >
           Sign Out
           <svg
