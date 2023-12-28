@@ -23,7 +23,7 @@ const FileUploadModal = () => {
       addFile(file);
     }
   };
-
+  const [name, setName] = useState("");
   const handleInputChange = (event) => {
     for (const file of event.target.files) {
       addFile(file);
@@ -41,7 +41,7 @@ const FileUploadModal = () => {
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-
+      formData.append('name', name);
       for (const file of Object.values(files)) {
         formData.append('file', file);
       }
@@ -142,7 +142,14 @@ const FileUploadModal = () => {
               </button>
             </header>
 
-            <h1 className="pt-8 pb-3 font-semibold sm:text-lg text-gray-900">To Upload</h1>
+            {/* <h1 className="pt-8 pb-3 font-semibold sm:text-lg text-gray-900">To Upload</h1> */}
+            <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter your name"
+                  className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
+                />
 
             <ul id="gallery" className="flex flex-1 flex-wrap -m-1">
               {Object.keys(files).length === 0 && (

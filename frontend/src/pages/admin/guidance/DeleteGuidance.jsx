@@ -5,7 +5,7 @@ import React from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import ManageGuidance from "./ManageGuidance";
+import ManageGiidance from "./ManageGiidance ";
 
 const DeleteGuidance = () => {
   const [open, setOpen] = useState(true);
@@ -19,26 +19,27 @@ const DeleteGuidance = () => {
   const handleDeleteUser = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:8000/user/delete/${id}`)
+      .delete(`http://localhost:8000/guidance/delete/${id}`)
       .then(() => {
         setLoading(false);
-        enqueueSnackbar("User deleted", { variant: "success" });
-        navigate("/managenotices");
+        enqueueSnackbar("guidance deleted", { variant: "success" });
+        navigate("/ManageGiidance");
+        console.log("guidance deleted succesfully");
       })
       .catch((error) => {
         setLoading(false);
-        enqueueSnackbar("Error deleting user", { variant: "error" });
+        enqueueSnackbar("Error deleting guidance", { variant: "error" });
         console.log(error);
       });
   };
 
   const handleOutsideClick = () => {
     setOpen(false);
-    navigate("/managenotices");
+    navigate("/ManageGiidance");
   };
   return (
     <div>
-      <ManageGuidance />
+      <ManageGiidance />
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"

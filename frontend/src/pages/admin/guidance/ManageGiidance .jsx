@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
-import Breadcrumb from "../../components/Breadcrumb.jsx";
-import "../../styles/button.css";
+import Breadcrumb from "../../../components/Breadcrumb.jsx";
+import "../../../styles/button.css";
 import { MdOutlineDelete, MdPreview,MdOutlineSimCardDownload  } from "react-icons/md";
 import { useParams } from "react-router-dom";
-import UserTypeNavbar from "../../components/UserTypeNavbar.jsx";
+import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
 
 const ManageGiidance = () => {
   const [guidances, setGuidance] = useState([]);
@@ -64,7 +64,7 @@ const ManageGiidance = () => {
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/adminhome/:id" },
-          { label: "Manage Gidance", link: "/UploadGuidance" },
+          { label: "Manage Gidance", link: "/ManageGiidance" },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />
@@ -185,7 +185,7 @@ const ManageGiidance = () => {
                           <MdPreview className="text-2xl text-green-600" />
                         </Link>
 
-                        <Link to={`/`}>
+                        <Link to={`/DeleteGuidance/${guidance._id}`}>
                           <MdOutlineDelete className="text-2xl text-red-500" />
                         </Link>
                         <button onClick={() => handleDownloadClick(guidance._id)}>

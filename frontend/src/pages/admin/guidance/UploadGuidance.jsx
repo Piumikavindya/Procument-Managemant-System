@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import ManageGiidance from './ManageGiidance ';
-import InputForm from "../../components/InputForm";
+import InputForm from "../../../components/InputForm";
 
 
 export default function UploadGuidance() {
