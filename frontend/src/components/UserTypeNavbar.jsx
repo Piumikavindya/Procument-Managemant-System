@@ -34,8 +34,8 @@ const UserTypeNavbar = ({ userType }) => {
  
   //NAVITEMS ARRAY
   const AdminOptions = [
-    { link: "User Registration", path: "/createusers" },
-    { link: "Vendor Registration", path: "/addvenders" },
+    { link: "User Registration", path: "/allusers" },
+    { link: "Vendor Registration", path: "/allvendors" },
     { link: "Add Items", path: "" },
     { link: "Dashboard", path: "" },
     { link: "Manage Documents", path: "/guidance" },

@@ -6,6 +6,7 @@ import "../../../styles/Scroller.css";
 import "../../../styles/button.css";
 import "../../../styles/button2.css";
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
+import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
 
 const CreateUsers = () => {
   const [role, setRole] = useState("");
@@ -20,9 +21,10 @@ const CreateUsers = () => {
   const roles = [
     "admin",
     "procurement Officer",
-    "financeofficers",
+    "Finance officers",
     "department",
     "approver",
+    "TECofficer"
   ];
   const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
 
@@ -66,6 +68,7 @@ const CreateUsers = () => {
 
   return (
     <div class="app-container p-8 rounded border border-gray-200">
+       <UserTypeNavbar userType="admin" />
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/adminhome/:id" },

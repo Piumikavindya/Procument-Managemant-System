@@ -149,10 +149,11 @@ const LoginPage = ({ setIsAuthenticated}) => {
                 Select your role
               </option>
               <option value="admin">Admin</option>
-              <option value="procurmentofficer">Procurement Officer</option>
-              <option value="financeofficers">Finance Officers</option>
+              <option value="procurement Officer">Procurement Officer</option>
+              <option value="Finance officers">Finance Officers</option>
               <option value="department">User Department</option>
               <option value="approver">Approver</option>
+              <option value="TECofficer">TEC Officer</option>
               {/* Add more options as needed */}
             </select>
             </div>

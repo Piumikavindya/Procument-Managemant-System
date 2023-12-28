@@ -5,22 +5,24 @@ import { MdOutlineAddBox } from "react-icons/md";
 import VendorTable from "../../../components/VendorsTable.jsx";
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
 import "../../../styles/button.css";
+import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
 
 const AllVenders = () => {
-    const [supplyers, setVendors] = useState([]);
-    const [loading, setLoading] = useState(false);
+  const [supplyers, setVendors] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // Fetch users data from your API endpoint
   useEffect(() => {
+    console.log('Supplyers:', supplyers);
     setLoading(true);
     axios
-      .get('http://localhost:8000/supplyer/view-supplyers')  // Update the API endpoint
-      .then(response => {
+      .get("http://localhost:8000/supplyer/view-supplyers") // Update the API endpoint
+      .then((response) => {
         setVendors(response.data);
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching supplyer:', error);
+      .catch((error) => {
+        console.error("Error fetching supplyer:", error);
         setLoading(false);
       });
   }, []);
@@ -31,9 +33,10 @@ const AllVenders = () => {
 
   return (
     <div className="p-4">
+        <UserTypeNavbar userType="admin" />
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/adminhome" },
+          { label: "Home", link: "/adminhome/:id" },
           { label: "Suppliers Data List", link: "/allvendors" },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
@@ -43,33 +46,17 @@ const AllVenders = () => {
         <h1 class="text-3xl py-4 border-b mb-10">Suppliers Data List</h1>
 
         <div class="flex items-center">
-        
-         <button 
-          onclick="popuphandler(true)"
-         class="button">
-         <Link to={"/addvendors"} class="text-white">
+          <button onclick="popuphandler(true)" class="button">
+            <Link to={"/addvendors"} class="text-white">
               Add Vendor
             </Link>
-            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                fill-rule="evenodd"
-                d="M12 2a1 1 0 011 1v8h8a1 1 0 110 2h-8v8a1 1 0 11-2 0v-8H3a1 1 0 110-2h8V3a1 1 0 011-1z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
           </button>
-        
-          
         </div>
       </div>
 
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <div className="reservation-list-container">
-          <VendorTable supplyers={supplyers} />
-        </div>
-      )}
+      <div className="reservation-list-container">
+        <VendorTable supplyers={supplyers} />
+      </div>
     </div>
   );
 };

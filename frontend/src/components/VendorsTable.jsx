@@ -7,10 +7,9 @@ import { MdOutlineDelete, MdPreview } from "react-icons/md";
 
 const VendorTable = ({ supplyers }) => {
   const [searchTerm, setSearchTerm] = useState("");
-
   const filteredsupplyers = supplyers.filter((supplyer) =>
-    supplyer.supplierId.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  supplyer.supplierId?.toLowerCase().includes(searchTerm.toLowerCase())
+);
   return (
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
       <div class="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
@@ -44,7 +43,7 @@ const VendorTable = ({ supplyers }) => {
               </div>
               <input
                 type="text"
-                class="flex-shrink flex-grow flex-auto leading-normal tracking-wide w-px flex-1 border border-none border-l-0 rounded rounded-l-none px-3 relative focus:outline-none text-xxs lg:text-xs lg:text-base text-gray-500 font-thin"
+                class="flex-shrink flex-grow  leading-normal tracking-wide w-px  border border-none border-l-0 rounded rounded-l-none px-3 relative focus:outline-none text-xxs text-xs lg:text-base text-gray-500 font-thin"
                 placeholder="Search by Supplier ID"
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -125,7 +124,7 @@ const VendorTable = ({ supplyers }) => {
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                   <div class="flex flex-col items-start">
-                    {supplyer.contactNumbers.map((number, index) => (
+                    {supplyer.contactNumber.map((number, index) => (
                       <div key={index} class="text-sm leading-5 text-gray-800">
                         {number}
                       </div>
@@ -135,7 +134,7 @@ const VendorTable = ({ supplyers }) => {
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 <div class="flex flex-col items-start">
-                {supplyer.emails.map((number, index) => (
+                {supplyer.email.map((number, index) => (
                      <div key={index} class="text-sm leading-5 text-gray-800">
 
                         {number}
