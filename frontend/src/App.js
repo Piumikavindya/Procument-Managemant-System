@@ -25,6 +25,9 @@ import  ManageNotices  from './pages/admin/notices/ManageNotices.jsx';
 import  UploadNotices from './pages/admin/notices/UploadNotices.jsx';
 import  ManageGuidance  from './pages/admin/guidance/ManageGuidance.jsx';
 import  DeleteGuidance  from './pages/admin/guidance/DeleteGuidance.jsx';
+import  ChangeAccountDetails from './pages/ChangeAccountDetails.jsx';
+import  ChangePassword from './pages/ChangePassword.jsx';
+import  Profile from './pages/Profile.jsx';
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -102,6 +105,10 @@ const App = () => {
         <Route path ="/uploadnotices" element={<UploadNotices/>}/>
         <Route path ="/manageguidance" element={<ManageGuidance/>}/>
         <Route path ="/deleteguidance" element={<DeleteGuidance/>}/>
+        <Route path ="/changeaccountdetails" element={<ChangeAccountDetails/>}/>
+        <Route path ="/changepassword" element={<ChangePassword/>}/>
+        <Route path ="/Profile" element={<Profile/>}/>
+
       </Routes>
   
   {renderCommonFooter ()}

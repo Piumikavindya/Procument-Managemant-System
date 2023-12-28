@@ -5,7 +5,7 @@ import Breadcrumb from "../../../components/Breadcrumb.jsx";
 import "../../../styles/button.css";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineDelete, MdPreview } from "react-icons/md";
-const AllUsers = () => {
+const ManageNotices = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -242,4 +242,4 @@ const AllUsers = () => {
   );
 };
 
-export default AllUsers;
+export default ManageNotices;

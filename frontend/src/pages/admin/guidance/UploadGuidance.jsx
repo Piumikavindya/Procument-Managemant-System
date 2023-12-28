@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import ManageNotices from './ManageNotices';
 import InputForm from "../../../components/InputForm"; 
 
-const UplaodNotices = () => {
+const UplaodGuidance = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -18,7 +18,7 @@ const UplaodNotices = () => {
 
   const handleOutsideClick = () => {
     setOpen(false);
-    navigate("/allusers");
+    navigate("/manageguidance");
   };
   
   return (
@@ -69,4 +69,4 @@ const UplaodNotices = () => {
   );
 };
 
-export default UplaodNotices;
+export default  UplaodGuidance;

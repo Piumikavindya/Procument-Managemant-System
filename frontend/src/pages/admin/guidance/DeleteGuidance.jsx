@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import ManageGuidance from "./ManageGuidance";
 
-const DeleteUsers = () => {
+const DeleteGuidance = () => {
   const [open, setOpen] = useState(true);
 
   const cancelButtonRef = useRef(null);
@@ -120,4 +120,4 @@ const DeleteUsers = () => {
     </div>
   );
 };
-export default DeleteUsers;
+export default DeleteGuidance;
