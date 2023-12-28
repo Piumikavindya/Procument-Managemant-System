@@ -17,7 +17,12 @@ import UpdateVendor from './pages/admin/vendors/UpdateVendors.jsx';
 import CommonFooter from './components/CommonFooter.jsx';
 import Navbar from './components/Navbar.jsx';
 import UserTypeNavbar from './components/UserTypeNavbar.jsx';
-import { useNavigate } from "react-router-dom";;
+import YearPlanner from './pages/admin/yearPlanner/YearPlanner.jsx';
+import { useNavigate } from "react-router-dom";
+import ReqForm from './pages/department/ReqForm.jsx';
+import ManageGiidance from './pages/guidance/ManageGiidance .jsx';
+import UploadGuidance from './pages/guidance/UploadGuidance.jsx';
+
 
 
 
@@ -99,6 +104,12 @@ const App = () => {
         <Route path="/previewvendor/:id" element={<PreviewVendor />} />
         <Route path="/updatevendor/:id" element={<UpdateVendor/>} />
 
+        <Route path="/yearplanner" element={<YearPlanner />} />
+
+        <Route path="/reqform" element={<ReqForm />} />
+        <Route path="/ManageGiidance" element={<ManageGiidance />} />
+        <Route path="/UploadGuidance" element={<UploadGuidance />} />
+        
       </Routes>
   
   {renderCommonFooter ()}
