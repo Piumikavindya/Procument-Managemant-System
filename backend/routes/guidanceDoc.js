@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { upload,viewGuidance, downloadGuidance } = require('../controllers/guidanceDoc');
+const { upload,viewGuidance, downloadGuidance,deleterGuidance } = require('../controllers/guidanceDoc');
 const uploads = require('../middlewares/multer');
 
 // Add user create route
@@ -13,5 +13,7 @@ router.post("/upload", uploads.single('file'), (req, res) => {
 router.get('/view-guidance', viewGuidance);
 
   router.get("/download/:id", downloadGuidance);
- 
+  router.delete("/delete/:id", deleterGuidance);
+
+  
   module.exports = router;

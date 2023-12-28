@@ -127,15 +127,15 @@ exports.downloadGuidance = async (req, res) => {
 // };
 
 
-//delete user
-// exports.deleterSupplyer = async (req,res)=>{
-//     let supplyerId = req.params.id;
-//     try {
-//         // Use await here to wait for the deletion to complete
-//         await guidance.findByIdAndDelete(supplyerId);
-//         res.status(200).send({ status: "User deleted" });
-//       } catch (err) {
-//         // Use status 500 for server errors
-//         res.status(500).send({ status: "Error with delete user", error: err.message });
-//       }
-// };
+// delete guidance
+exports.deleterGuidance = async (req,res)=>{
+    let guidanceId = req.params.id;
+    try {
+        // Use await here to wait for the deletion to complete
+        await Guidance.findByIdAndDelete(guidanceId);
+        res.status(200).send({ status: "guidance deleted" });
+      } catch (err) {
+        // Use status 500 for server errors
+        res.status(500).send({ status: "Error with delete guidance", error: err.message });
+      }
+};

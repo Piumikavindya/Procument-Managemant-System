@@ -18,12 +18,13 @@ import CommonFooter from './components/CommonFooter.jsx';
 import Navbar from './components/Navbar.jsx';
 import UserTypeNavbar from './components/UserTypeNavbar.jsx';
 import YearPlanner from './pages/admin/yearPlanner/YearPlanner.jsx';
-import { useNavigate } from "react-router-dom";
+
 import ReqForm from './pages/department/ReqForm.jsx';
-import ManageGiidance from './pages/guidance/ManageGiidance .jsx';
-import UploadGuidance from './pages/guidance/UploadGuidance.jsx';
+import ManageGiidance from './pages/admin/guidance/ManageGiidance .jsx';
+import UploadGuidance from './pages/admin/guidance/UploadGuidance.jsx';
+import DeleteGuidance from './pages/admin/guidance/DeleteGuidance.jsx';
 
-
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -109,6 +110,7 @@ const App = () => {
         <Route path="/reqform" element={<ReqForm />} />
         <Route path="/ManageGiidance" element={<ManageGiidance />} />
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
+        <Route path="/DeleteGuidance/:id" element={<DeleteGuidance/>} />
         
       </Routes>
   
