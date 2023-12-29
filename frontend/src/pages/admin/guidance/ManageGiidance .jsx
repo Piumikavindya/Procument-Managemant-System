@@ -64,7 +64,7 @@ const ManageGiidance = () => {
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/adminhome/:id" },
-          { label: "Manage Gidance", link: "/ManageGiidance" },
+          { label: "Manage Guidance", link: "/ManageGiidance" },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />
@@ -75,7 +75,7 @@ const ManageGiidance = () => {
             <div class="flex flex-wrap items-center">
               <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                 <h3 class="font-semibold  text-blueGray-700">
-                  <i class="fa-solid fa-file-lines"></i> Giudance
+                  <i class="fa-solid fa-file-lines"></i> Guidance
                 </h3>
               </div>
 

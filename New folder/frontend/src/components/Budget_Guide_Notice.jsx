@@ -22,7 +22,7 @@ function Budget_Guide_Notice() {
         <h2 className="text-4xl test-neutralDGrey font-semibold mb-4 ">
           Implementing Online Procurement Systems in University Operations.
         </h2>
-        <p className="text-lg text-NeutralGrey mb-8 md:w-3/4 mx-auto">
+        <p className="text-sm text-NeutralGrey mb-8 md:w-3/4 mx-auto">
           Web base procurement systems for universities include improved
           transparency, efficiency, cost control, compliance with regulations,
           better supplier management, and reduced paperwork. These systems

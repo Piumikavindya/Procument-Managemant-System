@@ -17,7 +17,7 @@ function SuppliersDiv() {
 
         <div className="md:w-3/4 mx-auto">
           <div>
-            <p className="md:w-4/5 text-lg text-NeutralGrey MB-8 leading-7 text-justify">
+            <p className="md:w-4/5 text-sm text-NeutralGrey MB-8 leading-7 text-justify">
               Effective management of supplier relationships is vital in
               university procurement. This involves vetting suppliers,
               negotiating contracts, ensuring compliance with regulations,

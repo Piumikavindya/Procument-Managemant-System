@@ -15,7 +15,7 @@ function NoticesDiv() {
             <h2 className="text-4xl test-neutralDGrey font-semibold mb-4 md:w-4/5">
               Procurement Notices
             </h2>
-            <p className="md:w-3/4 text-lg text-NeutralGrey mb-8 text-justify">
+            <p className="md:w-3/4 text-sm text-NeutralGrey mb-8 text-justify">
               Procurement notices are formal announcements or notifications
               issued by organizations to communicate their intent to procure
               goods, services, or works. These notices provide essential
