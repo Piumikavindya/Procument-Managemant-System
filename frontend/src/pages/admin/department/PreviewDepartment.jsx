@@ -1,14 +1,12 @@
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import React from 'react';
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import AllUsers from './AllUsers';
-import PreviewUserCom from './PreviewUserCom';
+import AllDepartments from './AllDepartment';
+import PreviewDepartmentCom from './PreviewDepartmentCom';
 
-const PreviewUsers = () => {
+const PreviewDepartment = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -18,12 +16,12 @@ const PreviewUsers = () => {
 
   const handleOutsideClick = () => {
     setOpen(false);
-    navigate("/allusers");
+    navigate("/alldepartments");
   };
   
   return (
     <div>
-      <AllUsers />
+      <AllDepartments/>
       <Transition.Root show={open} as={Fragment}>
       <Dialog
           as="div"
@@ -56,10 +54,9 @@ const PreviewUsers = () => {
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
               <Dialog.Panel>
-              <PreviewUserCom />
+              <PreviewDepartmentCom />
 
                 </Dialog.Panel>
-                {/* Render the PreviewUserCom component here */}
               </Transition.Child>
             </div>
           </div>
@@ -69,4 +66,4 @@ const PreviewUsers = () => {
   );
 };
 
-export default PreviewUsers;
+export default PreviewDepartment;

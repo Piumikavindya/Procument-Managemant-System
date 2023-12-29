@@ -28,6 +28,10 @@ import  DeleteGuidance  from './pages/admin/guidance/DeleteGuidance.jsx';
 import  ChangeAccountDetails from './pages/ChangeAccountDetails.jsx';
 import  ChangePassword from './pages/ChangePassword.jsx';
 import  Profile from './pages/Profile.jsx';
+import  AddDepartment  from './pages/admin/department/AddDepartment.jsx';
+import  AllDepartment  from './pages/admin/department/AllDepartment.jsx';
+import  DeleteDepartment  from './pages/admin/department/DeleteDepartment.jsx';
+import PreviewDepartment from './pages/admin/department/PreviewDepartment.jsx';
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -108,6 +112,10 @@ const App = () => {
         <Route path ="/changeaccountdetails" element={<ChangeAccountDetails/>}/>
         <Route path ="/changepassword" element={<ChangePassword/>}/>
         <Route path ="/Profile" element={<Profile/>}/>
+        <Route path="/adddepartment" element={<AddDepartment/>} />
+        <Route path="/alldepartments" element={<AllDepartment/>} />
+        <Route path="/deletedepartment" element={<DeleteDepartment/>} />
+        <Route path="/previewdepartment" element={<PreviewDepartment/>} />
 
       </Routes>
   
