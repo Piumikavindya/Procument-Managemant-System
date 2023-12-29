@@ -1,28 +1,23 @@
-// ReservationTable.js
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineDelete, MdPreview } from "react-icons/md";
 
-const VendorTable = ({ supplyers }) => {
+const ItemTable = ({ items }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredsupplyers = supplyers.filter((supplyer) =>
-    supplyer.supplierId.toLowerCase().includes(searchTerm.toLowerCase())
-  );
   return (
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
       <div class="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
         <div class="flex justify-between">
-          <div class="p-4 input-group rounded mb-4">
+          <div class="input-group rounded mb-4">
             <input
               type="search"
               class="form-control rounded"
               aria-label="Search"
               aria-describedby="search-addon"
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search by Supplier ID"
+              placeholder="Search by item name"
             />
             <span class="input-group-text border-0" id="search-addon">
               <i class="fa-sharp fa-solid fa-magnifying-glass"></i>{" "}
@@ -38,24 +33,16 @@ const VendorTable = ({ supplyers }) => {
                 No
               </th>
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Supplier ID
+              Assets Class
               </th>
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Supplier Name
+              Assets Sub Class
               </th>
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Address
-              </th>
-              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Contact Number
-              </th>
-              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Contact Email
-              </th>
-              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Type of Business
+              Item Name
               </th>
 
+              
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                 Operations
               </th>
@@ -63,8 +50,8 @@ const VendorTable = ({ supplyers }) => {
           </thead>
 
           <tbody class="bg-white">
-            {filteredsupplyers.map((supplyer, index) => (
-              <tr key={supplyer._id} className="reservation-row">
+            {items.map((items, index) => (
+              <tr key={items._id} className="reservation-row">
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                   <div class="flex items-center">
                     <div>
@@ -78,67 +65,42 @@ const VendorTable = ({ supplyers }) => {
                   <div class="flex items-center">
                     <div>
                       <div class="text-sm leading-5 text-gray-800">
-                        {supplyer.supplierId}
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                  <div class="flex items-center">
-                    <div>
-                      <div class="text-sm leading-5 text-gray-800">
-                        {supplyer.supplierName}{" "}
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                  <div class="flex items-center">
-                    <div>
-                      <div class="text-sm leading-5 text-gray-800">
-                        {supplyer.address}{" "}
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                  <div class="flex flex-col items-start">
-                    {supplyer.contactNumbers.map((number, index) => (
-                      <div key={index} class="text-sm leading-5 text-gray-800">
-                        {number}
-                      </div>
-                    ))}
-                  </div>
-                </td>
+                        {items.assetsclass}
 
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                  <div class="flex flex-col items-start">
-                    {supplyer.emails.map((number, index) => (
-                      <div key={index} class="text-sm leading-5 text-gray-800">
-                        {number}
                       </div>
-                    ))}
+                    </div>
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                   <div class="flex items-center">
                     <div>
                       <div class="text-sm leading-5 text-gray-800">
-                        {supplyer.typeofBusiness}
+                      {items.assetssubclass}
+
                       </div>
                     </div>
                   </div>
                 </td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                  <div class="flex items-center">
+                    <div>
+                      <div class="text-sm leading-5 text-gray-800">
+                      {items.itemname}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                   <div className="icon-link flex justify-center gap-x-4">
-                    <Link to={`/previewvendor/${supplyer._id}`}>
+                    <Link to={`/`}>
                       <MdPreview className="text-2xl text-green-600" />
                     </Link>
-                    <Link to={`/updatevendor/${supplyer._id}`}>
+                    <Link to={`/`}>
                       <AiOutlineEdit className="text-2xl text-blue-800 " />
                     </Link>
-                    <Link to={`/deletevendor/${supplyer._id}`}>
+                    <Link to={`/`}>
                       <MdOutlineDelete className="text-2xl text-red-500" />
                     </Link>
                   </div>
@@ -168,7 +130,7 @@ const VendorTable = ({ supplyers }) => {
               </div>
               <div>
                 <a
-                  href="/allvendors"
+                  href="/allitems"
                   class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-blue-700 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-tertiary active:text-gray-700 transition ease-in-out duration-150 hover:bg-tertiary"
                 >
                   1
@@ -198,4 +160,4 @@ const VendorTable = ({ supplyers }) => {
   );
 };
 
-export default VendorTable;
+export default ItemTable;

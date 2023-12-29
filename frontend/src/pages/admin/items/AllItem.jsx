@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import DepartmentTable from "../../../components/DepartmentTable.jsx";
+import ItemTable from "../../../components/ItemTable.jsx";
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
 import "../../../styles/button.css";
 
-const AllDepartment = () => {
-  const [departments, setDepartments] = useState([]);
+const AllItem = () => {
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // Fetch users data from your API endpoint
@@ -15,11 +15,11 @@ const AllDepartment = () => {
     axios
       .get("http://localhost:8000/user/view-users") // Update the API endpoint
       .then((response) => {
-        setDepartments(response.data);
+        setItems(response.data);
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching departments:", error);
+        console.error("Error fetching items:", error);
         setLoading(false);
       });
   }, []);
@@ -33,28 +33,28 @@ const AllDepartment = () => {
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/adminhome/:id" },
-          { label: "All Departments", link: "/alldepartments" },
+          { label: "All Items", link: "/allitems" },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />
 
       <div className="container mx-auto py-6 px-4 flex items-center justify-between">
-        <h1 class="text-3xl py-4 border-b mb-10">Department Details List</h1>
+        <h1 class="text-3xl py-4 border-b mb-10">Items Details List</h1>
 
         <div class="flex items-center">
           <button onclick="popuphandler(true)" class="button">
-            <Link to={"/adddepartment"} class="text-white">
-              Add Department
+            <Link to={"/additem"} class="text-white">
+              Add Item
             </Link>
           </button>
         </div>
       </div>
 
       <div className="reservation-list-container">
-        <DepartmentTable departments={departments} />
+        <ItemTable items={items} />
       </div>
     </div>
   );
 };
 
-export default AllDepartment;
+export default AllItem;

@@ -8,7 +8,7 @@ export const UserNavBar = () => {
 
         <a href="/allvendors" className="text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 mx-1.5 sm:mx-6">Vendor Registraion</a>
 
-        <a href="#" className="text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 mx-1.5 sm:mx-6">Add Items</a>
+        <a href="/allitems" className="text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 mx-1.5 sm:mx-6">Add Items</a>
         <a href="/alldepartments" className="text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 mx-1.5 sm:mx-6">Add Department</a>
 
 

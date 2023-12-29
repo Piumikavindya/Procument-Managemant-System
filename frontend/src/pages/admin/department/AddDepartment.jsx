@@ -50,7 +50,7 @@ const CreateDepartment = () => {
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/adminhome/:id" },
-          { label: "All departments", link: "/alldepartments" },
+          { label: "All Departments", link: "/alldepartments" },
 
           { label: "Add Department", link: "/adddepartment" },
         ]}
@@ -60,7 +60,7 @@ const CreateDepartment = () => {
       <h3 className={`font-sm mt-0.5`}>Add Department</h3>
 
       <form onSubmit={handleSaveDepartment}>
-        <div class="mt-4 grid lg:grid-cols-2 gap-4">
+        <div class="mt-4 grid  gap-4">
           <div>
             <label
               for="role"
