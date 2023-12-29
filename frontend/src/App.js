@@ -25,6 +25,7 @@ import UploadGuidance from './pages/admin/guidance/UploadGuidance.jsx';
 import DeleteGuidance from './pages/admin/guidance/DeleteGuidance.jsx';
 
 import { useNavigate } from "react-router-dom";
+import ViewGuidances from './pages/admin/guidance/ViewGuidances.jsx';
 
 
 
@@ -111,6 +112,7 @@ const App = () => {
         <Route path="/ManageGiidance" element={<ManageGiidance />} />
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
         <Route path="/DeleteGuidance/:id" element={<DeleteGuidance/>} />
+        <Route path="/ViewGuidances" element={<ViewGuidances/>} />
         
       </Routes>
   

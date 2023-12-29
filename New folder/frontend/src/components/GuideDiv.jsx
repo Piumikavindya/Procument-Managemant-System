@@ -31,7 +31,7 @@ function GuideDiv() {
             >
               Guidelines on utilizing the Procurement Management system
             </h2>
-            <p className="md:w-3/4 text-lg text-NeutralGrey mb-8 text-justify">
+            <p className="md:w-3/4 text-sm text-NeutralGrey mb-8 text-justify">
               Procurement Management Systems provide structured guidelines and
               tools for effectively managing the procurement process within an
               organization. They streamline everything from sourcing and
@@ -53,7 +53,7 @@ function GuideDiv() {
               <br />
               <span className="text-brandPrimary"> of FoE , UoR</span>
             </h2>
-            <p className="text-justify text-lg">
+            <p className="text-justify">
               A procurement management system facilitates streamlined control
               and optimization of the end-to-end procurement process within an
               organization.
