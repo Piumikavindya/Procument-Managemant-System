@@ -109,7 +109,7 @@ const App = () => {
         <Route path="/yearplanner" element={<YearPlanner />} />
 
         <Route path="/reqform" element={<ReqForm />} />
-        <Route path="/ManageGiidance" element={<ManageGiidance />} />
+        <Route path="/ManageGuidance" element={<ManageGiidance />} />
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
         <Route path="/DeleteGuidance/:id" element={<DeleteGuidance/>} />
         <Route path="/ViewGuidances" element={<ViewGuidances/>} />
