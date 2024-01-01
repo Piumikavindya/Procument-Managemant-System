@@ -84,7 +84,7 @@ const Navbar = ({ isAuthenticated, handleSignOut, handleSignIn }) => {
           <div className="space-x-12 lg:flex items-center hidden">
             {isAuthenticated ? (
               <Link
-                onClick={handleSignOut}
+                onClick={handleSignOut}     to="/"
                 className="bg-brandPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-neutralDGrey items-center mr-4 inline-block"
               >
                 Sign Out
@@ -107,7 +107,7 @@ const Navbar = ({ isAuthenticated, handleSignOut, handleSignIn }) => {
               <Link
                 className="bg-brandPrimary text-white py-2 px-4 no-underline transition-all duration-300 rounded hover:bg-neutralDGrey items-center mr-4 inline-block"
                 to="/loginpage"
-                onClick={() => handleSignIn()}
+                
               >
                 Sign In{""}
                 <svg
@@ -132,7 +132,7 @@ const Navbar = ({ isAuthenticated, handleSignOut, handleSignIn }) => {
           <div className="md:hidden">
           {isAuthenticated ? (
             <Link
-              onClick={handleSignOut}
+              onClick={handleSignOut} to="/" 
               className="bg-brandPrimary text-white py-2 px-4 transition-all duration-300 rounded  hover:bg-neutralDGrey items-center mr-4 inline-block"
             >
               Sign Out

@@ -42,9 +42,9 @@ const App = () => {
     }
   
     return isAuthenticated ? (
-      <Navbar handleSignOut={handleSignOut} />
+      <Navbar  isAuthenticated={isAuthenticated}  handleSignOut={handleSignOut} />
     ) : (
-      <Navbar isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />
+      <Navbar isAuthenticated={isAuthenticated}  handleSignIn={handleSignIn}  />
     );
   };
 
@@ -66,7 +66,7 @@ const App = () => {
     setIsAuthenticated(true);
     console.log("User authenticated state:", isAuthenticated);
     setLoggedInUser(user);
-    navigate("/");
+    navigate('/loginpage');
   };
 
   const handleSignOut = () => {
