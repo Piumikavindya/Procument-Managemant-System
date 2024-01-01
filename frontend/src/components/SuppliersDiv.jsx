@@ -65,7 +65,7 @@ function SuppliersDiv() {
         className="cursor-pointer"
       />
       <div className="flex items-center gap-8">
-      <a href="/" className="font-bold text-brandPrimary hover:text-neutral-700">See all Suppliers{""}
+      <a href="/allvendors" className="font-bold text-brandPrimary hover:text-neutral-700 no-underline">See all Suppliers{""}
       <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"
       className="inline-block ml-2">
 <path d="M8.71145 7.06123L11.0035 4.76915C11.2754 4.49732 11.2754 4.05659 11.0035 3.78476L8.71145 1.49268M10.7997 4.27695L1.05469 4.27695" stroke="#2194F3" />

@@ -34,18 +34,19 @@ const UserTypeNavbar = ({ userType }) => {
  
   //NAVITEMS ARRAY
   const AdminOptions = [
-    { link: "User Registration", path: "/allusers" },
-    { link: "Vendor Registration", path: "/allvendors" },
-    { link: "Add Items", path: "" },
+    { link: "Manage Users", path: "/allusers" },
+    { link: "Manage Vendors", path: "/allvendors" },
+    { link: "Items", path: "" },
     { link: "Dashboard", path: "" },
-    { link: "Manage Documents", path: "/ManageGiidance" },
+    { link: "Manage Guidance", path: "/ManageGuidance" },
+    { link: "Manage Notices", path: "" },
     { link: "Budget & Plan", path: "" },
-    { link: "Add Year Plan", path: "/yearplanner" },
+    { link: "Manage Year Plan", path: "/yearplanner" },
   ];
 
   const DepartmentOptions = [
-    { link: "Purchase Requistion", path: "" },
-    { link: "Progress track", path: "" },
+    { link: "Purchase Requisition", path: "" },
+    { link: "Requisition Tracker", path: "" },
   ];
 
   const procOfficerOptions = [
@@ -85,17 +86,17 @@ const UserTypeNavbar = ({ userType }) => {
   ];
 
   return (
-    <header className="w-full mt-20 bg-brandPrimary md:bg-brandPrimary fixed top-0 left-0 right-0 ${isSticky ? 'sticky' : ''}">
+    <header className="w-full mt-20 bg-brandPrimary items-center md:bg-brandPrimary fixed top-2 left-0 right-0 ${isSticky ? 'sticky' : ''}">
       <nav
-        className={`py-4 lg:px-14 px-4 ${
+        className={`py-2.5 lg:px-14 px-4 ${
           isSticky
             ? "sticky top-0 left-0 right-0 border-b bg-brandPrimary duration-300"
             : ""
         }`}
       >
-        <div className="flex justify-between items-center text-sm gap-8 text-center">
+        <div className="flex justify-between items-center text-lg gap-8 text-center">
           {/* Nav bar items for large devices */}
-          <ul className="md:flex space-x-20 hidden ml-auto mr-auto text-sm">
+          <ul className="md:flex space-x-20 hidden ml-auto mr-auto text-lg ">
             {userType === "admin" &&
               AdminOptions.map(({ link, path }) => (
                 <Link
@@ -104,7 +105,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block  text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -117,7 +118,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block  text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -130,7 +131,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block  text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -143,7 +144,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block  text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -156,7 +157,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block  text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -170,7 +171,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block  text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -207,7 +208,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block  cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
               >
                 {link}
               </Link>
@@ -222,7 +223,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block  cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block  no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
               >
                 {link}
               </Link>
@@ -237,7 +238,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block  cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
               >
                 {link}
               </Link>
@@ -252,7 +253,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block  cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
               >
                 {link}
               </Link>
@@ -267,7 +268,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block  cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
               >
                 {link}
               </Link>
@@ -282,7 +283,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block  cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
               >
                 {link}
               </Link>

@@ -11,6 +11,7 @@ import NoticesDiv from "../../components/NoticesDiv";
 import SuppliersDiv from "../../components/SuppliersDiv";
 import BudgetGuideNotice from "../../components/Budget_Guide_Notice.jsx";
 import UserTypeNavbar from "../../components/UserTypeNavbar.jsx";
+import CalendarDiv from "../../components/CalendarDiv.jsx";
 
 
 
@@ -20,7 +21,7 @@ function AdminHome() {
   return (
    
     <div id="Home">
-     <UserTypeNavbar userType="admin" />
+    <UserTypeNavbar userType="admin" />
       <div className="bg-NeutralSilver">
         <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto min-h-screen h-screen">
           <Carousel className="w-full mx-auto ">
@@ -33,16 +34,15 @@ function AdminHome() {
                 ></img>
               </div>
               <div className="md:w-1/2 pt-8">
-                <h1 className=" text-1xl md:text-3xl lg:text-5xl font-semibold mb-1 text-neutralDGrey md:w-3/4 leading-snug">
+                <h1 className=" text-1xl md:text-3xl lg:text-5xl font-semibold mb-1 text-NeutralDGrey md:w-3/4 leading-snug">
                   Guidelines{" "}
                   <span className="text-brandPrimary leading-snug">
                     on utilizing the system
                   </span>
                 </h1>
-                <p className="text-NeutralGrey text-base pt-8">
+                <p className="text-NeutralGrey text-lg pt-8">
                   Follow the Instructions for operating the procurement
                   management system.
-                  
                 </p>
               </div>
             </div>
@@ -56,13 +56,13 @@ function AdminHome() {
                 ></img>
               </div>
               <div className="md:w-3/4">
-                <h1 className="text-1xl  md:text-3xl lg:text-5xl font-semibold  mb-16 text-neutralDGrey md:w-3/4 leading-snug">
+                <h1 className="text-1xl  md:text-3xl lg:text-5xl font-semibold  mb-16 text-NeutralDGrey md:w-3/4 leading-snug">
                   Take a moment to read the{" "}
                   <span className="text-brandPrimary leading-snug">
                     procurement notices.
                   </span>
                 </h1>
-                <p className=" text-NeutralGrey text-base ">
+                <p className=" text-NeutralGrey text-lg ">
                   Procurement notices give information about available
                   opportunities for purchasing goods or services.
                 </p>
@@ -78,7 +78,7 @@ function AdminHome() {
                 ></img>
               </div>
               <div className="md:w-3/4 ">
-                <h1 className=" text-1xl md:text-3xl lg:text-5xl font-semibold mb-4 text-neutralDGrey md:w-3/4 leading-snug">
+                <h1 className=" text-1xl md:text-3xl lg:text-5xl font-semibold mb-4 text-NeutralDGrey md:w-3/4 leading-snug">
                   Manage the procurement{" "}
                   <span className="text-brandPrimary leading-snug">
                     Budget{" "}
@@ -88,7 +88,7 @@ function AdminHome() {
                     Planning.
                   </span>
                 </h1>
-                <p className="text-NeutralGrey text-base mb-8  mt-8">
+                <p className="text-NeutralGrey text-lg mb-8  mt-8">
                   Plan and make the procurement budgets to guarantee optimal
                   resource allocation and cost-effective purchasing decisions.
                 </p>
@@ -102,6 +102,8 @@ function AdminHome() {
       <NoticesDiv />
       <SuppliersDiv />
       <BudgetGuideNotice />
+      <CalendarDiv />
+     
     </div>
   );
 }
