@@ -62,11 +62,11 @@ exports.previewUser = async (req,res) =>{
 exports.updateUser = async (req,res)=>{
     let userId = req.params.id;
 
-    const { username, name, email, password,role } = req.body;
+    const { username, lastname, email, password,role } = req.body;
 
     const updateUser = {
        username,
-       name,
+       lastname,
        email,
        password,
        role

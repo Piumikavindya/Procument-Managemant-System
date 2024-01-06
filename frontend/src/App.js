@@ -18,7 +18,7 @@ import CommonFooter from "./components/CommonFooter.jsx";
 import Navbar from "./components/NavBar";
 import { useNavigate } from "react-router-dom";
 import Form from "./pages/Form";
-import NavbarMain from "./components/NavBarMain";
+import NavbarMain from "./components/NavbarMain.jsx";
 import { UserNavBar } from "./components/UserNavBar.jsx";
 import DeleteManageNotices from "./pages/admin/notices/DeleteManageNotices.jsx";
 import ManageNotices from "./pages/admin/notices/ManageNotices.jsx";

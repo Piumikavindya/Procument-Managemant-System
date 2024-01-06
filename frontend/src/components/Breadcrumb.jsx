@@ -5,7 +5,7 @@ const breadcrumb = {
   backgroundColor: "white",
   border: "2px solid rgba(0,0,0,0.125)",
   borderRadius: "0.37rem",
-  marginTop: "84px",
+  marginTop: "54px",
 };
 
 function Breadcrumb(props) {
