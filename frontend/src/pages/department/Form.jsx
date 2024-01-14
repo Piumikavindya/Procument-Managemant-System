@@ -1,61 +1,12 @@
+
 import React, { useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
-import Dropdown from "../../components/DropDown";
-import "../../styles/Buttons.css";
-import "../../styles/button3.css";
-
+import Dropdown from "../components/DropDown";
+import "../styles/Buttons.css";
+import "../styles/button3.css";
 const Form = ({ forms }) => {
-
-  const [date, setDate] = useState("");
-  const [requestId, setRequestId] = useState("");
-  const [department, setDepartment] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [contactPerson, setContactPerson] = useState("");
-  const [budgetAllocation, setBudgetAllocation] = useState("");
-  const [usedAmount, setUsedAmount] = useState("");
-  const [balanceAvailable, setBalanceAvailable] = useState("");
-  const [purpose, setPurpose] = useState("");
-  const [sendTo, setSendTo] = useState("");
-  const [items, setItems] = useState("");
-  const [files, setFiles] = useState("");
-
-  // Function to generate request ID
-  const generateRequestId = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/procReqest/generateRequestId");
-      // Assuming the response contains the generated ID
-      const generatedId = response.data.id;
-      setRequestId(generatedId);
-    } catch (error) {
-      console.error("Error generating request ID", error);
-    }
-  };
-
-  // Function to handle form submission
-  const handleSubmit = async () => {
-    // Perform other form submission logic, and include the generated request ID
-    try {
-      const response = await axios.post("http://localhost:8000/procReqest/createRequest", {
-        requestId,
-        department,
-        date,
-        contactNo,
-        contactPerson,
-        budgetAllocation,
-        usedAmount,
-        balanceAvailable,
-        purpose,
-        sendTo,
-        items,
-        files,
-        // Other form data...
-      });
-      console.log("Request submitted successfully", response.data);
-    } catch (error) {
-      console.error("Error submitting request", error);
-    }
-  };
+  const [Date, setDate] = useState("");
+ 
 
   return (
     <div className="max-w-6xl mx-auto mt-40 ">
@@ -70,7 +21,7 @@ const Form = ({ forms }) => {
               <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
                 {/* Box 1 */}
                 <div className="border border-black p-2 bg-black text-white">
-                <button onClick={generateRequestId}>Generate Request ID</button>
+                  Generate Request ID
                 </div>
               </div>
               <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
@@ -518,7 +469,7 @@ const Form = ({ forms }) => {
                 </svg>
               </span>
             </button>
-            <button class="button3" type="button" onClick={handleSubmit}>
+            <button class="button3" type="button">
               <span class="button3__text">Save Form</span>
               <span class="button3__icon">
                 <svg

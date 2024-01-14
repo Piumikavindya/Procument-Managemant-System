@@ -26,6 +26,10 @@ import DeleteGuidance from './pages/admin/guidance/DeleteGuidance.jsx';
 
 import { useNavigate } from "react-router-dom";
 import ViewGuidances from './pages/admin/guidance/ViewGuidances.jsx';
+import DepartmentHome from './pages/department/DepartmentHome.jsx';
+import AllItem from './pages/admin/items/AllItem.jsx';
+import DeleteItem from './pages/admin/items/DeleteItem.jsx';
+import AddItem from './pages/admin/items/AddItem.jsx';
 
 
 
@@ -109,10 +113,16 @@ const App = () => {
         <Route path="/yearplanner" element={<YearPlanner />} />
 
         <Route path="/reqform" element={<ReqForm />} />
+        <Route path="/department/:id" element={<DepartmentHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
+
         <Route path="/ManageGuidance" element={<ManageGiidance />} />
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
         <Route path="/DeleteGuidance/:id" element={<DeleteGuidance/>} />
         <Route path="/ViewGuidances" element={<ViewGuidances/>} />
+        
+        <Route path="/AllItem" element={<AllItem/>} />
+        <Route path="/DeleteItem/:id" element={<DeleteItem/>} />
+        <Route path="/AddItem" element={<AddItem/>} />
         
       </Routes>
   

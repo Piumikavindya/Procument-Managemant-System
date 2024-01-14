@@ -5,6 +5,7 @@ import { useSnackbar } from "notistack";
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
 
 import "../../../styles/button2.css";
+import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
 
 const UpdateVendors = () => {
   const [username, setUsername] = useState("");
@@ -42,7 +43,7 @@ const UpdateVendors = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:8000/supplyer/${id}`)
+      .get(`http://localhost:8000/supplyer/preview-supplyer/${id}`)
       .then((response) => {
         setUsername(response.data.username);
         setSupplierId(response.data.supplierId);
@@ -139,6 +140,7 @@ const UpdateVendors = () => {
 
   return (
     <div class="app-container p-8 rounded border border-gray-200">
+       <UserTypeNavbar userType="admin" />
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/adminhome/:id" },

@@ -57,7 +57,7 @@ const FileUploadModal = () => {
       alert('Files uploaded successfully');
 
  // Redirect or navigate to the desired page
- navigate('/ManageGiidance');
+ navigate('/ManageGuidance');
 } catch (error) {
   console.error('Error uploading files:', error);
   // Handle errors, e.g., show an error message
@@ -65,7 +65,7 @@ const FileUploadModal = () => {
 }
 };
   const handleCancel = () => {
-    navigate('/ManageGiidance'); 
+    navigate('/ManageGuidance'); 
   };
 
   useEffect(() => {

@@ -5,9 +5,9 @@ import React from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import ManageGiidance from "./ManageGiidance ";
+import AllItem from "./AllItem";
 
-const DeleteGuidance = () => {
+const DeleteItem = () => {
   const [open, setOpen] = useState(true);
 
   const cancelButtonRef = useRef(null);
@@ -16,30 +16,29 @@ const DeleteGuidance = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-  const handleDeleteUser = () => {
+  const handleDeleteItem = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:8000/guidance/delete/${id}`)
+      .delete(`http://localhost:8000/item/delete/${id}`)
       .then(() => {
         setLoading(false);
-        enqueueSnackbar("guidance deleted", { variant: "success" });
-        navigate("/ManageGuidance");
-        console.log("guidance deleted succesfully");
+        enqueueSnackbar("Item deleted", { variant: "success" });
+        navigate("/AllItem");
       })
       .catch((error) => {
         setLoading(false);
-        enqueueSnackbar("Error deleting guidance", { variant: "error" });
+        enqueueSnackbar("Error deleting item", { variant: "error" });
         console.log(error);
       });
   };
 
   const handleOutsideClick = () => {
     setOpen(false);
-    navigate("/ManageGuidance");
+    navigate("/AllItem");
   };
   return (
     <div>
-      <ManageGiidance />
+      <AllItem />
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
@@ -89,13 +88,11 @@ const DeleteGuidance = () => {
 
                         <div className="mt-2">
                           <p className="text-xl text-black">
-                          Are you sure want to delete this guidance document?                            
-                            <br />
+                          Are you sure want to delete this Item?<br />
                             <span className="text-red-500">
-                            
-                              Note : Once you delete this guidance document 
-
-                              it will be permanently deleted from database!!{" "}
+                            Note : Once you delete this Item all details of this Item
+                              of this department will be removed from the
+                              system!!{" "}
                             </span>
                           </p>
                         </div>
@@ -107,7 +104,7 @@ const DeleteGuidance = () => {
                     <button
                       type="button"
                       className="mt-3 inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                      onClick={handleDeleteUser}
+                      onClick={handleDeleteItem}
                     >
                       Delete
                     </button>
@@ -121,4 +118,4 @@ const DeleteGuidance = () => {
     </div>
   );
 };
-export default DeleteGuidance;
+export default DeleteItem;

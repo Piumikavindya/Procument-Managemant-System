@@ -28,6 +28,7 @@ exports.createRequest = async (req, res) => {
       usedAmount,
       balanceAvailable,
       purpose,
+      sendTo,
       items,
       files
   } = req.body;
@@ -44,6 +45,7 @@ exports.createRequest = async (req, res) => {
           usedAmount,
           balanceAvailable,
           purpose,
+          sendTo,
           items,
           files
       });

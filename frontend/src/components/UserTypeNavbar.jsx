@@ -36,16 +36,17 @@ const UserTypeNavbar = ({ userType }) => {
   const AdminOptions = [
     { link: "Manage Users", path: "/allusers" },
     { link: "Manage Vendors", path: "/allvendors" },
-    { link: "Items", path: "" },
+    { link: "Items", path: "/AllItem" },
     { link: "Dashboard", path: "" },
     { link: "Manage Guidance", path: "/ManageGuidance" },
     { link: "Manage Notices", path: "" },
+    { link: "Department", path: "" },
     { link: "Budget & Plan", path: "" },
     { link: "Manage Year Plan", path: "/yearplanner" },
   ];
 
   const DepartmentOptions = [
-    { link: "Purchase Requisition", path: "" },
+    { link: "Purchase Requisition", path: "/reqform" },
     { link: "Requisition Tracker", path: "" },
   ];
 
@@ -94,9 +95,9 @@ const UserTypeNavbar = ({ userType }) => {
             : ""
         }`}
       >
-        <div className="flex justify-between items-center text-lg gap-8 text-center">
+        <div className="flex justify-between items-center text-l gap-8 text-center">
           {/* Nav bar items for large devices */}
-          <ul className="md:flex space-x-20 hidden ml-auto mr-auto text-lg ">
+          <ul className="md:flex space-x-20 hidden ml-auto mr-auto ">
             {userType === "admin" &&
               AdminOptions.map(({ link, path }) => (
                 <Link
