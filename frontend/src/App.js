@@ -36,7 +36,7 @@ import AllItem from "./pages/admin/items/AllItem.jsx";
 import AddItem from "./pages/admin/items/AddItem.jsx";
 import DeleteItem from "./pages/admin/items/DeleteItem.jsx";
 import PreviewItem from "./pages/admin/items/PreviewItem.jsx";
-
+import Test from "./pages/admin/test.jsx"
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
 
@@ -46,8 +46,8 @@ const App = () => {
   const renderNavbar = () => {
     if (
       location.pathname === "/admin/:id" ||
-      location.pathname === "/loginpage" ||
-      location.pathname === "/form"
+      location.pathname === "/loginpage"
+    
     ) {
       return null;
     }
@@ -65,7 +65,7 @@ const App = () => {
   };
 
   const renderCommonFooter = () => {
-    if (location.pathname === "/loginpage" || location.pathname === "/form") {
+    if (location.pathname === "/loginpage" ) {
       return null;
     }
 
@@ -115,6 +115,7 @@ const App = () => {
         <Route path="/allusers" element={<AllUsers />} />
         <Route path="/previewuser/:id" element={<PreviewUser />} />
         <Route path="/form" element={<Form />} />
+        <Route path="/test" element={<Test/>} />
 
         <Route path="/allvendors" element={<AllVendors />} />
         <Route path="/addvendors" element={<AddVendors />} />

@@ -97,6 +97,8 @@ function Home() {
       <NoticesDiv />
       <SuppliersDiv />
       <BudgetGuideNotice />
+      <BudgetGuideNotice />
+
     </div>
   );
 }

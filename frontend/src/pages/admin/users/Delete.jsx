@@ -45,7 +45,6 @@ const DeleteUsers = () => {
           className="relative z-10"
           onClose={() => handleOutsideClick()} // Use onClose to handle both closing and navigating
           static // Add the static prop here
-        
         >
           <Transition.Child
             as={Fragment}
@@ -73,32 +72,28 @@ const DeleteUsers = () => {
                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                   <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                     <div className="sm:flex sm:items-start">
-                     
                       <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                      <div className="mx-auto flex h-32 w-32 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                        <ExclamationTriangleIcon
-                          className="h-24 w-24 text-red-600"
-                          aria-hidden="true"
-                        />
-                             </div>
+                        <div className="mx-auto flex h-32 w-32 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                          <ExclamationTriangleIcon
+                            className="h-24 w-24 text-red-600"
+                            aria-hidden="true"
+                          />
+                        </div>
                         <Dialog.Title
-                           as="h1"
-                           className="text-3xl font-bold leading-6 text-black-500"
-                           >
-Are you sure?
+                          as="h1"
+                          className="text-3xl font-bold leading-6 text-black-500"
+                        >
+                          Are you sure?
                         </Dialog.Title>
                         <div className="mt-2">
-                        
-                      
-                        <p className="text-xl text-black">
-                        Are you sure you want to delete this user ?                        
-                        <span className="text-red-500 block">
-                          Note : Once you delete this user all details of this user will be removed from the system   </span>
-                        </p>
-                      
-                      
-                      
-                                              </div>
+                          <p className="text-xl text-black">
+                            Are you sure you want to delete this user ?
+                            <span className="text-red-500 block">
+                              Note : Once you delete this user all details of
+                              this user will be removed from the system{" "}
+                            </span>
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
