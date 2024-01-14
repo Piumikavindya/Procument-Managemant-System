@@ -18,6 +18,8 @@ import CommonFooter from "./components/CommonFooter.jsx";
 import Navbar from "./components/NavBar";
 import { useNavigate } from "react-router-dom";
 import Form from "./pages/Form";
+import FormView from "./pages/FormView";
+
 import NavbarMain from "./components/NavbarMain.jsx";
 import { UserNavBar } from "./components/UserNavBar.jsx";
 import DeleteManageNotices from "./pages/admin/notices/DeleteManageNotices.jsx";
@@ -116,6 +118,7 @@ const App = () => {
         <Route path="/previewuser/:id" element={<PreviewUser />} />
         <Route path="/form" element={<Form />} />
         <Route path="/test" element={<Test/>} />
+        <Route path="/formview" element={<FormView />} />
 
         <Route path="/allvendors" element={<AllVendors />} />
         <Route path="/addvendors" element={<AddVendors />} />

@@ -4,8 +4,11 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import Form from './Form';
+import { AddItemCard } from './AddItemCard';
 
-const PreviewDepartment = () => {
+
+
+const FormView = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -15,7 +18,7 @@ const PreviewDepartment = () => {
 
   const handleOutsideClick = () => {
     setOpen(false);
-    navigate("/alldepartments");
+    navigate("/form");
   };
   
   return (
@@ -53,7 +56,7 @@ const PreviewDepartment = () => {
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
               <Dialog.Panel>
-            
+            <AddItemCard/>
 
                 </Dialog.Panel>
               </Transition.Child>
@@ -65,4 +68,4 @@ const PreviewDepartment = () => {
   );
 };
 
-export default PreviewDepartment;
+export default FormView;

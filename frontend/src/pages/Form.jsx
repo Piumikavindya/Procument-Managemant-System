@@ -1,13 +1,18 @@
-
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Dropdown from "../components/DropDown";
 import "../styles/Buttons.css";
 import "../styles/button3.css";
+
 const Form = ({ forms }) => {
   const [Date, setDate] = useState("");
- 
+  const navigate = useNavigate();
 
+  const handleAddItemsClick = () => {
+    // Navigate to the specified route when "Add items" is clicked
+    navigate("/formview");
+  };
+ 
   return (
     <div className="max-w-6xl mx-auto mt-40 ">
       <div className="block w-full h-auto rounded-md border border-black bg-black py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
@@ -191,24 +196,21 @@ const Form = ({ forms }) => {
                 purchasing items.
               </p>
             </div>
-
-            <div className="border-b border-gray-900/10 pb-12">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-base font-bold leading-7 text-gray-900">
-                  Requesting Item Details
-                </h2>
-                <button className="c-button">
-                  <span className="c-main">
-                    <span className="c-ico">
-                      <span className="c-blur"></span>{" "}
-                      <span className="ico-text">+</span>
-                    </span>
-                    Add items
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-base font-bold leading-7 text-gray-900">
+                Requesting Item Details
+              </h2>
+              <button className="c-button" onClick={handleAddItemsClick}>
+                <span className="c-main">
+                  <span className="c-ico">
+                    <span className="c-blur"></span>{" "}
+                    <span className="ico-text">+</span>
                   </span>
-                </button>
-              </div>
-            
-              <div className="flex items-center">
+                  Add items
+                </span>
+              </button>
+            </div>
+            <div className="flex items-center">
                 <table className="min-w-full bg-white shadow-md rounded-xl">
                   <thead>
                     <tr className="bg-blue-gray-100 text-gray-700">
@@ -292,7 +294,6 @@ const Form = ({ forms }) => {
                   </tbody>
                 </table>
               </div>
-            </div>
 
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-base font-bold leading-7 text-gray-900">
@@ -527,6 +528,7 @@ const Form = ({ forms }) => {
           </div>
         </form>
       </div>
+     
     </div>
   );
 };
