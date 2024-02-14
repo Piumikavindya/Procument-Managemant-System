@@ -94,7 +94,7 @@ const ItemTable = ({ items }) => {
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                   <div className="icon-link flex justify-center gap-x-4">
-                    <Link to={`/`}>
+                    <Link to={`/PreveiwItem/:id`}>
                       <MdPreview className="text-2xl text-green-600" />
                     </Link>
                     <Link to={`/`}>

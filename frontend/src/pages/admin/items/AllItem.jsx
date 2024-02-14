@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ItemTable from "../../../components/ItemTable .jsx";
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
 import "../../../styles/button.css";
+import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
 
 const AllItem = () => {
   const [items, setItems] = useState([]);
@@ -30,6 +31,7 @@ const AllItem = () => {
 
   return (
     <div className="p-4">
+       <UserTypeNavbar userType="admin" />
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/adminhome/:id" },

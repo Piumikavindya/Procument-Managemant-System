@@ -9,45 +9,79 @@ exports.generateRequestId = async (req, res) => {
           ? 'REQ' + String(Number(latestRequest.requestId.slice(3)) + 1).padStart(3, '0')
           : 'REQ001';
     
-        // Respond with the generated ID without saving to the database
-        res.json({ requestId: newRequestId });
+        // Creating an instance of the model
+        const newRequestInstance = new procReqest({
+          requestId: newRequestId,
+      });
+
+      // Saving the instance to the database
+      const savedRequest = await newRequestInstance.save();
+
+      // Respond with the generated ID and the saved document
+      res.json({ requestId: savedRequest.requestId, savedRequest });
       } catch (error) {
+
         res.status(500).json({ error: error.message });
       }
 };
 
-//create the main Request
 exports.createRequest = async (req, res) => {
+  const requestId = req.params.requestId;
   const {
-      requestId,
-      department,
-      date,
-      contactNo,
-      contactPerson,
-      budgetAllocation,
-      usedAmount,
-      balanceAvailable,
-      purpose,
-      sendTo,
-      items,
-      files
+    faculty,
+    department,
+    date,
+    contactNo,
+    contactPerson,
+    budgetAllocation,
+    usedAmount,
+    balanceAvailable,
+    purpose,
+    sendTo,
+    items,
+    files
   } = req.body;
 
   try {
-      // Create a new instance of the model with the provided ID
+    // Find the existing document with the provided requestId
+    const existingRequest = await procReqest.findOne({ requestId });
+
+    if (existingRequest) {
+      // Update the existing document with additional fields
+      existingRequest.faculty = faculty;
+      existingRequest.department = department;
+      existingRequest.date = date;
+      existingRequest.contactNo = contactNo;
+      existingRequest.contactPerson = contactPerson;
+      existingRequest.budgetAllocation = budgetAllocation;
+      existingRequest.usedAmount = usedAmount;
+      existingRequest.balanceAvailable = balanceAvailable;
+      existingRequest.purpose = purpose;
+      existingRequest.sendTo = sendTo;
+      existingRequest.items = items;
+      existingRequest.files = files;
+
+      // Save the updated document to the database
+      const updatedRequest = await existingRequest.save();
+
+      // Send the updated document as a response
+      res.json(updatedRequest);
+    } else {
+      // If no document is found, create a new one
       const newprocReqest = new procReqest({
-          requestId,
-          department,
-          date,
-          contactNo,
-          contactPerson,
-          budgetAllocation,
-          usedAmount,
-          balanceAvailable,
-          purpose,
-          sendTo,
-          items,
-          files
+        requestId,
+        faculty,
+        department,
+        date,
+        contactNo,
+        contactPerson,
+        budgetAllocation,
+        usedAmount,
+        balanceAvailable,
+        purpose,
+        sendTo,
+        items,
+        files
       });
 
       // Save the new document to the database
@@ -55,11 +89,14 @@ exports.createRequest = async (req, res) => {
 
       // Send the created document as a response
       res.json(createdRequest);
+    }
   } catch (error) {
-      // Handle errors and send an appropriate response
-      res.status(500).json({ error: error.message });
+    console.error("Error in createRequest:", error);
+    // Handle errors and send an appropriate response
+    res.status(500).json({ error: error.message });
   }
 };
+
 
 
 exports.deleteRequest = async (req, res) => {

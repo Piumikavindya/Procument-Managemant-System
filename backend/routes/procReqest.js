@@ -7,7 +7,7 @@ router.post("/generateRequestId", generateRequestId, (req, res) => {
     console.log("Received a request to create a REQ id:", req.body);
     generateRequestId(req, res);
   });
-  router.post("/createRequest", createRequest, (req, res) => {
+  router.post("/createRequest/:requestId", createRequest, (req, res) => {
     console.log("Received a request to create a procurement request:", req.body);
     createRequest(req, res);
   });

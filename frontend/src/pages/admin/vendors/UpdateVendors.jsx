@@ -85,10 +85,14 @@ const UpdateVendors = () => {
       username,
       supplierId,
       supplierName,
-      address: [addressNo, addressStreet, addressLine],
+     addressNo,
+      addressStreet, 
+      addressLine,
       contactOfficer,
-      contactNumbers: [contactNumbers1, contactNumbers2],
-      emails: [emails1, emails2],
+    contactNumbers1, 
+      contactNumbers2,
+   emails1,
+    emails2,
       faxNumber,
       typeofBusiness,
       classOfAssets,
@@ -103,7 +107,7 @@ const UpdateVendors = () => {
         // Reset form fields
         setUsername("");
         setSupplierName("");
-
+        setSupplierId("");
         setAddressNo("");
         setAddressStreet("");
         setAddressLine("");

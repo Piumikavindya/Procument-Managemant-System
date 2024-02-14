@@ -39,7 +39,7 @@ const UserTypeNavbar = ({ userType }) => {
     { link: "Items", path: "/AllItem" },
     { link: "Dashboard", path: "" },
     { link: "Manage Guidance", path: "/ManageGuidance" },
-    { link: "Manage Notices", path: "" },
+    { link: "Manage Notices", path: "/ManageNotice" },
     { link: "Department", path: "" },
     { link: "Budget & Plan", path: "" },
     { link: "Manage Year Plan", path: "/yearplanner" },

@@ -28,12 +28,12 @@ const fileSchema = new Schema({
 const procRequestSchema = new Schema({
   requestId: {
     type: String,
-    required: true,
+    
     unique: true,
   },
+  faculty: {type: String,},
   department: {type: String,},
   date:{type: Date,},
-  contactNo: {type: String,},
   contactPerson: {type: String,},
   contactNo: {type: Number,},
 budgetAllocation: {type: Number,},

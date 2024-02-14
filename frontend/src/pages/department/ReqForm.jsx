@@ -1,61 +1,122 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate, } from "react-router-dom";
 import Dropdown from "../../components/DropDown";
 import "../../styles/Buttons.css";
 import "../../styles/button3.css";
 
-const Form = ({ forms }) => {
 
+
+const ReqForm = ({ forms }) => {
+
+  const navigate = useNavigate();
+
+
+    // Function to handle the generation of request ID
+    const handleGenerateRequestId = async () => {
+      try {
+        console.log("Generate Request ID button clicked");
+        const response = await axios.post(`http://localhost:8000/procReqest/generateRequestId`);
+        // Assuming the response contains the generated ID
+        const generatedId = response.data.requestId;
+        setRequestId(generatedId);
+     
+      } catch (error) {
+        console.error("Error generating request ID", error);
+      }
+    };
+    const [loading, setLoading] = useState(false);
+   
   const [date, setDate] = useState("");
   const [requestId, setRequestId] = useState("");
   const [department, setDepartment] = useState("");
+  const [faculty, setFaculty] = useState("");
   const [contactNo, setContactNo] = useState("");
   const [contactPerson, setContactPerson] = useState("");
   const [budgetAllocation, setBudgetAllocation] = useState("");
   const [usedAmount, setUsedAmount] = useState("");
   const [balanceAvailable, setBalanceAvailable] = useState("");
-  const [purpose, setPurpose] = useState("");
-  const [sendTo, setSendTo] = useState("");
-  const [items, setItems] = useState("");
-  const [files, setFiles] = useState("");
+  const [purpose, setPurpose] = useState('Normal');
+  const [sendTo, setSendTo] = useState('dean');
+  const [items, setItems] = useState({});
+  const [files, setFiles] = useState({});
 
-  // Function to generate request ID
-  const generateRequestId = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/procReqest/generateRequestId");
-      // Assuming the response contains the generated ID
-      const generatedId = response.data.id;
-      setRequestId(generatedId);
-    } catch (error) {
-      console.error("Error generating request ID", error);
-    }
+  const handleCheckboxClick = (selectedPurpose) => {
+    setPurpose(selectedPurpose);
+  };
+  
+  const formData = {
+    requestId,
+    department,
+    date,
+    contactPerson,
+    contactNo,
+    budgetAllocation,
+    usedAmount,
+    purpose,
+    sendTo,
+    items,
+    files,
   };
 
+  const handleAddItemsClick = () => {
+    // Navigate to the specified route when "Add items" is clicked
+    navigate(`/formview/${requestId}?state=${JSON.stringify(formData)}`);
+  };
   // Function to handle form submission
-  const handleSubmit = async () => {
-    // Perform other form submission logic, and include the generated request ID
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const newRequest = {
+      requestId,
+      department,
+      date,
+      contactPerson,
+      contactNo,
+      budgetAllocation,
+      usedAmount,
+      purpose,
+      sendTo,
+      // items: items,  
+      // files: files, 
+      // Add other form data...
+    };
+  
+    setLoading(true);
+  
     try {
-      const response = await axios.post("http://localhost:8000/procReqest/createRequest", {
-        requestId,
-        department,
-        date,
-        contactNo,
-        contactPerson,
-        budgetAllocation,
-        usedAmount,
-        balanceAvailable,
-        purpose,
-        sendTo,
-        items,
-        files,
-        // Other form data...
-      });
+      const response = await axios.post(`http://localhost:8000/procReqest/createRequest/${requestId}`, newRequest);
+  // Assuming the response contains the updated request
+      const updatedRequest = response.data.updatedRequest;
+  
+      // Update the state or perform any other actions based on the response
+  
+      alert("Request submitted successfully");
+      setLoading(false);
+  
+      // Reset form fields
+      // setRequestId("");
+      // setDepartment("");
+      // setDate("");
+      // setContactPerson("");
+      // setContactNo("");
+      // setBudgetAllocation("");
+      // setUsedAmount("");
+      // setPurpose({
+      //   normal: false,
+      //   fastTrack: false,
+      //   urgent: false,
+      // });
+      // setItems({});
+      // setFiles({});
+  
       console.log("Request submitted successfully", response.data);
     } catch (error) {
       console.error("Error submitting request", error);
+      console.dir(error); // Log the entire error object for more details
     }
   };
+  
 
   return (
     <div className="max-w-6xl mx-auto mt-40 ">
@@ -64,27 +125,32 @@ const Form = ({ forms }) => {
       </div>
 
       <div className="border border-black bg-white p-6 rounded-lg shadow-md">
-        <form>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <div className="space-y-6 ">
             <div className="flex flex-col justify-end space-y-1">
               <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
                 {/* Box 1 */}
                 <div className="border border-black p-2 bg-black text-white">
-                <button onClick={generateRequestId}>Generate Request ID</button>
+                <button  type="button"  onClick={handleGenerateRequestId}>Generate Request ID</button>
                 </div>
               </div>
               <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
                 {/* Box 2 */}
-                <div className="border border-black p-3">
-                  {/* Content for Box 2 */}
-                </div>
+               
+                <input
+  type="text"
+  value={requestId}
+  onChange={(e) => setRequestId(e.target.value)}
+  className="border-2 border-black px-4 py-2 w-full"
+/>
+              
               </div>
               <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
                 {/* Box 3 */}
                 {/* Content for Box 3 */}
                 <input
                   type="date"
-                  value={Date}
+                  value={date}
                   onChange={(e) => setDate(e.target.value)}
                   className="border-2 border-black px-4 py-2  w-full "
                 />
@@ -108,9 +174,8 @@ const Form = ({ forms }) => {
                   <div className="mt-2">
                     <input
                       type="text"
-                      name="first-name"
-                      id="first-name"
-                      autoComplete="given-name"
+                      value={faculty}
+                      onChange={(e) => setFaculty(e.target.value)}
                       className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -126,9 +191,8 @@ const Form = ({ forms }) => {
                   <div className="mt-2">
                     <input
                       type="text"
-                      name="last-name"
-                      id="last-name"
-                      autoComplete="family-name"
+                      value={department}
+                      onChange={(e) => setDepartment(e.target.value)}
                       className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -144,9 +208,8 @@ const Form = ({ forms }) => {
                   <div className="mt-2">
                     <input
                       type="text"
-                      name="first-name"
-                      id="first-name"
-                      autoComplete="given-name"
+                      value={contactPerson}
+                      onChange={(e) => setContactPerson(e.target.value)}
                       className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -161,8 +224,8 @@ const Form = ({ forms }) => {
                   <div className="mt-2">
                     <input
                       type="text"
-                      name="last-name"
-                      id="last-name"
+                      value={contactNo}
+                      onChange={(e) => setContactNo(e.target.value)}
                       autoComplete="family-name"
                       className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
@@ -185,11 +248,10 @@ const Form = ({ forms }) => {
                   </label>
                   <div className="mt-2">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                      <input
-                        type="text"
-                        name="username"
-                        id="username"
-                        autoComplete="username"
+                    <input
+              type="number"
+              value={budgetAllocation}
+              onChange={(e) => setBudgetAllocation(e.target.value)}
                         className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -206,10 +268,9 @@ const Form = ({ forms }) => {
                   <div className="mt-2">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
-                        type="text"
-                        name="username"
-                        id="username"
-                        autoComplete="username"
+                       type="text"
+                       value={usedAmount}
+                       onChange={(e) => setUsedAmount(e.target.value)}
                         className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -226,9 +287,8 @@ const Form = ({ forms }) => {
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
                         type="text"
-                        name="username"
-                        id="username"
-                        autoComplete="username"
+                        value={balanceAvailable}
+                        onChange={(e) => setBalanceAvailable(e.target.value)}
                         className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -246,7 +306,8 @@ const Form = ({ forms }) => {
                 <h2 className="text-base font-bold leading-7 text-gray-900">
                   Requesting Item Details
                 </h2>
-                <button className="c-button">
+            
+                <button type="button" onClick={handleAddItemsClick}>
                   <span className="c-main">
                     <span className="c-ico">
                       <span className="c-blur"></span>{" "}
@@ -290,6 +351,16 @@ const Form = ({ forms }) => {
                               </div>
                             </div>
                           </td>
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  {form.itemId}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+
                           <td className="border-blue-gray-200">
                             <div className="flex items-center">
                               <div>
@@ -377,9 +448,10 @@ const Form = ({ forms }) => {
                       <div className="relative flex gap-x-3">
                         <div className="flex h-6 items-center">
                           <input
-                            id="candidates"
-                            name="candidates"
+                            id="purpose"
+                            name="purpose"
                             type="checkbox"
+                            onClick={() => handleCheckboxClick('Normal')}
                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                         </div>
@@ -395,9 +467,10 @@ const Form = ({ forms }) => {
                       <div className="relative flex gap-x-3">
                         <div className="flex h-6 items-center">
                           <input
-                            id="offers"
-                            name="offers"
+                            id="purpose"
+                            name="purpose"
                             type="checkbox"
+                            onClick={() => handleCheckboxClick('Fast Track')}
                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                         </div>
@@ -456,7 +529,7 @@ const Form = ({ forms }) => {
                       <div className="flex items-center gap-x-3">
                         <input
                           id="push-everything"
-                          name="push-notifications"
+                          name="sendTo"
                           type="radio"
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
@@ -470,8 +543,9 @@ const Form = ({ forms }) => {
                       <div className="flex items-center gap-x-3">
                         <input
                           id="push-email"
-                          name="push-notifications"
+                          name="dean"
                           type="radio"
+                          onClick={() => handleCheckboxClick('dean')}
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                         <label
@@ -486,6 +560,7 @@ const Form = ({ forms }) => {
                           id="push-nothing"
                           name="push-notifications"
                           type="radio"
+                          onClick={() => handleCheckboxClick('registrar')}
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                         <label
@@ -518,7 +593,7 @@ const Form = ({ forms }) => {
                 </svg>
               </span>
             </button>
-            <button class="button3" type="button" onClick={handleSubmit}>
+            <button class="button3" type="submit" onClick={(e) => handleSubmit(e)}>
               <span class="button3__text">Save Form</span>
               <span class="button3__icon">
                 <svg
@@ -579,4 +654,4 @@ const Form = ({ forms }) => {
     </div>
   );
 };
-export default Form;
+export default ReqForm;

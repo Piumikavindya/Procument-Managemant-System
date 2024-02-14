@@ -60,7 +60,7 @@ exports.previewSupplyer = async (req,res) =>{
 exports.updateSupplyer = async (req,res)=>{
     let supplyerId = req.params.id;
 
-    const { username,supplierName,email, address,contactOfficer,contactNumber,faxNumber,typeofBusiness,classOfAssets} = req.body;
+    const { username,supplierName,supplierId,email, address,contactOfficer,contactNumber,faxNumber,typeofBusiness,classOfAssets} = req.body;
 
     const updateSupplyer = {
        username,

@@ -23,13 +23,20 @@ import ReqForm from './pages/department/ReqForm.jsx';
 import ManageGiidance from './pages/admin/guidance/ManageGiidance .jsx';
 import UploadGuidance from './pages/admin/guidance/UploadGuidance.jsx';
 import DeleteGuidance from './pages/admin/guidance/DeleteGuidance.jsx';
-
 import { useNavigate } from "react-router-dom";
 import ViewGuidances from './pages/admin/guidance/ViewGuidances.jsx';
 import DepartmentHome from './pages/department/DepartmentHome.jsx';
 import AllItem from './pages/admin/items/AllItem.jsx';
+import PreviewItem from './pages/admin/items/PreviewItem.jsx';
 import DeleteItem from './pages/admin/items/DeleteItem.jsx';
 import AddItem from './pages/admin/items/AddItem.jsx';
+import FormView from './pages/department/FormView.jsx';
+import { AddItemCard } from './pages/department/AddItemCard .jsx';
+
+import UploadNotice from './pages/admin/notices/UploadNotice.jsx';
+import DeleterNotice from './pages/admin/notices/DeleteNotice.jsx';
+import ViewNotice from './pages/admin/notices/ViewNotice.jsx';
+import ManageNotices from './pages/admin/notices/ManageNotices.jsx';
 
 
 
@@ -119,10 +126,18 @@ const App = () => {
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
         <Route path="/DeleteGuidance/:id" element={<DeleteGuidance/>} />
         <Route path="/ViewGuidances" element={<ViewGuidances/>} />
+
+        <Route path="/ManageNotice" element={<ManageNotices />} />
+        <Route path="/UploadNotice" element={<UploadNotice />} />
+        <Route path="/DeleteGuidance/:id" element={<DeleterNotice/>} />
+        <Route path="/ViewGuidances" element={<ViewNotice/>} />
         
         <Route path="/AllItem" element={<AllItem/>} />
+        <Route path="/PreviewItem/:id" element={<PreviewItem />} />
         <Route path="/DeleteItem/:id" element={<DeleteItem/>} />
         <Route path="/AddItem" element={<AddItem/>} />
+          <Route path="/formview/:requestId" element={<FormView />} />
+          <Route path="/additem/:requestId" element={<AddItemCard/>}/>
         
       </Routes>
   
