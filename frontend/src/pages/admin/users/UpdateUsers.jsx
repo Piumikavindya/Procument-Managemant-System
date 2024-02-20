@@ -4,7 +4,8 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
-
+import UserTypeNavbar from '../../../components/UserTypeNavbar.jsx';
+import "../../../styles/button2.css";
 
 const UpdateUsers = () => {
   const [role, setRole] = useState('');
@@ -29,16 +30,20 @@ const UpdateUsers = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:8000/user/${id}`)
+      .get(`http://localhost:8000/user/preview-user/${id}`)
       .then((response) => {
-        setRole(response.data.role);
-        setEmail(response.data.email);
-        setFirstName(response.data.firstname);
-        setLastName(response.data.lastname);
-        setPassword(response.data.password);
-        setUsername(response.data.username);
-        setDepartment(response.data.department);
-        setEmpNo(response.data.employeeNumber);
+        const userData = response.data;
+  
+        console.log('Fetched user data:', userData);
+        setRole(userData.role);
+        setEmail(userData.email);
+        setFirstName(userData.firstname);
+        setLastName(userData.lastname);
+        setPassword(userData.password);
+        setUsername(userData.username);
+        setDepartment(userData.department);
+        setEmpNo(userData.employeeNumber);
+  
         setLoading(false);
       })
       .catch((error) => {
@@ -95,6 +100,7 @@ const UpdateUsers = () => {
 
   return (
     <div class="app-container p-8 rounded border border-gray-200">
+       <UserTypeNavbar userType="admin" />
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/adminhome" },
@@ -210,7 +216,7 @@ const UpdateUsers = () => {
         </div>
         <div class="space-x-4 mt-8 text-center">         
        
-       <button class="button-56" role="button">Save</button>
+       <button className="button-71 " role="button">Save</button>
      </div>
       </form>
     </div>  );

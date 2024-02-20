@@ -2,33 +2,32 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
 import "../../../styles/button2.css";
 
-export default function PreviewUser() {
-  const [user, setUser] = useState({});
+export default function PreviewItemCom() {
+  const [items, setItems] = useState({});
   const { id } = useParams();
 
   useEffect(() => {
-    const getUser = async () => {
+    const getItem = async () => {
       try {
         const response = await axios.get(
           `http://localhost:8000/user/preview-user/${id}`
         );
-        console.log("User Data:", response.data);
-        setUser(response.data);
+        console.log("Item Data:", response.data);
+        setItems(response.data);
       } catch (error) {
-        console.log("Error fetching user:", error);
+        console.log("Error fetching item:", error);
       }
     };
 
-    getUser();
+    getItem();
   }, [id]);
 
   const navigate = useNavigate();
 
   const handleClose = () => {
-    navigate("/allusers");
+    navigate("/allitems");
   };
 
   return (
@@ -42,10 +41,7 @@ export default function PreviewUser() {
                 style={{ border: "4px solid #3490dc" }}
               >
                 <div className="p-3 border-b">
-                  <h1 className="font-medium text-2xl">User Details</h1>
-                  <p className="text-sm text-gray-500">
-                    Registration details of users.
-                  </p>
+                  <h1 className="font-medium text-2xl">Item Details</h1>
                 </div>
                 <div>
                   <style>
@@ -85,74 +81,48 @@ export default function PreviewUser() {
                   </style>
                   <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b bg-gray-50">
                     <span className="text-xl md:mr-4 text-black-900 font-bold block sm:inline">
-                      Role:
+                    Assets Class :
                     </span>
                     <span className="text-xl md:mr-4 text-gray-600">
-                      {user.role}
+                      {items.assetsclass} {items.assetsclass}
                     </span>
                   </div>
-                  {/* ... (similar logic for other fields) */}
                   <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
                     <span className="text-xl md:mr-4 text-black-900 font-bold block sm:inline">
-                      Department:
+                    Assets Sub Class:
                     </span>
                     <span className="text-xl md:mr-4 text-gray-600">
-                      {user.department}
+                    {items.assetssubclass}
                     </span>
                   </div>
-                  <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b bg-gray-50">
+                  <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b bg-gray-50">
                     <span className="text-xl md:mr-4 text-black-900 font-bold block sm:inline">
-                      First Name:
+                    Item Name :
                     </span>
                     <span className="text-xl mr-4 text-gray-600">
-                      {user.firstname}
-                    </span>
-                  </div>
-
-                  <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
-                    <span className="text-xl md:mr-4 text-black-900 font-bold block sm:inline">
-                      Last Name:
-                    </span>
-                    <span className="text-xl mr-4 text-gray-600">
-                      {user.lastname}
-                    </span>
-                  </div>
-
-                  <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b bg-gray-50">
-                    <span className="text-xl md:mr-4 text-black-900 font-bold block sm:inline">
-                      Email:
-                    </span>
-                    <span className="text-xl mr-4 text-gray-600">
-                      {user.email}
-                    </span>
-                  </div>
-
-                  <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
-                    <span className="text-xl md:mr-4 text-black-900 font-bold block sm:inline">
-                      Employee Number:
-                    </span>
-                    <span className="text-xl mr-4 text-gray-600">
-                      {user.employeeNumber}
-                    </span>
-                  </div>
-
-                  <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b bg-gray-50">
-                    <span className="text-xl md:mr-4 text-black-900 font-bold block sm:inline">
-                      Usename:
-                    </span>
-                    <span className="text-xl mr-4 text-gray-600">
-                      {user.username}
+                      {items.itemname}
                     </span>
                   </div>
                   <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
                     <span className="text-xl md:mr-4 text-black-900 font-bold block sm:inline">
-                      Password:
+                    Created At :
                     </span>
                     <span className="text-xl mr-4 text-gray-600">
-                      {user.password}
+                    {new Date(items.createdAt).toString()}
                     </span>
                   </div>
-                  <div class="space-x-4 mt-8 text-center mt-2">
+                  <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b bg-gray-50">
+                    <span className="text-xl md:mr-4 text-black-900 font-bold block sm:inline">
+                    Upadted At :
+                    </span>
+                    <span className="text-xl mr-4 text-gray-600">
+                    {new Date(items.updatedAt).toString()}
+                    </span>
+                  </div>
+
+                  
+
+                  <div class="space-x-4 mt-8 text-center ">
                     <button onClick={handleClose} className="button-71">
                       Close
                     </button>

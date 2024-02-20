@@ -22,18 +22,20 @@ const fileSchema = new Schema({
       cost: {type: Number,},
       qtyRequired: {type: Number,},
       qtyAvailable: {type: Number,},
+      action: {type: String,},
    
   });
 const procRequestSchema = new Schema({
   requestId: {
     type: String,
-    required: true,
+    
     unique: true,
   },
+  faculty: {type: String,},
   department: {type: String,},
   date:{type: Date,},
-  contactNo: {type: String,},
   contactPerson: {type: String,},
+  contactNo: {type: Number,},
 budgetAllocation: {type: Number,},
   usedAmount:{type: Number,},
   balanceAvailable:{type: Number,},
@@ -41,6 +43,11 @@ budgetAllocation: {type: Number,},
     type: String,
     default: 'Normal',
     enum: ['Normal', 'Fast Track','Urgent']
+  },
+  sendTo:{
+    type: String,
+    default: 'dean',
+    enum: ['dean', 'registrar','viceChancellor']
   },
   items: [itemSchema],  // Array of items within ProcurementRequest schema
   files: [fileSchema],  // Array of files within ProcurementRequest schema

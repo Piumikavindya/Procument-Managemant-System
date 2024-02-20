@@ -5,9 +5,10 @@ import React from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import ManageGiidance from "./ManageGiidance ";
+import ManageNotices from "./ManageNotices";
 
-const DeleteGuidance = () => {
+
+const DeleterNotice = () => {
   const [open, setOpen] = useState(true);
 
   const cancelButtonRef = useRef(null);
@@ -39,7 +40,7 @@ const DeleteGuidance = () => {
   };
   return (
     <div>
-      <ManageGiidance />
+      <ManageNotices/>
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
@@ -89,11 +90,11 @@ const DeleteGuidance = () => {
 
                         <div className="mt-2">
                           <p className="text-xl text-black">
-                          Are you sure want to delete this guidance document?                            
+                          Are you sure want to delete this notice document?                            
                             <br />
                             <span className="text-red-500">
                             
-                              Note : Once you delete this guidance document 
+                              Note : Once you delete this notice document 
 
                               it will be permanently deleted from database!!{" "}
                             </span>
@@ -121,4 +122,4 @@ const DeleteGuidance = () => {
     </div>
   );
 };
-export default DeleteGuidance;
+export default DeleterNotice;

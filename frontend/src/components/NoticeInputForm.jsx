@@ -46,7 +46,7 @@ const FileUploadModal = () => {
         formData.append('file', file);
       }
 
-      const response = await axios.post('http://localhost:8000/guidance/upload', formData, {
+      const response = await axios.post('http://localhost:8000/notice/uploadnotice', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -57,7 +57,7 @@ const FileUploadModal = () => {
       alert('Files uploaded successfully');
 
  // Redirect or navigate to the desired page
- navigate('/ManageGuidance');
+ navigate('/ManageNotice');
 } catch (error) {
   console.error('Error uploading files:', error);
   // Handle errors, e.g., show an error message
@@ -65,7 +65,7 @@ const FileUploadModal = () => {
 }
 };
   const handleCancel = () => {
-    navigate('/ManageGuidance'); 
+    navigate('/ManageNotice'); 
   };
 
   useEffect(() => {

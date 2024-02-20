@@ -14,6 +14,7 @@ const supplyerRouter = require('./routes/supplyer');
 const itemRouter = require('./routes/item');
 
 const guidanceRouter = require('./routes/guidanceDoc');
+const noticeRouter = require('./routes/noticeDoc');
 const procReqestRouter = require('./routes/procReqest');
 
 
@@ -46,6 +47,8 @@ app.use('/supplyer',supplyerRouter);
 app.use('/item',itemRouter);
 //this is gudance document route
 app.use('/guidance',guidanceRouter);
+//this is gudance document route
+app.use('/notice',noticeRouter);
 //this is Procurement request route
 app.use('/procReqest',procReqestRouter);
 

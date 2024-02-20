@@ -1,16 +1,11 @@
-// ReservationTable.js
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineDelete, MdPreview } from "react-icons/md";
 
-const UserTable = ({ users }) => {
+const ItemTable = ({ items }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredUsers = users.filter((user) =>
-    user.role.toLowerCase().includes(searchTerm.toLowerCase())
-  );
   return (
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
       <div class="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
@@ -22,7 +17,7 @@ const UserTable = ({ users }) => {
               aria-label="Search"
               aria-describedby="search-addon"
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search by Role"
+              placeholder="Search by item name"
             />
             <span class="input-group-text border-0" id="search-addon">
               <i class="fa-sharp fa-solid fa-magnifying-glass"></i>{" "}
@@ -38,26 +33,16 @@ const UserTable = ({ users }) => {
                 No
               </th>
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Role
+              Assets Class
               </th>
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Email
+              Assets Sub Class
               </th>
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                First Name
+              Item Name
               </th>
-              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Last Name
-              </th>
-              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Department
-              </th>
-              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Employee Number
-              </th>
-              <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-                Username
-              </th>
+
+              
               <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
                 Operations
               </th>
@@ -65,8 +50,8 @@ const UserTable = ({ users }) => {
           </thead>
 
           <tbody class="bg-white">
-            {filteredUsers.map((user, index) => (
-              <tr key={user._id} className="reservation-row">
+            {items.map((items, index) => (
+              <tr key={items._id} className="reservation-row">
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                   <div class="flex items-center">
                     <div>
@@ -80,7 +65,8 @@ const UserTable = ({ users }) => {
                   <div class="flex items-center">
                     <div>
                       <div class="text-sm leading-5 text-gray-800">
-                        {user.role}
+                        {items.AssetsClass}
+
                       </div>
                     </div>
                   </div>
@@ -89,7 +75,8 @@ const UserTable = ({ users }) => {
                   <div class="flex items-center">
                     <div>
                       <div class="text-sm leading-5 text-gray-800">
-                        {user.email}
+                      {items.AssetsSubClass}
+
                       </div>
                     </div>
                   </div>
@@ -98,56 +85,22 @@ const UserTable = ({ users }) => {
                   <div class="flex items-center">
                     <div>
                       <div class="text-sm leading-5 text-gray-800">
-                        {user.firstname}
+                      {items.itemName}
                       </div>
                     </div>
                   </div>
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                  <div class="flex items-center">
-                    <div>
-                      <div class="text-sm leading-5 text-gray-800">
-                        {user.lastname}
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                  <div class="flex items-center">
-                    <div>
-                      <div class="text-sm leading-5 text-gray-800">
-                        {user.department}
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                  <div class="flex items-center">
-                    <div>
-                      <div class="text-sm leading-5 text-gray-800">
-                        {user.employeeNumber}
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                  <div class="flex items-center">
-                    <div>
-                      <div class="text-sm leading-5 text-gray-800">
-                        {user.username}
-                      </div>
-                    </div>
-                  </div>
-                </td>
+                
+
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                   <div className="icon-link flex justify-center gap-x-4">
-                    <Link to={`/previewuser/${user._id}`}>
+                    <Link to={`/PreveiwItem/:id`}>
                       <MdPreview className="text-2xl text-green-600" />
                     </Link>
-                    <Link to={`/updateusers/${user._id}`}>
+                    <Link to={`/`}>
                       <AiOutlineEdit className="text-2xl text-blue-800 " />
                     </Link>
-                    <Link to={`/deleteusers/${user._id}`}>
+                    <Link to={`/DeleteItem/:id`}>
                       <MdOutlineDelete className="text-2xl text-red-500" />
                     </Link>
                   </div>
@@ -177,7 +130,7 @@ const UserTable = ({ users }) => {
               </div>
               <div>
                 <a
-                  href="/allusers"
+                  href="/AllItem"
                   class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-blue-700 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-tertiary active:text-gray-700 transition ease-in-out duration-150 hover:bg-tertiary"
                 >
                   1
@@ -207,4 +160,4 @@ const UserTable = ({ users }) => {
   );
 };
 
-export default UserTable;
+export default ItemTable;
