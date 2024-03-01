@@ -111,7 +111,7 @@ const LoginPage = ({ setIsAuthenticated}) => {
         <div className="sm:mx-auto sm:w-full ">
           <img
             className="mx-auto h-15 w-20 mt-2"
-            src="http://www.eng.ruh.ac.lk/img/unilogo.png"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCt-SLcMs8hS4aNdbyYIn9lQNRXX55C2ZsQO0SHz9j-g&s"
             alt="FoE,UoR-"
 
           />

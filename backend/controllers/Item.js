@@ -59,10 +59,10 @@ exports.previewItem = async (req,res) =>{
 exports.updateItem = async (req,res)=>{
     let itemId = req.params.id;
 
-    const { username,itemName,AssetsClass, AssetsSubClass} = req.body;
+    const { itemName,AssetsClass, AssetsSubClass} = req.body;
 
     const updateItem = {
-       username,
+       
        itemName,
        AssetsClass,
        AssetsSubClass,
