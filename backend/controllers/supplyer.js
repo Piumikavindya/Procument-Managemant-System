@@ -7,9 +7,9 @@ const Supplyer = require('../Models/supplyer');
 
 // request from the frontend
 exports.create = async (req,res) =>{
-    const {username,supplierId,supplierName,email, address,contactOfficer,contactNumber,faxNumber,typeofBusiness,classOfAssets} = req.body;
+    const {username,supplierId,supplierName,email, address,contactOfficer,contactNumber,faxNumber1,faxNumber2,typeofBusiness,classOfAssets} = req.body;
 // response will send to frontend
-const newSupplyer= new Supplyer({username,supplierId,supplierName,email, address,contactOfficer,contactNumber,faxNumber,typeofBusiness,classOfAssets})
+const newSupplyer= new Supplyer({username,supplierId,supplierName,email, address,contactOfficer,contactNumber,faxNumber1,faxNumber2,typeofBusiness,classOfAssets})
 //save the data in the database
 try {
     console.log('New Supplyer:', newSupplyer);
@@ -60,7 +60,7 @@ exports.previewSupplyer = async (req,res) =>{
 exports.updateSupplyer = async (req,res)=>{
     let supplyerId = req.params.id;
 
-    const { username,supplierName,supplierId,email, address,contactOfficer,contactNumber,faxNumber,typeofBusiness,classOfAssets} = req.body;
+    const { username,supplierName,supplierId,email, address,contactOfficer,contactNumber,faxNumber1,faxNumber2,typeofBusiness,classOfAssets} = req.body;
 
     const updateSupplyer = {
        username,
@@ -70,7 +70,8 @@ exports.updateSupplyer = async (req,res)=>{
        address,
        contactOfficer,
        contactNumber,
-       faxNumber,
+       faxNumber1,
+       faxNumber2,
        typeofBusiness,
        classOfAssets,
     };

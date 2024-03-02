@@ -34,14 +34,19 @@ const supplyerSchema = new Schema({
     type: [String,]
 
   }, 
-  faxNumber :{
+  faxNumber1 :{
+    type: String,
+
+  }, 
+
+  faxNumber2 :{
     type: String,
 
   }, 
   typeofBusiness:{
     type: String,
-    default: 'SoleImporter',
-    enum: ['SoleImporter', 'SoleDistributor ','LocalAgent','contractors']
+    // default: 'SoleImporter',
+    // enum: ['SoleImporter', 'SoleDistributor ','LocalAgent','contractors']
   },
   classOfAssets :{
     type: String,
