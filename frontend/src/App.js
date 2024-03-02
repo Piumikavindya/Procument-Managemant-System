@@ -37,6 +37,21 @@ import UploadNotice from './pages/admin/notices/UploadNotice.jsx';
 import DeleterNotice from './pages/admin/notices/DeleteNotice.jsx';
 import ViewNotice from './pages/admin/notices/ViewNotice.jsx';
 import ManageNotices from './pages/admin/notices/ManageNotices.jsx';
+import Purchase from './pages/admin/users/AddUsers.jsx';
+import AddSupplier from './pages/admin/vendors/AddSupplier.jsx';
+import AddItems from './pages/admin/items/AddItems.jsx';
+import AddUsers from './pages/admin/users/AddUsers.jsx';
+import UserList from './pages/admin/users/UserList.jsx';
+import VendorDetails from './pages/admin/vendors/VendorDetails.jsx';
+import ItemDetails from './pages/admin/items/ItemDetails.jsx';
+import EditUserDetails from './pages/admin/users/EditUserDetails.jsx';
+import DeleteUserDetails from './pages/admin/users/DeleteUserDetails.jsx';
+import ViewUserDetails from './pages/admin/users/ViewUserDetails.jsx';
+import UpdateSupplier from './pages/admin/vendors/UpdateSupplier.jsx';
+import DeleteSupplier from './pages/admin/vendors/DeleteSupplier.jsx';
+import UpdateItems from './pages/admin/items/updateItems.jsx';
+
+
 
 
 
@@ -111,11 +126,22 @@ const App = () => {
         <Route path="/allusers" element={<AllUsers />} />
         <Route path="/previewuser/:id" element={<PreviewUser />} />
 
+
+        <Route path="/editUsers/:id" element={<EditUserDetails />} />
+        <Route path="/userList" element={<UserList />} />
+        <Route path="/deleteUserDetails/:id" element={<DeleteUserDetails />} />
+        <Route path="/viewUserDetails/:id" element={<ViewUserDetails />} />
+
         <Route path="/allvendors" element={<AllVendors />} />
         <Route path='/addvendors' element={<AddVendors/>} />
         <Route path="/deletevendor/:id" element={<DeleteVendor/>} />
         <Route path="/previewvendor/:id" element={<PreviewVendor />} />
         <Route path="/updatevendor/:id" element={<UpdateVendor/>} />
+
+        <Route path="/addSupplier" element={<AddSupplier />} />
+        <Route path="/vendorsDetails" element={<VendorDetails />} />
+        <Route path="/updateSupplier/:id" element={<UpdateSupplier/>} />
+        <Route path="/deleteSupplier/:id" element={<DeleteSupplier/>} />
 
         <Route path="/yearplanner" element={<YearPlanner />} />
 
@@ -138,6 +164,13 @@ const App = () => {
         <Route path="/AddItem" element={<AddItem/>} />
           <Route path="/formview/:requestId" element={<FormView />} />
           <Route path="/additem/:requestId" element={<AddItemCard/>}/>
+
+          <Route path="/itemDetails" element={<ItemDetails/>} />
+          <Route path="/AddItems" element={<AddItems/>} />
+          <Route path="/updateItems" element={<UpdateItems/>} />
+
+          <Route path="/addUsers" element={<AddUsers/>} />
+       
         
       </Routes>
   
