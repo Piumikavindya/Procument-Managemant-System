@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from React Router
-import { FaXmark, FaBars } from "react-icons/fa6";
+
+import { FaXmark, FaBars } from "react-icons/fa";
 import "../styles/Navbar.css";
 import "../pages/Home";
 
