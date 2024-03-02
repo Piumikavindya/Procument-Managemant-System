@@ -41,8 +41,8 @@ budgetAllocation: {type: Number,},
   balanceAvailable:{type: Number,},
   purpose:{
     type: String,
-    default: 'Normal',
-    enum: ['Normal', 'Fast Track','Urgent']
+    default: 'normal',
+    enum: ['normal', 'Fast Track','Urgent','Normal']
   },
   sendTo:{
     type: String,
