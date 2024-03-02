@@ -4,13 +4,47 @@ import { Link ,useNavigate, } from "react-router-dom";
 import Dropdown from "../../components/DropDown";
 import "../../styles/Buttons.css";
 import "../../styles/button3.css";
-
-
+import { AddItemCard } from "./AddItemCard ";
 
 const ReqForm = ({ forms }) => {
 
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
+  const [date, setDate] = useState("");
+  const [requestId, setRequestId] = useState("");
+  const [department, setDepartment] = useState("");
+  const [faculty, setFaculty] = useState("");
+  const [contactNo, setContactNo] = useState("");
+  const [contactPerson, setContactPerson] = useState("");
+  const [budgetAllocation, setBudgetAllocation] = useState("");
+  const [usedAmount, setUsedAmount] = useState("");
+  const [balanceAvailable, setBalanceAvailable] = useState("");
+  const [purpose, setPurpose] = useState('normal');
+  const [sendTo, setSendTo] = useState('dean');
+  const [items, setItems] = useState({});
+  const [files, setFiles] = useState({});
+
+  useEffect(() => {
+    const formDataFromStorage = localStorage.getItem("formData");
+    if (formDataFromStorage) {
+      const formData = JSON.parse(formDataFromStorage);
+      setRequestId(formData.requestId);
+      setDepartment(formData.department);
+      setDate(formData.date);
+      setContactPerson(formData.contactPerson);
+      setContactNo(formData.contactNo);
+      setBudgetAllocation(formData.budgetAllocation);
+      setUsedAmount(formData.usedAmount);
+      setPurpose(formData.purpose);
+      setSendTo(formData.sendTo);
+      setItems(formData.items);
+      setFiles(formData.files);
+    } else {
+      handleGenerateRequestId();
+    }
+  }, []);
 
     // Function to handle the generation of request ID
     const handleGenerateRequestId = async () => {
@@ -25,48 +59,98 @@ const ReqForm = ({ forms }) => {
         console.error("Error generating request ID", error);
       }
     };
-    const [loading, setLoading] = useState(false);
-   
-  const [date, setDate] = useState("");
-  const [requestId, setRequestId] = useState("");
-  const [department, setDepartment] = useState("");
-  const [faculty, setFaculty] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [contactPerson, setContactPerson] = useState("");
-  const [budgetAllocation, setBudgetAllocation] = useState("");
-  const [usedAmount, setUsedAmount] = useState("");
-  const [balanceAvailable, setBalanceAvailable] = useState("");
-  const [purpose, setPurpose] = useState('Normal');
-  const [sendTo, setSendTo] = useState('dean');
-  const [items, setItems] = useState({});
-  const [files, setFiles] = useState({});
-
+ 
   const handleCheckboxClick = (selectedPurpose) => {
     setPurpose(selectedPurpose);
   };
-  
-  const formData = {
-    requestId,
-    department,
-    date,
-    contactPerson,
-    contactNo,
-    budgetAllocation,
-    usedAmount,
-    purpose,
-    sendTo,
-    items,
-    files,
+
+
+  const handleAddItemsClick = (itemData) => {
+
+    setItems((prevItems) => ({
+      ...prevItems,
+      [Date.now()]: itemData, // Assuming you want to use a timestamp as the key
+    }));
+    const formData = {
+      requestId,
+      department,
+      date,
+      contactPerson,
+      contactNo,
+      budgetAllocation,
+      usedAmount,
+      purpose,
+      sendTo,
+      items,
+      files,
+    };
+    // Navigate to the specified route when "Add items" is clicked
+    // Store form data in localStorage
+    localStorage.setItem("formData", JSON.stringify(formData));
+    // Navigate to add item page
+    navigate(`/formview/${requestId}`);
   };
 
-  const handleAddItemsClick = () => {
-    // Navigate to the specified route when "Add items" is clicked
-    navigate(`/formview/${requestId}?state=${JSON.stringify(formData)}`);
-  };
+
+
+
   // Function to handle form submission
+
+
+  const handleGeneratePDF = async () => {
+    const formData = {
+      requestId,
+      department,
+      date,
+      contactPerson,
+      contactNo,
+      budgetAllocation,
+      usedAmount,
+      purpose,
+      sendTo,
+      items,
+      files,
+    };
+  
+    try {
+      // Check if requestId is defined before proceeding
+      if (!formData.requestId) {
+        console.error('Error generating PDF: requestId is undefined');
+        return;
+      }
+  
+      const pdfResponse = await axios.post(`http://localhost:8000/procReqest/generatePdf/${formData.requestId}`, formData, {
+        responseType: 'arraybuffer' // Change response type to 'arraybuffer'
+      });
+  
+      const pdfBlob = new Blob([pdfResponse.data], { type: 'application/pdf' });
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+  
+      // Add a delay before opening the PDF in a new window
+      setTimeout(() => {
+        window.open(pdfUrl, '_blank');
+      }, 1000); // Adjust the delay time as needed
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const formData = {
+      requestId,
+      department,
+      date,
+      contactPerson,
+      contactNo,
+      budgetAllocation,
+      usedAmount,
+      purpose,
+      sendTo,
+      items,
+      files,
+    };
     const newRequest = {
       requestId,
       department,
@@ -77,45 +161,48 @@ const ReqForm = ({ forms }) => {
       usedAmount,
       purpose,
       sendTo,
-      // items: items,  
-      // files: files, 
-      // Add other form data...
+      items,
+      files,
     };
   
     setLoading(true);
   
     try {
-      const response = await axios.post(`http://localhost:8000/procReqest/createRequest/${requestId}`, newRequest);
-  // Assuming the response contains the updated request
-      const updatedRequest = response.data.updatedRequest;
+      const createResponse = await axios.post(
+        `http://localhost:8000/procReqest/createRequest/${requestId}`,
+        newRequest
+      );
+      const updatedRequest = createResponse.data.updatedRequest;
   
       // Update the state or perform any other actions based on the response
-  
       alert("Request submitted successfully");
       setLoading(false);
   
-      // Reset form fields
-      // setRequestId("");
-      // setDepartment("");
-      // setDate("");
-      // setContactPerson("");
-      // setContactNo("");
-      // setBudgetAllocation("");
-      // setUsedAmount("");
-      // setPurpose({
-      //   normal: false,
-      //   fastTrack: false,
-      //   urgent: false,
-      // });
-      // setItems({});
-      // setFiles({});
+      // Generate PDF after successful form submission
+      await handleGeneratePDF(formData);
   
-      console.log("Request submitted successfully", response.data);
+      // Reset form fields
+      setRequestId("");
+      setDepartment("");
+      setDate("");
+      setContactPerson("");
+      setContactNo("");
+      setBudgetAllocation("");
+      setUsedAmount("");
+      setPurpose("normal");
+      setSendTo("dean");
+  
+      localStorage.removeItem("formData");
+  
+      console.log("Request submitted successfully", createResponse.data);
     } catch (error) {
       console.error("Error submitting request", error);
-      console.dir(error); // Log the entire error object for more details
+      console.dir(error);
     }
   };
+  
+
+  
   
 
   return (
@@ -125,7 +212,7 @@ const ReqForm = ({ forms }) => {
       </div>
 
       <div className="border border-black bg-white p-6 rounded-lg shadow-md">
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e,items)}>
           <div className="space-y-6 ">
             <div className="flex flex-col justify-end space-y-1">
               <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
@@ -141,7 +228,7 @@ const ReqForm = ({ forms }) => {
   type="text"
   value={requestId}
   onChange={(e) => setRequestId(e.target.value)}
-  className="border-2 border-black px-4 py-2 w-full"
+  className="border-2 border-black px-4 py-2 w-full "disabled={true}
 />
               
               </div>
@@ -451,7 +538,7 @@ const ReqForm = ({ forms }) => {
                             id="purpose"
                             name="purpose"
                             type="checkbox"
-                            onClick={() => handleCheckboxClick('Normal')}
+                            onClick={() => handleCheckboxClick('normal')}
                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                         </div>
@@ -593,7 +680,10 @@ const ReqForm = ({ forms }) => {
                 </svg>
               </span>
             </button>
-            <button class="button3" type="submit" onClick={(e) => handleSubmit(e)}>
+            <button class="button3" type="submit" onClick={(e) => {
+    handleSubmit(e);
+    handleGeneratePDF();
+}}>
               <span class="button3__text">Save Form</span>
               <span class="button3__icon">
                 <svg

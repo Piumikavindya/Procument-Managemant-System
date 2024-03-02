@@ -95,7 +95,7 @@ const UserTypeNavbar = ({ userType }) => {
             : ""
         }`}
       >
-        <div className="flex justify-between items-center text-l gap-8 text-center">
+        <div className="flex justify-between items-center text-m gap-8 text-center">
           {/* Nav bar items for large devices */}
           <ul className="md:flex space-x-20 hidden ml-auto mr-auto ">
             {userType === "admin" &&
