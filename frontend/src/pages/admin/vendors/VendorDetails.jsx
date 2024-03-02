@@ -7,6 +7,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import Breadcrumb from "../../../components/Breadcrumb.jsx";
 
 import {
   Card,
@@ -23,19 +24,20 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
+import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
 
 
 
 const TABLE_HEAD = [
   "No",
   "SupplierID",
-  "Supplier Name",
+  "SupplierName",
   "Address",
-  "Contact Officer",
+  "ContactOfficer",
   "FaxNumber",
-  "Contact Number",
-  "Contact Email",
-  "Type of Business",
+  "ContactNumber",
+  "ContactEmail",
+  "TypeofBusiness",
   "Operations",
 ];
 
@@ -142,6 +144,14 @@ export default function VendorDetails() {
   );
 
   return (
+    <div className="p-4 ">
+    <UserTypeNavbar userType="admin"/>
+     <Breadcrumb  
+        crumbs={[
+          { label: "Home", link: "/adminhome/:id" },
+          { label: "Vendor Details", link: "/vendorsDetails" },
+        ]}
+        selected={(crumb) => console.log(`Selected: ${crumb.label}`)}/>
     <Card className="h-full w-full  mt-20  flex justify-center items-center">
       <CardHeader floated={false} shadow={false} className="rounded-none w-4/5">
         <div className="mb-8 flex items-center justify-between gap-8 w-full">
@@ -157,11 +167,11 @@ export default function VendorDetails() {
             <Button
               variant="outlined"
               size="sm"
-              className="text-white bg-blue-500 h-10"
+              className="text-white bg-brandPrimary  h-10"
             >
               <h6 className="mt-0">view all</h6>
             </Button>
-            <Button className="flex items-center gap-3 h-10" size="sm">
+            <Button className="flex items-center gap-3 h-10 bg-NeutralBlack" size="sm">
               <UserPlusIcon strokeWidth={2} className="h-5 w-5" />{" "}
               <Link to={"/addSupplier"} class="text-white" style={{ textDecoration: 'none' }}>
               <h6 className="mt-1">Add Supplier</h6>
@@ -185,19 +195,19 @@ export default function VendorDetails() {
       </CardHeader>
       <CardBody className="w-4/5  overflow-scroll px-0 ">
         <table className="mt-4 w-full  table-auto text-center ">
-          <thead className="bg-blue-500">
+          <thead className="bg-NeutralBlack">
             <tr>
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-1"
                 >
                   <Typography
                     variant="small"
                     color="blue-gray-900"
                     className="font-normal leading-none "
                   >
-                    <h5 className="font-bold text-white">{head}</h5>
+                    <h6 className="font-bold text-white mt-2">{head}</h6>
                   </Typography>
                 </th>
               ))}
@@ -266,7 +276,7 @@ export default function VendorDetails() {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      <h6>{supplyer.contactOfficer},</h6>
+                      <h6>{supplyer.contactOfficer}</h6>
                     </Typography>
                   </td>
 
@@ -276,8 +286,8 @@ export default function VendorDetails() {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      <h6>{supplyer.faxNumber1},</h6>
-                      <h6>{supplyer.faxNumber2},</h6>
+                      <h6>{supplyer.faxNumber1}</h6>
+                      <h6>{supplyer.faxNumber2}</h6>
                     </Typography>
                   </td>
 
@@ -370,5 +380,7 @@ export default function VendorDetails() {
         </div>
       </CardFooter>
     </Card>
+
+    </div>
   );
 }

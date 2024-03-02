@@ -5,7 +5,8 @@ import React from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import ManageGiidance from "./ManageGiidance ";
+import ManageGiidance from "./ManageGuidance ";
+import ManageGuidance from "./ManageGuidance ";
 
 const DeleteGuidance = () => {
   const [open, setOpen] = useState(true);
@@ -16,7 +17,7 @@ const DeleteGuidance = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-  const handleDeleteUser = () => {
+  const handleDeleteGuidance = () => {
     setLoading(true);
     axios
       .delete(`http://localhost:8000/guidance/delete/${id}`)
@@ -39,7 +40,7 @@ const DeleteGuidance = () => {
   };
   return (
     <div>
-      <ManageGiidance />
+      <ManageGuidance />
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
@@ -107,7 +108,7 @@ const DeleteGuidance = () => {
                     <button
                       type="button"
                       className="mt-3 inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                      onClick={handleDeleteUser}
+                      onClick={handleDeleteGuidance}
                     >
                       Delete
                     </button>

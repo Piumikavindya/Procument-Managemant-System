@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { EyeIcon, MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import Breadcrumb from "../../../components/Breadcrumb.jsx";
 import {
   Card,
   CardHeader,
@@ -19,6 +20,7 @@ import {
   Breadcrumbs,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
 
 
 
@@ -90,6 +92,15 @@ export default function ItemDetails() {
   };
 
   return (
+    <div className="p-4 ">
+    <UserTypeNavbar userType="admin"/>
+
+    <Breadcrumb  
+        crumbs={[
+          { label: "Home", link: "/adminhome/:id" },
+          { label: "Item Details", link: "/itemDetails" },
+        ]}
+        selected={(crumb) => console.log(`Selected: ${crumb.label}`)}/>
     <Card className="h-full w-full  mt-20  flex justify-center items-center">
     
       <CardHeader floated={false} shadow={false} className="rounded-none w-4/5 ">
@@ -109,10 +120,10 @@ export default function ItemDetails() {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button variant="outlined" size="sm" className="text-white bg-blue-500 h-10">
+            <Button variant="outlined" size="sm" className="text-white bg-brandPrimary h-10">
               <h6 className="mt-0">view all</h6>
             </Button>
-            <Button className="flex items-center gap-3 h-10" size="sm">
+            <Button className="flex items-center gap-3 h-10 bg-NeutralBlack" size="sm">
               <UserPlusIcon strokeWidth={2} className="h-5 w-5" /> 
               <Link to={"/AddItems"} class="text-white" style={{ textDecoration: 'none' }}>
               <h6 className="mt-1">Add Items</h6>
@@ -135,19 +146,19 @@ export default function ItemDetails() {
       </CardHeader>
       <CardBody className="w-4/5  overflow-scroll px-0 ">
         <table className="mt-4 w-full  table-auto text-center ">
-          <thead className="bg-blue-500">
+          <thead className="bg-NeutralBlack">
             <tr>
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-1"
                 >
                   <Typography
                     variant="small"
                     color="blue-gray-900"
                     className="font-normal leading-none "
                   >
-                    <h5 className="font-bold text-white">{head}</h5>
+                    <h6 className="font-bold text-white mt-2">{head}</h6>
                   </Typography>
                 </th>
               ))}
@@ -253,5 +264,7 @@ export default function ItemDetails() {
         </div>
       </CardFooter>
     </Card>
+
+    </div>
   )
 }

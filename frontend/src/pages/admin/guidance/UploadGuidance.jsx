@@ -5,8 +5,9 @@ import React from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import ManageGiidance from './ManageGiidance ';
+import ManageGiidance from './ManageGuidance ';
 import InputForm from "../../../components/InputForm";
+import ManageGuidance from './ManageGuidance ';
 
 
 export default function UploadGuidance() {
@@ -20,12 +21,12 @@ export default function UploadGuidance() {
   
     const handleOutsideClick = () => {
       setOpen(false);
-      navigate("/allusers");
+      navigate("/ManageGuidance");
     };
     
     return (
       <div>
-        <ManageGiidance />
+        <ManageGuidance />
         <Transition.Root show={open} as={Fragment}>
         <Dialog
             as="div"
@@ -70,3 +71,5 @@ export default function UploadGuidance() {
       </div>
     );
 }
+
+
