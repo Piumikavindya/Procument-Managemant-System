@@ -7,37 +7,34 @@ import {
   MdOutlineDelete,
   MdPreview,
   MdOutlineSimCardDownload,
-  MdDownloading,
-  MdDownload,
   MdDelete,
-  MdOpenWith,
+  MdDownload,
 } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
 import { Tooltip } from "flowbite-react";
 import { IconButton } from "@material-tailwind/react";
-import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { FolderIcon } from "@heroicons/react/24/solid";
+import { EyeIcon } from "@heroicons/react/24/outline";
 
-const ManageNotices = () => {
-  const [notice, setNotice] = useState([]);
+const ManageGuidance = () => {
+  const [guidances, setGuidance] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [showUploadForm, setShowUploadForm] = useState(false);
   const navigate = useNavigate();
 
-  const filteredNotices = notice.filter((notice) =>
-    notice.noticeId?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredGuidances = guidances.filter((guidance) =>
+    guidance.guidanceId?.toLowerCase().includes(searchTerm.toLowerCase())
   );
   // Fetch users data from your API endpoint
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8000/notice/view-notice") // Update the API endpoint
+      .get("http://localhost:8000/guidance/view-guidance") // Update the API endpoint
       .then((response) => {
-        setNotice(response.data.notice); // Assuming the guidance data is in response.data.guidance
+        setGuidance(response.data.guidance); // Assuming the guidance data is in response.data.guidance
         setLoading(false);
-        console.error("veiw notice is success");
+        console.error("veiw guidance is success");
       })
       .catch((error) => {
         console.error("Error fetching guidance:", error);
@@ -49,7 +46,7 @@ const ManageNotices = () => {
   const handleDownloadClick = async (id) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/notice/download/${id}`,
+        `http://localhost:8000/guidance/download/${id}`,
         {
           responseType: "blob",
         }
@@ -57,7 +54,7 @@ const ManageNotices = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const a = document.createElement("a");
       a.href = url;
-      a.download = "downloaded-notice.pdf";
+      a.download = "downloaded-guidance.pdf";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -70,7 +67,7 @@ const ManageNotices = () => {
     console.log(crumb);
   };
   const handleUploadClick = () => {
-    navigate("/UploadNotice"); // Update '/inputform' with the actual route
+    navigate("/UploadGuidance"); // Update '/inputform' with the actual route
   };
 
   return (
@@ -79,25 +76,25 @@ const ManageNotices = () => {
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/adminhome/:id" },
-          { label: "Manage Notice", link: "/ManageNotice" },
+          { label: "Manage Guidance", link: "/ManageGiidance" },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />
 
       <div className="reservation-list-container">
-        <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
-          <div class="rounded-t mb-0 px-4 py-3 border-0">
-            <div class="flex flex-wrap items-center">
-              <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                <h3 class="font-semibold  text-blueGray-700">
-                  <i class="fa-solid fa-file-lines"></i> Notice
+        <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
+          <div className="rounded-t mb-0 px-4 py-3 border-0">
+            <div className="flex flex-wrap items-center">
+              <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+                <h3 className="font-semibold  text-blueGray-700">
+                  <i className="fa-solid fa-file-lines"></i> Guidance
                 </h3>
               </div>
 
-              <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                <div class="flex justify-end gap-4">
+              <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+                <div className="flex justify-end gap-4">
                   <button
-                    class="select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-brandPrimary text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-3"
+                    className="select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-brandPrimary from-gray-900 to-gray-800 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-3"
                     type="button"
                     onClick={handleUploadClick}
                   >
@@ -107,7 +104,7 @@ const ManageNotices = () => {
                       viewBox="0 0 24 24"
                       stroke-width="2"
                       stroke="currentColor"
-                      class="w-5 h-5"
+                      className="w-5 h-5"
                     >
                       <path
                         stroke-linecap="round"
@@ -119,7 +116,7 @@ const ManageNotices = () => {
                   </button>
 
                   <button
-                    class="select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-3"
+                    className="select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-NeutralBlack  text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-3"
                     type="button"
                     onClick={handleUploadClick}
                   >
@@ -129,18 +126,18 @@ const ManageNotices = () => {
               </div>
             </div>
           </div>
-          <hr class="border-t border-black-500 my-3  " />
+          <hr className="border-t border-black-500 my-3  " />
 
-          <div class="align-middle inline-block min-w-full  overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
-            <table class="min-w-full">
-              <thead class="text-xs text-white-700 uppercase bg-NeutralBlack  dark:text-gray-400">
+          <div className="align-middle inline-block min-w-full  overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
+            <table className="min-w-full">
+              <thead className="text-xs text-white uppercase bg-NeutralBlack  dark:bg-gray-200 dark:text-gray-400">
                 {" "}
                 <tr>
-                  <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
+                  <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
                     No
                   </th>
                   <th
-                    class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider"
+                    className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider"
                     style={{ width: "500px" }} // Adjust the width as needed
                   >
                     File Name
@@ -148,18 +145,18 @@ const ManageNotices = () => {
 
                   {/* <th
                     style={{ width: "200px" }}
-                    class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white-900 tracking-wider"
+                    className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white-900 tracking-wider"
                   >
                     File Size
                   </th>
                   <th
                     style={{ width: "200px" }}
-                    class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white-900 tracking-wider"
+                    className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white-900 tracking-wider"
                   >
                     Date
                   </th> */}
 
-                  <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
+                  <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white-900 tracking-wider">
                     Operations
                   </th>
                 </tr>
@@ -172,12 +169,12 @@ const ManageNotices = () => {
                     </td>
                   </tr>
                 ) : (
-                  notice.map((notice, index) => (
-                    <tr key={notice._id} className="reservation-row">
+                  guidances.map((guidance, index) => (
+                    <tr key={guidance._id} className="reservation-row">
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="flex items-center">
                           <div>
-                            <div className="text-sm leading-5 text-gray-800">
+                            <div className="text-sm leading-5 text-gray-900">
                               {index + 1}
                             </div>
                           </div>
@@ -187,25 +184,26 @@ const ManageNotices = () => {
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="flex items-center">
                           <div>
-                            <div className="text-sm leading-5 text-gray-800">
-                              {notice.name}
+                            <div className="text-sm leading-5 text-gray-900">
+                              {guidance.name}
                             </div>
                           </div>
                         </div>
                       </td>
 
-                      <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                      <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="icon-link flex justify-center gap-x-4">
-                          <Link to={`/ViewNotices/${notice._id}`}>
-                            <Tooltip content="Preview Notice">
+
+                        <Link to={`/ViewGuidances/${guidance._id}`}>
+                            <Tooltip content="Preview Guidelines">
                               <IconButton variant="text">
                                 <EyeIcon className="h-6 w-6 text-green-500" />
                               </IconButton>
                             </Tooltip>
                           </Link>
 
-                          <Link to={`/DeleteNotice/${notice._id}`}>
-                            <Tooltip content="Delete Notice">
+                          <Link to={`/DeleteGuidance/${guidance._id}`}>
+                            <Tooltip content="Delete Guidelines">
                               <IconButton variant="text">
                                 <MdDelete className="h-6 w-6 text-red-500" />
                               </IconButton>
@@ -214,16 +212,14 @@ const ManageNotices = () => {
 
 
                           <button
-                            onClick={() => handleDownloadClick(notice._id)}
+                            onClick={() => handleDownloadClick(guidance._id)}
                           >
-                            <Tooltip content="Download Notice">
+                            <Tooltip content="Download Guidelines">
                               <IconButton variant="text">
                                 <MdDownload className="h-6 w-6 text-blue-500" />
                               </IconButton>
                             </Tooltip>
                           </button>
-
-                          
                           
                         </div>
                       </td>
@@ -232,18 +228,18 @@ const ManageNotices = () => {
                 )}
               </tbody>
             </table>
-            <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
+            <div className="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
               <div>
-                <nav class="relative z-0 inline-flex shadow-sm">
+                <nav className="relative z-0 inline-flex shadow-sm">
                   <div>
                     <a
                       href="#"
-                      class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
+                      className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
                       aria-label="Previous"
                       onClick={(e) => e.preventDefault()}
                     >
                       <svg
-                        class="h-5 w-5"
+                        className="h-5 w-5"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -258,7 +254,7 @@ const ManageNotices = () => {
                   <div>
                     <a
                       href="/allusers"
-                      class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-blue-700 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-tertiary active:text-gray-700 transition ease-in-out duration-150 hover:bg-tertiary"
+                      className="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-blue-700 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-tertiary active:text-gray-700 transition ease-in-out duration-150 hover:bg-tertiary"
                     >
                       1
                     </a>
@@ -266,12 +262,12 @@ const ManageNotices = () => {
                   <div>
                     <a
                       href="#"
-                      class="-ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
+                      className="-ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
                       aria-label="Next"
                       onClick={(e) => e.preventDefault()}
                     >
                       <svg
-                        class="h-5 w-5"
+                        className="h-5 w-5"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -293,4 +289,4 @@ const ManageNotices = () => {
   );
 };
 
-export default ManageNotices;
+export default ManageGuidance;

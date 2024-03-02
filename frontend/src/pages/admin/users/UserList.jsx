@@ -3,6 +3,7 @@ import { EyeIcon, MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/out
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Breadcrumb from "../../../components/Breadcrumb.jsx";
 import {
   Card,
   CardHeader,
@@ -19,7 +20,8 @@ import {
   Tooltip,
   Breadcrumbs,
 } from "@material-tailwind/react";
-import { Breadcrumb } from "flowbite-react";
+import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
+
 
 
 const TABLE_HEAD = [
@@ -120,19 +122,23 @@ export default function UserList() {
   };
 
   return (
-       
-    <Card className="h-full w-full  mt-20  flex justify-center items-center">
-    
-      <CardHeader floated={false} shadow={false} className="rounded-none w-4/5 ">
-      <Breadcrumb
+    <div className="p-4 ">
+    <UserTypeNavbar userType="admin" />
+       <Breadcrumb  
         crumbs={[
           { label: "Home", link: "/adminhome/:id" },
-          { label: "User Details", link: "/AllItem" },
-
-          { label: "Add User Details", link: "/additem" },
+          { label: "User Details", link: "/userList" },
         ]}
-        selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
-      />
+        selected={(crumb) => console.log(`Selected: ${crumb.label}`)}/>
+    <Card className="h-full w-full  mt-20  flex justify-center items-center">
+    
+    
+  
+    
+    
+      <CardHeader floated={false} shadow={false} className="rounded-none w-4/5 ">
+
+      
         <div className="mb-8 flex items-center justify-between gap-8 w-full">
         
         
@@ -148,10 +154,10 @@ export default function UserList() {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button variant="outlined" size="sm" className="text-white bg-blue-500 h-10">
+            <Button variant="outlined" size="sm" className="text-white bg-brandPrimary h-10">
               <h6 className="mt-0">view all</h6>
             </Button>
-            <Button className="flex items-center gap-3 h-10" size="sm" onclick="popuphandler(true)">
+            <Button className="flex items-center gap-3 h-10 bg-NeutralBlack" size="sm" onclick="popuphandler(true)">
               <UserPlusIcon strokeWidth={2} className="h-5 w-5" /> 
               <Link to={"/addUsers"} class="text-white"  style={{ textDecoration: 'none' }}>
               <h6 className="mt-2">Add User</h6>
@@ -171,21 +177,21 @@ export default function UserList() {
           </div>
         </div>
       </CardHeader>
-      <CardBody className="w-4/5  overflow-scroll px-0 ">
+      <CardBody className="w-4/5  overflow-scroll px-0">
         <table className="mt-4 w-full  table-auto text-center ">
-          <thead className="bg-blue-500">
+          <thead className="bg-NeutralBlack ">
             <tr>
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-1"
                 >
                   <Typography
                     variant="small"
                     color="blue-gray-900"
                     className="font-normal leading-none "
                   >
-                    <h5 className="font-bold text-white">{head}</h5>
+                    <h6 className="font-bold text-white mt-2">{head}</h6>
                   </Typography>
                 </th>
               ))}
@@ -341,6 +347,8 @@ export default function UserList() {
         </div>
       </CardFooter>
     </Card>
+
+    </div>
     
   );
 }

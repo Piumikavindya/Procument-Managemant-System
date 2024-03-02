@@ -105,9 +105,9 @@ export default function AddSupplier() {
         <Breadcrumb
           crumbs={[
             { label: "Home", link: "/adminhome/:id" },
-            { label: "Vendor Details", link: "/AllItem" },
+            { label: "Vendor Details", link: "/allvendors" },
 
-            { label: "Add Vendor Details", link: "/additem" },
+            { label: "Add Vendor Details", link: "/addvendors" },
           ]}
           selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
         />
