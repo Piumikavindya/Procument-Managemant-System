@@ -1,6 +1,8 @@
 const procReqest = require('../Models/procReqest');
 const path = require("path");
-const fs = require('fs');
+const { PDFDocument, rgb } = require('pdf-lib');
+const fs = require('fs').promises;
+
 // Generate Request ID
 exports.generateRequestId = async (req, res) => {
     try {
@@ -230,5 +232,83 @@ exports.deleteFile = async (req, res) => {
     res.json({message : 'file deleted successfully',updatedRequest});
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+
+exports.generatePdf = async (req, res) => {
+  try {
+    const { requestId } = req.params;
+
+    // Find the request document by ID
+    const request = await procReqest.findOne({ requestId });
+
+    if (!request) {
+      return res.status(404).json({ error: 'Request not found' });
+    }
+
+    // Create a new PDF document
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage();
+
+    // Add text to the PDF
+    const text = `
+      Faculty: ${request.faculty}
+      Department: ${request.department}
+      Date: ${request.date}
+      Contact No: ${request.contactNo}
+      Contact Person: ${request.contactPerson}
+      Budget Allocation: ${request.budgetAllocation}
+      Used Amount: ${request.usedAmount}
+      Balance Available: ${request.balanceAvailable}
+      Purpose: ${request.purpose}
+      Send To: ${request.sendTo}
+      Items: ${request.items.map(item => item.itemName).join(', ')}
+    `;
+    page.drawText(text, {
+      x: 50,
+      y: 750,
+    });
+
+    // Serialize the PDF
+    const pdfBytes = await pdfDoc.save();
+
+    // Set response headers for PDF download
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="${requestId}.pdf"`);
+
+    // Send the PDF as a downloadable file
+    res.send(pdfBytes);
+
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+    res.status(500).json({ error: 'Error generating PDF', message: error.message });
+  }
+};
+
+
+
+exports.downloadPdf = async (req, res) => {
+  const requestId = req.params.requestId;
+
+  try {
+    // Generate PDF bytes
+    const pdfBytes = await exports.generatePdf(requestId);
+
+    // Set response headers for PDF download
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="request_${requestId}.pdf"`);
+
+    // Send the PDF as a downloadable file
+    res.send(pdfBytes);
+
+  } catch (error) {
+    if (error.message === 'Request not found') {
+      return res.status(404).json({ error: 'Request not found' });
+    }
+    console.error('Error downloading PDF:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
