@@ -19,6 +19,12 @@ const procReqestRouter = require('./routes/procReqest');
 
 
 const PORT = process.env.PORT || 8000;
+const env = require('dotenv')
+const pdfRoute = require('./routes/pdfRoutes');
+const path = require('path')
+require('dotenv').config();
+env.config()
+
 
 
 
@@ -52,6 +58,7 @@ app.use('/notice',noticeRouter);
 //this is Procurement request route
 app.use('/procReqest',procReqestRouter);
 
+app.use(pdfRoute)
 
 app.listen(PORT, () => {
     console.log(`The server is listening on port: ${PORT}`);
