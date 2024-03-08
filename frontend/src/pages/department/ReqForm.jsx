@@ -37,6 +37,7 @@ const ReqForm = ({ forms }) => {
       setContactNo(formData.contactNo);
       setBudgetAllocation(formData.budgetAllocation);
       setUsedAmount(formData.usedAmount);
+      setBalanceAvailable(formData.balanceAvailable);
       setPurpose(formData.purpose);
       setSendTo(formData.sendTo);
       setItems(formData.items);
@@ -47,23 +48,21 @@ const ReqForm = ({ forms }) => {
   }, []);
 
     // Function to handle the generation of request ID
-    const handleGenerateRequestId = async () => {
-      try {
-        console.log("Generate Request ID button clicked");
-        const response = await axios.post(`http://localhost:8000/procReqest/generateRequestId`);
-        // Assuming the response contains the generated ID
-        const generatedId = response.data.requestId;
-        setRequestId(generatedId);
-     
-      } catch (error) {
-        console.error("Error generating request ID", error);
-      }
-    };
+  const handleGenerateRequestId = async () => {
+    try {
+      console.log("Generate Request ID button clicked");
+      const response = await axios.post(`http://localhost:8000/procReqest/generateRequestId`);
+      // Assuming the response contains the generated ID
+      const generatedId = response.data.requestId;
+      setRequestId(generatedId);
+    } catch (error) {
+      console.error("Error generating request ID", error);
+    }
+  };
  
   const handleCheckboxClick = (selectedPurpose) => {
     setPurpose(selectedPurpose);
   };
-
 
   const handleAddItemsClick = (itemData) => {
 
@@ -79,6 +78,7 @@ const ReqForm = ({ forms }) => {
       contactNo,
       budgetAllocation,
       usedAmount,
+      balanceAvailable,
       purpose,
       sendTo,
       items,
@@ -90,6 +90,7 @@ const ReqForm = ({ forms }) => {
     // Navigate to add item page
     navigate(`/formview/${requestId}`);
   };
+
 
 
 
@@ -106,6 +107,7 @@ const ReqForm = ({ forms }) => {
       contactNo,
       budgetAllocation,
       usedAmount,
+      balanceAvailable,
       purpose,
       sendTo,
       items,
@@ -146,6 +148,7 @@ const ReqForm = ({ forms }) => {
       contactNo,
       budgetAllocation,
       usedAmount,
+      balanceAvailable,
       purpose,
       sendTo,
       items,
@@ -159,6 +162,7 @@ const ReqForm = ({ forms }) => {
       contactNo,
       budgetAllocation,
       usedAmount,
+      balanceAvailable,
       purpose,
       sendTo,
       items,
@@ -189,6 +193,7 @@ const ReqForm = ({ forms }) => {
       setContactNo("");
       setBudgetAllocation("");
       setUsedAmount("");
+      balanceAvailable("");
       setPurpose("normal");
       setSendTo("dean");
   

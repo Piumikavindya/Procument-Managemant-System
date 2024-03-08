@@ -1,7 +1,7 @@
 const procReqest = require('../Models/procReqest');
 const path = require("path");
 const { PDFDocument, rgb } = require('pdf-lib');
-const fs = require('fs').promises;
+// const fs = require('fs').promises;
 
 // Generate Request ID
 exports.generateRequestId = async (req, res) => {
@@ -40,8 +40,8 @@ exports.createRequest = async (req, res) => {
     balanceAvailable,
     purpose,
     sendTo,
-    items,
-    files
+    // items,
+    // files
   } = req.body;
 
   try {
@@ -60,12 +60,12 @@ exports.createRequest = async (req, res) => {
       existingRequest.balanceAvailable = balanceAvailable;
       existingRequest.purpose = purpose;
       existingRequest.sendTo = sendTo;
-      existingRequest.items = items;
-      existingRequest.files = files;
+      // existingRequest.items = items;
+      // existingRequest.files = files;
 
       // Save the updated document to the database
       const updatedRequest = await existingRequest.save();
-
+console.log(updatedRequest);
       // Send the updated document as a response
       res.json(updatedRequest);
     } else {
@@ -82,8 +82,8 @@ exports.createRequest = async (req, res) => {
         balanceAvailable,
         purpose,
         sendTo,
-        items,
-        files
+        // items,
+        // files
       });
 
       // Save the new document to the database
@@ -114,12 +114,24 @@ exports.deleteRequest = async (req, res) => {
 
 exports.addProcItem = async (req, res) => {
   try {
+    const { requestId } = req.params;
+    const { description, cost, qtyRequired, qtyAvailable } = req.body;
+
     const updatedRequest = await procReqest.findOneAndUpdate(
-      { requestId: req.params.requestId },
-      { $push: { items: req.body } },
+      { requestId },
+      {
+        $push: {
+          items: {
+            description,
+            cost,
+            qtyRequired,
+            qtyAvailable,
+          },
+        },
+      },
       { new: true }
-      
     );
+
     res.json({ message: 'Item added successfully', updatedRequest });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -310,5 +322,137 @@ exports.downloadPdf = async (req, res) => {
     }
     console.error('Error downloading PDF:', error);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+// const fs = require('fs').promises;
+// const docx = require('docx');
+
+// const inputPath = 'test.docx'; // Path to your Word template
+// const outputPath = 'output.docx'; // Path to save the generated document
+
+// exports.generateWordDocument = async (req, res) => {
+//   try {
+//     const { requestId } = req.params;
+
+//     // Retrieve request data from MongoDB
+//     const request = await procReqest.findOne({ requestId });
+
+//     if (!request) {
+//       return res.status(404).json({ error: 'Request not found' });
+//     }
+
+//     // Read the Word template
+//     const templateBuffer = await fs.readFile(inputPath);
+
+//     // Create a new document from the template buffer
+//     const doc = new docx.Document(templateBuffer);
+
+//     // Check if options2 is defined and contains the sections property
+//     if (!options2 || !options2.sections || !Array.isArray(options2.sections)) {
+//       throw new Error('Error generating Word document: options2.sections is not defined or not an array');
+//     }
+
+//     // Iterate over each section and add it to the document
+//     for (const section of options2.sections) {
+//       this.addSection(section);
+//     }
+
+//     // Replace placeholders with data in the entire document text
+//     doc.getBody().getChildren().forEach((child) => {
+//       if (child instanceof docx.Paragraph) {
+//         const text = child.getText();
+//         const updatedText = text
+//           .replace('{{requestId}}', request.requestId)
+//           .replace('{{purpose}}', request.purpose)
+//           .replace('{{sendTo}}', request.sendTo);
+//         // Add other placeholder replacements as needed
+//         child.removeChildren();
+//         child.addRun(new docx.TextRun({ text: updatedText }));
+//       }
+//     });
+
+//     // Serialize the document to a buffer
+//     const buffer = await docx.Packer.toBuffer(doc);
+
+//     // Write the buffer content to the output file
+//     await fs.writeFile(outputPath, buffer);
+
+//     // Set response headers for Word download
+//     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+//     res.setHeader('Content-Disposition', `attachment; filename="output.docx"`);
+
+//     // Send the Word document as a downloadable file
+//     res.send(buffer);
+//   } catch (error) {
+//     console.error('Error generating Word document:', error);
+//     res.status(500).json({ error: 'Error generating Word document', message: error.message });
+//   }
+// };
+
+
+
+
+const fs = require('fs');
+const { promisify } = require('util');
+const Docxtemplater = require('docxtemplater');
+
+const readFileAsync = promisify(fs.readFile);
+const writeFileAsync = promisify(fs.writeFile);
+
+const inputPath = 'test1.docx'; // Path to your Word template
+const outputPath = 'output.docx'; // Path to save the generated document
+
+exports.generateWordDocument = async (req, res) => {
+  try {
+    const requestId = req.params.requestId;
+
+    // Find data from the database using requestId
+    const data = await procReqest.findOne({ requestId });
+
+    if (!data) {
+      return res.status(404).send('Request not found');
+    }
+
+    console.log('Data:', data);
+
+    // Read the Word template
+    const templateData = await readFileAsync(inputPath, 'binary');
+
+    console.log('Template data:', templateData);
+
+    // Initialize the docxtemplater with the template data
+    const doc = new Docxtemplater();
+    doc.loadZip(templateData);
+
+    // Set the data for placeholders
+    doc.setData({
+      faculty: data.faculty,
+      requestId: data.requestId,
+      department: data.department,
+      purpose: data.purpose,
+      sendTo: data.sendTo
+      // Add other placeholders and corresponding data fields as needed
+    });
+
+    // Render the template
+    doc.render();
+
+    // Get the rendered document as a binary buffer
+    const renderedBuffer = doc.getZip().generate({ type: 'nodebuffer' });
+
+    // Write the rendered document to the output path
+    await writeFileAsync(outputPath, renderedBuffer);
+
+    // Set response headers for Word download
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+    res.setHeader('Content-Disposition', `attachment; filename="output.docx"`);
+
+    // Send the Word document as a downloadable file
+    res.sendFile(outputPath);
+  } catch (error) {
+    console.error('Error generating Word document:', error);
+    res.status(500).send('Error creating Word document');
   }
 };
