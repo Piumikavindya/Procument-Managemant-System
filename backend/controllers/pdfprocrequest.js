@@ -61,7 +61,7 @@ exports.createPdf = async (req, res) => {
 
 
 exports.servePdf = (req, res) => {
-    const filename = 'output.pdf'; // Replace with actual filename if needed
+    const filename = 'output4.pdf'; // Replace with actual filename if needed
 
     const filePath = `${filename}`; // Adjust file path as needed
   

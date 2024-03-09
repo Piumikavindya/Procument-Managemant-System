@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from React Router
+// import { FaXmark, Fabars } from "react-icons/fa";
 
-import { FaXmark, FaBars } from "react-icons/fa";
+import { FaXmark, FaBars } from "react-icons/fa6";
 import "../styles/Navbar.css";
 import "../pages/Home";
 
@@ -35,7 +36,7 @@ const UserTypeNavbar = ({ userType }) => {
  
   //NAVITEMS ARRAY
   const AdminOptions = [
-    { link: "Manage Users", path: "/allusers" },
+    { link: "Manage Users", path: "/userList" },
     { link: "Manage Vendors", path: "/allvendors" },
     { link: "Items", path: "/AllItem" },
     { link: "Dashboard", path: "" },
@@ -48,7 +49,7 @@ const UserTypeNavbar = ({ userType }) => {
 
   const DepartmentOptions = [
     { link: "Purchase Requisition", path: "/reqform" },
-    { link: "Requisition Tracker", path: "" },
+    { link: "Requisition Tracker", path: "/ProgressTrack" },
   ];
 
   const procOfficerOptions = [
@@ -107,7 +108,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -120,7 +121,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -210,7 +211,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white  hover:text-bold  hover:font-medium"
               >
                 {link}
               </Link>
@@ -225,7 +226,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block  no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white  hover:text-bold  hover:font-medium"
               >
                 {link}
               </Link>
@@ -240,7 +241,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white  hover:text-bold  hover:font-medium"
               >
                 {link}
               </Link>
@@ -255,7 +256,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white  hover:text-bold  hover:font-mediumm"
               >
                 {link}
               </Link>
@@ -270,7 +271,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white  hover:text-bold  hover:font-medium"
               >
                 {link}
               </Link>
@@ -285,7 +286,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white  hover:text-bold  hover:font-medium"
               >
                 {link}
               </Link>

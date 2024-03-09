@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { generateRequestId,createRequest ,deleteRequest,addProcItem,deleteProcItem,uploadFile,downloadFile,deleteFile,viewFiles,generatePdf,downloadPdf} = require('../controllers/procReqest');
+const { generateRequestId,createRequest ,deleteRequest,addProcItem,deleteProcItem,uploadFile,downloadFile,deleteFile,viewFiles,generatePdf,downloadPdf,generateWordDocument} = require('../controllers/procReqest');
 const upload = require('../middlewares/multer');
 
 
@@ -19,7 +19,8 @@ router.post("/generateRequestId", generateRequestId, (req, res) => {
   router.delete('/deleteFile/:requestId/:filename', deleteFile);
   router.post('/generatePdf/:requestId', generatePdf);
   router.get('/viewFiles', viewFiles);
-  router.get('/downloadPdf/:requestId', downloadPdf);
+  // router.get('/downloadPdf/:requestId', downloadPdf);
+  router.get('/generateword/:requestId', generateWordDocument);
 
 
   module.exports = router;

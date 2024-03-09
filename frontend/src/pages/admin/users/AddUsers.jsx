@@ -66,9 +66,9 @@ export default function AddUsers() {
         <Breadcrumb
           crumbs={[
             { label: "Home", link: "/adminhome/:id" },
-            { label: "User Details", link: "/AllItem" },
+            { label: "User Details", link: "/userList" },
 
-            { label: "Add User Details", link: "/additem" },
+            { label: "Add User Details", link: "/addUsers" },
           ]}
           selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
         />

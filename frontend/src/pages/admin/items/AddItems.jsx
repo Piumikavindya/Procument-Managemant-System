@@ -70,8 +70,8 @@ export default function AddItems() {
               </label>
               <div className="mt-2">
               <select
-                  id="country"
-                  name="country"
+                  id="assets"
+                  name="assets"
                   value={assets}
               onChange={(e) => setAssetsClass(e.target.value)}
                   autoComplete="country-name"

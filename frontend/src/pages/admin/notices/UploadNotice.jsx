@@ -21,12 +21,12 @@ export default function UploadNotice() {
   
     const handleOutsideClick = () => {
       setOpen(false);
-      navigate("/allusers");
+      navigate("/ManageNotice");
     };
     
     return (
       <div>
-        <ManageNotices />
+        <ManageNotices/>
         <Transition.Root show={open} as={Fragment}>
         <Dialog
             as="div"
