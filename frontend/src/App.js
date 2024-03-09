@@ -156,7 +156,6 @@ const App = () => {
           <Route path="/itemDetails" element={<ItemDetails/>} />
           <Route path="/AddItems" element={<AddItems/>} />
           <Route path="/updateItems" element={<UpdateItems/>} />
-
           
 
          
