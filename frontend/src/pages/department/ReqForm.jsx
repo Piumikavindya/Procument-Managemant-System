@@ -5,6 +5,7 @@ import Dropdown from "../../components/DropDown";
 import "../../styles/Buttons.css";
 import "../../styles/button3.css";
 import { AddItemCard } from "./AddItemCard ";
+import UserTypeNavbar from "../../components/UserTypeNavbar";
 
 const ReqForm = ({ forms }) => {
 
@@ -219,7 +220,10 @@ const ReqForm = ({ forms }) => {
   
 
   return (
+    <div>
+    <UserTypeNavbar userType="department" />
     <div className="max-w-6xl mx-auto mt-40 ">
+    
       <div className="block w-full h-auto rounded-md border border-black bg-black py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
         <Dropdown />
       </div>
@@ -736,6 +740,7 @@ const ReqForm = ({ forms }) => {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 };
