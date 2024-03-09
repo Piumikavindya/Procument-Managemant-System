@@ -227,15 +227,24 @@ export default function ItemDetails() {
 
                     
                     <td className={classes}>
+
+                    <Link to={`/previewItemDetails/:${items._id}`}>
+                    <Tooltip content="View Item">
+                        <IconButton variant="text">
+                          <EyeIcon className="h-6 w-6 text-blue-500" />
+                        </IconButton>
+                      </Tooltip>
+                    </Link>
+
                     <Link to={`/updateItems/:${items._id}`}>
-                    <Tooltip content="Edit User">
+                    <Tooltip content="Edit Item">
                         <IconButton variant="text">
                           <PencilIcon className="h-6 w-6 text-green-500" />
                         </IconButton>
                       </Tooltip>
                     </Link>
                     <Link to={`/deleteItems/:${items._id}`}>
-                    <Tooltip content="Delete User">
+                    <Tooltip content="Delete Item">
                         <IconButton variant="text">
                           <TrashIcon className="h-6 w-6  text-red-500" />
                         </IconButton>
