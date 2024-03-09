@@ -40,6 +40,7 @@ import DeleteSupplier from './pages/admin/vendors/DeleteSupplier.jsx';
 import UpdateItems from './pages/admin/items/updateItems.jsx';
 import ManageGuidance from './pages/admin/guidance/ManageGuidance .jsx';
 import DeleteNotice from './pages/admin/notices/DeleteNotice.jsx';
+import ProgressTracker from './pages/department/ProgressTracker.js';
 
 
 const App = () => {
@@ -133,6 +134,7 @@ const App = () => {
 
         <Route path="/reqform" element={<ReqForm />} />
         <Route path="/department/:id" element={<DepartmentHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
+        <Route path="/ProgressTrack" element={<ProgressTracker />} />
 
         <Route path="/ManageGuidance" element={<ManageGuidance />} />
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
@@ -154,6 +156,8 @@ const App = () => {
           <Route path="/itemDetails" element={<ItemDetails/>} />
           <Route path="/AddItems" element={<AddItems/>} />
           <Route path="/updateItems" element={<UpdateItems/>} />
+
+          
 
          
        

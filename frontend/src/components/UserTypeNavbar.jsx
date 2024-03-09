@@ -49,7 +49,7 @@ const UserTypeNavbar = ({ userType }) => {
 
   const DepartmentOptions = [
     { link: "Purchase Requisition", path: "/reqform" },
-    { link: "Requisition Tracker", path: "" },
+    { link: "Requisition Tracker", path: "/ProgressTrack" },
   ];
 
   const procOfficerOptions = [
@@ -121,7 +121,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
