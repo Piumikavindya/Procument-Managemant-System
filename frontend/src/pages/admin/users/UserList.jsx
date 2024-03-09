@@ -307,6 +307,14 @@ export default function UserList() {
                       </Typography>
                     </td>
                     <td className={classes}>
+                    <Link to={`/previewUserDetails/${user._id}`}>
+                    <Tooltip content="View User">
+                        <IconButton variant="text">
+                          <EyeIcon className="h-6 w-6 text-blue-500" />
+                        </IconButton>
+                      </Tooltip>
+                    </Link>
+
                     <Link to={`/editUsers/${user._id}`}>
                     <Tooltip content="Edit User">
                         <IconButton variant="text">
@@ -314,6 +322,7 @@ export default function UserList() {
                         </IconButton>
                       </Tooltip>
                     </Link>
+
                     <Link to={`/deleteUserDetails/${user._id}`}>
                     <Tooltip content="Delete User">
                         <IconButton variant="text">
