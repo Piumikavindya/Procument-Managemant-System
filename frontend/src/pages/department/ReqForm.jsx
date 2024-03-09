@@ -45,6 +45,7 @@ const ReqForm = ({ forms }) => {
     } else {
       handleGenerateRequestId();
     }
+    handleViewProcItems();
   }, []);
 
     // Function to handle the generation of request ID
@@ -68,8 +69,9 @@ const ReqForm = ({ forms }) => {
 
     setItems((prevItems) => ({
       ...prevItems,
-      [Date.now()]: itemData, // Assuming you want to use a timestamp as the key
+      [Date.now()]: itemData,
     }));
+    handleViewProcItems();
     const formData = {
       requestId,
       department,
@@ -84,16 +86,28 @@ const ReqForm = ({ forms }) => {
       items,
       files,
     };
-    // Navigate to the specified route when "Add items" is clicked
+   
+    // Navigate to the specified route after updating items
+    navigate(`/formview/${requestId}`);
+  
     // Store form data in localStorage
     localStorage.setItem("formData", JSON.stringify(formData));
-    // Navigate to add item page
-    navigate(`/formview/${requestId}`);
+    handleViewProcItems()
   };
+  
 
-
-
-
+  const handleViewProcItems = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/procReqest/viewProcItems/${requestId}`
+      );
+      const itemsData = response.data;
+      setItems(itemsData); // Update the items state with the fetched data
+    } catch (error) {
+      console.error("Error fetching procurement items:", error);
+    }
+  };
+  
 
   // Function to handle form submission
 
@@ -136,8 +150,8 @@ const ReqForm = ({ forms }) => {
       console.error('Error generating PDF:', error);
     }
   };
-  
-  
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
@@ -168,24 +182,16 @@ const ReqForm = ({ forms }) => {
       items,
       files,
     };
-  
     setLoading(true);
-  
     try {
       const createResponse = await axios.post(
         `http://localhost:8000/procReqest/createRequest/${requestId}`,
         newRequest
       );
       const updatedRequest = createResponse.data.updatedRequest;
-  
-      // Update the state or perform any other actions based on the response
       alert("Request submitted successfully");
       setLoading(false);
-  
-      // Generate PDF after successful form submission
       await handleGeneratePDF(formData);
-  
-      // Reset form fields
       setRequestId("");
       setDepartment("");
       setDate("");
@@ -193,20 +199,22 @@ const ReqForm = ({ forms }) => {
       setContactNo("");
       setBudgetAllocation("");
       setUsedAmount("");
-      balanceAvailable("");
+      setBalanceAvailable("");
       setPurpose("normal");
       setSendTo("dean");
-  
+      setItems({});
+      setFiles({});
       localStorage.removeItem("formData");
-  
       console.log("Request submitted successfully", createResponse.data);
+  
+      // Fetch updated items after submitting the form
+      handleViewProcItems();
     } catch (error) {
       console.error("Error submitting request", error);
       console.dir(error);
     }
   };
   
-
   
   
 
@@ -215,6 +223,7 @@ const ReqForm = ({ forms }) => {
       <div className="block w-full h-auto rounded-md border border-black bg-black py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
         <Dropdown />
       </div>
+     
 
       <div className="border border-black bg-white p-6 rounded-lg shadow-md">
         <form onSubmit={(e) => handleSubmit(e,items)}>
@@ -411,98 +420,79 @@ const ReqForm = ({ forms }) => {
               </div>
             
               <div className="flex items-center">
-                <table className="min-w-full bg-white shadow-md rounded-xl">
-                  <thead>
-                    <tr className="bg-blue-gray-100 text-gray-700">
-                      <th className="py-3 px-4 text-left">No</th>
-                      <th className="py-3 px-4 text-left">
-                        Description of the item/items indented to be purchased
-                      </th>
-                      <th className="py-3 px-4 text-left">
-                        Cost (Approximately)
-                      </th>
-                      <th className="py-3 px-4 text-left">Qty Required</th>
-                      <th className="py-3 px-4 text-left">Qty Available</th>
-                      <th className="py-3 px-4 text-left">Actions</th>
-                    </tr>
-                  </thead>
+              <table key={Object.keys(items).length} className="min-w-full bg-white shadow-md rounded-xl">
+        <thead>
+          <tr className="bg-blue-gray-100 text-gray-700">
+            <th className="py-3 px-4 text-left">No</th>
+            <th className="py-3 px-4 text-left">Description</th>
+            <th className="py-3 px-4 text-left">Cost (Approximately)</th>
+            <th className="py-3 px-4 text-left">Qty Required</th>
+            <th className="py-3 px-4 text-left">Qty Available</th>
+            <th className="py-3 px-4 text-left">Actions</th>
+          </tr>
+        </thead>
 
-                  <tbody className="text-blue-gray-900">
-                    {forms &&
-                      forms.map((form, index) => (
-                        <tr
-                          key={form._id}
-                          className="border-b border-blue-gray-200"
-                        >
-                          <td className="border-blue-gray-200">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {index + 1}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="border-blue-gray-200">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {form.itemId}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-
-                          <td className="border-blue-gray-200">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {form.description}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-
-                          <td className="border-blue-gray-200">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {form.cost}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="border-blue-gray-200">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {form.qtyRequired}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {form.qtyAvailable}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="border-blue-gray-200">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {form.actions}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
+        <tbody className="text-blue-gray-900">
+          {Object.entries(items).map(([key, item], index) => (
+            <tr key={key} className="border-b border-blue-gray-200">
+              <td className="border-blue-gray-200">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-sm leading-5 text-gray-800">
+                      {index + 1}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="border-blue-gray-200">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-sm leading-5 text-gray-800">
+                      {item.description}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="border-blue-gray-200">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-sm leading-5 text-gray-800">
+                      {item.cost}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="border-blue-gray-200">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-sm leading-5 text-gray-800">
+                      {item.qtyRequired}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="border-blue-gray-200">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-sm leading-5 text-gray-800">
+                      {item.qtyAvailable}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="border-blue-gray-200">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-sm leading-5 text-gray-800">
+                      {/* Add actions here */}
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
               </div>
             </div>
 
