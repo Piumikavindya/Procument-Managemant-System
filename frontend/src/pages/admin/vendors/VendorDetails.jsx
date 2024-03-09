@@ -343,15 +343,24 @@ export default function VendorDetails() {
                   </td>
 
                   <td className={classes}>
+
+                  <Link to={`/previewVendorDetails/${supplyer._id}`}>
+                    <Tooltip content="View Vendor">
+                        <IconButton variant="text">
+                          <EyeIcon className="h-6 w-6 text-blue-500" />
+                        </IconButton>
+                      </Tooltip>
+                    </Link>
+
                   <Link to={`/updateSupplier/:${supplyer._id}`}>
-                    <Tooltip content="Edit User">
+                    <Tooltip content="Edit Vendor">
                         <IconButton variant="text">
                           <PencilIcon className="h-6 w-6 text-green-500" />
                         </IconButton>
                       </Tooltip>
                     </Link>
                     <Link to={`/deleteSupplier/:${supplyer._id}`}>
-                    <Tooltip content="Delete User">
+                    <Tooltip content="Delete Vendor">
                         <IconButton variant="text">
                           <TrashIcon className="h-6 w-6  text-red-500" />
                         </IconButton>
