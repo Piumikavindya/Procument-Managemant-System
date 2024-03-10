@@ -41,13 +41,13 @@ budgetAllocation: {type: Number,},
   balanceAvailable:{type: Number,},
   purpose:{
     type: String,
-    default: 'Normal',
-    enum: ['Normal', 'Fast Track','Urgent']
+    default: 'normal',
+    enum: [ '','normal', 'Fast Track','Urgent','Normal']
   },
   sendTo:{
     type: String,
     default: 'dean',
-    enum: ['dean', 'registrar','viceChancellor']
+    enum: ['','dean', 'registrar','viceChancellor']
   },
   items: [itemSchema],  // Array of items within ProcurementRequest schema
   files: [fileSchema],  // Array of files within ProcurementRequest schema

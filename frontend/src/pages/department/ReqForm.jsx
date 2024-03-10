@@ -1,27 +1,16 @@
-import React, { useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link ,useNavigate, } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Dropdown from "../../components/DropDown";
 import "../../styles/Buttons.css";
 import "../../styles/button3.css";
+import { saveAs } from "file-saver";
 
 const ReqForm = ({ forms }) => {
-
   const navigate = useNavigate();
-    // Function to handle the generation of request ID
-    const handleGenerateRequestId = async () => {
-      try {
-        console.log("Generate Request ID button clicked");
-        const response = await axios.post(`http://localhost:8000/procReqest/generateRequestId`);
-        // Assuming the response contains the generated ID
-        const generatedId = response.data.requestId;
-        setRequestId(generatedId);
-     
-      } catch (error) {
-        console.error("Error generating request ID", error);
-      }
-    };
+
   const [loading, setLoading] = useState(false);
+
   const [date, setDate] = useState("");
   const [requestId, setRequestId] = useState("");
   const [department, setDepartment] = useState("");
@@ -31,88 +20,161 @@ const ReqForm = ({ forms }) => {
   const [budgetAllocation, setBudgetAllocation] = useState("");
   const [usedAmount, setUsedAmount] = useState("");
   const [balanceAvailable, setBalanceAvailable] = useState("");
-  const [purpose, setPurpose] = useState('Normal');
-  const [sendTo, setSendTo] = useState('dean');
+  const [purpose, setPurpose] = useState("normal");
+  const [sendTo, setSendTo] = useState("dean");
   const [items, setItems] = useState({});
   const [files, setFiles] = useState({});
+
+  useEffect(() => {
+    const formDataFromStorage = localStorage.getItem("formData");
+    if (formDataFromStorage) {
+      const formData = JSON.parse(formDataFromStorage);
+      setRequestId(formData.requestId);
+      setDepartment(formData.department);
+      setFaculty(formData.faculty);
+      setDate(formData.date);
+      setContactPerson(formData.contactPerson);
+      setContactNo(formData.contactNo);
+      setBudgetAllocation(formData.budgetAllocation);
+      setUsedAmount(formData.usedAmount);
+      setBalanceAvailable(formData.balanceAvailable);
+      setPurpose(formData.purpose);
+      setSendTo(formData.sendTo);
+      setItems(formData.items);
+      setFiles(formData.files);
+    } else {
+      handleGenerateRequestId();
+    }
+  }, []);
+
+  // Function to handle the generation of request ID
+  const handleGenerateRequestId = async () => {
+    try {
+      console.log("Generate Request ID button clicked");
+      const response = await axios.post(
+        `http://localhost:8000/procReqest/generateRequestId`
+      );
+      // Assuming the response contains the generated ID
+      const generatedId = response.data.requestId;
+      setRequestId(generatedId);
+    } catch (error) {
+      console.error("Error generating request ID", error);
+    }
+  };
 
   const handleCheckboxClick = (selectedPurpose) => {
     setPurpose(selectedPurpose);
   };
-  
-  const formData = {
-    requestId,
-    department,
-    date,
-    contactPerson,
-    contactNo,
-    budgetAllocation,
-    usedAmount,
-    purpose,
-    sendTo,
-    items,
-    files,
+
+  const handleAddItemsClick = (itemData) => {
+    setItems((prevItems) => ({
+      ...prevItems,
+      [Date.now()]: itemData, // Assuming you want to use a timestamp as the key
+    }));
+    const formData = {
+      requestId,
+      department,
+      faculty,
+      date,
+      contactPerson,
+      contactNo,
+      budgetAllocation,
+      usedAmount,
+      balanceAvailable,
+      purpose,
+      sendTo,
+      items,
+      files,
+    };
+    // Navigate to the specified route when "Add items" is clicked
+    // Store form data in localStorage
+    localStorage.setItem("formData", JSON.stringify(formData));
+    // Navigate to add item page
+    navigate(`/formview/${requestId}`);
   };
 
-  const handleAddItemsClick = () => {
-    // Navigate to the specified route when "Add items" is clicked
-    navigate(`/formview/${requestId}?state=${JSON.stringify(formData)}`);
-  };
   // Function to handle form submission
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const newRequest = {
+    let email;
+  
+    // Determine the email address based on the sendTo state
+    switch (sendTo) {
+      case "dean":
+        email = "imashanaw1999@gmail.com";
+        break;
+      case "registrar":
+        email = "imashanaw1999@gmail.com";
+        break;
+      case "viceChancellor":
+        email = "imashanaw1999@gmail.com";
+        break;
+      default:
+        email = ""; // Provide a default email or handle this case accordingly
+        break;
+    }
+  
+    const data = {
       requestId,
       department,
       date,
+      faculty,
       contactPerson,
       contactNo,
       budgetAllocation,
       usedAmount,
       purpose,
       sendTo,
-      // items: items,  
-      // files: files, 
-      // Add other form data...
+      items,
+      files,
+      email, // Include the determined email address in the data object
     };
   
-    setLoading(true);
-  
     try {
-      const response = await axios.post(`http://localhost:8000/procReqest/createRequest/${requestId}`, newRequest);
-  // Assuming the response contains the updated request
-      const updatedRequest = response.data.updatedRequest;
+      // Create PDF
+      await axios.post("http://localhost:8000/createPdf", data);
   
-      // Update the state or perform any other actions based on the response
+      // Fetching the generated PDF
+      const response = await axios.get("http://localhost:8000/fetchPdf", {
+        responseType: "blob",
+      });
+      const pdfBlob = new Blob([response.data], { type: "application/pdf" });
+      saveAs(pdfBlob, "InvoiceDocument.pdf");
   
-      alert("Request submitted successfully");
-      setLoading(false);
+      // Clear form inputs after downloading
+      clearFormInputs();
   
-      // Reset form fields
-      // setRequestId("");
-      // setDepartment("");
-      // setDate("");
-      // setContactPerson("");
-      // setContactNo("");
-      // setBudgetAllocation("");
-      // setUsedAmount("");
-      // setPurpose({
-      //   normal: false,
-      //   fastTrack: false,
-      //   urgent: false,
-      // });
-      // setItems({});
-      // setFiles({});
-  
-      console.log("Request submitted successfully", response.data);
+      // Sending PDF via email
+      if (email) {
+        await axios.post("http://localhost:8000/sendPdf", { email });
+        alert("PDF sent successfully");
+      } else {
+        console.error("No email address provided.");
+        alert("An error occurred. Email address not provided.");
+      }
     } catch (error) {
-      console.error("Error submitting request", error);
-      console.dir(error); // Log the entire error object for more details
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
     }
   };
   
-
+  const clearFormInputs = () => {
+    setRequestId("");
+    setDepartment("");
+    setFaculty("");
+    setDate("");
+    setContactNo("");
+    setContactPerson("");
+    setBudgetAllocation("");
+    setBalanceAvailable("");
+    setUsedAmount("");
+    setPurpose("Normal");
+    setItems({});
+    setFiles({});
+    setSendTo("dean");
+  };
+  
   return (
     <div className="max-w-6xl mx-auto mt-40 ">
       <div className="block w-full h-auto rounded-md border border-black bg-black py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
@@ -126,19 +188,21 @@ const ReqForm = ({ forms }) => {
               <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
                 {/* Box 1 */}
                 <div className="border border-black p-2 bg-black text-white">
-                <button  type="button"  onClick={handleGenerateRequestId}>Generate Request ID</button>
+                  <button type="button" onClick={handleGenerateRequestId}>
+                    Generate Request ID
+                  </button>
                 </div>
               </div>
               <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
                 {/* Box 2 */}
-               
+
                 <input
-  type="text"
-  value={requestId}
-  onChange={(e) => setRequestId(e.target.value)}
-  className="border-2 border-black px-4 py-2 w-full"
-/>
-              
+                  type="text"
+                  value={requestId}
+                  onChange={(e) => setRequestId(e.target.value)}
+                  className="border-2 border-black px-4 py-2 w-full "
+                  disabled={true}
+                />
               </div>
               <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
                 {/* Box 3 */}
@@ -243,10 +307,10 @@ const ReqForm = ({ forms }) => {
                   </label>
                   <div className="mt-2">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <input
-              type="number"
-              value={budgetAllocation}
-              onChange={(e) => setBudgetAllocation(e.target.value)}
+                      <input
+                        type="number"
+                        value={budgetAllocation}
+                        onChange={(e) => setBudgetAllocation(e.target.value)}
                         className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -263,9 +327,9 @@ const ReqForm = ({ forms }) => {
                   <div className="mt-2">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
-                       type="text"
-                       value={usedAmount}
-                       onChange={(e) => setUsedAmount(e.target.value)}
+                        type="text"
+                        value={usedAmount}
+                        onChange={(e) => setUsedAmount(e.target.value)}
                         className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -301,7 +365,7 @@ const ReqForm = ({ forms }) => {
                 <h2 className="text-base font-bold leading-7 text-gray-900">
                   Requesting Item Details
                 </h2>
-            
+
                 <button type="button" onClick={handleAddItemsClick}>
                   <span className="c-main">
                     <span className="c-ico">
@@ -312,7 +376,7 @@ const ReqForm = ({ forms }) => {
                   </span>
                 </button>
               </div>
-            
+
               <div className="flex items-center">
                 <table className="min-w-full bg-white shadow-md rounded-xl">
                   <thead>
@@ -446,7 +510,7 @@ const ReqForm = ({ forms }) => {
                             id="purpose"
                             name="purpose"
                             type="checkbox"
-                            onClick={() => handleCheckboxClick('Normal')}
+                            onClick={() => handleCheckboxClick("normal")}
                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                         </div>
@@ -465,7 +529,7 @@ const ReqForm = ({ forms }) => {
                             id="purpose"
                             name="purpose"
                             type="checkbox"
-                            onClick={() => handleCheckboxClick('Fast Track')}
+                            onClick={() => handleCheckboxClick("Fast Track")}
                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                         </div>
@@ -540,7 +604,7 @@ const ReqForm = ({ forms }) => {
                           id="push-email"
                           name="dean"
                           type="radio"
-                          onClick={() => handleCheckboxClick('dean')}
+                          onClick={() => handleCheckboxClick("dean")}
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                         <label
@@ -555,7 +619,7 @@ const ReqForm = ({ forms }) => {
                           id="push-nothing"
                           name="push-notifications"
                           type="radio"
-                          onClick={() => handleCheckboxClick('registrar')}
+                          onClick={() => handleCheckboxClick("registrar")}
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                         <label
@@ -573,61 +637,8 @@ const ReqForm = ({ forms }) => {
           </div>
 
           <div className="mt-3 flex items-center justify-end gap-x-6">
-            <button class="button3" type="button">
-              <span class="button3__text">Clear Form</span>
-              <span class="button3__icon">
-                <svg
-                  class="svg"
-                  height="48"
-                  viewBox="0 0 48 48"
-                  width="48"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M35.3 12.7c-2.89-2.9-6.88-4.7-11.3-4.7-8.84 0-15.98 7.16-15.98 16s7.14 16 15.98 16c7.45 0 13.69-5.1 15.46-12h-4.16c-1.65 4.66-6.07 8-11.3 8-6.63 0-12-5.37-12-12s5.37-12 12-12c3.31 0 6.28 1.38 8.45 3.55l-6.45 6.45h14v-14l-4.7 4.7z"></path>
-                  <path d="M0 0h48v48h-48z" fill="none"></path>
-                </svg>
-              </span>
-            </button>
-            <button class="button3" type="submit" onClick={(e) => handleSubmit(e)}>
-              <span class="button3__text">Save Form</span>
-              <span class="button3__icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="100%"
-                  height="100%"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-save w-5 h-5 mr-1"
-                >
-                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                  <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                  <polyline points="7 3 7 8 15 8"></polyline>
-                </svg>
-              </span>
-            </button>
-
-            <button class="button3" type="button">
-              <span class="button3__text">Download</span>
-              <span class="button3__icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 35 35"
-                  id="bdd05811-e15d-428c-bb53-8661459f9307"
-                  data-name="Layer 2"
-                  class="svg"
-                >
-                  <path d="M17.5,22.131a1.249,1.249,0,0,1-1.25-1.25V2.187a1.25,1.25,0,0,1,2.5,0V20.881A1.25,1.25,0,0,1,17.5,22.131Z"></path>
-                  <path d="M17.5,22.693a3.189,3.189,0,0,1-2.262-.936L8.487,15.006a1.249,1.249,0,0,1,1.767-1.767l6.751,6.751a.7.7,0,0,0,.99,0l6.751-6.751a1.25,1.25,0,0,1,1.768,1.767l-6.752,6.751A3.191,3.191,0,0,1,17.5,22.693Z"></path>
-                  <path d="M31.436,34.063H3.564A3.318,3.318,0,0,1,.25,30.749V22.011a1.25,1.25,0,0,1,2.5,0v8.738a.815.815,0,0,0,.814.814H31.436a.815.815,0,0,0,.814-.814V22.011a1.25,1.25,0,1,1,2.5,0v8.738A3.318,3.318,0,0,1,31.436,34.063Z"></path>
-                </svg>
-              </span>
-            </button>
-            <button class="button3" type="button">
-              <span class="button3__text">Send</span>
+            <button class="button3" type="submit">
+              <span class="button3__text">downlaod and send</span>
               <span class="button3__icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

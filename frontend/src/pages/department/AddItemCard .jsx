@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export const AddItemCard = () => {
+export const AddItemCard = ({ handleAddItemsClick }) => {
   const navigate = useNavigate();
   const { requestId } = useParams();
   const [description, setDescription] = useState("");
@@ -31,7 +31,13 @@ export const AddItemCard = () => {
   
       // Update the state or perform any other actions based on the response
       console.log("Item added successfully", updatedRequest);
-  
+  // Call the callback function to update the items state in the ReqForm component
+  handleAddItemsClick({
+    description,
+    cost,
+    qtyRequired,
+    qtyAvailable,
+  });
 
   
     } catch (error) {

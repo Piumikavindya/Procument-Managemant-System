@@ -1,6 +1,7 @@
 const procReqest = require('../Models/procReqest');
 const path = require("path");
-const fs = require('fs');
+// const fs = require('fs').promises;
+
 // Generate Request ID
 exports.generateRequestId = async (req, res) => {
     try {
@@ -38,8 +39,8 @@ exports.createRequest = async (req, res) => {
     balanceAvailable,
     purpose,
     sendTo,
-    items,
-    files
+    // items,
+    // files
   } = req.body;
 
   try {
@@ -58,12 +59,12 @@ exports.createRequest = async (req, res) => {
       existingRequest.balanceAvailable = balanceAvailable;
       existingRequest.purpose = purpose;
       existingRequest.sendTo = sendTo;
-      existingRequest.items = items;
-      existingRequest.files = files;
+      // existingRequest.items = items;
+      // existingRequest.files = files;
 
       // Save the updated document to the database
       const updatedRequest = await existingRequest.save();
-
+console.log(updatedRequest);
       // Send the updated document as a response
       res.json(updatedRequest);
     } else {
@@ -80,8 +81,8 @@ exports.createRequest = async (req, res) => {
         balanceAvailable,
         purpose,
         sendTo,
-        items,
-        files
+        // items,
+        // files
       });
 
       // Save the new document to the database
@@ -112,12 +113,24 @@ exports.deleteRequest = async (req, res) => {
 
 exports.addProcItem = async (req, res) => {
   try {
+    const { requestId } = req.params;
+    const { description, cost, qtyRequired, qtyAvailable } = req.body;
+
     const updatedRequest = await procReqest.findOneAndUpdate(
-      { requestId: req.params.requestId },
-      { $push: { items: req.body } },
+      { requestId },
+      {
+        $push: {
+          items: {
+            description,
+            cost,
+            qtyRequired,
+            qtyAvailable,
+          },
+        },
+      },
       { new: true }
-      
     );
+
     res.json({ message: 'Item added successfully', updatedRequest });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -232,3 +245,4 @@ exports.deleteFile = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+

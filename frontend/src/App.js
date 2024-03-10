@@ -32,13 +32,14 @@ import DeleteItem from "./pages/admin/items/DeleteItem.jsx";
 import AddItem from "./pages/admin/items/AddItem.jsx";
 import FormView from "./pages/department/FormView.jsx";
 import { AddItemCard } from "./pages/department/AddItemCard .jsx";
-
+import AddItems from './pages/admin/items/Additems.jsx';
 import UploadNotice from "./pages/admin/notices/UploadNotice.jsx";
 import DeleterNotice from "./pages/admin/notices/DeleteNotice.jsx";
 import ViewNotice from "./pages/admin/notices/ViewNotice.jsx";
 import ManageNotices from "./pages/admin/notices/ManageNotices.jsx";
 import Req from "./pages/department/Req.jsx";
-
+import UpdateItems from './pages/admin/items/updateItems.jsx';
+import ItemDetails from './pages/admin/items/ItemDetails.jsx';
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
   const location = useLocation();
@@ -149,9 +150,15 @@ const App = () => {
         <Route path="/PreviewItem/:id" element={<PreviewItem />} />
         <Route path="/DeleteItem/:id" element={<DeleteItem />} />
         <Route path="/AddItem" element={<AddItem />} />
-        <Route path="/formview" element={<FormView />} />
-        <Route path="/additem/:requestId" element={<AddItemCard />} />
+        <Route path="/reqform" element={<ReqForm />} />
+        <Route path="/additem/:requestId" element={<AddItemCard/>}/>
         <Route path="/req" element={<Req />} />
+        <Route path="/itemDetails" element={<ItemDetails/>} />
+          <Route path="/AddItems" element={<AddItems/>} />
+          <Route path="/updateItems" element={<UpdateItems/>} />
+          <Route path="/formview/:requestId" element={<FormView />} />
+
+     
       </Routes>
 
       {renderCommonFooter()}
