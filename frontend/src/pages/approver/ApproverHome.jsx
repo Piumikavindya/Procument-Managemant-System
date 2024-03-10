@@ -5,24 +5,21 @@ import guide from "../../assets/guide.png";
 import notice from "../../assets/notice.png";
 import budget from "../../assets/budget.png";
 
-import VenderList from '../../components/VenderList';
-import GuideDiv from "../../components/GuideDiv";
-import NoticesDiv from "../../components/NoticesDiv";
-import SuppliersDiv from "../../components/SuppliersDiv";
+import VenderList from '../../components/VenderList.jsx';
+import GuideDiv from "../../components/GuideDiv.jsx";
+import NoticesDiv from "../../components/NoticesDiv.jsx";
+import SuppliersDiv from "../../components/SuppliersDiv.jsx";
 import BudgetGuideNotice from "../../components/Budget_Guide_Notice.jsx";
 import UserTypeNavbar from "../../components/UserTypeNavbar.jsx";
 import CalendarDiv from "../../components/CalendarDiv.jsx";
 
-
-
-function AdminHome() {
-  // const { id } = useParams();
-  const { id } = useParams();
-  return (
-   
-    <div id="Home">
-    <UserTypeNavbar userType="admin" />
-    <div className="bg-NeutralSilver">
+export default function ApproverHome() {
+    const { id } = useParams();
+    return (
+     
+      <div id="Home">
+      <UserTypeNavbar userType="approver" />
+        <div className="bg-NeutralSilver">
           <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto min-h-screen h-screen">
             <Carousel className="w-full mx-auto ">
               <div className="my-28 md:my-8 py-12 flex flex-col md:flex-row-reverse items-center justify-between gap-12">
@@ -97,15 +94,13 @@ function AdminHome() {
             </Carousel>
           </div>
         </div>
-      <VenderList />
-      <GuideDiv />
-      <NoticesDiv />
-      <SuppliersDiv />
-      <BudgetGuideNotice />
-      <CalendarDiv />
-     
-    </div>
-  );
+        <VenderList />
+        <GuideDiv />
+        <NoticesDiv />
+        <SuppliersDiv />
+        <BudgetGuideNotice />
+        <CalendarDiv />
+       
+      </div>
+    );
 }
-
-export default AdminHome;
