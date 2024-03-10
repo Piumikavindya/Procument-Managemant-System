@@ -40,8 +40,14 @@ import DeleteSupplier from './pages/admin/vendors/DeleteSupplier.jsx';
 import UpdateItems from './pages/admin/items/updateItems.jsx';
 import ManageGuidance from './pages/admin/guidance/ManageGuidance .jsx';
 import DeleteNotice from './pages/admin/notices/DeleteNotice.jsx';
-import ProgressTracker from './pages/department/ProgressTracker.js';
-
+import PreviewUserDetails from './pages/admin/users/PreviewUserDetails.jsx';
+import PreviewVendorDetails from './pages/admin/vendors/PreviewVendorDetails.jsx';
+import PreviewItemDetails from './pages/admin/items/PreviewItemDetails.jsx';
+import ProgressTracker from './pages/department/ProgressTracker.jsx';
+import ApprovalList from './pages/approver/ApprovalList.js';
+import DenyRequest from './pages/approver/DenyRequest.jsx';
+import ApprovalForm from './pages/approver/ApprovalForm.jsx';
+import ApproverHome from './pages/approver/ApproverHome.jsx';
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -119,11 +125,15 @@ const App = () => {
         <Route path="/deleteUserDetails/:id" element={<DeleteUserDetails />} />
         <Route path="/viewUserDetails/:id" element={<ViewUserDetails />} />
 
+        <Route path="/previewUserDetails/:id" element={<PreviewUserDetails />} />
+
         <Route path="/allvendors" element={<VendorDetails />} />
         <Route path='/addvendors' element={<AddSupplier/>} />
         <Route path="/deletevendor/:id" element={<DeleteVendor/>} />
         <Route path="/previewvendor/:id" element={<PreviewVendor />} />
         <Route path="/updatevendor/:id" element={<UpdateVendor/>} />
+
+        <Route path="/previewVendorDetails/:id" element={<PreviewVendorDetails />} />
 
         <Route path="/addSupplier" element={<AddSupplier />} />
         <Route path="/vendorsDetails" element={<VendorDetails />} />
@@ -156,11 +166,12 @@ const App = () => {
           <Route path="/itemDetails" element={<ItemDetails/>} />
           <Route path="/AddItems" element={<AddItems/>} />
           <Route path="/updateItems" element={<UpdateItems/>} />
+          <Route path="/previewItemDetails/:id" element={<PreviewItemDetails />} />
 
-          
-
-         
-       
+          <Route path="/ApproverHome/:id" element={<ApproverHome/>}/>
+          <Route path="/ViewForApproval" element={<ApprovalList/>} />
+          <Route path="/DenyApproval/:requestId" element={<DenyRequest/>} />
+          <Route path="/ApprovalForm" element={<ApprovalForm/>} />
         
       </Routes>
   

@@ -28,6 +28,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
         email: credentials.email,
         password: credentials.password,
         role: credentials.role,
+      
       });
       console.log("User details:", response.data.user);
       if (response.data.user) {
@@ -45,7 +46,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
             navigate("/adminhome/" + response.data.user.id);
             break;
           case "department":
-            navigate("/department/" + response.data.user.id);
+            navigate("/department/"+ response.data.user.id);
             break;
           case "procurement Officer":
             navigate("/procurementOfficer/" + response.data.user.id);

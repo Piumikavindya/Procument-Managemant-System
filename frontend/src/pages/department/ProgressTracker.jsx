@@ -1,72 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
-const TABLE_HEAD = [
-  "Request ID",
-  "Request Category",
-  "Short Description",
-  "Last Action",
-  "Last Action Date",
-  "Next Pending Action",
-  "Relevant Officer",
-  "View Details",
-];
-
-const TABLE_ROWS = [
-  {
-    requestId: "12345",
-    requestCategory: "Category 1",
-    shortDescription: "Purchase request for office supplies",
-    lastAction: "Rejected",
-    lastActionDate: "23/04/2024",
-    nextPendingAction: "Approve and Forward",
-    relevantOfficer: "Supply Officer",
-    action: "2023-01-01",
-  },
-  {
-    requestId: "12345",
-    requestCategory: "Category 1",
-    shortDescription: "Acquisition of laboratory equipment",
-    lastAction: "Bid opening closing",
-    lastActionDate: "23/04/2024",
-    nextPendingAction: "Approve and Forward",
-    relevantOfficer: "Supply Officer",
-    action: "2023-01-01",
-  },
-  {
-    requestId: "12345",
-    requestCategory: "Category 1",
-    shortDescription: "test sd form 1",
-    lastAction: "tender request",
-    lastActionDate: "23/04/2024",
-    nextPendingAction: "Approve and Forward",
-    relevantOfficer: "Supply Officer",
-    action: "2023-01-01",
-  },
-  {
-    requestId: "12345",
-    requestCategory: "Category 1",
-    shortDescription: "test sd form 1 yggvvghygvkygvghjm",
-    lastAction: "Bid opening closing",
-    lastActionDate: "23/04/2024",
-    nextPendingAction: "Approve and Forward",
-    relevantOfficer: "Supply Officer",
-    action: "2023-01-01",
-  },
-  {
-    requestId: "10",
-    requestCategory: "Category 1",
-    shortDescription: "test sd form 1",
-    lastAction: "Approve and forward",
-    lastActionDate: "23/04/2024",
-    nextPendingAction: "Tender request",
-    relevantOfficer: "Supply Officer",
-    action: "2023-01-01",
-  },
-];
 
 function ProgressTracker() {
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
+
+  // Fetch requests data from your API endpoint
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get("http://localhost:8000/procReqest/viewRequests")
+      .then((response) => {
+        setRequests(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching requests:", error);
+        setLoading(false);
+      });
+  }, []);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -76,9 +31,9 @@ function ProgressTracker() {
     setSearchOption(e.target.value);
   };
 
-  // Filter the rows based on searchQuery and searchOption
-  const filteredRows = TABLE_ROWS.filter((row) =>
-    row[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
+  // Filter the requests based on searchQuery and searchOption
+  const filteredRequests = requests.filter((request) =>
+    request[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -109,7 +64,7 @@ function ProgressTracker() {
                       onChange={handleSearchOptionChange}
                       className="px-6 py-2 border border-gray-300 focus:outline-none focus:ring focus:ring-brandPrimary focus:ring-opacity-50 rounded-md ml-3"
                     >
-                      <option  value="requestId">Request ID</option>
+                      <option value="requestId">Request ID</option>
                       <option value="shortDescription">
                         Short Description
                       </option>
@@ -121,92 +76,95 @@ function ProgressTracker() {
                     <table className="w-full my-0 align-middle text-dark border-neutral-200">
                       <thead className="align-bottom bg-NeutralBlack ">
                         <tr className="font-semibold text-[0.95rem] text-white">
-                          {TABLE_HEAD.map((head) => (
-                            <th
-                              key={head}
-                              className={`p-4 text-start min-w-[${
-                                head === "Request ID" ? 100 : 175
-                              }px]`}
-                            >
-                              {head}
-                            </th>
-                          ))}
+                          <th className="p-4 text-start min-w-[100px]">
+                            Request ID
+                          </th>
+                          <th className="p-4 text-start min-w-[175px]">
+                            Request Category
+                          </th>
+                          <th className="p-4 text-start">Short Description</th>
+                          <th className="p-4 text-start">Last Action</th>
+                          <th className="p-4 text-start">Last Action Date</th>
+                          <th className="p-4 text-start">
+                            Next Pending Action
+                          </th>
+                          <th className="p-4 text-start">Approver</th>
+                          <th className="p-4 text-start"></th>
                         </tr>
                       </thead>
                       <tbody>
-                        {filteredRows.map((detail, index) => (
+                        {filteredRequests.map((request, index) => (
                           <tr
                             key={index}
                             className="border-b border-dashed last:border-b-0"
                           >
                             <td className="pr-0 text-start">
                               <span className="font-semibold text-light-inverse text-md/normal">
-                                {detail.requestId}
-                              </span>
-                            </td>
-
-                            <td className="p-3 pr-0 text-start">
-                              <span className="font-semibold text-light-inverse text-md/normal">
-                                {detail.requestCategory}
+                                {request.requestId}
                               </span>
                             </td>
                             <td className="p-3 pr-0 text-start">
                               <span className="font-semibold text-light-inverse text-md/normal">
-                                {detail.shortDescription}
+                                {request.requestCategory}
+                              </span>
+                            </td>
+                            <td className="p-3 pr-0 text-start">
+                              <span className="font-semibold text-light-inverse text-md/normal">
+                                {request.shortDescription}
                               </span>
                             </td>
                             <td className="pt-3 pb-3 pr-12 text-start">
                               <span
                                 className={`text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg ${
-                                  detail.lastAction === "Bid opening closing"
+                                  request.lastAction === "Bid opening closing"
                                     ? "text-blue-500 bg-blue-200"
-                                    : detail.lastAction === "Tender request"
+                                    : request.lastAction === "Tender request"
                                     ? "text-green-500 bg-green-200"
-                                    : detail.lastAction ===
+                                    : request.lastAction ===
                                       "Approve and Forward"
                                     ? "text-yellow-500 bg-yellow-100"
-                                    : detail.lastAction ===
+                                    : request.lastAction ===
                                       "Send purchase request"
                                     ? "text-purple-500 bg-purple-200"
-                                    : detail.lastAction === "Rejected"
+                                    : request.lastAction === "Rejected"
                                     ? "text-red-500 bg-red-300"
                                     : "text-primary bg-primary-light" // default style if action doesn't match
                                 }`}
                               >
-                                {detail.lastAction}
+                                {request.lastAction}
                               </span>
                             </td>
                             <td className="p-3 pr-0 text-start">
                               <span className="font-semibold text-light-inverse text-md/normal">
-                                {detail.lastActionDate}
+                                {request.lastActionDate}
                               </span>
                             </td>
                             <td className="pr-0 text-start">
                               <span
                                 className={`text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg ${
-                                  detail.nextPendingAction ===
+                                  request.nextPendingAction ===
                                   "Bid opening closing"
                                     ? "text-blue-500 bg-blue-200"
-                                    : detail.nextPendingAction ===
+                                    : request.nextPendingAction ===
                                       "Tender request"
                                     ? "text-green-500 bg-green-200"
-                                    : detail.nextPendingAction ===
+                                    : request.nextPendingAction ===
                                       "Approve and Forward"
                                     ? "text-yellow-500 bg-yellow-100"
-                                    : detail.nextPendingAction ===
+                                    : request.nextPendingAction ===
                                       "Send purchase request"
                                     ? "text-purple-500 bg-purple-200"
-                                    : detail.nextPendingAction === "Rejected"
+                                    : request.nextPendingAction === "Rejected"
                                     ? "text-red-500 bg-red-300"
                                     : "text-primary bg-primary-light" // default style if action doesn't match
                                 }`}
                               >
-                                {detail.nextPendingAction}
+                                {request.nextPendingAction}
                               </span>
                             </td>
                             <td className="p-3 pr-0 text-start">
                               <span className="font-semibold text-light-inverse text-md/normal">
-                                {detail.relevantOfficer}
+                                {request.sendTo}
                               </span>
                             </td>
                             <td className="pl-12  text-center">
