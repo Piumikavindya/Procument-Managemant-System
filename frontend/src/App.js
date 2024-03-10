@@ -44,6 +44,10 @@ import PreviewUserDetails from './pages/admin/users/PreviewUserDetails.jsx';
 import PreviewVendorDetails from './pages/admin/vendors/PreviewVendorDetails.jsx';
 import PreviewItemDetails from './pages/admin/items/PreviewItemDetails.jsx';
 import ProgressTracker from './pages/department/ProgressTracker.js';
+import ApprovalList from './pages/approver/ApprovalList.js';
+import DenyRequest from './pages/approver/DenyRequest.jsx';
+import ApprovalForm from './pages/approver/ApprovalForm.jsx';
+import ApproverHome from './pages/approver/ApproverHome.jsx';
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -140,6 +144,7 @@ const App = () => {
 
         <Route path="/reqform" element={<ReqForm />} />
         <Route path="/department/:id" element={<DepartmentHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
+        <Route path="/ProgressTrack" element={<ProgressTracker />} />
 
         <Route path="/ManageGuidance" element={<ManageGuidance />} />
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
@@ -163,8 +168,10 @@ const App = () => {
           <Route path="/updateItems" element={<UpdateItems/>} />
           <Route path="/previewItemDetails/:id" element={<PreviewItemDetails />} />
 
-         
-       
+          <Route path="/ApproverHome/:id" element={<ApproverHome/>}/>
+          <Route path="/ViewForApproval" element={<ApprovalList/>} />
+          <Route path="/DenyApproval/:requestId" element={<DenyRequest/>} />
+          <Route path="/ApprovalForm" element={<ApprovalForm/>} />
         
       </Routes>
   

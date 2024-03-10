@@ -80,12 +80,8 @@ const UserTypeNavbar = ({ userType }) => {
   ];
 
   const ApproverOptions = [
-    { link: "User Registration", path: "Home" },
-    { link: "Vendor Registration", path: "guidelines" },
-    { link: "Add Items", path: "notices" },
-    { link: "Dashboard", path: "budget" },
-    { link: "Manage Documents", path: "vendors" },
-    { link: "Budget & Plan", path: "events" },
+    { link: "Pending Approval list", path: "/ViewForApproval" },
+    
   ];
 
   return (

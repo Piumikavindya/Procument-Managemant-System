@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Breadcrumb from "../../../components/Breadcrumb";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function AddUsers() {
   const [role, setRole] = useState("");
@@ -259,17 +260,19 @@ export default function AddUsers() {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6 mr-40 mb-10">
-        <button
-          type="button"
-          className="rounded-md  h-12 w-20 bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          <h6> Cancel</h6>
-        </button>
+      <Link to="/userList">
+      <button
+        type="button"
+        className="rounded-md h-12 w-20 bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      >
+        CANCEL
+      </button>
+      </Link>
         <button
           type="submit"
           className="rounded-md bg-blue-600 h-12 w-20 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
-          Save
+          SAVE
         </button>
       </div>
     </form>
