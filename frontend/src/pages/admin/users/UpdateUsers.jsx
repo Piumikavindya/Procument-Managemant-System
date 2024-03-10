@@ -6,7 +6,7 @@ import { useSnackbar } from 'notistack';
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
 import UserTypeNavbar from '../../../components/UserTypeNavbar.jsx';
 import "../../../styles/button2.css";
-
+  
 const UpdateUsers = () => {
   const [role, setRole] = useState('');
   const [email, setEmail] = useState('');

@@ -24,7 +24,7 @@ const CreateUsers = () => {
     "Finance officers",
     "department",
     "approver",
-    "TECofficer"
+    "TECofficer",
   ];
   const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
 
@@ -68,7 +68,8 @@ const CreateUsers = () => {
 
   return (
     <div class="app-container p-8 rounded border border-gray-200">
-       <UserTypeNavbar userType="admin" />
+      <UserTypeNavbar userType="admin" />
+
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/adminhome/:id" },
@@ -104,7 +105,7 @@ const CreateUsers = () => {
               ))}
             </select>
           </div>
-          
+
           <div>
             <label
               for="department"
@@ -220,11 +221,11 @@ const CreateUsers = () => {
           </div>
         </div>
 
-
-        <div class="space-x-4 mt-8 text-center">         
-       
-        <button class="button-71" role="button">Save</button>   
-             </div>
+        <div class="space-x-4 mt-8 text-center">
+          <button class="button-71" role="button">
+            Save
+          </button>
+        </div>
       </form>
     </div>
   );

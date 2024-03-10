@@ -57,26 +57,27 @@ const Navbar = ({ isAuthenticated, handleSignOut, handleSignIn }) => {
       >
         <div className="flex justify-between items-center text-base gap-8">
           <p className="text-2xl font-semibold flex items-center space-x-3">
-            <span className="text-[#2194F3]">ENG</span>
+            <span className="text-brandPrimary">ENG</span>
             <img
               src={logo}
               alt=" "
               className="w-10 inline-block item-center "
             />
-            <span className="text-[#2194F3]">PMS</span>
+            <span className="text-brandPrimary">PMS</span>
           </p>
 
           {/* Nav bar items for large devices */}
           <ul className="md:flex space-x-12 hidden">
             {navItems.map(({ link, path }) => (
               <ScrollLink
-                to={path}
-                spy={true}
-                smooth={true}
-                offset={-100}
-                key={path}
-                className="block text-base text-gray900 hover:text-brandPrimary first:font-medium cursor-pointer no-underline"
-              >
+  to={path}
+  spy={true}
+  smooth={true}
+  offset={-100}
+  key={path}
+  className=" text-base text-brandPrimary  hover:font-bold  cursor-pointer no-underline"
+>
+
                 {link}
               </ScrollLink>
             ))}
@@ -203,7 +204,7 @@ const Navbar = ({ isAuthenticated, handleSignOut, handleSignIn }) => {
               offset={-100}
               key={path}
               onClick={closeMenu}
-              className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
+              className="block no-underline cursor-pointer text-base text-white  hover:text-bold  hover:font-medium"
             >
               {link}
             </ScrollLink>

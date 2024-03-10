@@ -11,17 +11,24 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
+    "docx": "^8.5.0",
+    "docxtemplater": "^3.46.0",
     "dotenv": "^16.3.1",
+    "easy-template-x": "^3.2.0",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "express-validator": "^7.0.1",
+    "file-saver": "^2.0.5",
     "html-pdf": "^3.0.1",
-    "mongodb": "^6.2.0",
+    "jsdom": "^24.0.0",
+    "mammoth": "^1.7.0",
+    "mongodb": "^6.3.0",
     "mongoose": "^8.0.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.7",
     "passport": "^0.6.0",
-    "passport-local-mongoose": "^8.0.0"
+    "passport-local-mongoose": "^8.0.0",
+    "pdf-lib": "^1.17.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

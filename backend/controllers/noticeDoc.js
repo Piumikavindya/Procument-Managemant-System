@@ -11,7 +11,7 @@ const path = require("path");
 
 exports.uploadnotice = async (req, res) => {
     try {
-        const {  name } = req.body;
+        const { username, name } = req.body;
 
         // Check if req.file is defined
         if (!req.file) {
@@ -23,10 +23,25 @@ exports.uploadnotice = async (req, res) => {
         // Log the file path to ensure it's correct
         console.log('File path:', file);
 
-        // Rest of your code for creating and saving the guidance
-        const newNotice = new Notice({  name, file });
+          // Split the file path string using backslash as delimiter
+    const filePathParts = file.split("\\");
 
-        // Log the new guidance object to ensure it's correct
+    // Get the last part of the array, which is the file name
+    const fileNameWithTimestamp = filePathParts[filePathParts.length - 1];
+
+    // Split the file name using underscore as delimiter
+    const fileNameParts = fileNameWithTimestamp.split("_");
+
+    // Get the second part of the array, which is the actual file name
+    const actualName = fileNameParts.slice(1).join("_");
+
+    console.log("Actual File Name:", name);
+
+    // Rest of your code for creating and saving the notice
+    const newNotice = new Notice({ username, name: name ? name : actualName, file });
+
+
+        // Log the new notice object to ensure it's correct
         console.log('New notice:', newNotice);
 
         // Save the data in the database
@@ -50,7 +65,7 @@ exports.viewNotice = async (req, res) => {
       const noticeItems = await Notice.find();
       res.json({ notice: noticeItems });
     } catch (error) {
-      console.error('Error fetching guidance:', error);
+      console.error('Error fetching notice:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
@@ -74,7 +89,7 @@ exports.downloadNotice = async (req, res) => {
         // res.status(200).json(guidance);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ status: "Error while downloading guidance", error: err.message });
+        res.status(500).json({ status: "Error while downloading notice", error: err.message });
     }
 
 };
