@@ -12,6 +12,7 @@ const ReqForm = ({ forms }) => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [showAddItemCard, setShowAddItemCard] = useState(false); 
 
   const [date, setDate] = useState("");
   const [requestId, setRequestId] = useState("");
@@ -26,7 +27,6 @@ const ReqForm = ({ forms }) => {
   const [sendTo, setSendTo] = useState('dean');
   const [items, setItems] = useState({});
   const [files, setFiles] = useState({});
-
   useEffect(() => {
     const formDataFromStorage = localStorage.getItem("formData");
     if (formDataFromStorage) {
@@ -43,12 +43,14 @@ const ReqForm = ({ forms }) => {
       setSendTo(formData.sendTo);
       setItems(formData.items);
       setFiles(formData.files);
-    } else {
+    } else if (!requestId) { // Add this condition
       handleGenerateRequestId();
     }
-    handleViewProcItems();
   }, []);
-
+  
+  useEffect(() => {
+    handleViewProcItems();
+  }, [requestId]);
     // Function to handle the generation of request ID
   const handleGenerateRequestId = async () => {
     try {
@@ -67,12 +69,12 @@ const ReqForm = ({ forms }) => {
   };
 
   const handleAddItemsClick = (itemData) => {
-
+ setShowAddItemCard(true);
     setItems((prevItems) => ({
       ...prevItems,
       [Date.now()]: itemData,
     }));
-    handleViewProcItems();
+   
     const formData = {
       requestId,
       department,
@@ -87,31 +89,38 @@ const ReqForm = ({ forms }) => {
       items,
       files,
     };
+    setLoading(true);
+    try {
+
+      // Fetch updated items after submitting the form
    
+    } catch (error) {
+      console.error("Error submitting request", error);
+      console.dir(error);
+    }
     // Navigate to the specified route after updating items
     navigate(`/formview/${requestId}`);
   
     // Store form data in localStorage
     localStorage.setItem("formData", JSON.stringify(formData));
-    handleViewProcItems()
+ 
   };
   
-
   const handleViewProcItems = async () => {
     try {
       const response = await axios.get(
         `http://localhost:8000/procReqest/viewProcItems/${requestId}`
       );
       const itemsData = response.data;
-      setItems(itemsData); // Update the items state with the fetched data
+      setItems((prevItems) => ({
+        ...prevItems,
+        ...itemsData, // Merge the existing items with the new data
+      }));
     } catch (error) {
       console.error("Error fetching procurement items:", error);
     }
   };
   
-
-  // Function to handle form submission
-
 
   const handleGeneratePDF = async () => {
     const formData = {
@@ -209,7 +218,7 @@ const ReqForm = ({ forms }) => {
       console.log("Request submitted successfully", createResponse.data);
   
       // Fetch updated items after submitting the form
-      handleViewProcItems();
+      // handleViewProcItems();
     } catch (error) {
       console.error("Error submitting request", error);
       console.dir(error);
@@ -421,6 +430,7 @@ const ReqForm = ({ forms }) => {
                     Add items
                   </span>
                 </button>
+                
               </div>
             
               <div className="flex items-center">
@@ -428,6 +438,7 @@ const ReqForm = ({ forms }) => {
         <thead>
           <tr className="bg-blue-gray-100 text-gray-700">
             <th className="py-3 px-4 text-left">No</th>
+            <th className="py-3 px-4 text-left">Item Id</th>
             <th className="py-3 px-4 text-left">Description</th>
             <th className="py-3 px-4 text-left">Cost (Approximately)</th>
             <th className="py-3 px-4 text-left">Qty Required</th>
@@ -452,7 +463,16 @@ const ReqForm = ({ forms }) => {
                 <div className="flex items-center">
                   <div>
                     <div className="text-sm leading-5 text-gray-800">
-                      {item.description}
+                      {item.itemId}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="border-blue-gray-200">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-sm leading-5 text-gray-800">
+                      {item.itemName}
                     </div>
                   </div>
                 </div>
@@ -498,6 +518,9 @@ const ReqForm = ({ forms }) => {
         </tbody>
       </table>
               </div>
+              {showAddItemCard && (
+         <AddItemCard handleAddItemsClick={handleAddItemsClick} handleViewProcItems={handleViewProcItems} />
+      )}
             </div>
 
             <div className="border-b border-gray-900/10 pb-12">

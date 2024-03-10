@@ -43,7 +43,7 @@ import DeleteNotice from './pages/admin/notices/DeleteNotice.jsx';
 import PreviewUserDetails from './pages/admin/users/PreviewUserDetails.jsx';
 import PreviewVendorDetails from './pages/admin/vendors/PreviewVendorDetails.jsx';
 import PreviewItemDetails from './pages/admin/items/PreviewItemDetails.jsx';
-import ProgressTracker from './pages/department/ProgressTracker.js';
+import ProgressTracker from './pages/department/ProgressTracker.jsx';
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -140,6 +140,7 @@ const App = () => {
 
         <Route path="/reqform" element={<ReqForm />} />
         <Route path="/department/:id" element={<DepartmentHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
+        <Route path="/ProgressTrack" element={<ProgressTracker/>} />
 
         <Route path="/ManageGuidance" element={<ManageGuidance />} />
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
@@ -155,6 +156,7 @@ const App = () => {
         <Route path="/PreviewItem/:id" element={<PreviewItem />} />
         <Route path="/DeleteItem/:id" element={<DeleteItem/>} />
         <Route path="/AddItem" element={<AddItem/>} />
+
           <Route path="/formview/:requestId" element={<FormView />} />
           <Route path="/additem/:requestId" element={<AddItemCard/>}/>
 
