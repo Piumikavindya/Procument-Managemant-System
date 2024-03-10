@@ -145,6 +145,7 @@ const App = () => {
         <Route path="/reqform" element={<ReqForm />} />
         <Route path="/department/:id" element={<DepartmentHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
         <Route path="/ProgressTrack" element={<ProgressTracker />} />
+        <Route path="/DeleteItem/:requestId/:itemId" element={<DeleteItem />} />
 
         <Route path="/ManageGuidance" element={<ManageGuidance />} />
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
@@ -168,7 +169,7 @@ const App = () => {
           <Route path="/updateItems" element={<UpdateItems/>} />
           <Route path="/previewItemDetails/:id" element={<PreviewItemDetails />} />
 
-          <Route path="/ApproverHome/:id" element={<ApproverHome/>}/>
+          <Route path="/approver/:id" element={<ApproverHome/>}/>
           <Route path="/ViewForApproval" element={<ApprovalList/>} />
           <Route path="/DenyApproval/:requestId" element={<DenyRequest/>} />
           <Route path="/ApprovalForm" element={<ApprovalForm/>} />

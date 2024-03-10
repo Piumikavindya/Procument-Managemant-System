@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link ,useNavigate, } from "react-router-dom";
 import Dropdown from "../../components/DropDown";
 import "../../styles/Buttons.css";
+import { AiOutlineEdit } from "react-icons/ai";
+import { MdOutlineDelete } from "react-icons/md";
 import "../../styles/button3.css";
 import { AddItemCard } from "./AddItemCard ";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
@@ -105,7 +107,27 @@ const ReqForm = ({ forms }) => {
     localStorage.setItem("formData", JSON.stringify(formData));
  
   };
+  const handleFileUpload = async (requestId, files) => {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("files", file);
+    });
   
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/procReqest/uploadFile/${requestId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("File uploaded successfully:", response.data);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
   const handleViewProcItems = async () => {
     try {
       const response = await axios.get(
@@ -216,7 +238,7 @@ const ReqForm = ({ forms }) => {
       setFiles({});
       localStorage.removeItem("formData");
       console.log("Request submitted successfully", createResponse.data);
-  
+      await handleFileUpload(requestId, e.target.files);
       // Fetch updated items after submitting the form
       // handleViewProcItems();
     } catch (error) {
@@ -508,7 +530,17 @@ const ReqForm = ({ forms }) => {
                 <div className="flex items-center">
                   <div>
                     <div className="text-sm leading-5 text-gray-800">
-                      {/* Add actions here */}
+              
+                  <div className="icon-link flex justify-center gap-x-4">
+                  
+                    <Link to={`/updatevendor/${item._id}`}>
+                      <AiOutlineEdit className="text-2xl text-blue-800 " />
+                    </Link>
+                    <Link to={`/DeleteItem/${requestId}/${item.itemId}`}>
+    <MdOutlineDelete className="text-2xl text-red-500" />
+  </Link>
+                  </div>
+              
                     </div>
                   </div>
                 </div>
