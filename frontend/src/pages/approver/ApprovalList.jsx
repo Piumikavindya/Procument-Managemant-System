@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Tooltip } from "flowbite-react";
 import { IconButton } from "@material-tailwind/react";
@@ -7,39 +8,26 @@ import Breadcrumb from "../../components/Breadcrumb";
 import { CheckCircleIcon, FolderOpenIcon } from "@heroicons/react/24/solid";
 import { MdCancel } from "react-icons/md";
 
-const TABLE_ROWS = [
-  {
-    requestId: "12345",
-    department: "CEE",
-    purpose: "For Cementary Machineries",
-  },
-  {
-    requestId: "12345",
-    department: "CEE",
-    purpose: "For Cementary Machineries",
-  },
-  {
-    requestId: "12345",
-    department: "CEE",
-    purpose: "For Cementary Machineries",
-  },
-  {
-    requestId: "12345",
-    department: "CEE",
-    purpose: "For Cementary Machineries",
-  },
-  {
-    requestId: "12345",
-    department: "CEE",
-    purpose: "For Cementary Machineries",
-  },
-];
 
 function ApprovalList ()  {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
+  const [requests, setRequests] = useState([]);
 
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get("http://localhost:8000/procReqest/viewRequests")
+      .then((response) => {
+        setRequests(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching requests:", error);
+        setLoading(false);
+      });
+  }, []);
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -48,9 +36,9 @@ function ApprovalList ()  {
     setSearchOption(e.target.value);
   };
 
-  const filteredRows = TABLE_ROWS.filter((row) =>
-    row[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredRequests = requests.filter((request) =>
+  request[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
+);
 
   const [isApprovalFormOpen, setIsApprovalFormOpen] = useState(false);
 
@@ -133,13 +121,13 @@ function ApprovalList ()  {
                 </tr>
               </thead>
               <tbody className="bg-white">
-                {filteredRows.map((details) => (
-                    <tr key={details.requestId} className="reservation-row">
+                {filteredRequests.map((request) => (
+                    <tr key={request.requestId} className="reservation-row">
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="flex items-center">
                           <div>
                             <div className="text-sm leading-5 text-gray-900">
-                              {details.requestId}
+                              {request.requestId}
                             </div>
                           </div>
                         </div>
@@ -149,7 +137,7 @@ function ApprovalList ()  {
                         <div className="flex items-center">
                           <div>
                             <div className="text-sm leading-5 text-gray-900">
-                              {details.department}
+                              {request.department}
                             </div>
                           </div>
                         </div>
@@ -159,7 +147,7 @@ function ApprovalList ()  {
                         <div className="flex items-center">
                           <div>
                             <div className="text-sm leading-5 text-gray-900">
-                              {details.purpose}
+                              {request.purpose}
                             </div>
                           </div>
                         </div>
@@ -175,14 +163,14 @@ function ApprovalList ()  {
                             </Tooltip>
                           </Link>
 
-                          <Link to={`/DenyApproval/${details.requestId}`}>
+                          <Link to={`/DenyApproval/${request.requestId}`}>
                             <Tooltip content="Deny">
                               <IconButton variant="text">
                                 <MdCancel className="h-6 w-6 text-red-500" />
                               </IconButton>
                             </Tooltip>
                           </Link>
-                          <Link to={`/DenyApproval/${details.requestId}`}>
+                          <Link to={`/DenyApproval/${request.requestId}`}>
                             <Tooltip content="View">
                               <IconButton variant="text">
                                 <FolderOpenIcon className="h-6 w-6 text-blue-500" />

@@ -5,7 +5,7 @@ import axios from "axios";
 export const AddItemCard = ({ handleAddItemsClick,handleViewProcItems }) => {
   const navigate = useNavigate();
   const { requestId } = useParams();
-  const [description, setDescription] = useState("");
+  const [itemName, setItemName] = useState("");
   const [cost, setCost] = useState("");
   const [qtyRequired, setQtyRequired] = useState("");
   const [qtyAvailable, setQtyAvailable] = useState("");
@@ -22,7 +22,7 @@ export const AddItemCard = ({ handleAddItemsClick,handleViewProcItems }) => {
       const response = await axios.post(
         `http://localhost:8000/procReqest/addProcItem/${requestId}`,
         {
-          description,
+          itemName,
           cost,
           qtyRequired,
           qtyAvailable,
@@ -30,9 +30,9 @@ export const AddItemCard = ({ handleAddItemsClick,handleViewProcItems }) => {
       );
 
       const newItemData = response.data.newItem;
-      handleViewProcItems(); // Fetch updated items after adding
+      // handleViewProcItems(); // Fetch updated items after adding
 
-      setDescription("");
+      setItemName("");
       setCost("");
       setQtyRequired("");
       setQtyAvailable("");
@@ -66,8 +66,8 @@ export const AddItemCard = ({ handleAddItemsClick,handleViewProcItems }) => {
                   </label>
                   <input
                     type="text"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={itemName}
+                    onChange={(e) => setItemName(e.target.value)}
                     class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                     placeholder="Add a discription"
                   />

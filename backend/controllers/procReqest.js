@@ -1,5 +1,7 @@
 const procReqest = require('../Models/procReqest');
 const path = require("path");
+// const fs = require('fs').promises;
+
 const { PDFDocument, rgb } = require('pdf-lib');
 // const fs = require('fs').promises;
 
@@ -62,6 +64,8 @@ exports.createRequest = async (req, res) => {
       existingRequest.sendTo = sendTo;
       // existingRequest.items = items;
       // existingRequest.files = files;
+      // existingRequest.items = items;
+      // existingRequest.files = files;
 
       // Save the updated document to the database
       const updatedRequest = await existingRequest.save();
@@ -112,6 +116,19 @@ exports.viewAllRequests = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+exports.viewAllRequests = async (req, res) => {
+  try {
+    // Fetch all requests from the database
+    const allRequests = await procReqest.find();
+
+    // Send the list of requests as a response
+    res.json(allRequests);
+  } catch (error) {
+    console.error("Error fetching all requests:", error);
+    // Handle errors and send an appropriate response
+    res.status(500).json({ error: error.message });
+  }
+};
 
 exports.deleteRequest = async (req, res) => {
   try {
@@ -127,14 +144,15 @@ exports.deleteRequest = async (req, res) => {
 exports.addProcItem = async (req, res) => {
   try {
     const { requestId } = req.params;
-    const { description, cost, qtyRequired, qtyAvailable } = req.body;
+    const { itemName, cost, qtyRequired, qtyAvailable } = req.body;
 
     const updatedRequest = await procReqest.findOneAndUpdate(
       { requestId },
       {
+
         $push: {
           items: {
-            description,
+            itemName,
             cost,
             qtyRequired,
             qtyAvailable,
@@ -144,12 +162,12 @@ exports.addProcItem = async (req, res) => {
       { new: true }
     );
 
+
     res.json({ message: 'Item added successfully', updatedRequest });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 exports.veiwProcItems = async (req, res) => {
   try {
@@ -157,6 +175,11 @@ exports.veiwProcItems = async (req, res) => {
 
     // Find the request by ID and select only the items field
     const request = await procReqest.findOne({ requestId }).select('items');
+
+    // Check if request is null
+    if (!request) {
+      return res.status(404).json({ error: "Request not found" });
+    }
 
     // Send the procurement items associated with the request as a response
     res.json(request.items);
@@ -166,6 +189,11 @@ exports.veiwProcItems = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+
+
+
 
 // Delete Item from Request
 exports.deleteProcItem = async (req, res) => {
@@ -181,6 +209,9 @@ exports.deleteProcItem = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+
 
 
 
@@ -277,6 +308,9 @@ exports.deleteFile = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+
 
 
 

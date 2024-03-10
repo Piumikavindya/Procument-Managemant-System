@@ -44,7 +44,7 @@ import PreviewUserDetails from './pages/admin/users/PreviewUserDetails.jsx';
 import PreviewVendorDetails from './pages/admin/vendors/PreviewVendorDetails.jsx';
 import PreviewItemDetails from './pages/admin/items/PreviewItemDetails.jsx';
 import ProgressTracker from './pages/department/ProgressTracker.jsx';
-import ApprovalList from './pages/approver/ApprovalList.js';
+import ApprovalList from './pages/approver/ApprovalList.jsx';
 import DenyRequest from './pages/approver/DenyRequest.jsx';
 import ApprovalForm from './pages/approver/ApprovalForm.jsx';
 import ApproverHome from './pages/approver/ApproverHome.jsx';
@@ -55,54 +55,48 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
 
-
   const renderNavbar = () => {
-    if (location.pathname === '/loginpage') {
+    if (location.pathname === "/loginpage") {
       return null;
     }
-  
+
     return isAuthenticated ? (
-      <Navbar  isAuthenticated={isAuthenticated}  handleSignOut={handleSignOut} />
+      <Navbar isAuthenticated={isAuthenticated} handleSignOut={handleSignOut} />
     ) : (
-      <Navbar isAuthenticated={isAuthenticated}  handleSignIn={handleSignIn}  />
+      <Navbar isAuthenticated={isAuthenticated} handleSignIn={handleSignIn} />
     );
   };
 
-  
-
   const renderCommonFooter = () => {
-    if (location.pathname === '/loginpage')
-    {
-        return null;
-    
+    if (location.pathname === "/loginpage") {
+      return null;
     }
-  
+
     return <CommonFooter />;
-  }
-  
+  };
 
   const handleSignIn = (user) => {
-    console.log('User details:', user);
+    console.log("User details:", user);
     setIsAuthenticated(true);
     console.log("User authenticated state:", isAuthenticated);
     setLoggedInUser(user);
-    navigate('/loginpage');
+    navigate("/loginpage");
   };
 
   const handleSignOut = () => {
     console.log("Signing out...");
-  setIsAuthenticated(false);
-  setLoggedInUser(null);
-  console.log("User authenticated state:", isAuthenticated);
-  console.log("Logged-in user:", loggedInUser);
-  navigate('/');
+    setIsAuthenticated(false);
+    setLoggedInUser(null);
+    console.log("User authenticated state:", isAuthenticated);
+    console.log("Logged-in user:", loggedInUser);
+    navigate("/");
   };
   return (
     <div>
-  {renderNavbar()}
- 
+      {renderNavbar()}
+
       <Routes>
-      <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/loginpage"
           element={
@@ -145,11 +139,12 @@ const App = () => {
         <Route path="/reqform" element={<ReqForm />} />
         <Route path="/department/:id" element={<DepartmentHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
         <Route path="/ProgressTrack" element={<ProgressTracker />} />
+        <Route path="/DeleteItem/:requestId/:itemId" element={<DeleteItem />} />
 
         <Route path="/ManageGuidance" element={<ManageGuidance />} />
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
-        <Route path="/DeleteGuidance/:id" element={<DeleteGuidance/>} />
-        <Route path="/ViewGuidances" element={<ViewGuidances/>} />
+        <Route path="/DeleteGuidance/:id" element={<DeleteGuidance />} />
+        <Route path="/ViewGuidances" element={<ViewGuidances />} />
 
         <Route path="/ManageNotice" element={<ManageNotices />} />
         <Route path="/UploadNotice" element={<UploadNotice />} />
@@ -158,8 +153,14 @@ const App = () => {
         
         <Route path="/AllItem" element={<ItemDetails/>} />
         <Route path="/PreviewItem/:id" element={<PreviewItem />} />
-        <Route path="/DeleteItem/:id" element={<DeleteItem/>} />
-        <Route path="/AddItem" element={<AddItem/>} />
+        <Route path="/DeleteItem/:id" element={<DeleteItem />} />
+        <Route path="/AddItem" element={<AddItem />} />
+        <Route path="/reqform" element={<ReqForm />} />
+        <Route path="/additem/:requestId" element={<AddItemCard/>}/>
+       
+        <Route path="/itemDetails" element={<ItemDetails/>} />
+          <Route path="/AddItems" element={<AddItems/>} />
+          <Route path="/updateItems" element={<UpdateItems/>} />
           <Route path="/formview/:requestId" element={<FormView />} />
           <Route path="/additem/:requestId" element={<AddItemCard/>}/>
 
@@ -168,17 +169,16 @@ const App = () => {
           <Route path="/updateItems" element={<UpdateItems/>} />
           <Route path="/previewItemDetails/:id" element={<PreviewItemDetails />} />
 
-          <Route path="/ApproverHome/:id" element={<ApproverHome/>}/>
+          <Route path="/approver/:id" element={<ApproverHome/>}/>
           <Route path="/ViewForApproval" element={<ApprovalList/>} />
           <Route path="/DenyApproval/:requestId" element={<DenyRequest/>} />
           <Route path="/ApprovalForm" element={<ApprovalForm/>} />
         
       </Routes>
-  
-  {renderCommonFooter ()}
+
+      {renderCommonFooter()}
     </div>
   );
 };
 reportWebVitals();
 export default App;
-
