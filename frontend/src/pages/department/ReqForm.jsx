@@ -45,6 +45,7 @@ const ReqForm = ({ forms }) => {
     } else {
       handleGenerateRequestId();
     }
+    handleViewProcItems();
   }, []);
 
   // Function to handle the generation of request ID
@@ -71,6 +72,7 @@ const ReqForm = ({ forms }) => {
       ...prevItems,
       [Date.now()]: itemData, // Assuming you want to use a timestamp as the key
     }));
+    handleViewProcItems();
     const formData = {
       requestId,
       department,
@@ -87,18 +89,26 @@ const ReqForm = ({ forms }) => {
       files,
     };
     // Navigate to the specified route when "Add items" is clicked
+     navigate(`/formview/${requestId}`);
     // Store form data in localStorage
     localStorage.setItem("formData", JSON.stringify(formData));
-    // Navigate to add item page
-    navigate(`/formview/${requestId}`);
+   
   };
+  const handleViewProcItems = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/procReqest/viewProcItems/${requestId}`
+      );
+      const itemsData = response.data;
+      setItems(itemsData); // Update the items state with the fetched data
+    } catch (error) {
+      console.error("Error fetching procurement items:", error);
+    }
+  };
+    const handleGeneratePDF = async () => {
+      let email;
 
-  // Function to handle form submission
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let email;
-  
+    
     // Determine the email address based on the sendTo state
     switch (sendTo) {
       case "dean":
@@ -158,7 +168,73 @@ const ReqForm = ({ forms }) => {
       alert("An error occurred. Please try again.");
     }
   };
+ 
+  // Function to handle form submission
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = {
+      requestId,
+      department,
+      date,
+      contactPerson,
+      contactNo,
+      budgetAllocation,
+      usedAmount,
+      balanceAvailable,
+      purpose,
+      sendTo,
+      items,
+      files,
+    };
+    const newRequest = {
+      requestId,
+      department,
+      date,
+      contactPerson,
+      contactNo,
+      budgetAllocation,
+      usedAmount,
+      balanceAvailable,
+      purpose,
+      sendTo,
+      items,
+      files,
+    };
+    setLoading(true);
+    try {
+      const createResponse = await axios.post(
+        `http://localhost:8000/procReqest/createRequest/${requestId}`,
+        newRequest
+      );
+      const updatedRequest = createResponse.data.updatedRequest;
+      alert("Request submitted successfully");
+      setLoading(false);
+      await handleGeneratePDF(formData);
+      setRequestId("");
+      setDepartment("");
+      setDate("");
+      setContactPerson("");
+      setContactNo("");
+      setBudgetAllocation("");
+      setUsedAmount("");
+      setBalanceAvailable("");
+      setPurpose("normal");
+      setSendTo("dean");
+      setItems({});
+      setFiles({});
+      localStorage.removeItem("formData");
+      console.log("Request submitted successfully", createResponse.data);
   
+      // Fetch updated items after submitting the form
+     // handleViewProcItems();
+    } catch (error) {
+      console.error("Error submitting request", error);
+      console.dir(error);
+    }
+    
+  };
+   
   const clearFormInputs = () => {
     setRequestId("");
     setDepartment("");
@@ -175,34 +251,36 @@ const ReqForm = ({ forms }) => {
     setSendTo("dean");
   };
   
+  
   return (
+    <div>
     <div className="max-w-6xl mx-auto mt-40 ">
+    
       <div className="block w-full h-auto rounded-md border border-black bg-black py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
         <Dropdown />
       </div>
+     
 
       <div className="border border-black bg-white p-6 rounded-lg shadow-md">
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e,items)}>
           <div className="space-y-6 ">
             <div className="flex flex-col justify-end space-y-1">
               <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
                 {/* Box 1 */}
                 <div className="border border-black p-2 bg-black text-white">
-                  <button type="button" onClick={handleGenerateRequestId}>
-                    Generate Request ID
-                  </button>
+                <button  type="button"  onClick={handleGenerateRequestId}>Generate Request ID</button>
                 </div>
               </div>
               <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
                 {/* Box 2 */}
-
+               
                 <input
-                  type="text"
-                  value={requestId}
-                  onChange={(e) => setRequestId(e.target.value)}
-                  className="border-2 border-black px-4 py-2 w-full "
-                  disabled={true}
-                />
+  type="text"
+  value={requestId}
+  onChange={(e) => setRequestId(e.target.value)}
+  className="border-2 border-black px-4 py-2 w-full "disabled={true}
+/>
+              
               </div>
               <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
                 {/* Box 3 */}
@@ -307,10 +385,10 @@ const ReqForm = ({ forms }) => {
                   </label>
                   <div className="mt-2">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                      <input
-                        type="number"
-                        value={budgetAllocation}
-                        onChange={(e) => setBudgetAllocation(e.target.value)}
+                    <input
+              type="number"
+              value={budgetAllocation}
+              onChange={(e) => setBudgetAllocation(e.target.value)}
                         className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -327,9 +405,9 @@ const ReqForm = ({ forms }) => {
                   <div className="mt-2">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
-                        type="text"
-                        value={usedAmount}
-                        onChange={(e) => setUsedAmount(e.target.value)}
+                       type="text"
+                       value={usedAmount}
+                       onChange={(e) => setUsedAmount(e.target.value)}
                         className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -365,7 +443,7 @@ const ReqForm = ({ forms }) => {
                 <h2 className="text-base font-bold leading-7 text-gray-900">
                   Requesting Item Details
                 </h2>
-
+            
                 <button type="button" onClick={handleAddItemsClick}>
                   <span className="c-main">
                     <span className="c-ico">
@@ -376,100 +454,81 @@ const ReqForm = ({ forms }) => {
                   </span>
                 </button>
               </div>
-
+            
               <div className="flex items-center">
-                <table className="min-w-full bg-white shadow-md rounded-xl">
-                  <thead>
-                    <tr className="bg-blue-gray-100 text-gray-700">
-                      <th className="py-3 px-4 text-left">No</th>
-                      <th className="py-3 px-4 text-left">
-                        Description of the item/items indented to be purchased
-                      </th>
-                      <th className="py-3 px-4 text-left">
-                        Cost (Approximately)
-                      </th>
-                      <th className="py-3 px-4 text-left">Qty Required</th>
-                      <th className="py-3 px-4 text-left">Qty Available</th>
-                      <th className="py-3 px-4 text-left">Actions</th>
-                    </tr>
-                  </thead>
+              <table key={Object.keys(items).length} className="min-w-full bg-white shadow-md rounded-xl">
+        <thead>
+          <tr className="bg-blue-gray-100 text-gray-700">
+            <th className="py-3 px-4 text-left">No</th>
+            <th className="py-3 px-4 text-left">Description</th>
+            <th className="py-3 px-4 text-left">Cost (Approximately)</th>
+            <th className="py-3 px-4 text-left">Qty Required</th>
+            <th className="py-3 px-4 text-left">Qty Available</th>
+            <th className="py-3 px-4 text-left">Actions</th>
+          </tr>
+        </thead>
 
-                  <tbody className="text-blue-gray-900">
-                    {forms &&
-                      forms.map((form, index) => (
-                        <tr
-                          key={form._id}
-                          className="border-b border-blue-gray-200"
-                        >
-                          <td className="border-blue-gray-200">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {index + 1}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="border-blue-gray-200">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {form.itemId}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-
-                          <td className="border-blue-gray-200">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {form.description}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-
-                          <td className="border-blue-gray-200">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {form.cost}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="border-blue-gray-200">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {form.qtyRequired}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {form.qtyAvailable}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="border-blue-gray-200">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm leading-5 text-gray-800">
-                                  {form.actions}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
+        <tbody className="text-blue-gray-900">
+          {Object.entries(items).map(([key, item], index) => (
+            <tr key={key} className="border-b border-blue-gray-200">
+              <td className="border-blue-gray-200">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-sm leading-5 text-gray-800">
+                      {index + 1}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="border-blue-gray-200">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-sm leading-5 text-gray-800">
+                      {item.description}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="border-blue-gray-200">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-sm leading-5 text-gray-800">
+                      {item.cost}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="border-blue-gray-200">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-sm leading-5 text-gray-800">
+                      {item.qtyRequired}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="border-blue-gray-200">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-sm leading-5 text-gray-800">
+                      {item.qtyAvailable}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="border-blue-gray-200">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-sm leading-5 text-gray-800">
+                      {/* Add actions here */}
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
               </div>
             </div>
 
@@ -510,7 +569,7 @@ const ReqForm = ({ forms }) => {
                             id="purpose"
                             name="purpose"
                             type="checkbox"
-                            onClick={() => handleCheckboxClick("normal")}
+                            onClick={() => handleCheckboxClick('normal')}
                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                         </div>
@@ -529,7 +588,7 @@ const ReqForm = ({ forms }) => {
                             id="purpose"
                             name="purpose"
                             type="checkbox"
-                            onClick={() => handleCheckboxClick("Fast Track")}
+                            onClick={() => handleCheckboxClick('Fast Track')}
                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                         </div>
@@ -604,7 +663,7 @@ const ReqForm = ({ forms }) => {
                           id="push-email"
                           name="dean"
                           type="radio"
-                          onClick={() => handleCheckboxClick("dean")}
+                          onClick={() => handleCheckboxClick('dean')}
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                         <label
@@ -619,7 +678,7 @@ const ReqForm = ({ forms }) => {
                           id="push-nothing"
                           name="push-notifications"
                           type="radio"
-                          onClick={() => handleCheckboxClick("registrar")}
+                          onClick={() => handleCheckboxClick('registrar')}
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
                         <label
@@ -637,26 +696,46 @@ const ReqForm = ({ forms }) => {
           </div>
 
           <div className="mt-3 flex items-center justify-end gap-x-6">
-            <button class="button3" type="submit">
-              <span class="button3__text">downlaod and send</span>
+            <button class="button3" type="button">
+              <span class="button3__text">Clear Form</span>
               <span class="button3__icon">
                 <svg
+                  class="svg"
+                  height="48"
+                  viewBox="0 0 48 48"
+                  width="48"
                   xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  height="24"
                 >
-                  <path fill="none" d="M0 0h24v24H0z"></path>
-                  <path
-                    fill="currentColor"
-                    d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                  ></path>
+                  <path d="M35.3 12.7c-2.89-2.9-6.88-4.7-11.3-4.7-8.84 0-15.98 7.16-15.98 16s7.14 16 15.98 16c7.45 0 13.69-5.1 15.46-12h-4.16c-1.65 4.66-6.07 8-11.3 8-6.63 0-12-5.37-12-12s5.37-12 12-12c3.31 0 6.28 1.38 8.45 3.55l-6.45 6.45h14v-14l-4.7 4.7z"></path>
+                  <path d="M0 0h48v48h-48z" fill="none"></path>
                 </svg>
               </span>
             </button>
+           
+            <button class="button3" type="submit" onClick={(e) => {
+    handleSubmit(e);
+    handleGeneratePDF();
+}}>
+              <span class="button3__text">Download and Send</span>
+              <span class="button3__icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 35 35"
+                  id="bdd05811-e15d-428c-bb53-8661459f9307"
+                  data-name="Layer 2"
+                  class="svg"
+                >
+                  <path d="M17.5,22.131a1.249,1.249,0,0,1-1.25-1.25V2.187a1.25,1.25,0,0,1,2.5,0V20.881A1.25,1.25,0,0,1,17.5,22.131Z"></path>
+                  <path d="M17.5,22.693a3.189,3.189,0,0,1-2.262-.936L8.487,15.006a1.249,1.249,0,0,1,1.767-1.767l6.751,6.751a.7.7,0,0,0,.99,0l6.751-6.751a1.25,1.25,0,0,1,1.768,1.767l-6.752,6.751A3.191,3.191,0,0,1,17.5,22.693Z"></path>
+                  <path d="M31.436,34.063H3.564A3.318,3.318,0,0,1,.25,30.749V22.011a1.25,1.25,0,0,1,2.5,0v8.738a.815.815,0,0,0,.814.814H31.436a.815.815,0,0,0,.814-.814V22.011a1.25,1.25,0,1,1,2.5,0v8.738A3.318,3.318,0,0,1,31.436,34.063Z"></path>
+                </svg>
+              </span>
+            </button>
+         
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 };

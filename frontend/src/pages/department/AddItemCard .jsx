@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export const AddItemCard = ({ handleAddItemsClick }) => {
+
+export const AddItemCard = ({ handleAddItemsClick,handleViewProcItems}) => {
   const navigate = useNavigate();
   const { requestId } = useParams();
-  const [description, setDescription] = useState("");
+  const [ itemName, setItemName] = useState("");
   const [cost, setCost] = useState("");
   const [qtyRequired, setQtyRequired] = useState("");
   const [qtyAvailable, setQtyAvailable] = useState("");
@@ -20,30 +21,35 @@ export const AddItemCard = ({ handleAddItemsClick }) => {
       // Perform the logic to add an item, for example:
       const response = await axios.post(
         `http://localhost:8000/procReqest/addProcItem/${requestId}`,
-        {description,
-            cost,
-            qtyRequired,
-            qtyAvailable,}
+        {
+          itemName,
+          cost,
+          qtyRequired,
+          qtyAvailable,
+        }
       );
-  
+      handleViewProcItems();
       // Assuming the response contains the updated request
       const updatedRequest = response.data.updatedRequest;
   
-      // Update the state or perform any other actions based on the response
-      console.log("Item added successfully", updatedRequest);
-  // Call the callback function to update the items state in the ReqForm component
-  handleAddItemsClick({
-    description,
-    cost,
-    qtyRequired,
-    qtyAvailable,
-  });
-
-  
+      // Call the callback function to update the items state in the ReqForm component
+      handleAddItemsClick({
+        itemName,
+        cost,
+        qtyRequired,
+        qtyAvailable,
+      });
+      handleViewProcItems();
+      // Reset input fields after adding an item
+      setItemName("");
+      setCost("");
+      setQtyRequired("");
+      setQtyAvailable("");
     } catch (error) {
       console.error("Error adding item", error);
     }
   };
+  
   
   return (
     <div class="mt-24 py-6 flex flex-col justify-center sm:py-12">
@@ -66,8 +72,8 @@ export const AddItemCard = ({ handleAddItemsClick }) => {
                   </label>
                   <input
                     type="text"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={itemName}
+                    onChange={(e) => setItemName(e.target.value)}
                     class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                     placeholder="Add a discription"
                   />

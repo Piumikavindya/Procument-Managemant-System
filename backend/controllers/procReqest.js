@@ -98,7 +98,19 @@ console.log(updatedRequest);
   }
 };
 
+exports.viewAllRequests = async (req, res) => {
+  try {
+    // Fetch all requests from the database
+    const allRequests = await procReqest.find();
 
+    // Send the list of requests as a response
+    res.json(allRequests);
+  } catch (error) {
+    console.error("Error fetching all requests:", error);
+    // Handle errors and send an appropriate response
+    res.status(500).json({ error: error.message });
+  }
+};
 
 exports.deleteRequest = async (req, res) => {
   try {
@@ -137,6 +149,28 @@ exports.addProcItem = async (req, res) => {
   }
 };
 
+exports.veiwProcItems = async (req, res) => {
+  try {
+    const { requestId } = req.params;
+
+    // Find the request by ID and select only the items field
+    const request = await procReqest.findOne({ requestId }).select('items');
+
+    // Check if request is null
+    if (!request) {
+      return res.status(404).json({ error: "Request not found" });
+    }
+
+    // Send the procurement items associated with the request as a response
+    res.json(request.items);
+  } catch (error) {
+    console.error("Error fetching procurement items:", error);
+    // Handle errors and send an appropriate response
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 
 // Delete Item from Request
 exports.deleteProcItem = async (req, res) => {
@@ -152,6 +186,9 @@ exports.deleteProcItem = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+
 
 exports.uploadFile = async (req, res) => {
   try {
@@ -245,4 +282,5 @@ exports.deleteFile = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
