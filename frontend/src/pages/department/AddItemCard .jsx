@@ -30,7 +30,7 @@ export const AddItemCard = ({ handleAddItemsClick,handleViewProcItems }) => {
       );
 
       const newItemData = response.data.newItem;
-      handleViewProcItems(); // Fetch updated items after adding
+      // handleViewProcItems(); // Fetch updated items after adding
 
       setItemName("");
       setCost("");

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+      Tailwind Starter Template - Multi Section Form / Scrollspy: Tailwind
+      Toolbox
+    </title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"
+    />
+    <link
+      href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css"
+      rel="stylesheet"
+    />
+    <!--Replace with your tailwind.css once created-->
+    <style>
+      .max-h-64 {
+        max-height: 16rem;
+      }
+      /*Quick overrides of the form input as using the CDN version*/
+      .form-input,
+      .form-textarea,
+      .form-select,
+      .form-multiselect {
+        background-color: white;
+        border-color: black;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-100 text-gray-900 tracking-wider leading-normal">
+    <!--Container-->
+    <div class="container w-full flex flex-wrap mx-auto px-2 pt-0">
+      <div
+        class="w-full lg:w-1/5 px-6 text-xl text-gray-800 leading-normal"
+      ></div>
+      <!--Section container-->
+      <section class="w-full lg:w-4/5">
+        <!--Card-->
+        <div class="w-full container mx-auto justify-between my-4 ">
+          <!-- Added relative positioning to maintain absolute position of child elements -->
+          <div class="flex justify-between items-center mx-4 md:mx-0">
+            <!-- Flex container to align the logo, text, and form -->
+            <div class="flex items-center">
+              <!-- Flex container to align the logo and text -->
+              <a href="http://www.ruh.ac.lk">
+                <img
+                  src="https://i.ibb.co/qpvr0B6/09-03-2024-11-31-07-REC.png"
+                  alt="09-03-2024-11-31-07-REC"
+                  border="0"
+                />
+              </a>
+            </div>
+            <div class="absolute right-5 flex flex-col">
+              <!-- Absolute positioning for the input container and set as a column -->
+              <!-- Label for Date -->
+              <label for="date" class="text-sm">Date:</label>
+              <input
+                id="date"
+                class="form-input mb-0 h-8 focus:bg-white"
+                type="text"
+                value=""
+                placeholder="Date"
+              />
+
+              <!-- Label for Form Number -->
+              <label for="form-no" class="text-sm">Form No:</label>
+              <input
+                id="form-no"
+                class="form-input mb-0 h-8 focus:bg-white"
+                type="text"
+                value=""
+                placeholder="Form No"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!--/Card-->
+
+        <!--divider-->
+        <hr class="bg-gray-300 my-2" />
+
+        <!--Title-->
+        <h2
+          class="font-sans font-bold break-normal text-gray-700 px-2 pb-0 text-lg"
+        >
+          User
+        </h2>
+
+        <!--Card-->
+        <form>
+          <div class="md:flex mb-0">
+            <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 text-sm font-bold md:text-left mb-0 md:mb-0 pr-4"
+                for="my-textfield"
+              >
+                Faculty/Admin
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <input
+                class="form-input block w-full focus:bg-white h-8 px-3 py-1 text-sm"
+                id="my-textfield"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+
+          <div class="md:flex mb-0">
+            <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 text-sm font-bold md:text-left mb-0 md:mb-0 pr-4"
+                for="my-textfield"
+              >
+                Department/Branch
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <input
+                class="form-input block w-full focus:bg-white h-8 px-3 py-1 text-sm"
+                id="my-textfield"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+
+          <div class="md:flex mb-0">
+            <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 text-sm font-bold md:text-left mb-0 md:mb-0 pr-4"
+                for="my-textfield"
+              >
+                Contact Person
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <input
+                class="form-input block w-full focus:bg-white h-8 px-3 py-1 text-sm"
+                id="my-textfield"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+          <div class="md:flex mb-0">
+            <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 text-sm font-bold md:text-left mb-0 md:mb-0 pr-4"
+                for="my-textfield"
+              >
+                Contact Number
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <input
+                class="form-input block w-full focus:bg-white h-8 px-3 py-1 text-sm"
+                id="my-textfield"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </form>
+        <!--/Card-->
+
+        <!--divider-->
+        <hr class="bg-gray-300 my-2" />
+
+        <!--Title-->
+        <h2
+          class="font-sans font-bold break-normal text-gray-700 px-2 pb-2 text-lg"
+        >
+          Funds
+        </h2>
+
+        <!--Card-->
+        <form>
+          <div class="md:flex mb-1">
+            <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 text-sm font-bold md:text-left mb-0 md:mb-0 pr-4"
+                for="my-textfield"
+              >
+                Budget Allocation Rs
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <input
+                class="form-input block w-full focus:bg-white h-8 px-3 py-1 text-sm"
+                id="my-textfield"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+
+          <div class="md:flex mb-1">
+            <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 text-sm font-bold md:text-left mb-0 md:mb-0 pr-4"
+                for="my-select"
+              >
+                Used Amount So far Rs
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <input
+                class="form-input block w-full focus:bg-white h-8 px-3 py-1 text-sm"
+                id="my-textfield"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+
+          <div class="md:flex mb-1">
+            <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 text-sm font-bold md:text-left mb-0 md:mb-0 pr-4"
+                for="my-textfield"
+              >
+                Balance Available Rs
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <input
+                class="form-input block w-full focus:bg-white h-8 px-3 py-1 text-sm"
+                id="my-textfield"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </form>
+        <!--/Card-->
+
+        <!--divider-->
+        <hr class="bg-gray-300 my-2" />
+
+        <!--Title-->
+        <h2
+          class="font-sans font-bold break-normal text-gray-700 px-2 pb-2 text-lg"
+        >
+          Object
+        </h2>
+
+        <!--Card-->
+        <div class="flex flex-col">
+          <div class="sm:mx-0.5 lg:mx-0.5">
+            <div class="py-2 inline-block min-w-full sm:px-6 lg:px-4">
+              <div class="overflow-hidden">
+                <table class="min-w-full">
+                  <thead class="bg-white border-b">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="text-sm font-medium text-gray-900 px-6 py-2 border border-gray-300"
+                        colspan="4"
+                      ></th>
+                      <th
+                        scope="col"
+                        class="text-sm font-medium text-gray-900 px- py-2 border border-gray-300"
+                        colspan="3"
+                      >
+                        To be filled by Supplies Division
+                      </th>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="col"
+                        class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                      >
+                        Description of the items indented to be purchased
+                      </th>
+                      <th
+                        scope="col"
+                        class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                      >
+                        Cost Approximately
+                      </th>
+                      <th
+                        scope="col"
+                        class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                      >
+                        Qty Required
+                      </th>
+                      <th
+                        scope="col"
+                        class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                      >
+                        Qty Already available
+                      </th>
+                      <th
+                        scope="col"
+                        class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                      >
+                        Qty Supplied
+                      </th>
+                      <th
+                        scope="col"
+                        class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                      >
+                        Rate
+                      </th>
+                      <th
+                        scope="col"
+                        class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                      >
+                        Total value
+                      </th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--/Card-->
+
+        <!--divider-->
+        <hr class="bg-gray-300 my-4" />
+
+        <!--Title-->
+        <h2
+          class="font-sans font-bold break-normal text-gray-700 px-2 pb-2 text-lg"
+        >
+          Purpose
+        </h2>
+        <ul
+          class="items-center w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex dark:bg-gray-700 dark:text-white"
+        >
+          <li class="w-full">
+            <div class="flex items-center">
+              <input
+                id="vue-checkbox-list"
+                type="checkbox"
+                value=""
+                class="w-4 h-4 text-blue-600 b rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+              />
+              <label
+                for="vue-checkbox-list"
+                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Normal</label
+              >
+            </div>
+          </li>
+
+          <li class="w-full">
+            <div class="flex items-center ps-3">
+              <input
+                id="angular-checkbox-list"
+                type="checkbox"
+                value=""
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+              />
+              <label
+                for="angular-checkbox-list"
+                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Fast Track</label
+              >
+            </div>
+          </li>
+          <li class="w-full">
+            <div class="flex items-center ps-3">
+              <input
+                id="laravel-checkbox-list"
+                type="checkbox"
+                value=""
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+              />
+              <label
+                for="laravel-checkbox-list"
+                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Urgent</label
+              >
+            </div>
+          </li>
+        </ul>
+
+        <!--divider-->
+        <hr class="bg-gray-300 my-2" />
+
+        <!--Title-->
+        <h2
+          class="font-sans font-bold break-normal text-gray-700 px-2 pb-2 text-lg"
+        >
+          Approval
+        </h2>
+
+        <!--Card-->
+        <form>
+          <div class="md:flex mb-1">
+            <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 text-sm font-bold md:text-left mb-1 md:mb-0 pr-4"
+                for="my-textfield"
+              >
+                Faculty/Admin
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <input
+                type="email"
+                name="floating_email"
+                id="floating_email"
+                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder="Prepared By                                                                  Head of the Department  "
+                required
+              />
+            </div>
+          </div>
+          <div class="md:flex mb-2">
+            <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 text-sm font-bold md:text-left mb-3 md:mb-0 pr-4"
+                for="my-textfield"
+              >
+                Recommeneded/Approved
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <input
+                type="email"
+                name="floating_email"
+                id="floating_email"
+                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder="Date                                                                              Dean/Registrar/Bursar  "
+                required
+              />
+            </div>
+          </div>
+
+          <div class="md:flex mb-2">
+            <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 text-sm font-bold md:text-left mb-3 md:mb-0 pr-4"
+                for="my-textfield"
+              >
+                Approved
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <input
+                type="email"
+                name="floating_email"
+                id="floating_email"
+                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder="Date                                        Registrar                                       Date                                        Vice Chancellor  "
+                required
+              />
+            </div>
+          </div>
+        </form>
+        <!--/Card-->
+
+        <!--divider-->
+        <hr class="bg-gray-300 my-2" />
+
+        <!--Title-->
+        <h2
+          class="font-sans font-bold break-normal text-gray-700 px-2 pb-2 text-lg"
+        >
+          Office Use
+        </h2>
+
+        <!--Card-->
+        <form>
+          <div class="md:flex mb-2">
+            <div class="md:w-1/3">
+              <label
+                class="block text-gray-600 text-sm font-bold md:text-left mb-3 md:mb-0 pr-4"
+                for="my-textfield"
+              >
+                Please take action to Supply
+              </label>
+            </div>
+            <div class="md:w-2/3">
+              <input
+                type="email"
+                name="floating_email"
+                id="floating_email"
+                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder="Date                                                                              Assistant Bursar(Supplies)  "
+                required
+              />
+            </div>
+          </div>
+        </form>
+        <!--/Card-->
+      </section>
+      <!--/Section container-->
+    </div>
+    <!--/container-->
+
+    <!-- Toggle dropdown list -->
+    <script>
+      /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
+
+      var userMenuDiv = document.getElementById("userMenu");
+      var userMenu = document.getElementById("userButton");
+
+      var helpMenuDiv = document.getElementById("menu-content");
+      var helpMenu = document.getElementById("menu-toggle");
+
+      document.onclick = check;
+
+      function check(e) {
+        var target = (e && e.target) || (event && event.srcElement);
+
+        //User Menu
+        if (!checkParent(target, userMenuDiv)) {
+          // click NOT on the menu
+          if (checkParent(target, userMenu)) {
+            // click on the link
+            if (userMenuDiv.classList.contains("invisible")) {
+              userMenuDiv.classList.remove("invisible");
+            } else {
+              userMenuDiv.classList.add("invisible");
+            }
+          } else {
+            // click both outside link and outside menu, hide menu
+            userMenuDiv.classList.add("invisible");
+          }
+        }
+
+        //Help Menu
+        if (!checkParent(target, helpMenuDiv)) {
+          // click NOT on the menu
+          if (checkParent(target, helpMenu)) {
+            // click on the link
+            if (helpMenuDiv.classList.contains("hidden")) {
+              helpMenuDiv.classList.remove("hidden");
+            } else {
+              helpMenuDiv.classList.add("hidden");
+            }
+          } else {
+            // click both outside link and outside menu, hide menu
+            helpMenuDiv.classList.add("hidden");
+          }
+        }
+      }
+
+      function checkParent(t, elm) {
+        while (t.parentNode) {
+          if (t == elm) {
+            return true;
+          }
+          t = t.parentNode;
+        }
+        return false;
+      }
+    </script>
+
+    <!-- jQuery -->
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+    ></script>
+
+    <!-- Scroll Spy -->
+    <script>
+      /* http://jsfiddle.net/LwLBx/ */
+
+      // Cache selectors
+      var lastId,
+        topMenu = $("#menu-content"),
+        topMenuHeight = topMenu.outerHeight() + 175,
+        // All list items
+        menuItems = topMenu.find("a"),
+        // Anchors corresponding to menu items
+        scrollItems = menuItems.map(function () {
+          var item = $($(this).attr("href"));
+          if (item.length) {
+            return item;
+          }
+        });
+
+      // Bind click handler to menu items
+      // so we can get a fancy scroll animation
+      menuItems.click(function (e) {
+        var href = $(this).attr("href"),
+          offsetTop =
+            href === "#" ? 0 : $(href).offset().top - topMenuHeight + 1;
+        $("html, body").stop().animate(
+          {
+            scrollTop: offsetTop,
+          },
+          300
+        );
+        if (!helpMenuDiv.classList.contains("hidden")) {
+          helpMenuDiv.classList.add("hidden");
+        }
+        e.preventDefault();
+      });
+
+      // Bind to scroll
+      $(window).scroll(function () {
+        // Get container scroll position
+        var fromTop = $(this).scrollTop() + topMenuHeight;
+
+        // Get id of current scroll item
+        var cur = scrollItems.map(function () {
+          if ($(this).offset().top < fromTop) return this;
+        });
+        // Get the id of the current element
+        cur = cur[cur.length - 1];
+        var id = cur && cur.length ? cur[0].id : "";
+
+        if (lastId !== id) {
+          lastId = id;
+          // Set/remove active class
+          menuItems
+            .parent()
+            .removeClass("font-bold border-yellow-600")
+            .end()
+            .filter("[href='#" + id + "']")
+            .parent()
+            .addClass("font-bold border-yellow-600");
+        }
+      });
+    </script>
+  </body>
+</html>

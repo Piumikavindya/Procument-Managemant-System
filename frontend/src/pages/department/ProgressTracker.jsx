@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
+import { Breadcrumb } from "flowbite-react";
 
 function ProgressTracker() {
   const [requests, setRequests] = useState([]);
@@ -41,7 +42,16 @@ function ProgressTracker() {
       <div>
         <UserTypeNavbar userType="department" />
 
-        <div className="flex flex-wrap -mx-3 mt-28">
+        <div className="flex flex-wrap -mx-3 mt-55">
+        <Breadcrumb
+          crumbs={[
+            { label: "Home", link: "/adminhome/:id" },
+            { label: "User Details", link: "/userList" },
+
+            { label: "Add User Details", link: "/addUsers" },
+          ]}
+          selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
+        />
           <div className="w-full max-w-full px-3  mb-6 mx-auto">
             <div className="relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem] bg-white m-5">
               <div className="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
@@ -80,11 +90,11 @@ function ProgressTracker() {
                             Request ID
                           </th>
                           <th className="p-4 text-start min-w-[175px]">
-                            Request Category
+                            Department
                           </th>
-                          <th className="p-4 text-start">Short Description</th>
+                          <th className="p-4 text-start">Date</th>
+                          <th className="p-4 text-start">Purpose</th>
                           <th className="p-4 text-start">Last Action</th>
-                          <th className="p-4 text-start">Last Action Date</th>
                           <th className="p-4 text-start">
                             Next Pending Action
                           </th>
@@ -105,12 +115,17 @@ function ProgressTracker() {
                             </td>
                             <td className="p-3 pr-0 text-start">
                               <span className="font-semibold text-light-inverse text-md/normal">
-                                {request.requestCategory}
+                                {request.department}
                               </span>
                             </td>
                             <td className="p-3 pr-0 text-start">
                               <span className="font-semibold text-light-inverse text-md/normal">
-                                {request.shortDescription}
+                                {request.date}
+                              </span>
+                            </td>
+                            <td className="p-3 pr-0 text-start">
+                              <span className="font-semibold text-light-inverse text-md/normal">
+                                {request.purpose}
                               </span>
                             </td>
                             <td className="pt-3 pb-3 pr-12 text-start">
@@ -132,11 +147,6 @@ function ProgressTracker() {
                                 }`}
                               >
                                 {request.lastAction}
-                              </span>
-                            </td>
-                            <td className="p-3 pr-0 text-start">
-                              <span className="font-semibold text-light-inverse text-md/normal">
-                                {request.lastActionDate}
                               </span>
                             </td>
                             <td className="pr-0 text-start">
