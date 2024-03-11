@@ -28,7 +28,6 @@ exports.fetchPdf = (req, res) => {
 exports.sendPdf = async (req, res) => {
     try {
         // Ensure that department is properly retrieved from req.body
-        const department = req.body.department; 
 
         const pathToAttachment =  path.join(__dirname, '..', 'download','Purchase Requisition.pdf');
         const attachment = fs.readFileSync(pathToAttachment);
@@ -53,12 +52,12 @@ exports.sendPdf = async (req, res) => {
             html: `
             <p>Dear Sir/Madam,</p>
 
-            <p>We are submitting this purchase requisition form to request approval for the procurement of necessary items for ${department}. The items listed in the form are essential for continuing academic activities in the department. Your timely approval will enable us to proceed with the procurement process efficiently.</p>
+            <p>We are submitting this purchase requisition form to request approval for the procurement of necessary items for department. The items listed in the form are essential for continuing academic activities in the department. Your timely approval will enable us to proceed with the procurement process efficiently.</p>
         
             <p><strong>Thank you</strong> for your attention to this matter.</p>
         
             <p><strong>Best regards,</strong><br>
-            ${department}</p> `,
+            department</p> `,
             attachments: [{
                 filename: 'Purchase Requisition.pdf',
                 content: attachment,
