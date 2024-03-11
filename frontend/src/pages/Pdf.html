@@ -1,411 +1,458 @@
 <!DOCTYPE html>
-<html lang="en" class="antialiased">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>
-      Tailwind Starter Template - Multi Section Form / Scrollspy: Tailwind
-      Toolbox
-    </title>
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"
-    />
-    <link
-      href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css"
-      rel="stylesheet"
-    />
-    <!--Replace with your tailwind.css once created-->
-    <style>
-      .max-h-64 {
-        max-height: 16rem;
-      }
-      /*Quick overrides of the form input as using the CDN version*/
-      .form-input,
-      .form-textarea,
-      .form-select,
-      .form-multiselect {
-        background-color: #edf2f7;
-      }
-    </style>
-  </head>
+<html lang="en">
 
-  <body class="bg-gray-100 text-gray-900 tracking-wider leading-normal">
-    <nav id="header" class="bg-white fixed w-full z-10 top-0 shadow">
-      <div
-        class="w-full container mx-auto flex flex-wrap items-center justify-between my-4"
-      >
-      <div class="pl-4 md:pl-0">
-        <div class="flex items-center mb-4"> <!-- Flex container to align the logo and text -->
-            <a href="http://www.ruh.ac.lk">
-                <img src="https://i.ibb.co/3F2KmjL/unilogo.png" alt="unilogo" border="0" class="mr-4"> <!-- Add Tailwind class for margin-right -->
-            </a>
-            <div> <!-- Text content -->
-                <p class="leading-3" >UNIVERSITY OF RUHUNA - MATARA</p> 
-                <p class="leading-2 font-bold">PURCHASE REQUISITION FORM</p>
-                <p class="leading-6">Supplies Branch</p>
-                <p class="leading-6">Tel: Extension 2115 Fax 041 2227027</p>
-                <p class="leading-6">E-mail - sabs@admin.ruh.ac.lk</p>
-                <p class="leading-6">Web - <a href="http://www.ruh.ac.lk">http://www.ruh.ac.lk</a></p>
-            </div>
-            <div class="absolute top-5 right-5 flex flex-col"> <!-- Absolute positioning for the input container and set as a column -->
-                <!-- Label for Date -->
-                <label for="date" class="text-sm">Date:</label>
-                <input id="date" class="form-input mb-2 focus:bg-white" type="text" value="" placeholder="Date">
-                
-                <!-- Label for Form Number -->
-                <label for="form-no" class="text-sm">Form No:</label>
-                <input id="form-no" class="form-input focus:bg-white" type="text" value="" placeholder="Form No">
-            </div>
-        
-        </div>
-        
-    </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Document Title</title>
+  <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+  <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+</head>
+
+<body>
+
     
-
-        
-      </div>
-    </nav>
-    <div
-      class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16"
-    >
-      
-
-      <!--Section container-->
-      <section class="w/2 lg:w-4/5">
-         <!--divider-->        
-            </form>
-
-        </div>
-        <!--/Card-->
-
-             <!--divider-->
-             <hr class="bg-gray-300 my-12" />
-
-             <!--Title-->
-             <h2
-               class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl"
-             >
-               User
-             </h2>
-     
-             <!--Card-->
-             <div id='section2' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-     
-                 <form>
-     
-                     <div class="md:flex mb-6">
-                         <div class="md:w-1/3">
-                             <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textfield">
-                                Faculty/Admin
-                            </label>
-                         </div>
-                         <div class="md:w-2/3">
-                             <input class="form-input block w-full focus:bg-white" id="my-textfield" type="text" value="">
-                         </div>
-                     </div>
-     
-                     <div class="md:flex mb-6">
-                         <div class="md:w-1/3">
-                             <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-select">
-                                Department/Branch
-
-                            </label>
-                         </div>
-                         <div class="md:w-2/3">
-                             <input class="form-input block w-full focus:bg-white" id="my-textfield" type="text" value="">
-                         </div>
-                     </div>
-     
-                     <div class="md:flex mb-6">
-                         <div class="md:w-1/3">
-                             <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
-                                Contact Details
-
-                            </label>
-                         </div>
-                         <div class="md:w-2/3 flex">
-                            <input class="form-input block w-1/2 mr-2 focus:bg-white" id="my-textfield" type="text" value="" placeholder="Contact Person">
-                            <input type="tel" class="form-input block w-1/2 focus:bg-white" placeholder="Telephone">                         </div>
-                     </div>
-                     
-     
-                    
-                     </div>
-                 </form>
-     
-             </div>
-             <!--/Card-->
-
-        <!--divider-->
-        <hr class="bg-gray-300 my-12" />
-
-        <!--Title-->
-        <h2
-          class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl"
-        >
-        Funds
-        </h2>
-
-        <!--Card-->
-        <div id='section2' class="p-8 mt-3 lg:mt-0 rounded shadow bg-white">
-
-            <form>
-
-                <div class="md:flex mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textfield">
-                            Budget Allocation Rs
-                        </label>
-                    </div>
-                    <div class="md:w-2/3">
-                        <input class="form-input block w-1/2 focus:bg-white" id="my-textfield" type="text" value="">
-                    </div>
+    
+    
+    <section class=" py-1 bg-blueGray-50">
+    <div class="w-full lg:w-8/12 px-4 mx-auto mt-6">
+      <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+        <div class="flex items-center">
+            <div class="w-full container mx-auto justify-between my-4">
+                <!-- Added relative positioning to maintain absolute position of child elements -->
+                <div class="flex justify-between items-center mx-4 md:mx-0">
+                  <!-- Flex container to align the logo, text, and form -->
+                  <div class="flex items-center">
+                    <!-- Flex container to align the logo and text -->
+                    <a href="http://www.ruh.ac.lk">
+                      <img
+                        src="https://i.ibb.co/qpvr0B6/09-03-2024-11-31-07-REC.png"
+                        alt="09-03-2024-11-31-07-REC"
+                        border="0"
+                      />
+                    </a>
+                  </div>
+                  <div class="flex flex-col items-end ml-5"> <!-- Changed flex-direction to column and aligned items to the end -->
+                    <!-- Label for Date -->
+                    <label for="date" class="text-sm mb-1">Date:</label>
+                    <input
+                      id="date"
+                      class="form-input mb-2 h-8 focus:bg-white"
+                      type="text"
+                      value=""
+                      placeholder="Date"
+                    />
+              
+                    <!-- Label for Form Number -->
+                    <label for="form-no" class="text-sm mb-1">Form No:</label>
+                    <input
+                      id="form-no"
+                      class="form-input mb-2 h-8 focus:bg-white"
+                      type="text"
+                      value=""
+                      placeholder="Form No"
+                    />
+                  </div>
                 </div>
-
-                <div class="md:flex mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-select">
-                        Used Amount So far Rs
-                        </label>
-                    </div>
-                    <div class="md:w-2/3">
-                        <input class="form-input block w-1/2 focus:bg-white" id="my-textfield" type="text" value="">
-                    </div>
-                </div>
-
-                <div class="md:flex mb-6">
-                    <div class="md:w-1/3">
-                        <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
-                            Balance Available Rs
-                        </label>
-                    </div>
-                    <div class="md:w-2/3 flex">
-                        <input class="form-input block w-1/2 focus:bg-white" id="my-textfield" type="text" value="">
-                    </div>
-                </div>
-                
-
-               
-                </div>
-            </form>
-
-        </div>
-        <!--/Card-->
-
-           <!--divider-->
-           <hr class="bg-gray-300 my-12" />
-
-           <!--Title-->
-           <h2
-             class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl"
-           >
-        Object
-           </h2>
-   
-           <!--Card-->
-           <div id='section2' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-   
-        <!-- component -->
-<div class="flex flex-col">
-    <div class=" sm:mx-0.5 lg:mx-0.5">
-      <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-        <div class="overflow-hidden">
-            <table class="min-w-full border border-collapse">
-                <thead class="bg-white border-b">
-                    <tr>
-                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-2 border border-gray-300" colspan="4">
-                            
-                        </th>
-                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-2 border border-gray-300" colspan="3">
-                            To be filled by Supplies Division
-                        </th>
-                    </tr>
-                    <tr>
-                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border border-gray-300 text-left">
-                            Description of the items indented to be purchased
-                        </th>
-                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border border-gray-300 text-left">
-                            Cost(Approximately)
-                        </th>
-                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border border-gray-300 text-left">
-                            Qty Required
-                        </th>
-                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border border-gray-300 text-left">
-                            Qty Already available
-                        </th>
-                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border border-gray-300 text-left">
-                            Qty Supplied
-                        </th>
-                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border border-gray-300 text-left">
-                            Rate
-                        </th>
-                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 border border-gray-300 text-left">
-                            Total value
-                        </th>
-                    </tr>
-                </thead>
-            </table>
-            
-        </div>
-      </div>
-    </div>
-  </div>
-   
+              </div>
+              
+          </div>
+          
+         <div class="flex-auto px-4 lg:px-10 py-10 pt-0 ">
+          <form>
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+              User 
+            </h6>
+            <div class="flex flex-wrap">
+    
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    Faculty / Admin
+                  </label>
                   
-                   </div>
-           <!--/Card-->
-
-                <!--divider-->
-        <hr class="bg-gray-300 my-12" />
-
-        <!--Title-->
-        <h2
-          class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl"
-        >
-          Section 3
-        </h2>
-
-        <!--Card-->
-        <div id='section2' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-
-            <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Identification</h3>
-            <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex dark:bg-gray-700 dark:text-white">
-                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                    <div class="flex items-center ps-3">
-                        <input id="vue-checkbox-list" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                        <label for="vue-checkbox-list" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Normal</label>
-                    </div>
-                </li>
-               
-                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                    <div class="flex items-center ps-3">
-                        <input id="angular-checkbox-list" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                        <label for="angular-checkbox-list" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Fast Track</label>
-                    </div>
-                </li>
-                <li class="w-full">
-                    <div class="flex items-center ps-3">
-                        <input id="laravel-checkbox-list" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                        <label for="laravel-checkbox-list" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Urgent</label>
-                    </div>
-                </li>
-            </ul>
-            
-
-        </div>
-        <!--/Card-->
-   
-
-        <!--divider-->
-        <hr class="bg-gray-300 my-12" />
-
-        <!--Title-->
-        <h2
-          class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl"
-        >
-        Approval
-        </h2>
-
-        <!--Card-->
-        <div id='section2' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-
-            <form>
-                <div id='section2' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-
-                    <form>
-        
-                        <div class="md:flex mb-6">
-                            <div class="md:w-1/3">
-                                <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textfield">
-                                    Budget Allocation Rs
-                                </label>
-                            </div>
-                            <div class="md:w-2/3">
-                                <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Prepared By                                                                  Head of the Department  " required />
-                            </div>
-                            
-                        </div>
-        
-                        <div class="md:flex mb-6">
-                            <div class="md:w-1/3">
-                                <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-select">
-Recommeneded/Approved                                </label>
-                            </div>
-                            <div class="md:w-2/3">
-                                <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Date                                                                              Dean/Registrar/Bursar  " required />
-                            </div>
-                        </div>
-        
-                        <div class="md:flex mb-6">
-                            <div class="md:w-1/3">
-                                <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
-                                    Approved
-                                </label>
-                            </div>
-                            <div class="md:w-2/3">
-                                <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Date                                        Registrar                                       Date                                        Vice Chancellor  " required />
-                            </div>
-                        </div>
-                        
-        
-                       
-                        </div>
-                
-
-               
                 </div>
-        <!--/Card-->
-
-        <!--divider-->
-        <hr class="bg-gray-300 my-12" />
-
-        <!--Title-->
-        <h2
-          class="font-sans font-bold break-normal text-gray-700 px-2 pb-8 text-xl"
-        >
-          Office Use
-        </h2>
-
-        <!--Card-->
-        <div id='section2' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-
-            <form>
-                <div id='section2' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-
-                    <form>
-        
-                       
-                        <div class="md:flex mb-6">
-                            <div class="md:w-1/3">
-                                <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-select">
-Please take action to Supply                              </label>
-                            </div>
-                            <div class="md:w-2/3">
-                                <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Date                                                                              Assistant Bursar(Supplies)  " required />
-                            </div>
-                        </div>
-        
+              </div>
+    
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  
+                  <input type="text" class="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150" value="Faculty/Admin">
+                </div>
+              </div>
+    
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    Department / Branch
+                  </label>
+                  
+                </div>
+              </div>
+    
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  
+                  <input type="text" class="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150" value="Department/Branch">
+                </div>
+              </div>
+    
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    Contact Person
+                  </label>
+                  
+                </div>
+              </div>
+    
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  
+                  <input type="text" class="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150" value="Contact Person">
+                </div>
+              </div>
+    
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                    Contact Number
+                  </label>
+                  
+                </div>
+              </div>
+    
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                  
+                  <input type="text" class="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150" value="Contact Number">
+                </div>
+              </div>
+    
+              </div>
+              <hr class="mt-4 border-b-1 border-blueGray-300">
+    
+              <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Funds 
+              </h6>
+              <div class="flex flex-wrap">
+      
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                        Budget Allocation Rs
+                    </label>
                     
-                        
-        
-                       
-                        </div>
-                
-
-               
+                  </div>
                 </div>
-        <!--/Card-->
-      </section>
-      <!--/Section container-->
+      
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="relative w-full mb-3">
+                    
+                    <input type="text" class="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150" value=".Rs">
+                  </div>
+                </div>
+      
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                        Used Amount So far Rs
+                    </label>
+                    
+                  </div>
+                </div>
+      
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="relative w-full mb-3">
+                    
+                    <input type="text" class="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150" value=".Rs">
+                  </div>
+                </div>
+      
+                <div class="w-full lg:w-6/12 px-4">
+                  <div class="relative w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                        Balance Available Rs
+                    </label>
+                    
+                  </div>
+                </div>
+    
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+                      
+                      <input type="text" class="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none  w-full ease-linear transition-all duration-150" value=".Rs">
+                    </div>
+                  </div>
+           
+                
+    
+    
+    
+            </form> </div>
+    
+            <hr class="mt-0 border-b-1 border-blueGray-300">
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Objects 
+              </h6>
+              <div class="flex flex-col">
+                <div class="sm:mx-0.5 lg:mx-0.5">
+                  <div class="py-2 inline-block min-w-full sm:px-6 lg:px-4">
+                    <div class="overflow-hidden">
+                      <table class="min-w-full">
+                        <thead class="bg-white border-b">
+                          <tr>
+                            <th
+                              scope="col"
+                              class="text-sm font-medium text-gray-900 px-6 py-2 border border-gray-300"
+                              colspan="4"
+                            ></th>
+                            <th
+                              scope="col"
+                              class="text-sm font-medium text-gray-900 px- py-2 border border-gray-300"
+                              colspan="3"
+                            >
+                              To be filled by Supplies Division
+                            </th>
+                          </tr>
+                          <tr>
+                            <th
+                              scope="col"
+                              class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                            >
+                              Description of the items indented to be purchased
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                            >
+                              Cost Approximately
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                            >
+                              Qty Required
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                            >
+                              Qty Already available
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                            >
+                              Qty Supplied
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                            >
+                              Rate
+                            </th>
+                            <th
+                              scope="col"
+                              class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+                            >
+                              Total value
+                            </th>
+                          </tr>
+                        </thead>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+    
+            <hr class="mt-3 border-b-1 border-blueGray-300">
+    
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Purpose 
+              </h6>
+    
+              <div class="md:col-span-5">
+                <div class="inline-flex items-center justify-center space-x-4">
+                  <input type="checkbox" name="billing_same" id="normal_checkbox" class="form-checkbox" />
+                  <label for="normal_checkbox" class="ml-2">Normal</label>
+                  <input type="checkbox" name="billing_same" id="fast_track_checkbox" class="form-checkbox" />
+                  <label for="fast_track_checkbox" class="ml-2">Fast Track</label>
+                  <input type="checkbox" name="billing_same" id="urgent_checkbox" class="form-checkbox" />
+                  <label for="urgent_checkbox" class="ml-2">Urgent</label>
+                </div>
+              </div>
+    
+              <hr class="mt-4 border-b-1 border-blueGray-300">
+    
+              <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Approval 
+              </h6>
+              <h6 class="text-blueGray-400 text-xs mt-3 mb-6 font-bold uppercase">
+                Faculty/Admin 
+              </h6>
+    
+    
+            <div class="flex flex-wrap">
+    
+    
+            <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                    <input type="text" name="name" class="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+                    <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Prepared By</label>
+    
+    
+                </div>
+              </div>
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                    <input type="text" name="name" class=" peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+                    <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Head of the Department</label>
+                </div>
+              </div>
+    
+              </div>
+              <h6 class="text-blueGray-400 text-xs mt-10 mb-6 font-bold uppercase">
+                Recommended/Approved
+              </h6>
+    
+    
+            <div class="flex flex-wrap">
+    
+    
+            <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                    <input type="text" name="name" class="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+                    <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Date</label>
+    
+    
+                </div>
+              </div>
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                    <input type="text" name="name" class=" peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+                    <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Dean/Registrar/Bursar</label>
+                </div>
+              </div>
+    
+              </div>
+    
+              <h6 class="text-blueGray-400 text-xs mt-10 mb-6 font-bold uppercase">
+                Faculty/Admin 
+              </h6>
+    
+    
+            <div class="flex flex-wrap">
+    
+    
+            <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                    <input type="text" name="name" class="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+                    <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Date</label>
+    
+                    <div class="mt-6">
+                        <input type="text" name="name" class="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+                        <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Registrar</label>
+                    </div>
+                    
+    
+                </div>
+              </div>
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                    <input type="text" name="name" class=" peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+                    <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Date</label>
+    
+                    <div class="mt-6">
+                        <input type="text" name="name" class="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+                        <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Vice Chancellor</label>
+                    </div>
+                    
+                </div>
+               
+    
+              </div>
     </div>
-    <!--/container-->
-
-
-
- 
+              <hr class="mt-6 border-b-1 border-blueGray-300">
+    
+              <h6 class="text-blueGray-400 text-sm mt-5 mb-6 font-bold uppercase">
+                Office Use 
+              </h6>
+    
+              <h6 class="text-blueGray-400 text-xs mt-3 mb-6 font-bold uppercase">
+                Please take action to supply
+              </h6>
+    
+    
+            <div class="flex flex-wrap">
+    
+    
+            <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                    <input type="text" name="name" class="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+                    <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Date</label>
+    
+    
+                </div>
+              </div>
+              <div class="w-full lg:w-6/12 px-4">
+                <div class="relative w-full mb-3">
+                    <input type="text" name="name" class=" peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+                    <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Assistant Bursar(Supplies)</label>
+                </div>
+              </div>
+    
+              </div>
+              
+    
+              </div>
+    
+            </div>
+    
+            </div>
+            
+    
+            </div>
+            
+    
+    
+            
+    
+    
+            <hr class="mt-4 border-b-1 border-blueGray-300">   
+    
+              </div>
+    
+            
+            
+    
+    
+    
+            <hr class="mt-0 border-b-1 border-blueGray-300">
+      
+                
+             
+              </div>
+    
+    
+              
+    
+    
+            
+            
+    
+            
+    
+            
+            
+          </form>
+        </div>
+      
+      
+    </div>
+    </section>
+  
   </body>
-</html>
+  
+  </html>

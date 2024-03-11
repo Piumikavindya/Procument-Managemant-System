@@ -126,14 +126,14 @@ exports.deleteRequest = async (req, res) => {
 exports.addProcItem = async (req, res) => {
   try {
     const { requestId } = req.params;
-    const { description, cost, qtyRequired, qtyAvailable } = req.body;
+    const { itemName, cost, qtyRequired, qtyAvailable } = req.body;
 
     const updatedRequest = await procReqest.findOneAndUpdate(
       { requestId },
       {
         $push: {
           items: {
-            description,
+            itemName,
             cost,
             qtyRequired,
             qtyAvailable,

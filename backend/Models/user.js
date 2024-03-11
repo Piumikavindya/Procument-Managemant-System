@@ -31,7 +31,7 @@ const userSchema = new Schema({
   }, 
   department:{
     type: String,
-
+    enum: ['DEIE', 'DCEE','DMME ','DCE','DMNNE','DIS']
   }, 
   role:{
     type: String,

@@ -57,23 +57,22 @@
                 />
               </a>
             </div>
-            <div class="absolute right-5 flex flex-col">
-              <!-- Absolute positioning for the input container and set as a column -->
+            <div class="flex flex-col items-end ml-5"> <!-- Changed flex-direction to column and aligned items to the end -->
               <!-- Label for Date -->
-              <label for="date" class="text-sm">Date:</label>
+              <label for="date" class="text-sm mb-1">Date:</label>
               <input
                 id="date"
-                class="form-input mb-0 h-8 focus:bg-white"
+                class="form-input mb-2 h-8 focus:bg-white"
                 type="text"
                 value=""
                 placeholder="Date"
               />
-
+        
               <!-- Label for Form Number -->
-              <label for="form-no" class="text-sm">Form No:</label>
+              <label for="form-no" class="text-sm mb-1">Form No:</label>
               <input
                 id="form-no"
-                class="form-input mb-0 h-8 focus:bg-white"
+                class="form-input mb-2 h-8 focus:bg-white"
                 type="text"
                 value=""
                 placeholder="Form No"
