@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export const AddItemCard = ({ handleAddItemsClic}) => {
+
+export const AddItemCard = ({ handleAddItemsClick,handleViewProcItems}) => {
   const navigate = useNavigate();
   const { requestId } = useParams();
   const [itemName, setItemName] = useState("");
@@ -18,7 +19,8 @@ export const AddItemCard = ({ handleAddItemsClic}) => {
   };
 
   const handleAddItemClick = async () => {
-    try { 
+    try {
+      // Perform the logic to add an item, for example:
       const response = await axios.post(
         `http://localhost:8000/procReqest/addProcItem/${requestId}`,
         {
@@ -28,9 +30,19 @@ export const AddItemCard = ({ handleAddItemsClic}) => {
           qtyAvailable,
         }
       );
-
-      const newItemData = response.data.newItem;
-
+      handleViewProcItems();
+      // Assuming the response contains the updated request
+      const updatedRequest = response.data.updatedRequest;
+  
+      // Call the callback function to update the items state in the ReqForm component
+      handleAddItemsClick({
+        itemName,
+        cost,
+        qtyRequired,
+        qtyAvailable,
+      });
+      handleViewProcItems();
+      // Reset input fields after adding an item
       setItemName("");
       setCost("");
       setQtyRequired("");

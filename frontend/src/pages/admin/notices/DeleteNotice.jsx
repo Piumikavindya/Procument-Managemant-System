@@ -8,7 +8,7 @@ import { useSnackbar } from "notistack";
 import ManageNotices from "./ManageNotices";
 
 
-const DeleterNotice = () => {
+const DeleteNotice = () => {
   const [open, setOpen] = useState(true);
 
   const cancelButtonRef = useRef(null);
@@ -17,15 +17,15 @@ const DeleterNotice = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-  const handleDeleteUser = () => {
+  const handleDeleteNotice = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:8000/guidance/delete/${id}`)
+      .delete(`http://localhost:8000/notice/delete/${id}`)
       .then(() => {
         setLoading(false);
-        enqueueSnackbar("guidance deleted", { variant: "success" });
-        navigate("/ManageGuidance");
-        console.log("guidance deleted succesfully");
+        enqueueSnackbar("notice deleted", { variant: "success" });
+        navigate("/ManageNotice");
+        console.log("Notice deleted succesfully");
       })
       .catch((error) => {
         setLoading(false);
@@ -36,7 +36,7 @@ const DeleterNotice = () => {
 
   const handleOutsideClick = () => {
     setOpen(false);
-    navigate("/ManageGuidance");
+    navigate("/ManageNotice");
   };
   return (
     <div>
@@ -108,7 +108,7 @@ const DeleterNotice = () => {
                     <button
                       type="button"
                       className="mt-3 inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                      onClick={handleDeleteUser}
+                      onClick={handleDeleteNotice}
                     >
                       Delete
                     </button>
@@ -122,4 +122,4 @@ const DeleterNotice = () => {
     </div>
   );
 };
-export default DeleterNotice;
+export default DeleteNotice;

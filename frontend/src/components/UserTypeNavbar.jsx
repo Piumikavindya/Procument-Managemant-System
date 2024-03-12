@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from React Router
+// import { FaXmark, Fabars } from "react-icons/fa";
+
 import { FaXmark, FaBars } from "react-icons/fa6";
 import "../styles/Navbar.css";
 import "../pages/Home";
@@ -34,7 +36,7 @@ const UserTypeNavbar = ({ userType }) => {
  
   //NAVITEMS ARRAY
   const AdminOptions = [
-    { link: "Manage Users", path: "/allusers" },
+    { link: "Manage Users", path: "/userList" },
     { link: "Manage Vendors", path: "/allvendors" },
     { link: "Items", path: "/AllItem" },
     { link: "Dashboard", path: "" },
@@ -47,7 +49,7 @@ const UserTypeNavbar = ({ userType }) => {
 
   const DepartmentOptions = [
     { link: "Purchase Requisition", path: "/reqform" },
-    { link: "Requisition Tracker", path: "" },
+    { link: "Requisition Tracker", path: "/ProgressTrack" },
   ];
 
   const procOfficerOptions = [
@@ -78,12 +80,8 @@ const UserTypeNavbar = ({ userType }) => {
   ];
 
   const ApproverOptions = [
-    { link: "User Registration", path: "Home" },
-    { link: "Vendor Registration", path: "guidelines" },
-    { link: "Add Items", path: "notices" },
-    { link: "Dashboard", path: "budget" },
-    { link: "Manage Documents", path: "vendors" },
-    { link: "Budget & Plan", path: "events" },
+    { link: "Pending Approval list", path: "/ViewForApproval" },
+    
   ];
 
   return (
@@ -95,7 +93,7 @@ const UserTypeNavbar = ({ userType }) => {
             : ""
         }`}
       >
-        <div className="flex justify-between items-center text-l gap-8 text-center">
+        <div className="flex justify-between items-center text-m gap-8 text-center">
           {/* Nav bar items for large devices */}
           <ul className="md:flex space-x-20 hidden ml-auto mr-auto ">
             {userType === "admin" &&
@@ -106,7 +104,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -119,7 +117,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -209,7 +207,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white  hover:text-bold  hover:font-medium"
               >
                 {link}
               </Link>
@@ -224,7 +222,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block  no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white  hover:text-bold  hover:font-medium"
               >
                 {link}
               </Link>
@@ -239,7 +237,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white  hover:text-bold  hover:font-medium"
               >
                 {link}
               </Link>
@@ -254,7 +252,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white  hover:text-bold  hover:font-mediumm"
               >
                 {link}
               </Link>
@@ -269,7 +267,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white  hover:text-bold  hover:font-medium"
               >
                 {link}
               </Link>
@@ -284,7 +282,7 @@ const UserTypeNavbar = ({ userType }) => {
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
-                className="block no-underline cursor-pointer text-base text-white   hover:text-black first:font-medium"
+                className="block no-underline cursor-pointer text-base text-white  hover:text-bold  hover:font-medium"
               >
                 {link}
               </Link>

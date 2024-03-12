@@ -3,9 +3,21 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
 import "../../../styles/button.css";
-import { MdOutlineDelete, MdPreview,MdOutlineSimCardDownload  } from "react-icons/md";
+import {
+  MdOutlineDelete,
+  MdPreview,
+  MdOutlineSimCardDownload,
+  MdDownloading,
+  MdDownload,
+  MdDelete,
+  MdOpenWith,
+} from "react-icons/md";
 import { useParams } from "react-router-dom";
 import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
+import { Tooltip } from "flowbite-react";
+import { IconButton } from "@material-tailwind/react";
+import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { FolderIcon } from "@heroicons/react/24/solid";
 
 const ManageNotices = () => {
   const [notice, setNotice] = useState([]);
@@ -15,7 +27,7 @@ const ManageNotices = () => {
   const navigate = useNavigate();
 
   const filteredNotices = notice.filter((notice) =>
-  notice.noticeId?.toLowerCase().includes(searchTerm.toLowerCase())
+    notice.noticeId?.toLowerCase().includes(searchTerm.toLowerCase())
   );
   // Fetch users data from your API endpoint
   useEffect(() => {
@@ -36,9 +48,12 @@ const ManageNotices = () => {
   const { id } = useParams();
   const handleDownloadClick = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:8000/notice/download/${id}`, {
-        responseType: "blob",
-      });
+      const response = await axios.get(
+        `http://localhost:8000/notice/download/${id}`,
+        {
+          responseType: "blob",
+        }
+      );
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const a = document.createElement("a");
       a.href = url;
@@ -57,10 +72,10 @@ const ManageNotices = () => {
   const handleUploadClick = () => {
     navigate("/UploadNotice"); // Update '/inputform' with the actual route
   };
-  
+
   return (
     <div className="p-4">
-       <UserTypeNavbar userType="admin" />
+      <UserTypeNavbar userType="admin" />
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/adminhome/:id" },
@@ -82,7 +97,7 @@ const ManageNotices = () => {
               <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                 <div class="flex justify-end gap-4">
                   <button
-                    class="select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-3"
+                    class="select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-brandPrimary text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-3"
                     type="button"
                     onClick={handleUploadClick}
                   >
@@ -116,16 +131,16 @@ const ManageNotices = () => {
           </div>
           <hr class="border-t border-black-500 my-3  " />
 
-          <div class="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
+          <div class="align-middle inline-block min-w-full  overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
             <table class="min-w-full">
-              <thead class="text-xs text-white-700 uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
+              <thead class="text-xs text-white-700 uppercase bg-NeutralBlack  dark:text-gray-400">
                 {" "}
                 <tr>
-                  <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white-900 tracking-wider">
+                  <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
                     No
                   </th>
                   <th
-                    class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white-900 tracking-wider"
+                    class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider"
                     style={{ width: "500px" }} // Adjust the width as needed
                   >
                     File Name
@@ -144,58 +159,77 @@ const ManageNotices = () => {
                     Date
                   </th> */}
 
-                  <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white-900 tracking-wider">
+                  <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
                     Operations
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white">
-              {loading ? (
-                <tr>
-                  <td colSpan="3" className="text-center py-4">
-                    Loading...
-                  </td>
-                </tr>
-              ) : (
-                notice.map((notice, index) => (
-                  <tr key={notice._id} className="reservation-row">
-                    <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
-                      <div className="flex items-center">
-                        <div>
-                          <div className="text-sm leading-5 text-gray-800">
-                            {index + 1}
+                {loading ? (
+                  <tr>
+                    <td colSpan="3" className="text-center py-4">
+                      Loading...
+                    </td>
+                  </tr>
+                ) : (
+                  notice.map((notice, index) => (
+                    <tr key={notice._id} className="reservation-row">
+                      <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                        <div className="flex items-center">
+                          <div>
+                            <div className="text-sm leading-5 text-gray-800">
+                              {index + 1}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
+                      </td>
 
-                    <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
-                      <div className="flex items-center">
-                        <div>
-                          <div className="text-sm leading-5 text-gray-800">
-                            {notice.name}
+                      <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                        <div className="flex items-center">
+                          <div>
+                            <div className="text-sm leading-5 text-gray-800">
+                              {notice.name}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
+                      </td>
 
-                    <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
-                      <div className="icon-link flex justify-center gap-x-4">
-                        <Link to={`/previewuser/${notice._id}`}>
-                          <MdPreview className="text-2xl text-green-600" />
-                        </Link>
+                      <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                        <div className="icon-link flex justify-center gap-x-4">
+                          <Link to={`/ViewNotices/${notice._id}`}>
+                            <Tooltip content="Preview Notice">
+                              <IconButton variant="text">
+                                <EyeIcon className="h-6 w-6 text-green-500" />
+                              </IconButton>
+                            </Tooltip>
+                          </Link>
 
-                        <Link to={`/DeleteGuidance/${notice._id}`}>
-                          <MdOutlineDelete className="text-2xl text-red-500" />
-                        </Link>
-                        <button onClick={() => handleDownloadClick(notice._id)}>
-                        <MdOutlineSimCardDownload  className="text-2xl text-red-500" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>)
-                  
-                ))}
+                          <Link to={`/DeleteNotice/${notice._id}`}>
+                            <Tooltip content="Delete Notice">
+                              <IconButton variant="text">
+                                <MdDelete className="h-6 w-6 text-red-500" />
+                              </IconButton>
+                            </Tooltip>
+                          </Link>
+
+
+                          <button
+                            onClick={() => handleDownloadClick(notice._id)}
+                          >
+                            <Tooltip content="Download Notice">
+                              <IconButton variant="text">
+                                <MdDownload className="h-6 w-6 text-blue-500" />
+                              </IconButton>
+                            </Tooltip>
+                          </button>
+
+                          
+                          
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
             <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">

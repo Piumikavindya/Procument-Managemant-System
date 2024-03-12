@@ -1,121 +1,91 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-//import '../styles/LoginPage.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const LoginPage = ({ setIsAuthenticated}) => {
+const LoginPage = ({ setIsAuthenticated }) => {
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+    role: "",
+  });
 
-    const [loggedInUser, setLoggedInUser] = useState(null);
+  const navigate = useNavigate();
 
-    const [credentials, setCredentials] = useState({
-      email: '',
-      password: '',
-      role: '',
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials({
+      ...credentials,
+      [name]: value,
     });
-  
-    const navigate = useNavigate();
-  
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setCredentials({
-        ...credentials,
-        [name]: value,
-      });
-    };
-  
-    const handleSignIn = async () => {
-      
-      try {
-        const response = await axios.post('http://localhost:8000/user/signIn', {
-          email: credentials.email,
-          password: credentials.password,
-          role: credentials.role,
-        });
-        console.log('User details:', response.data.user);
-        if (response.data.user) {
-          // Authentication successful
-          console.log('User signed in successfully:', response.data.user);
-   // Update your state or localStorage with user details
-   setLoggedInUser(response.data.user);
-  
-   // Update authentication state
-   setIsAuthenticated(true);
-         
-  
-          // Redirect based on user role
-          switch (response.data.user.role) {
-            case 'admin':
-              navigate('/adminhome/' + response.data.user.id);
-              break;
-            case 'department':
-              navigate('/department/' + response.data.user.id);
-              break;
-            case 'procurement Officer':
-              navigate('/procurementOfficer/' + response.data.user.id);
-              break;
-              case 'TECofficer':
-              navigate('/TECofficer/' + response.data.user.id);
-              break;
-              case 'Finance officers':
-              navigate('/Finance officers/' + response.data.user.id);
-              break;
-              case 'approver':
-              navigate('/approver/' + response.data.user.id);
-              break;
-            // Add more roles as needed
-            default:
-              console.log('Invalid role');
-  
-  
-             
-          }
-        } else {
-          // Authentication failed
-          console.log('Invalid email or password');
-          // Set an error state or show an error message to the user
-        }
-      } catch (error) {
-        // Handle errors, e.g., network issues or server errors
-        console.error('Signin failed:', error);
-        console.log('Axios response:', error.response);
-      }
-    };
-  
-  return (
-    <>
-      {/*
-        This example requires updating your template:
+  };
 
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
-    <div className="flex  flex-1 flex-col justify-center px-6 py-20 lg:px-8 bg-gray-300 min-h-screen">
+  const handleSignIn = async () => {
+    try {
+      const response = await axios.post("http://localhost:8000/user/signIn", {
+        email: credentials.email,
+        password: credentials.password,
+        role: credentials.role,
+      
+      });
+      console.log("User details:", response.data.user);
+      if (response.data.user) {
+        // Authentication successful
+        console.log("User signed in successfully:", response.data.user);
+        // Update your state or localStorage with user details
+        setLoggedInUser(response.data.user);
+
+        // Update authentication state
+        setIsAuthenticated(true);
+
+        // Redirect based on user role
+        switch (response.data.user.role) {
+          case "admin":
+            navigate("/adminhome/" + response.data.user.id);
+            break;
+          case "department":
+            navigate("/department/"+ response.data.user.id);
+            break;
+          case "procurement Officer":
+            navigate("/procurementOfficer/" + response.data.user.id);
+            break;
+          case "TECofficer":
+            navigate("/TECofficer/" + response.data.user.id);
+            break;
+          case "Finance officers":
+            navigate("/Finance officers/" + response.data.user.id);
+            break;
+          case "approver":
+            navigate("/approver/" + response.data.user.id);
+            break;
+          // Add more roles as needed
+          default:
+            console.log("Invalid role");
+        }
+      } else {
+        // Authentication failed
+        console.log("Invalid email or password");
+        // Set an error state or show an error message to the user
+      }
+    } catch (error) {
+      // Handle errors, e.g., network issues or server errors
+      console.error("Signin failed:", error);
+      console.log("Axios response:", error.response);
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex  flex-1 flex-col justify-center px-6 py-20 lg:px-8 bg-white min-h-screen">
         <div className="sm:mx-auto sm:w-full ">
           <img
             className="mx-auto h-15 w-20 mt-2"
-            src="http://www.eng.ruh.ac.lk/img/unilogo.png"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCt-SLcMs8hS4aNdbyYIn9lQNRXX55C2ZsQO0SHz9j-g&s"
             alt="FoE,UoR-"
-
           />
-            <h1 className="mt-4 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
+          <h1 className="mt-4 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
             Procurement Management System
           </h1>
           <h1 className="mt-2 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
@@ -130,79 +100,86 @@ const LoginPage = ({ setIsAuthenticated}) => {
         </div>
 
         <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-2xl">
-          <form className="space-y-6" action="#" method="POST" onSubmit={handleSignIn}>
-
-          <div>
-              <label htmlFor="role" className="block text-2xl font-medium leading-6 text-gray-900">
+          <form
+            className="space-y-6"
+            action="#"
+            method="POST"
+            onSubmit={handleSignIn}
+          >
+            <div>
+              <label
+                htmlFor="role"
+                className="block text-2xl font-medium leading-6 text-gray-900"
+              >
                 Role
               </label>
               <div className="mt-2">
-              <select
-              id="role"
-              name="role"
-              value={credentials.role}
-              onChange={handleChange}
-              className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6"
-
-            >
-              <option value="role" >
-                Select your role
-              </option>
-              <option value="admin">Admin</option>
-              <option value="procurmentofficer">Procurement Officer</option>
-              <option value="financeofficers">Finance Officers</option>
-              <option value="department">User Department</option>
-              <option value="approver">Approver</option>
-              {/* Add more options as needed */}
-            </select>
-            </div>
+                <select
+                  id="role"
+                  name="role"
+                  value={credentials.role}
+                  onChange={handleChange}
+                  className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6"
+                >
+                  <option value="role">Select your role</option>
+                  <option value="admin">Admin</option>
+                  <option value="procurmentofficer">Procurement Officer</option>
+                  <option value="financeofficers">Finance Officers</option>
+                  <option value="department">User Department</option>
+                  <option value="approver">Approver</option>
+                </select>
+              </div>
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-2xl font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-2xl font-medium leading-6 text-gray-900"
+              >
                 Email address
               </label>
               <div className="mt-2">
                 <input
-                    type="email"  
-                    name="email"
-                    value={credentials.email}
-                    onChange={handleChange}
-                    placeholder="Email"  
-                     
-                  className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6"
+                  type="email"
+                  name="email"
+                  value={credentials.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-2xl font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-2xl font-medium leading-6 text-gray-900"
+                >
                   Password
                 </label>
-               
               </div>
-              
+
               <div className="mt-2">
                 <input
-                   type="password"
-                   name="password"
-                   value={credentials.password}
-                   onChange={handleChange}
-                   placeholder="Password"
-                   required
-                  className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6"
+                  type="password"
+                  name="password"
+                  value={credentials.password}
+                  onChange={handleChange}
+                  placeholder="Password"
+                  required
+                  className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6"
                 />
               </div>
-              
-
-              
             </div>
             <div className="text-l">
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                    Forgot password?
-                  </a>
-                </div>
+              <a
+                href="#"
+                className="font-semibold text-indigo-600 hover:text-indigo-500"
+              >
+                Forgot password?
+              </a>
+            </div>
             <div>
               <button
                 type="button"
@@ -214,9 +191,9 @@ const LoginPage = ({ setIsAuthenticated}) => {
             </div>
           </form>
         </div>
-        
       </div>
-    </>
+    </div>
   );
 };
+
 export default LoginPage;
