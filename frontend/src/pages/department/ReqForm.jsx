@@ -177,6 +177,7 @@ const ReqForm = ({ forms }) => {
       contactNo,
       budgetAllocation,
       usedAmount,
+      balanceAvailable,
       purpose,
       sendTo,
       items,
@@ -583,9 +584,9 @@ const ReqForm = ({ forms }) => {
               
                   <div className="icon-link flex justify-center gap-x-4">
                   
-                    <Link to={`/updatevendor/${item._id}`}>
+                    {/* <Link to={`/updatevendor/${item._id}`}>
                       <AiOutlineEdit className="text-2xl text-blue-800 " />
-                    </Link>
+                    </Link> */}
                     <Link to={`/DeleteItem/${requestId}/${item.itemId}`}>
     <MdOutlineDelete className="text-2xl text-red-500" />
   </Link>

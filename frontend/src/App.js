@@ -27,7 +27,7 @@ import UploadNotice from './pages/admin/notices/UploadNotice.jsx';
 import ViewNotice from './pages/admin/notices/ViewNotice.jsx';
 import ManageNotices from './pages/admin/notices/ManageNotices.jsx';
 import AddSupplier from './pages/admin/vendors/AddSupplier.jsx';
-import AddItems from './pages/admin/items/AddItems.jsx';
+import AddItems from './pages/admin/items/Additems.jsx';
 import AddUsers from './pages/admin/users/AddUsers.jsx';
 import UserList from './pages/admin/users/UserList.jsx';
 import VendorDetails from './pages/admin/vendors/VendorDetails.jsx';
@@ -48,6 +48,7 @@ import ApprovalList from './pages/approver/ApprovalList.jsx';
 import DenyRequest from './pages/approver/DenyRequest.jsx';
 import ApprovalForm from './pages/approver/ApprovalForm.jsx';
 import ApproverHome from './pages/approver/ApproverHome.jsx';
+import DeleteProcItem from './pages/department/DeleteProcItem.jsx';
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -137,9 +138,10 @@ const App = () => {
         <Route path="/yearplanner" element={<YearPlanner />} />
 
         <Route path="/reqform" element={<ReqForm />} />
-        <Route path="/department/:id" element={<DepartmentHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />
+        <Route path="/department/:departmentId/:userId" 
+  element={<DepartmentHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} />} />
         <Route path="/ProgressTrack" element={<ProgressTracker />} />
-        <Route path="/DeleteItem/:requestId/:itemId" element={<DeleteItem />} />
+        <Route path="/DeleteItem/:requestId/:itemId" element={<DeleteProcItem />} />
 
         <Route path="/ManageGuidance" element={<ManageGuidance />} />
         <Route path="/UploadGuidance" element={<UploadGuidance />} />

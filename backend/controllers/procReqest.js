@@ -116,19 +116,24 @@ exports.viewAllRequests = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
 exports.viewAllRequests = async (req, res) => {
   try {
-    // Fetch all requests from the database
-    const allRequests = await procReqest.find();
+    const { department } = req.query; // Assuming department is passed in the query params
 
-    // Send the list of requests as a response
-    res.json(allRequests);
+    // Fetch all requests from the database with the specified department
+    const requestsByDepartment = await procReqest.find({ department });
+
+    // Send the list of requests for the specified department as a response
+    res.json(requestsByDepartment);
   } catch (error) {
-    console.error("Error fetching all requests:", error);
+    console.error("Error fetching requests for department:", error);
     // Handle errors and send an appropriate response
     res.status(500).json({ error: error.message });
   }
 };
+
 
 exports.deleteRequest = async (req, res) => {
   try {
