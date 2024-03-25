@@ -5,7 +5,7 @@ const fs = require('fs');
 const pdfTemplate = require("../documents/document");
 const env = require('dotenv');
 env.config();
-const filePath = path.join(__dirname, '..','download', 'invoice.pdf');
+const filePath = path.join(__dirname, '..','download', 'Purchase Requisition.pdf');
 
 exports.createPdf = (req, res) => {
     const options = {
@@ -22,12 +22,14 @@ exports.createPdf = (req, res) => {
 };
 
 exports.fetchPdf = (req, res) => {
-    res.sendFile(path.join(__dirname, '..','download','invoice.pdf'));
+    res.sendFile(path.join(__dirname, '..','download','Purchase Requisition.pdf'));
 };
 
 exports.sendPdf = async (req, res) => {
     try {
-        const pathToAttachment =  path.join(__dirname, '..', 'download','invoice.pdf');
+        // Ensure that department is properly retrieved from req.body
+
+        const pathToAttachment =  path.join(__dirname, '..', 'download','Purchase Requisition.pdf');
         const attachment = fs.readFileSync(pathToAttachment);
 
         const transporter = nodemailer.createTransport({
@@ -46,11 +48,18 @@ exports.sendPdf = async (req, res) => {
         await transporter.sendMail({
             from: process.env.EMAIL,
             to: req.body.email,
-            subject: 'Pdf Generate document',
+            subject: 'Request for Approval: Purchase Requisition',
             html: `
-            Testing Pdf Generate document, Thanks.`,
+            <p>Dear Sir/Madam,</p>
+
+            <p>We are submitting this purchase requisition form to request approval for the procurement of necessary items for department. The items listed in the form are essential for continuing academic activities in the department. Your timely approval will enable us to proceed with the procurement process efficiently.</p>
+        
+            <p><strong>Thank you</strong> for your attention to this matter.</p>
+        
+            <p><strong>Best regards,</strong><br>
+            department</p> `,
             attachments: [{
-                filename: 'invoice.pdf',
+                filename: 'Purchase Requisition.pdf',
                 content: attachment,
                 contentType: 'application/pdf'
             }]

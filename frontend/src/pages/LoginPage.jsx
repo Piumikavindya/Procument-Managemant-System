@@ -45,9 +45,9 @@ const LoginPage = ({ setIsAuthenticated }) => {
           case "admin":
             navigate("/adminhome/" + response.data.user.id);
             break;
-          case "department":
-            navigate("/department/"+ response.data.user.id);
-            break;
+            case "department":
+              navigate(`/department/${response.data.user.department}/${response.data.user.id}`);
+              break;
           case "procurement Officer":
             navigate("/procurementOfficer/" + response.data.user.id);
             break;

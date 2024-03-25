@@ -1,5 +1,7 @@
-module.exports = ({ requestId,
+module.exports = ({
+  requestId,
   department,
+  faculty,
   date,
   contactPerson,
   contactNo,
@@ -9,7 +11,8 @@ module.exports = ({ requestId,
   purpose,
   sendTo,
   items,
-  files, }) => {
+  files,
+}) => {
   return `
   <!DOCTYPE html>
   <html lang="en" class="antialiased">
@@ -70,13 +73,12 @@ module.exports = ({ requestId,
                   />
                 </a>
               </div>
-              <div class="absolute right-5 flex flex-col">
-                <!-- Absolute positioning for the input container and set as a column -->
+              <div class="flex flex-col items-end ml-5">                <!-- Absolute positioning for the input container and set as a column -->
                 <!-- Label for Date -->
                 <label for="date" class="text-sm">Date:</label>
                 <input
                   id="date"
-                  class="form-input mb-0 h-8 focus:bg-white"
+                  class="form-input mb-2 h-8 focus:bg-white"
                   type="text"
                   value="${date}"
                   placeholder="Date"
@@ -86,7 +88,7 @@ module.exports = ({ requestId,
                 <label for="form-no" class="text-sm">Form No:</label>
                 <input
                   id="form-no"
-                  class="form-input mb-0 h-8 focus:bg-white"
+                  class="form-input mb-02 h-8 focus:bg-white"
                   type="text"
                   value="${requestId}"
                   placeholder="Form No"
@@ -123,7 +125,7 @@ module.exports = ({ requestId,
                   class="form-input block w-full focus:bg-white h-8 px-3 py-1 text-sm"
                   id="my-textfield"
                   type="text"
-                  value="${department}"
+                  value="${faculty}"
                 />
               </div>
             </div>
@@ -268,78 +270,108 @@ module.exports = ({ requestId,
           </h2>
   
           <!--Card-->
-          <div class="flex flex-col">
-            <div class="sm:mx-0.5 lg:mx-0.5">
-              <div class="py-2 inline-block min-w-full sm:px-6 lg:px-4">
-                <div class="overflow-hidden">
-                  <table class="min-w-full">
-                    <thead class="bg-white border-b">
-                      <tr>
-                        <th
-                          scope="col"
-                          class="text-sm font-medium text-gray-900 px-6 py-2 border border-gray-300"
-                          colspan="4"
-                        ></th>
-                        <th
-                          scope="col"
-                          class="text-sm font-medium text-gray-900 px- py-2 border border-gray-300"
-                          colspan="3"
-                        >
-                          To be filled by Supplies Division
-                        </th>
-                      </tr>
-                      <tr>
-                        <th
-                          scope="col"
-                          class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
-                        >
-                          Description of the items indented to be purchased
-                        </th>
-                        <th
-                          scope="col"
-                          class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
-                        >
-                          Cost Approximately
-                        </th>
-                        <th
-                          scope="col"
-                          class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
-                        >
-                          Qty Required
-                        </th>
-                        <th
-                          scope="col"
-                          class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
-                        >
-                          Qty Already available
-                        </th>
-                        <th
-                          scope="col"
-                          class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
-                        >
-                          Qty Supplied
-                        </th>
-                        <th
-                          scope="col"
-                          class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
-                        >
-                          Rate
-                        </th>
-                        <th
-                          scope="col"
-                          class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
-                        >
-                          Total value
-                        </th>
-                      </tr>
-                    </thead>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--/Card-->
-  
+          <!--Object-->
+<div class="flex flex-col">
+  <div class="sm:mx-0.5 lg:mx-0.5">
+    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-4">
+      <div class="overflow-hidden">
+        <table class="min-w-full ">
+        <thead class="bg-white border-b">
+        <tr>
+          <th
+            scope="col"
+            class="text-sm font-medium text-gray-900 px-6 py-2 border border-gray-300"
+            colspan="4"
+          ></th>
+          <th
+            scope="col"
+            class="text-sm font-medium text-gray-900 px- py-2 border border-gray-300"
+            colspan="3"
+          >
+            To be filled by Supplies Division
+          </th>
+        </tr>
+        <tr>
+          <th
+            scope="col"
+            class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+          >
+            Description of the items indented to be purchased
+          </th>
+          <th
+            scope="col"
+            class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+          >
+            Cost Approximately
+          </th>
+          <th
+            scope="col"
+            class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+          >
+            Qty Required
+          </th>
+          <th
+            scope="col"
+            class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+          >
+            Qty Already available
+          </th>
+          <th
+            scope="col"
+            class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+          >
+            Qty Supplied
+          </th>
+          <th
+            scope="col"
+            class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+          >
+            Rate
+          </th>
+          <th
+            scope="col"
+            class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
+          >
+            Total value
+          </th>
+        </tr>
+      </thead>
+      <tbody class="text-blue-gray-900">
+      ${Object.entries(items)
+        .map(
+          ([key, item], index) => `
+        <tr key=${key} class="border-b border-blue-gray-200">
+          <td class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left">
+            <div>${item.itemName}</div>
+          </td>
+          <td class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left">
+            <div>${item.cost}</div>
+          </td>
+          <td class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left">
+            <div>${item.qtyRequired}</div>
+          </td>
+          <td class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left">
+            <div>${item.qtyAvailable}</div>
+          </td>
+          <td class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left">
+          </td>
+          <td class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left">
+          </td>
+          <td class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left">
+          </td>
+        </tr>
+      `
+        )
+        .join("")}
+    </tbody>
+    
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Card -->
+      
           <!--divider-->
           <hr class="bg-gray-300 my-4" />
   
@@ -404,63 +436,127 @@ module.exports = ({ requestId,
           </form>
           <!--/Card-->
   
+         
+  
           <!--divider-->
-          <hr class="bg-gray-300 my-4" />
+          <hr class="bg-gray-300 my-2" />
   
           <!--Title-->
-          <h2
-            class="font-sans font-bold break-normal text-gray-700 px-2 pb-2 text-lg"
-          >
-            Attached Documents
-          </h2>
   
-          <!--Card-->
-          <div class="flex flex-col">
-            <div class="sm:mx-0.5 lg:mx-0.5">
-              <div class="py-2 inline-block min-w-full sm:px-6 lg:px-4">
-                <div class="overflow-hidden">
-                  <table class="min-w-full">
-                    <thead class="bg-white border-b">
-                      <tr>
-                        <th
-                          scope="col"
-                          class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
-                        >
-                          File Name
-                        </th>
-                        <th
-                          scope="col"
-                          class="text-sm font-medium text-gray-900 px-2 py-4 border border-gray-300 text-left"
-                        >
-                          Description
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody class="bg-white">
-                    ${Array.isArray(files) ? files.map(
-                      (file) => `
-                        <tr>
-                          <td
-                            class="px-2 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-gray-300"
-                          >
-                            ${file.fileName}
-                          </td>
-                          <td
-                            class="px-2 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border border-gray-300"
-                          >
-                            ${file.description}
-                          </td>
-                        </tr>
-                      `
-                    ).join('') : ''}
-                  </tbody>
-                  
-                  </table>
-                </div>
+          <h2
+          class="font-sans font-bold break-normal text-gray-700 px-2 pb-2 text-lg"
+        >
+        Approval 
+        </h2>
+
+        <h6 class="text-blueGray-400 text-xs mt-3 mb-6 font-bold uppercase">
+        Faculty/Admin 
+      </h6>
+      <div class="flex flex-wrap">
+
+
+      <div class="w-full lg:w-6/12 px-4">
+          <div class="relative w-full mb-3">
+              <input type="text" name="name" class="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+              <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Prepared By</label>
+
+
+          </div>
+        </div>
+        <div class="w-full lg:w-6/12 px-4">
+          <div class="relative w-full mb-3">
+              <input type="text" name="name" class=" peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+              <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Head of the Department</label>
+          </div>
+        </div>
+
+        </div>
+        <h6 class="text-blueGray-400 text-xs mt-10 mb-6 font-bold uppercase">
+        Recommended/Approved
+      </h6>
+
+      <div class="flex flex-wrap">
+
+
+      <div class="w-full lg:w-6/12 px-4">
+          <div class="relative w-full mb-3">
+              <input type="text" name="name" class="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+              <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Date</label>
+
+
+          </div>
+        </div>
+        <div class="w-full lg:w-6/12 px-4">
+          <div class="relative w-full mb-3">
+              <input type="text" name="name" class=" peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+              <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Dean/Registrar/Bursar</label>
+          </div>
+        </div>
+
+        </div>
+
+        <h6 class="text-blueGray-400 text-xs mt-10 mb-6 font-bold uppercase">
+        Faculty/Admin 
+      </h6>
+
+      <div class="flex flex-wrap">
+      <div class="w-full lg:w-6/12 px-4">
+      <div class="relative w-full mb-3">
+          <input type="text" name="name" class=" peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+          <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Date</label>
+      </div>
+      <div class="relative w-full mb-3">
+      <input type="text" name="name" class=" peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+      <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Registrar</label>
+  </div>
+  <div class="relative w-full mb-3">
+  <input type="text" name="name" class=" peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+  <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Date</label>
+</div>
+<div class="relative w-full mb-3">
+<input type="text" name="name" class=" peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+<label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Vice Chancellor</label>
+</div>
+    </div>
+
+        
+         
+</div>
+
+
+<!--divider-->
+<hr class="bg-gray-300 my-2" />
+
+<!--Title-->
+
+<h2
+class="font-sans font-bold break-normal text-gray-700 px-2 pb-2 text-lg"
+>
+Office Use 
+</h2>
+<h6 class="text-blueGray-400 text-xs mt-3 mb-6 font-bold uppercase">
+            Please take action to supply
+          </h6>
+          <div class="flex flex-wrap">
+
+
+          <div class="w-full lg:w-6/12 px-4">
+              <div class="relative w-full mb-3">
+                  <input type="text" name="name" class="peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+                  <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Date</label>
+  
+  
               </div>
             </div>
-          </div>
-          <!--/Card-->
+            <div class="w-full lg:w-6/12 px-4">
+              <div class="relative w-full mb-3">
+                  <input type="text" name="name" class=" peer block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0" placeholder=" " />
+                  <label class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 peer-focus:dark:text-blue-500">Assistant Bursar(Supplies)</label>
+              </div>
+            </div>
+  
+            </div>
+
         </section>
         <!--/Section container-->
       </div>

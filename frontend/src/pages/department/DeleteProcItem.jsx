@@ -1,7 +1,7 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog,Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
@@ -9,22 +9,33 @@ import ReqForm from "./ReqForm";
 
 
 
-const DeleteItem = () => {
+
+const DeleteProcItem = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { requestId } = useParams();
+  const { itemId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
+  // const [requestId, setRequestId] = useState('');
+  // const [itemId, setItemId] = useState('');
+
+  useEffect(() => {
+    handleDeleteItem();
+  }, [requestId]);
+
 
   const handleDeleteItem = () => {
+
     setLoading(true);
     axios
       .delete(`http://localhost:8000/procReqest/deleteProcItem/${requestId}/${itemId}`)
-      .then(() => {
+      .then((response) => {
         setLoading(false);
+        
         enqueueSnackbar("Item deleted", { variant: "success" });
-        navigate(`/reqform/${requestId}`);
+    
       })
       .catch((error) => {
         setLoading(false);
@@ -35,13 +46,13 @@ const DeleteItem = () => {
   
   const handleOutsideClick = () => {
     setOpen(false);
-    navigate(`/reqform/${requestId}`);
+    navigate(`/reqform`);
   };
 
 
   return (
     <div>
-      <ReqForm />
+  <ReqForm/>
       <Transition.Root show={open} as={Fragment}>
       <Dialog
           as="div"
@@ -123,4 +134,4 @@ const DeleteItem = () => {
   );
 };
 
-export default DeleteItem;
+export default DeleteProcItem;
