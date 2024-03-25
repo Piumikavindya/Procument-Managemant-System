@@ -6,13 +6,14 @@ import { saveAs } from "file-saver";
 import { AddItemCard } from "./AddItemCard ";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
-import { Breadcrumb } from "flowbite-react";
+
 import UserTypeNavbar from "../../components/UserTypeNavbar";
+import Breadcrumb from "../../components/Breadcrumb";
 const ReqForm = ({ forms }) => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const [showAddItemCard, setShowAddItemCard] = useState(false); 
+  const [showAddItemCard, setShowAddItemCard] = useState(false);
 
   const [date, setDate] = useState("");
   const [requestId, setRequestId] = useState("");
@@ -23,8 +24,8 @@ const ReqForm = ({ forms }) => {
   const [budgetAllocation, setBudgetAllocation] = useState("");
   const [usedAmount, setUsedAmount] = useState("");
   const [balanceAvailable, setBalanceAvailable] = useState("");
-  const [purpose, setPurpose] = useState('normal');
-  const [sendTo, setSendTo] = useState('dean');
+  const [purpose, setPurpose] = useState("normal");
+  const [sendTo, setSendTo] = useState("dean");
   const [items, setItems] = useState({});
   const [files, setFiles] = useState({});
   useEffect(() => {
@@ -44,11 +45,12 @@ const ReqForm = ({ forms }) => {
       setSendTo(formData.sendTo);
       setItems(formData.items);
       setFiles(formData.files);
-    } else if (!requestId) { // Add this condition
+    } else if (!requestId) {
+      // Add this condition
       handleGenerateRequestId();
     }
   }, []);
-  
+
   useEffect(() => {
     handleViewProcItems();
   }, [requestId]);
@@ -74,81 +76,76 @@ const ReqForm = ({ forms }) => {
 
   const handleAddItemsClick = (itemData) => {
     setShowAddItemCard(true);
-       setItems((prevItems) => ({
-         ...prevItems,
-         [Date.now()]: itemData,
-       }));
-      
-       const formData = {
-         requestId,
-         faculty,
-         department,
-         date,
-         contactPerson,
-         contactNo,
-         budgetAllocation,
-         usedAmount,
-         balanceAvailable,
-         purpose,
-         sendTo,
-         items,
-         files,
-       };
-       setLoading(true);
-       try {
-   
-         // Fetch updated items after submitting the form
-      
-       } catch (error) {
-         console.error("Error submitting request", error);
-         console.dir(error);
-       }
-       // Navigate to the specified route after updating items
-       navigate(`/formview/${requestId}`);
-     
-       // Store form data in localStorage
-       localStorage.setItem("formData", JSON.stringify(formData));
-    
-     };
+    setItems((prevItems) => ({
+      ...prevItems,
+      [Date.now()]: itemData,
+    }));
 
-
-     const handleFileUpload = async (requestId, files) => {
-      const formData = new FormData();
-      files.forEach((file) => {
-        formData.append("files", file);
-      });
-    
-      try {
-        const response = await axios.post(
-          `http://localhost:8000/procReqest/uploadFile/${requestId}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log("File uploaded successfully:", response.data);
-      } catch (error) {
-        console.error("Error uploading file:", error);
-      }
+    const formData = {
+      requestId,
+      faculty,
+      department,
+      date,
+      contactPerson,
+      contactNo,
+      budgetAllocation,
+      usedAmount,
+      balanceAvailable,
+      purpose,
+      sendTo,
+      items,
+      files,
     };
-     const handleViewProcItems = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/procReqest/viewProcItems/${requestId}`
-        );
-        const itemsData = response.data;
-        setItems((prevItems) => ({
-          ...prevItems,
-          ...itemsData, // Merge the existing items with the new data
-        }));
-      } catch (error) {
-        console.error("Error fetching procurement items:", error);
-      }
-    };
+    setLoading(true);
+    try {
+      // Fetch updated items after submitting the form
+    } catch (error) {
+      console.error("Error submitting request", error);
+      console.dir(error);
+    }
+    // Navigate to the specified route after updating items
+    navigate(`/formview/${requestId}`);
 
-  
+    // Store form data in localStorage
+    localStorage.setItem("formData", JSON.stringify(formData));
+  };
+
+  const handleFileUpload = async (requestId, files) => {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("files", file);
+    });
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/procReqest/uploadFile/${requestId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("File uploaded successfully:", response.data);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
+  const handleViewProcItems = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/procReqest/viewProcItems/${requestId}`
+      );
+      const itemsData = response.data;
+      setItems((prevItems) => ({
+        ...prevItems,
+        ...itemsData, // Merge the existing items with the new data
+      }));
+    } catch (error) {
+      console.error("Error fetching procurement items:", error);
+    }
+  };
+
   const handleGeneratePDF = async () => {
     let email;
 
@@ -256,7 +253,7 @@ const ReqForm = ({ forms }) => {
       const updatedRequest = createResponse.data.updatedRequest;
       alert("Request submitted successfully");
       setLoading(false);
-     
+
       setRequestId("");
       setFaculty("");
       setDepartment("");
@@ -281,7 +278,7 @@ const ReqForm = ({ forms }) => {
       console.dir(error);
     }
   };
-  
+
   const clearFormInputs = () => {
     setRequestId("");
     setFaculty("");
@@ -302,9 +299,16 @@ const ReqForm = ({ forms }) => {
   return (
     <div>
       <UserTypeNavbar userType="department" />
-    
-      <div className="max-w-6xl mx-auto mt-40 ">
-      
+      <div className="max-w-7xl mx-auto  ">
+        <Breadcrumb
+          crumbs={[
+            { label: "Home", link: "/department/:departmentId/:userId" },
+            { label: "Purchase Requisition", link: "/ProgressTrack" },
+          ]}
+          selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
+        />
+      </div>
+      <div className="max-w-6xl mx-auto ">
         <div className="block w-full h-auto rounded-md border border-black bg-black py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           <Dropdown />
         </div>
@@ -489,122 +493,128 @@ const ReqForm = ({ forms }) => {
               </div>
 
               <div className="border-b border-gray-900/10 pb-12">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-base font-bold leading-7 text-gray-900">
-                  Requesting Item Details
-                </h2>
-            
-                <button type="button" onClick={handleAddItemsClick}>
-                  <span className="c-main">
-                    <span className="c-ico">
-                      <span className="c-blur"></span>{" "}
-                      <span className="ico-text">+</span>
-                    </span>
-                    Add items
-                  </span>
-                </button>
-                
-              </div>
-            
-              <div className="flex items-center">
-              <table key={Object.keys(items).length} className="min-w-full bg-white shadow-md rounded-xl">
-        <thead>
-          <tr className="bg-blue-gray-100 text-gray-700">
-            <th className="py-3 px-4 text-left">No</th>
-            <th className="py-3 px-4 text-left">Item Id</th>
-            <th className="py-3 px-4 text-left">Description</th>
-            <th className="py-3 px-4 text-left">Cost (Approximately)</th>
-            <th className="py-3 px-4 text-left">Qty Required</th>
-            <th className="py-3 px-4 text-left">Qty Available</th>
-            <th className="py-3 px-4 text-left">Actions</th>
-          </tr>
-        </thead>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-base font-bold leading-7 text-gray-900">
+                    Requesting Item Details
+                  </h2>
 
-        <tbody className="text-blue-gray-900">
-          {Object.entries(items).map(([key, item], index) => (
-            <tr key={key} className="border-b border-blue-gray-200">
-              <td className="border-blue-gray-200">
-                <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">
-                      {index + 1}
-                    </div>
-                  </div>
+                  <button type="button" onClick={handleAddItemsClick}>
+                    <span className="c-main">
+                      <span className="c-ico">
+                        <span className="c-blur"></span>{" "}
+                        <span className="ico-text">+</span>
+                      </span>
+                      Add items
+                    </span>
+                  </button>
                 </div>
-              </td>
-              <td className="border-blue-gray-200">
+
                 <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">
-                      {item.itemId}
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td className="border-blue-gray-200">
-                <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">
-                      {item.itemName}
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td className="border-blue-gray-200">
-                <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">
-                      {item.cost}
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td className="border-blue-gray-200">
-                <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">
-                      {item.qtyRequired}
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td className="border-blue-gray-200">
-                <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">
-                      {item.qtyAvailable}
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td className="border-blue-gray-200">
-                <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">
-              
-                  <div className="icon-link flex justify-center gap-x-4">
-                  
-                    {/* <Link to={`/updatevendor/${item._id}`}>
+                  <table
+                    key={Object.keys(items).length}
+                    className="min-w-full bg-white shadow-md rounded-xl"
+                  >
+                    <thead>
+                      <tr className="bg-blue-gray-100 text-gray-700">
+                        <th className="py-3 px-4 text-left">No</th>
+                        <th className="py-3 px-4 text-left">Item Id</th>
+                        <th className="py-3 px-4 text-left">Description</th>
+                        <th className="py-3 px-4 text-left">
+                          Cost (Approximately)
+                        </th>
+                        <th className="py-3 px-4 text-left">Qty Required</th>
+                        <th className="py-3 px-4 text-left">Qty Available</th>
+                        <th className="py-3 px-4 text-left">Actions</th>
+                      </tr>
+                    </thead>
+
+                    <tbody className="text-blue-gray-900">
+                      {Object.entries(items).map(([key, item], index) => (
+                        <tr key={key} className="border-b border-blue-gray-200">
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  {index + 1}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  {item.itemId}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  {item.itemName}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  {item.cost}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  {item.qtyRequired}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  {item.qtyAvailable}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  <div className="icon-link flex justify-center gap-x-4">
+                                    {/* <Link to={`/updatevendor/${item._id}`}>
                       <AiOutlineEdit className="text-2xl text-blue-800 " />
                     </Link> */}
-                    <Link to={`/DeleteItem/${requestId}/${item.itemId}`}>
-    <MdOutlineDelete className="text-2xl text-red-500" />
-  </Link>
-                  </div>
-              
-                    </div>
-                  </div>
+                                    <Link
+                                      to={`/DeleteItem/${requestId}/${item.itemId}`}
+                                    >
+                                      <MdOutlineDelete className="text-2xl text-red-500" />
+                                    </Link>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                {showAddItemCard && (
+                  <AddItemCard
+                    handleAddItemsClick={handleAddItemsClick}
+                    handleViewProcItems={handleViewProcItems}
+                  />
+                )}
               </div>
-              {showAddItemCard && (
-         <AddItemCard handleAddItemsClick={handleAddItemsClick} handleViewProcItems={handleViewProcItems} />
-      )}
-            </div>
 
               <div className="border-b border-gray-900/10 pb-12">
                 <h2 className="text-base font-bold leading-7 text-gray-900">
@@ -791,8 +801,7 @@ const ReqForm = ({ forms }) => {
                   handleGeneratePDF();
                 }}
               >
-                <span >Submit, Download & Send</span>
-                
+                <span>Submit, Download & Send</span>
               </button>
             </div>
           </form>

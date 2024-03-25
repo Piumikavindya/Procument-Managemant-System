@@ -62,6 +62,9 @@ exports.createRequest = async (req, res) => {
       existingRequest.balanceAvailable = balanceAvailable;
       existingRequest.purpose = purpose;
       existingRequest.sendTo = sendTo;
+      existingRequest.lastAction = 'Request Sent'; // Update last action to "Request Sent"
+      existingRequest.nextPendingAction = 'Approval'; // Update next pending action to "Approval"
+      
       // existingRequest.items = items;
       // existingRequest.files = files;
       // existingRequest.items = items;
@@ -86,8 +89,8 @@ console.log(updatedRequest);
         balanceAvailable,
         purpose,
         sendTo,
-        // items,
-        // files
+        lastAction: 'Request Sent', // Set last action to "Request Sent"
+        nextPendingAction: 'Approval', // Set next pending action to "Approval"
       });
 
       // Save the new document to the database
@@ -105,8 +108,8 @@ console.log(updatedRequest);
 
 exports.viewAllRequests = async (req, res) => {
   try {
-    // Fetch all requests from the database
-    const allRequests = await procReqest.find();
+    // Fetch all requests from the database, including the "date" and "department" fields
+    const allRequests = await procReqest.find().select('requestId department date purpose sendTo lastAction nextPendingAction');
 
     // Send the list of requests as a response
     res.json(allRequests);
@@ -118,21 +121,22 @@ exports.viewAllRequests = async (req, res) => {
 };
 
 
-exports.viewAllRequests = async (req, res) => {
-  try {
-    const { department } = req.query; // Assuming department is passed in the query params
 
-    // Fetch all requests from the database with the specified department
-    const requestsByDepartment = await procReqest.find({ department });
+// exports.viewAllRequests = async (req, res) => {
+//   try {
+//     const { department } = req.query; // Assuming department is passed in the query params
 
-    // Send the list of requests for the specified department as a response
-    res.json(requestsByDepartment);
-  } catch (error) {
-    console.error("Error fetching requests for department:", error);
-    // Handle errors and send an appropriate response
-    res.status(500).json({ error: error.message });
-  }
-};
+//     // Fetch all requests from the database with the specified department
+//     const requestsByDepartment = await procReqest.find({ department });
+
+//     // Send the list of requests for the specified department as a response
+//     res.json(requestsByDepartment);
+//   } catch (error) {
+//     console.error("Error fetching requests for department:", error);
+//     // Handle errors and send an appropriate response
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
 
 exports.deleteRequest = async (req, res) => {
