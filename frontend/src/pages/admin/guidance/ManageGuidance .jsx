@@ -9,6 +9,7 @@ import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
 import { Tooltip } from "flowbite-react";
 import { IconButton } from "@material-tailwind/react";
 import { EyeIcon } from "@heroicons/react/24/outline";
+import DefaultPagination from "../../../components/DefaultPagination.js";
 
 const ManageGuidance = () => {
   const [guidances, setGuidance] = useState([]);
@@ -18,8 +19,13 @@ const ManageGuidance = () => {
   const navigate = useNavigate();
 
   const filteredGuidances = guidances.filter((guidance) =>
-    guidance.guidanceId?.toLowerCase().includes(searchTerm.toLowerCase())
+    guidance.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchOption, setSearchOption] = useState("");
+  const [currentPage, setCurrentPage] = useState(1); // State to manage current page
+  const itemsPerPage = 5; // Number of items per page
 
   useEffect(() => {
     setLoading(true);
@@ -28,13 +34,36 @@ const ManageGuidance = () => {
       .then((response) => {
         setGuidance(response.data.guidance);
         setLoading(false);
-        console.error("veiw guidance is success");
+        console.error("view guidance is success");
       })
       .catch((error) => {
         console.error("Error fetching guidance:", error);
         setLoading(false);
       });
   }, []);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset current page when search query changes
+  };
+
+  const handleSearchOptionChange = (e) => {
+    setSearchOption(e.target.value);
+    setCurrentPage(1); // Reset current page when search option changes
+  };
+
+   // Calculate index of the last item to display on the current page
+   const indexOfLastItem = currentPage * itemsPerPage;
+   // Calculate index of the first item to display on the current page
+   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+ 
+   // Slice the array of filtered requests to display only the items for the current page
+   const currentItems = filteredGuidances.slice(indexOfFirstItem, indexOfLastItem);
+ 
+   const handlePageChange = (pageNumber) => {
+     setCurrentPage(pageNumber);
+   };
+
 
   const { id } = useParams();
   const handleDownloadClick = async (id) => {
@@ -87,6 +116,38 @@ const ManageGuidance = () => {
 
               <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                 <div className="flex justify-end gap-4">
+                <div className="relative flex items-center">
+                <div className="relative">
+                  <button
+                    type="submit"
+                    className="absolute left-0 top-0 flex items-center justify-center h-full px-3"
+                  >
+                    <svg
+                      className="text-gray-600 h-4 w-4 fill-current mr-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlnsXlink="http://www.w3.org/1999/xlink"
+                      version="1.1"
+                      id="Capa_1"
+                      x="0px"
+                      y="0px"
+                      viewBox="0 0 56.966 56.966"
+                      style={{ enableBackground: "new 0 0 56.966 56.966" }}
+                      xmlSpace="preserve"
+                      width="512px"
+                      height="512px"
+                    >
+                      <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+                    </svg>
+                  </button>
+                </div>
+                <input
+                  className="border-2 border-gray-300 bg-white h-10 px-10 pr-16 rounded-lg text-sm focus:outline-none flex-grow"
+                  type="search"
+                  name="search"
+                  placeholder="Search by File Name"
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
                   <button
                     className="select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-brandPrimary from-gray-900 to-gray-800 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-3"
                     type="button"
@@ -109,13 +170,7 @@ const ManageGuidance = () => {
                     Upload Files
                   </button>
 
-                  <button
-                    className="select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-NeutralBlack  text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-3"
-                    type="button"
-                    onClick={handleUploadClick}
-                  >
-                    Upload History
-                  </button>
+                 
                 </div>
               </div>
             </div>
@@ -150,7 +205,7 @@ const ManageGuidance = () => {
                     </td>
                   </tr>
                 ) : (
-                  guidances.map((guidance, index) => (
+                  currentItems.map((guidance, index) => (
                     <tr key={guidance._id} className="reservation-row">
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="flex items-center">
@@ -207,58 +262,7 @@ const ManageGuidance = () => {
               </tbody>
             </table>
             <div className="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
-              <div>
-                <nav className="relative z-0 inline-flex shadow-sm">
-                  <div>
-                    <a
-                      href="#"
-                      className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
-                      aria-label="Previous"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <svg
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                  <div>
-                    <a
-                      href="/allusers"
-                      className="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-blue-700 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-tertiary active:text-gray-700 transition ease-in-out duration-150 hover:bg-tertiary"
-                    >
-                      1
-                    </a>
-                  </div>
-                  <div>
-                    <a
-                      href="#"
-                      className="-ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
-                      aria-label="Next"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <svg
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </nav>
-              </div>
+             <DefaultPagination onPageChange={handlePageChange} />
             </div>
           </div>
         </div>
