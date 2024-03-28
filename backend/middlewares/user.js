@@ -16,3 +16,6 @@ exports.isValidPassResetToken = async (req,res, next) =>{
     req.resetToken = resetToken;
     next();
 };
+
+
+  

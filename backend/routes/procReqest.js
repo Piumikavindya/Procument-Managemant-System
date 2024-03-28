@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { generateRequestId,createRequest ,deleteRequest,addProcItem,deleteProcItem,uploadFile,downloadFile,deleteFile,viewFiles,generatePdf,downloadPdf,generateWordDocument, viewAllRequests,veiwProcItems} = require('../controllers/procReqest');
 const upload = require('../middlewares/multer');
-
+const { isAuthenticated } = require('../middlewares/auth');
 
 router.post("/generateRequestId", generateRequestId, (req, res) => {
     console.log("Received a request to create a REQ id:", req.body);
@@ -11,7 +11,7 @@ router.post("/generateRequestId", generateRequestId, (req, res) => {
     console.log("Received a request to create a procurement request:", req.body);
     createRequest(req, res);
   });
-  router.get('/viewRequests',viewAllRequests);
+  router.get('/viewRequests/', isAuthenticated ,viewAllRequests);
   router.delete('/deleteRequest/:requestId',deleteRequest);
   router.post('/addProcItem/:requestId',addProcItem);
   router.get('/viewProcItems/:requestId',veiwProcItems);

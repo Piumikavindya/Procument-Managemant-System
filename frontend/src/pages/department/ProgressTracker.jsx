@@ -2,27 +2,33 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import { Breadcrumb } from "flowbite-react";
-
+import { useParams } from "react-router-dom";
 function ProgressTracker() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
-
+  // const [department, setDepartment] = useState([]);
+  const { department } = useParams();
   // Fetch requests data from your API endpoint
-  useEffect(() => {
+  useEffect((loggedInUser ) => {
+
     setLoading(true);
-    axios
-      .get("http://localhost:8000/procReqest/viewRequests")
-      .then((response) => {
-        setRequests(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching requests:", error);
-        setLoading(false);
-      });
+    if (loggedInUser && loggedInUser.department) {
+      // If the logged-in user has a department, fetch requests based on that department
+      axios
+        .get(`http://localhost:8000/procReqest/viewRequests/${loggedInUser.department}`)
+        .then((response) => {
+          setRequests(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching requests:", error);
+          setLoading(false);
+        });
+    }
   }, []);
+
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);

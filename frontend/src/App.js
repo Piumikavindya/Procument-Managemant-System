@@ -137,10 +137,10 @@ const App = () => {
 
         <Route path="/yearplanner" element={<YearPlanner />} />
 
-        <Route path="/reqform" element={<ReqForm />} />
+        <Route path="/reqform/:department" element={<ReqForm />} />
         <Route path="/department/:departmentId/:userId" 
   element={<DepartmentHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} />} />
-        <Route path="/ProgressTrack" element={<ProgressTracker />} />
+        <Route path="/ProgressTrack/" element={<ProgressTracker />} />
         <Route path="/DeleteItem/:requestId/:itemId" element={<DeleteProcItem />} />
 
         <Route path="/ManageGuidance" element={<ManageGuidance />} />
