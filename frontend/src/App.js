@@ -48,6 +48,9 @@ import ApprovalList from './pages/approver/ApprovalList.jsx';
 import DenyRequest from './pages/approver/DenyRequest.jsx';
 import ApprovalForm from './pages/approver/ApprovalForm.jsx';
 import ApproverHome from './pages/approver/ApproverHome.jsx';
+import ChangeAccountDetails from './pages/ChangeAccountDetails.jsx';
+import ChangePassword from './pages/ChangePassword.jsx';
+import Profile from './pages/Profile.jsx';
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -173,7 +176,13 @@ const App = () => {
           <Route path="/ViewForApproval" element={<ApprovalList/>} />
           <Route path="/DenyApproval/:requestId" element={<DenyRequest/>} />
           <Route path="/ApprovalForm" element={<ApprovalForm/>} />
-        
+          <Route
+          path="/changeaccountdetails"
+          element={<ChangeAccountDetails />}
+        />
+        <Route path="/changepassword" element={<ChangePassword/>} />
+        <Route path="/Profile" element={<Profile/>} />
+
       </Routes>
 
       {renderCommonFooter()}

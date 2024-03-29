@@ -16,7 +16,6 @@ const itemRouter = require('./routes/item');
 const guidanceRouter = require('./routes/guidanceDoc');
 const noticeRouter = require('./routes/noticeDoc');
 const procReqestRouter = require('./routes/procReqest');
-const pdfRoutes = require('./routes/pdfprocrequest');
 
 
 const PORT = process.env.PORT || 8000;
@@ -59,7 +58,6 @@ app.use('/guidance',guidanceRouter);
 app.use('/notice',noticeRouter);
 //this is Procurement request route
 app.use('/procReqest',procReqestRouter);
-app.use('/pdf', pdfRoutes);
 
 app.use(pdfRoute)
 

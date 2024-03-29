@@ -3,11 +3,14 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Dropdown from "../../components/DropDown";
 import { saveAs } from "file-saver";
-
+import { AddItemCard } from "./AddItemCard ";
+import { AiOutlineEdit } from "react-icons/ai";
+import { MdOutlineDelete } from "react-icons/md";
 const ReqForm = ({ forms }) => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [showAddItemCard, setShowAddItemCard] = useState(false);
 
   const [date, setDate] = useState("");
   const [requestId, setRequestId] = useState("");
@@ -18,8 +21,8 @@ const ReqForm = ({ forms }) => {
   const [budgetAllocation, setBudgetAllocation] = useState("");
   const [usedAmount, setUsedAmount] = useState("");
   const [balanceAvailable, setBalanceAvailable] = useState("");
-  const [purpose, setPurpose] = useState('normal');
-  const [sendTo, setSendTo] = useState('dean');
+  const [purpose, setPurpose] = useState("normal");
+  const [sendTo, setSendTo] = useState("dean");
   const [items, setItems] = useState({});
   const [files, setFiles] = useState({});
   useEffect(() => {
@@ -39,10 +42,15 @@ const ReqForm = ({ forms }) => {
       setSendTo(formData.sendTo);
       setItems(formData.items);
       setFiles(formData.files);
-    } else {
+    } else if (!requestId) {
+      // Add this condition
       handleGenerateRequestId();
     }
   }, []);
+
+  useEffect(() => {
+    handleViewProcItems();
+  }, [requestId]);
 
   // Function to handle the generation of request ID
   const handleGenerateRequestId = async () => {
@@ -64,16 +72,17 @@ const ReqForm = ({ forms }) => {
   };
 
   const handleAddItemsClick = (itemData) => {
+    setShowAddItemCard(true);
     setItems((prevItems) => ({
       ...prevItems,
-      [Date.now()]: itemData, // Assuming you want to use a timestamp as the key
+      [Date.now()]: itemData,
     }));
-    handleViewProcItems();
+
     const formData = {
       requestId,
       department,
-      faculty,
       date,
+      faculty,
       contactPerson,
       contactNo,
       budgetAllocation,
@@ -84,34 +93,45 @@ const ReqForm = ({ forms }) => {
       items,
       files,
     };
-    // Navigate to the specified route when "Add items" is clicked
-     navigate(`/formview/${requestId}`);
+    setLoading(true);
+    try {
+      // Fetch updated items after submitting the form
+    } catch (error) {
+      console.error("Error submitting request", error);
+      console.dir(error);
+    }
+    // Navigate to the specified route after updating items
+    navigate(`/formview/${requestId}`);
+
     // Store form data in localStorage
     localStorage.setItem("formData", JSON.stringify(formData));
-   
   };
+
   const handleViewProcItems = async () => {
     try {
       const response = await axios.get(
         `http://localhost:8000/procReqest/viewProcItems/${requestId}`
       );
       const itemsData = response.data;
-      setItems(itemsData); // Update the items state with the fetched data
+      setItems((prevItems) => ({
+        ...prevItems,
+        ...itemsData, // Merge the existing items with the new data
+      }));
     } catch (error) {
       console.error("Error fetching procurement items:", error);
     }
   };
-    const handleGeneratePDF = async () => {
-      let email;
 
-    
+  const handleGeneratePDF = async () => {
+    let email;
+
     // Determine the email address based on the sendTo state
     switch (sendTo) {
       case "dean":
         email = "imashanaw1999@gmail.com";
         break;
       case "registrar":
-        email = "imashanaw1999@gmail.com";
+        email = "lankapuraranduniapsararanduni@gmail.com";
         break;
       case "viceChancellor":
         email = "usertestoneapp@gmail.com";
@@ -172,7 +192,6 @@ const ReqForm = ({ forms }) => {
     e.preventDefault();
     const formData = {
       requestId,
-      faculty,
       department,
       date,
       faculty,
@@ -188,7 +207,6 @@ const ReqForm = ({ forms }) => {
     };
     const newRequest = {
       requestId,
-      faculty,
       department,
       date,
       faculty,
@@ -211,9 +229,7 @@ const ReqForm = ({ forms }) => {
       const updatedRequest = createResponse.data.updatedRequest;
       alert("Request submitted successfully");
       setLoading(false);
-      await handleGeneratePDF(formData);
       setRequestId("");
-      setFaculty("");
       setDepartment("");
       setFaculty("");
       setDate("");
@@ -228,7 +244,7 @@ const ReqForm = ({ forms }) => {
       setFiles({});
       localStorage.removeItem("formData");
       console.log("Request submitted successfully", createResponse.data);
-  
+
       // Fetch updated items after submitting the form
       // handleViewProcItems();
     } catch (error) {
@@ -236,10 +252,9 @@ const ReqForm = ({ forms }) => {
       console.dir(error);
     }
   };
-   
+
   const clearFormInputs = () => {
     setRequestId("");
-    setFaculty("");
     setDepartment("");
     setFaculty("");
     setDate("");
@@ -256,12 +271,10 @@ const ReqForm = ({ forms }) => {
 
   return (
     <div>
-    <div className="max-w-6xl mx-auto mt-40 ">
-    
-      <div className="block w-full h-auto rounded-md border border-black bg-black py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-        <Dropdown />
-      </div>
-     
+      <div className="max-w-6xl mx-auto mt-40 ">
+        <div className="block w-full h-auto rounded-md border border-black bg-black py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          <Dropdown />
+        </div>
 
         <div className="border border-black bg-white p-6 rounded-lg shadow-md">
           <form onSubmit={(e) => handleSubmit(e, items)}>
@@ -442,99 +455,127 @@ const ReqForm = ({ forms }) => {
                 </p>
               </div>
 
-            <div className="border-b border-gray-900/10 pb-12">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-base font-bold leading-7 text-gray-900">
-                  Requesting Item Details
-                </h2>
-            
-                <button type="button" onClick={handleAddItemsClick}>
-                  <span className="c-main">
-                    <span className="c-ico">
-                      <span className="c-blur"></span>{" "}
-                      <span className="ico-text">+</span>
-                    </span>
-                    Add items
-                  </span>
-                </button>
-              </div>
-            
-              <div className="flex items-center">
-              <table key={Object.keys(items).length} className="min-w-full bg-white shadow-md rounded-xl">
-        <thead>
-          <tr className="bg-blue-gray-100 text-gray-700">
-            <th className="py-3 px-4 text-left">No</th>
-            <th className="py-3 px-4 text-left">Description</th>
-            <th className="py-3 px-4 text-left">Cost (Approximately)</th>
-            <th className="py-3 px-4 text-left">Qty Required</th>
-            <th className="py-3 px-4 text-left">Qty Available</th>
-            <th className="py-3 px-4 text-left">Actions</th>
-          </tr>
-        </thead>
+              <div className="border-b border-gray-900/10 pb-12">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-base font-bold leading-7 text-gray-900">
+                    Requesting Item Details
+                  </h2>
 
-        <tbody className="text-blue-gray-900">
-          {Object.entries(items).map(([key, item], index) => (
-            <tr key={key} className="border-b border-blue-gray-200">
-              <td className="border-blue-gray-200">
-                <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">
-                      {index + 1}
-                    </div>
-                  </div>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    type="button"
+                    onClick={handleAddItemsClick}
+                  >
+                    <span className="c-main">Add items</span>
+                  </button>
                 </div>
-              </td>
-              <td className="border-blue-gray-200">
+
                 <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">
-                      {item.description}
-                    </div>
-                  </div>
+                  <table
+                    key={Object.keys(items).length}
+                    className="min-w-full bg-white shadow-md rounded-xl"
+                  >
+                    <thead>
+                      <tr className="bg-blue-gray-100 text-gray-700">
+                        <th className="py-3 px-4 text-left">No</th>
+                        <th className="py-3 px-4 text-left">Item Id</th>
+                        <th className="py-3 px-4 text-left">Description</th>
+                        <th className="py-3 px-4 text-left">
+                          Cost (Approximately)
+                        </th>
+                        <th className="py-3 px-4 text-left">Qty Required</th>
+                        <th className="py-3 px-4 text-left">Qty Available</th>
+                        <th className="py-3 px-4 text-left">Actions</th>
+                      </tr>
+                    </thead>
+
+                    <tbody className="text-blue-gray-900">
+                      {Object.entries(items).map(([key, item], index) => (
+                        <tr key={key} className="border-b border-blue-gray-200">
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  {index + 1}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  {item.itemId}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  {item.itemName}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  {item.cost}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  {item.qtyRequired}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  {item.qtyAvailable}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="border-blue-gray-200">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm leading-5 text-gray-800">
+                                  <div className="icon-link flex justify-center gap-x-4">
+                                    <Link to={`/updatevendor/${item._id}`}>
+                                      <AiOutlineEdit className="text-2xl text-blue-800 " />
+                                    </Link>
+                                    <Link
+                                      to={`/DeleteItem/${requestId}/${item.itemId}`}
+                                    >
+                                      <MdOutlineDelete className="text-2xl text-red-500" />
+                                    </Link>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-              </td>
-              <td className="border-blue-gray-200">
-                <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">
-                      {item.cost}
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td className="border-blue-gray-200">
-                <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">
-                      {item.qtyRequired}
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td className="border-blue-gray-200">
-                <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">
-                      {item.qtyAvailable}
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td className="border-blue-gray-200">
-                <div className="flex items-center">
-                  <div>
-                    <div className="text-sm leading-5 text-gray-800">
-                      {/* Add actions here */}
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                {showAddItemCard && (
+                  <AddItemCard
+                    handleAddItemsClick={handleAddItemsClick}
+                    handleViewProcItems={handleViewProcItems}
+                  />
+                )}
               </div>
-            </div>
 
               <div className="border-b border-gray-900/10 pb-12">
                 <h2 className="text-base font-bold leading-7 text-gray-900">
@@ -712,47 +753,21 @@ const ReqForm = ({ forms }) => {
               </div>
             </div>
 
-          <div className="mt-3 flex items-center justify-end gap-x-6">
-            <button class="button3" type="button">
-              <span class="button3__text">Clear Form</span>
-              <span class="button3__icon">
-                <svg
-                  class="svg"
-                  height="48"
-                  viewBox="0 0 48 48"
-                  width="48"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M35.3 12.7c-2.89-2.9-6.88-4.7-11.3-4.7-8.84 0-15.98 7.16-15.98 16s7.14 16 15.98 16c7.45 0 13.69-5.1 15.46-12h-4.16c-1.65 4.66-6.07 8-11.3 8-6.63 0-12-5.37-12-12s5.37-12 12-12c3.31 0 6.28 1.38 8.45 3.55l-6.45 6.45h14v-14l-4.7 4.7z"></path>
-                  <path d="M0 0h48v48h-48z" fill="none"></path>
-                </svg>
-              </span>
-            </button>
-           
-            <button class="button3" type="submit" onClick={(e) => {
-    handleSubmit(e);
-    handleGeneratePDF();
-}}>
-              <span class="button3__text">Download and Send</span>
-              <span class="button3__icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 35 35"
-                  id="bdd05811-e15d-428c-bb53-8661459f9307"
-                  data-name="Layer 2"
-                  class="svg"
-                >
-                  <path d="M17.5,22.131a1.249,1.249,0,0,1-1.25-1.25V2.187a1.25,1.25,0,0,1,2.5,0V20.881A1.25,1.25,0,0,1,17.5,22.131Z"></path>
-                  <path d="M17.5,22.693a3.189,3.189,0,0,1-2.262-.936L8.487,15.006a1.249,1.249,0,0,1,1.767-1.767l6.751,6.751a.7.7,0,0,0,.99,0l6.751-6.751a1.25,1.25,0,0,1,1.768,1.767l-6.752,6.751A3.191,3.191,0,0,1,17.5,22.693Z"></path>
-                  <path d="M31.436,34.063H3.564A3.318,3.318,0,0,1,.25,30.749V22.011a1.25,1.25,0,0,1,2.5,0v8.738a.815.815,0,0,0,.814.814H31.436a.815.815,0,0,0,.814-.814V22.011a1.25,1.25,0,1,1,2.5,0v8.738A3.318,3.318,0,0,1,31.436,34.063Z"></path>
-                </svg>
-              </span>
-            </button>
-         
-          </div>
-        </form>
+            <div className="mt-3 flex items-center justify-end gap-x-6">
+              <button
+                className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                type="submit"
+                onClick={(e) => {
+                  handleSubmit(e);
+                  handleGeneratePDF();
+                }}
+              >
+                <span>Submit, Download & Send</span>
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 };
