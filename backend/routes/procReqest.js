@@ -11,7 +11,7 @@ router.post("/generateRequestId", generateRequestId, (req, res) => {
     console.log("Received a request to create a procurement request:", req.body);
     createRequest(req, res);
   });
-  router.get('/viewRequests/', isAuthenticated ,viewAllRequests);
+  router.get('/viewRequests/' ,viewAllRequests);
   router.delete('/deleteRequest/:requestId',deleteRequest);
   router.post('/addProcItem/:requestId',addProcItem);
   router.get('/viewProcItems/:requestId',veiwProcItems);

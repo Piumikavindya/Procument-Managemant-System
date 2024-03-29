@@ -104,18 +104,30 @@ console.log(updatedRequest);
   }
 };
 
-// exports.viewAllRequests = async (req, res) => {
-//   try {
-//     // Fetch all requests from the database
-//     const allRequests = await procReqest.find();
+exports.viewAllRequests = async (req, res) => {
+  try {
+    // Fetch all requests from the database
+    const allRequests = await procReqest.find();
 
-//     // Send the list of requests as a response
-//     res.json(allRequests);
-//   } catch (error) {
-//     console.error("Error fetching all requests:", error);
-//     // Handle errors and send an appropriate response
-//     res.status(500).json({ error: error.message });
-//   }
+    // Send the list of requests as a response
+    res.json(allRequests);
+  } catch (error) {
+    console.error("Error fetching all requests:", error);
+    // Handle errors and send an appropriate response
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+
+// exports.viewAllRequests = async (req,res) =>{
+//   procReqest.find().then((procReqests)=>{
+//    res.json(procReqests)
+//   }).catch((err)=>{
+//    console.log(err);
+//   })
+
 // };
 // Middleware to check if the password reset token is valid
 
@@ -123,23 +135,23 @@ console.log(updatedRequest);
 
 // Middleware to verify authentication and attach user information to request object
 
-// Controller to view all requests
-exports.viewAllRequests = async (req, res) => {
-  try {
-      // Retrieve the department from the logged-in user's object
-      const department = req.user.department;
+// // Controller to view all requests
+// exports.viewAllRequests = async (req, res) => {
+//   try {
+//       // Retrieve the department from the logged-in user's object
+//       const department = req.procReqest.department;
 
-      // Fetch all requests from the database with the specified department
-      const requestsByDepartment = await procReqest.find({ department });
+//       // Fetch all requests from the database with the specified department
+//       const requestsByDepartment = await procReqest.find({ department });
 
-      // Send the list of requests for the specified department as a response
-      res.json(requestsByDepartment);
-  } catch (error) {
-      console.error("Error fetching requests for department:", error);
-      // Handle errors and send an appropriate response
-      res.status(500).json({ error: error.message });
-  }
-};
+//       // Send the list of requests for the specified department as a response
+//       res.json(requestsByDepartment);
+//   } catch (error) {
+//       console.error("Error fetching requests for department:", error);
+//       // Handle errors and send an appropriate response
+//       res.status(500).json({ error: error.message });
+//   }
+// };
 
 
 

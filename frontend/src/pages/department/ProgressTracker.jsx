@@ -13,24 +13,19 @@ function ProgressTracker() {
   const itemsPerPage = 5; // Number of items per page
 
   // Fetch requests data from your API endpoint
-  useEffect((loggedInUser ) => {
-
+  useEffect(() => {
     setLoading(true);
-    if (loggedInUser && loggedInUser.department) {
-      // If the logged-in user has a department, fetch requests based on that department
-      axios
-        .get(`http://localhost:8000/procReqest/viewRequests/${loggedInUser.department}`)
-        .then((response) => {
-          setRequests(response.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching requests:", error);
-          setLoading(false);
-        });
-    }
+    axios
+      .get("http://localhost:8000/procReqest/viewRequests")
+      .then((response) => {
+        setRequests(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching requests:", error);
+        setLoading(false);
+      });
   }, []);
-
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
