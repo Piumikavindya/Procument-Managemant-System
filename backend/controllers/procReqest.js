@@ -1,4 +1,5 @@
 const procReqest = require('../Models/procReqest');
+const user = require('../Models/user');
 const path = require("path");
 // const fs = require('fs').promises;
 
@@ -118,21 +119,42 @@ exports.viewAllRequests = async (req, res) => {
 };
 
 
-exports.viewAllRequests = async (req, res) => {
-  try {
-    const { department } = req.query; // Assuming department is passed in the query params
 
-    // Fetch all requests from the database with the specified department
-    const requestsByDepartment = await procReqest.find({ department });
 
-    // Send the list of requests for the specified department as a response
-    res.json(requestsByDepartment);
-  } catch (error) {
-    console.error("Error fetching requests for department:", error);
-    // Handle errors and send an appropriate response
-    res.status(500).json({ error: error.message });
-  }
-};
+// exports.viewAllRequests = async (req,res) =>{
+//   procReqest.find().then((procReqests)=>{
+//    res.json(procReqests)
+//   }).catch((err)=>{
+//    console.log(err);
+//   })
+
+// };
+// Middleware to check if the password reset token is valid
+
+
+
+// Middleware to verify authentication and attach user information to request object
+
+// // Controller to view all requests
+// exports.viewAllRequests = async (req, res) => {
+//   try {
+//       // Retrieve the department from the logged-in user's object
+//       const department = req.procReqest.department;
+
+//       // Fetch all requests from the database with the specified department
+//       const requestsByDepartment = await procReqest.find({ department });
+
+//       // Send the list of requests for the specified department as a response
+//       res.json(requestsByDepartment);
+//   } catch (error) {
+//       console.error("Error fetching requests for department:", error);
+//       // Handle errors and send an appropriate response
+//       res.status(500).json({ error: error.message });
+//   }
+// };
+
+
+
 
 
 exports.deleteRequest = async (req, res) => {
