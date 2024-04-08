@@ -88,33 +88,49 @@ async function fetchDataFromDatabase(requestIds) {
   }
 };
 
-
 // Controller function to create a new Procurement Project
 exports.createProject = async (req, res) => {
   try {
-    const { projectId, projectTitle, biddingType, closingDate, closingTime, appointTEC, appointBOCommite, procurementRequests } = req.body;
+    const { projectId, projectTitle, biddingType, closingDate, closingTime, appointTEC, appointBOCommite } = req.body;
 
-    // Create a new project instance
-    const newProject = new procProject({
-      projectId, // Use the provided projectId
-      projectTitle,
-      biddingType,
-      closingDate,
-      closingTime,
-      appointTEC,
-      appointBOCommite,
-      procurementRequests, // Include the procurementRequests field
-    });
+    // Check if a project with the same project ID already exists
+    const existingProject = await procProject.findOne({ projectId });
 
-    // Save the new project to the database
-    const createdProject = await newProject.save();
+    if (existingProject) {
+      // Update the existing project with the new data
+      existingProject.projectTitle = projectTitle;
+      existingProject.biddingType = biddingType;
+      existingProject.closingDate = closingDate;
+      existingProject.closingTime = closingTime;
+      existingProject.appointTEC = appointTEC;
+      existingProject.appointBOCommite = appointBOCommite;
 
-    // Send the created project as a response
-    res.status(201).json(createdProject);
+      // Save the updated project to the database
+      const updatedProject = await existingProject.save();
+
+      // Send the updated project as a response
+      res.status(200).json(updatedProject);
+    } else {
+      // Create a new project instance
+      const newProject = new procProject({
+        projectId, // Use the provided projectId
+        projectTitle,
+        biddingType,
+        closingDate,
+        closingTime,
+        appointTEC,
+        appointBOCommite,
+      });
+
+      // Save the new project to the database
+      const createdProject = await newProject.save();
+
+      // Send the created project as a response
+      res.status(201).json(createdProject);
+    }
   } catch (error) {
     console.error('Error creating project:', error);
     // Handle errors and send an appropriate response
     res.status(500).json({ error: 'Error creating project', message: error.message });
   }
 };
-
