@@ -33,7 +33,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
       console.log("User details:", response.data.user);
       if (response.data.user) {
         // Authentication successful
-        console.log("User signed in successfully:", response.data.user);
+        console.log("User Login is Successfully:", response.data.user);
         // Update your state or localStorage with user details
         setLoggedInUser(response.data.user);
 
@@ -45,9 +45,9 @@ const LoginPage = ({ setIsAuthenticated }) => {
           case "admin":
             navigate("/adminhome/" + response.data.user.id);
             break;
-          case "department":
-            navigate("/department/"+ response.data.user.id);
-            break;
+            case "department":
+              navigate(`/department/${response.data.user.department}/${response.data.user.id}`);
+              break;
           case "procurement Officer":
             navigate("/procurementOfficer/" + response.data.user.id);
             break;
@@ -71,7 +71,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
       }
     } catch (error) {
       // Handle errors, e.g., network issues or server errors
-      console.error("Signin failed:", error);
+      console.error("Sign in is failed:", error);
       console.log("Axios response:", error.response);
     }
   };

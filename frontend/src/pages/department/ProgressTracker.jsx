@@ -42,7 +42,7 @@ function ProgressTracker() {
       <div>
         <UserTypeNavbar userType="department" />
 
-        <div className="flex flex-wrap -mx-3 mt-55">
+        <div className="flex flex-wrap -mx-3 mt-40">
         <Breadcrumb
           crumbs={[
             { label: "Home", link: "/adminhome/:id" },

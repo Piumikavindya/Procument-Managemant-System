@@ -6,6 +6,8 @@ import { saveAs } from "file-saver";
 import { AddItemCard } from "./AddItemCard ";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
+import { Breadcrumb } from "flowbite-react";
+import UserTypeNavbar from "../../components/UserTypeNavbar";
 const ReqForm = ({ forms }) => {
   const navigate = useNavigate();
 
@@ -21,8 +23,8 @@ const ReqForm = ({ forms }) => {
   const [budgetAllocation, setBudgetAllocation] = useState("");
   const [usedAmount, setUsedAmount] = useState("");
   const [balanceAvailable, setBalanceAvailable] = useState("");
-  const [purpose, setPurpose] = useState("normal");
-  const [sendTo, setSendTo] = useState("dean");
+  const [purpose, setPurpose] = useState("Normal");
+  const [sendTo, setSendTo] = useState("Dean");
   const [items, setItems] = useState({});
   const [files, setFiles] = useState({});
   useEffect(() => {
@@ -80,9 +82,9 @@ const ReqForm = ({ forms }) => {
 
     const formData = {
       requestId,
+      faculty,
       department,
       date,
-      faculty,
       contactPerson,
       contactNo,
       budgetAllocation,
@@ -107,6 +109,27 @@ const ReqForm = ({ forms }) => {
     localStorage.setItem("formData", JSON.stringify(formData));
   };
 
+  const handleFileUpload = async (requestId, files) => {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("files", file);
+    });
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/procReqest/uploadFile/${requestId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("File uploaded successfully:", response.data);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
   const handleViewProcItems = async () => {
     try {
       const response = await axios.get(
@@ -131,7 +154,7 @@ const ReqForm = ({ forms }) => {
         email = "imashanaw1999@gmail.com";
         break;
       case "registrar":
-        email = "lankapuraranduniapsararanduni@gmail.com";
+        email = "piyumikavindyappk@gmail.com";
         break;
       case "viceChancellor":
         email = "usertestoneapp@gmail.com";
@@ -192,9 +215,9 @@ const ReqForm = ({ forms }) => {
     e.preventDefault();
     const formData = {
       requestId,
+      faculty,
       department,
       date,
-      faculty,
       contactPerson,
       contactNo,
       budgetAllocation,
@@ -207,9 +230,9 @@ const ReqForm = ({ forms }) => {
     };
     const newRequest = {
       requestId,
+      faculty,
       department,
       date,
-      faculty,
       contactPerson,
       contactNo,
       budgetAllocation,
@@ -229,9 +252,10 @@ const ReqForm = ({ forms }) => {
       const updatedRequest = createResponse.data.updatedRequest;
       alert("Request submitted successfully");
       setLoading(false);
+
       setRequestId("");
-      setDepartment("");
       setFaculty("");
+      setDepartment("");
       setDate("");
       setContactPerson("");
       setContactNo("");
@@ -244,6 +268,7 @@ const ReqForm = ({ forms }) => {
       setFiles({});
       localStorage.removeItem("formData");
       console.log("Request submitted successfully", createResponse.data);
+      await handleFileUpload(requestId, e.target.files);
 
       // Fetch updated items after submitting the form
       // handleViewProcItems();
@@ -255,6 +280,7 @@ const ReqForm = ({ forms }) => {
 
   const clearFormInputs = () => {
     setRequestId("");
+    setFaculty("");
     setDepartment("");
     setFaculty("");
     setDate("");
@@ -271,6 +297,8 @@ const ReqForm = ({ forms }) => {
 
   return (
     <div>
+      <UserTypeNavbar userType="department" />
+
       <div className="max-w-6xl mx-auto mt-40 ">
         <div className="block w-full h-auto rounded-md border border-black bg-black py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           <Dropdown />
@@ -461,12 +489,14 @@ const ReqForm = ({ forms }) => {
                     Requesting Item Details
                   </h2>
 
-                  <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                    type="button"
-                    onClick={handleAddItemsClick}
-                  >
-                    <span className="c-main">Add items</span>
+                  <button type="button" onClick={handleAddItemsClick}>
+                    <span className="c-main">
+                      <span className="c-ico">
+                        <span className="c-blur"></span>{" "}
+                        <span className="ico-text">+</span>
+                      </span>
+                      Add items
+                    </span>
                   </button>
                 </div>
 
@@ -551,9 +581,9 @@ const ReqForm = ({ forms }) => {
                               <div>
                                 <div className="text-sm leading-5 text-gray-800">
                                   <div className="icon-link flex justify-center gap-x-4">
-                                    <Link to={`/updatevendor/${item._id}`}>
-                                      <AiOutlineEdit className="text-2xl text-blue-800 " />
-                                    </Link>
+                                    {/* <Link to={`/updatevendor/${item._id}`}>
+                      <AiOutlineEdit className="text-2xl text-blue-800 " />
+                    </Link> */}
                                     <Link
                                       to={`/DeleteItem/${requestId}/${item.itemId}`}
                                     >

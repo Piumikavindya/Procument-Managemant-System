@@ -1,59 +1,10 @@
-const pdf = require('html-pdf');
 const path = require('path');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
-const pdfTemplate = require("../documents/document");
 const env = require('dotenv');
-const PdfModel =require('../Models/pdfDetails');
 
 env.config();
-
-exports.createPdf = async (req, res) => {
-    const options = {
-        format: 'A4'
-    };
-
-    const pdfFileName = `Purchase_Requisition_${req.body.requestId}.pdf`;
-
-    const pdfFilePath = path.join(__dirname, '..', 'download', pdfFileName);
-
-    try {
-        pdf.create(pdfTemplate(req.body), options).toFile(pdfFilePath, async (err) => {
-            if (err) {
-                console.error('Error generating PDF:', err);
-                return res.status(500).send('Error generating PDF');
-            }
-
-            const pdfData = fs.readFileSync(pdfFilePath);
-            await savePdfToMongoDB(pdfData, pdfFileName);
-            res.send('PDF generated, stored in MongoDB, and uploaded successfully');
-        });
-    } catch (error) {
-        console.error('Error creating PDF:', error);
-        res.status(500).send('An error occurred while generating PDF');
-    }
-};
-
-async function savePdfToMongoDB(pdfData, filename) {
-    try {
-        const newPdf = new PdfModel({
-            filename: filename,
-            data: pdfData
-        });
-        await newPdf.save();
-        console.log('PDF saved successfully in MongoDB');
-    } catch (error) {
-        console.error('Error saving PDF to MongoDB:', error);
-        throw new Error('An error occurred while storing the PDF in MongoDB');
-    }
-}
-
-exports.fetchPdf = (req, res) => {
-    const pdfFilePath = path.join(__dirname, '..', 'download', 'Purchase_Requisition.pdf');
-    res.sendFile(pdfFilePath);
-};
-
-exports.sendPdf = async (req, res) => {
+exports.sendMail = async (req, res) => {
     try {
         const pathToAttachment = path.join(__dirname, '..', 'download', 'Purchase_Requisition.pdf');
         const attachment = fs.readFileSync(pathToAttachment);
@@ -72,7 +23,7 @@ exports.sendPdf = async (req, res) => {
 
         await transporter.sendMail({
             from: process.env.EMAIL,
-            to: req.body.email,
+            to: process.env.RES,
             subject: 'Request for Approval: Purchase Requisition',
             html: `
             <p>Dear Sir/Madam,</p>
@@ -92,11 +43,6 @@ exports.sendPdf = async (req, res) => {
         res.status(500).send("An error occurred while sending the email.");
     }
 };
-
-
-
-    
-
 
 
 

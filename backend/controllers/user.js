@@ -169,24 +169,40 @@ res.json({ message: 'Password reset sucessfully, Now you can use new Password' }
 };
 
 //user signin
-exports.signIn = async (req,res) =>{
 
-   
-        const {email,password} = req.body;
 
-        const user = await User.findOne({email})
+exports.signIn = async (req, res) => {
+    const { email, password, role } = req.body;
+
+    try {
+        // Find the user by email
+        const user = await User.findOne({ email });
+
         if (!user) {
+            // If user not found, return error
             return res.status(401).json({ success: false, message: 'Invalid email or password' });
-          }
+        }
 
+        // Verify the password
+        const isPasswordMatch = await user.comparePassword(password);
+        if (!isPasswordMatch) {
+            // If password does not match, return error
+            return res.status(401).json({ success: false, message: 'Invalid email or password' });
+        }
 
-    const matched= await user.comparePassword(password);
-    if(!matched) return sendError(res,'Email/Password mismatch!');
+        let department = null;
+        // Check if the role is 'department'
+        if (role === 'department') {
+            // If role is 'department', retrieve the department from the user
+            department = user.department;
+        }
 
-    const {_id, lastname, role} = user;
-   // const jwtToken = jwt.sign({userId: _id}, 'dfjjjjlkhf5454ggmnkfkj8787')
-
-   res.json({user: {id: _id, lastname,  role}});
-   
-   
-}
+        // If email, password, and role are correct, return user data (id, lastname, role, and department if applicable)
+        const { _id, lastname, role: userRole } = user;
+        res.json({ user: { id: _id, lastname, role: userRole, department } });
+    } catch (error) {
+        // If an error occurs, return internal server error
+        console.error('Error:', error);
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+};
