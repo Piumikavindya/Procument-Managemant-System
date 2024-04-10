@@ -141,11 +141,12 @@ exports.viewRequestById = async (req, res) => {
 exports.deleteRequest = async (req, res) => {
   let requestID = req.params.id;
 
-  await procReqest.findByIdAndDelete(requestID).then(()=>{
-      res.status(200).send({status:"Request is deleted"}).catch((err)=>{
-          res.status(500).send({status: "Error with delete request"})
-      })
-  });
+  try {
+    await procReqest.findByIdAndDelete(requestID);
+    res.status(200).send({ status: "Request is deleted" });
+  } catch (err) {
+    res.status(500).send({ status: "Error with delete request" });
+  }
 };
 
 
