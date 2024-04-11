@@ -1,40 +1,66 @@
 const pdf = require('html-pdf');
 const path = require('path');
-const nodemailer = require('nodemailer');
 const fs = require('fs');
+const nodemailer = require('nodemailer');
 const pdfTemplate = require("../documents/document");
 const env = require('dotenv');
-env.config();
-const filePath = path.join(__dirname, '..','download', 'Purchase Requisition.pdf');
+const PdfModel =require('../Models/pdfDetails');
 
-exports.createPdf = (req, res) => {
+env.config();
+
+exports.createPdf = async (req, res) => {
     const options = {
-        format: 'A4' // Set the format to A4
+        format: 'A4'
     };
 
-    pdf.create(pdfTemplate(req.body), options).toFile(filePath, (err) => {
-        if (err) {
-            console.log(err);
-            return res.status(500).send('Error generating PDF');
-        }
-        res.send('PDF generated successfully');
-    });
+    const pdfFileName = `Purchase_Requisition_${req.body.requestId}.pdf`;
+
+    const pdfFilePath = path.join(__dirname, '..', 'download', pdfFileName);
+
+    try {
+        pdf.create(pdfTemplate(req.body), options).toFile(pdfFilePath, async (err) => {
+            if (err) {
+                console.error('Error generating PDF:', err);
+                return res.status(500).send('Error generating PDF');
+            }
+
+            const pdfData = fs.readFileSync(pdfFilePath);
+            await savePdfToMongoDB(pdfData, pdfFileName);
+            res.send('PDF generated, stored in MongoDB, and uploaded successfully');
+        });
+    } catch (error) {
+        console.error('Error creating PDF:', error);
+        res.status(500).send('An error occurred while generating PDF');
+    }
 };
 
+async function savePdfToMongoDB(pdfData, filename) {
+    try {
+        const newPdf = new PdfModel({
+            filename: filename,
+            data: pdfData
+        });
+        await newPdf.save();
+        console.log('PDF saved successfully in MongoDB');
+    } catch (error) {
+        console.error('Error saving PDF to MongoDB:', error);
+        throw new Error('An error occurred while storing the PDF in MongoDB');
+    }
+}
+
 exports.fetchPdf = (req, res) => {
-    res.sendFile(path.join(__dirname, '..','download','Purchase Requisition.pdf'));
+    const pdfFilePath = path.join(__dirname, '..', 'download', 'Purchase_Requisition.pdf');
+    res.sendFile(pdfFilePath);
 };
 
 exports.sendPdf = async (req, res) => {
     try {
-        // Ensure that department is properly retrieved from req.body
-
-        const pathToAttachment =  path.join(__dirname, '..', 'download','Purchase Requisition.pdf');
+        const pathToAttachment = path.join(__dirname, '..', 'download', 'Purchase_Requisition.pdf');
         const attachment = fs.readFileSync(pathToAttachment);
 
-        const transporter = nodemailer.createTransport({
+         const transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
-            service: 'Gmail',
+           service: 'Gmail',
             port: 465,
             secure: true,
             auth: {
@@ -44,22 +70,17 @@ exports.sendPdf = async (req, res) => {
             tls: { rejectUnauthorized: false }
         });
 
-        // Use async/await to send email
         await transporter.sendMail({
             from: process.env.EMAIL,
             to: req.body.email,
             subject: 'Request for Approval: Purchase Requisition',
             html: `
             <p>Dear Sir/Madam,</p>
-
-            <p>We are submitting this purchase requisition form to request approval for the procurement of necessary items for department. The items listed in the form are essential for continuing academic activities in the department. Your timely approval will enable us to proceed with the procurement process efficiently.</p>
-        
+            <p>We are submitting this purchase requisition form to request approval for the procurement of necessary items for the department. The items listed in the form are essential for continuing academic activities in the department. Your timely approval will enable us to proceed with the procurement process efficiently.</p>
             <p><strong>Thank you</strong> for your attention to this matter.</p>
-        
-            <p><strong>Best regards,</strong><br>
-            department</p> `,
+            <p><strong>Best regards,</strong><br>department</p> `,
             attachments: [{
-                filename: 'Purchase Requisition.pdf',
+                filename: 'Purchase_Requisition.pdf',
                 content: attachment,
                 contentType: 'application/pdf'
             }]
@@ -67,7 +88,15 @@ exports.sendPdf = async (req, res) => {
 
         res.send("Mail has been sent to your email. Check your mail");
     } catch (error) {
-        console.error(error);
+        console.error('Error sending email:', error);
         res.status(500).send("An error occurred while sending the email.");
     }
 };
+
+
+
+    
+
+
+
+
