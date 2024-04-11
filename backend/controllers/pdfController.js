@@ -34,20 +34,6 @@ exports.createPdf = async (req, res) => {
     }
 };
 
-async function savePdfToMongoDB(pdfData, filename) {
-    try {
-        const newPdf = new PdfModel({
-            filename: filename,
-            data: pdfData
-        });
-        await newPdf.save();
-        console.log('PDF saved successfully in MongoDB');
-    } catch (error) {
-        console.error('Error saving PDF to MongoDB:', error);
-        throw new Error('An error occurred while storing the PDF in MongoDB');
-    }
-}
-
 exports.fetchPdf = (req, res) => {
     const pdfFilePath = path.join(__dirname, '..', 'download', 'Purchase_Requisition.pdf');
     res.sendFile(pdfFilePath);
@@ -93,10 +79,13 @@ exports.sendPdf = async (req, res) => {
     }
 };
 
-
+exports.getPdf = async (req, res) => {
+    const filename = req.params.filename;
+    const filePath = path.join(__dirname, 'path_to_your_pdf_files', filename); // Adjust the path as per your backend file structure
+    res.sendFile(filePath);
+  };
 
     
-
 
 
 

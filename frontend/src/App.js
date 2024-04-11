@@ -52,6 +52,7 @@ import DeleteProcItem from './pages/department/DeleteProcItem.jsx';
 import ProcurementOfficerHome  from './pages/procurementOfficer/ProcurementOfficerHome.jsx';
 import SubmitReqForm from './pages/department/SubmitReqForm.jsx';
 import SendApproval from './pages/approver/SendApproval.jsx';
+import RequestList from './pages/department/RequestList.jsx';
 import ProjectCreationForm from './pages/PO_BU/ProjectCreationForm.jsx';
 import PO_BuHome from './pages/PO_BU/PO_BuHome.jsx';
 import { AddReqCard } from './pages/PO_BU/AddItemCard.jsx';
@@ -185,6 +186,7 @@ const App = () => {
           <Route path="/ApprovalForm/:id" element={<EditApproval/>} />
           <Route path="/SubmitApprovalForm/:requestId" element={<SubmitReqForm/>} />
           <Route path="/SendApproval/:id" element={<SendApproval/>} />
+          <Route path="/ViewForRequest" element={<RequestList/>} />
 
           <Route path="/ProjectCreationForm/" element={<ProjectCreationForm/>} />
           <Route path="/ReqSelection/:procId" element={<AddReqCard/>} />
