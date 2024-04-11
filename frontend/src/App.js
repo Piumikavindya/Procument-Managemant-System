@@ -50,7 +50,7 @@ import ApprovalForm from './pages/approver/ApprovalForm.jsx';
 import ApproverHome from './pages/approver/ApproverHome.jsx';
 import DeleteProcItem from './pages/department/DeleteProcItem.jsx';
 import ProjectCreationForm from './pages/PO_BU/ProjectCreationForm.jsx';
-
+import PO_BuHome from './pages/PO_BU/PO_BuHome.jsx';
 
 
 const App = () => {
@@ -179,9 +179,9 @@ const App = () => {
           <Route path="/DenyApproval/:requestId" element={<DenyRequest/>} />
           <Route path="/ApprovalForm" element={<ApprovalForm/>} />
 
-          <Route path="/ProjectCreationForm" element={<ProjectCreationForm/>} />
+          <Route path="/ProjectCreationForm/" element={<ProjectCreationForm/>} />
          
-          
+          <Route path="/PO_BuHome/:id" element={<PO_BuHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />      
       </Routes>
 
       {renderCommonFooter()}
