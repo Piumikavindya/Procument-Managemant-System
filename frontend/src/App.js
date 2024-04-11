@@ -54,6 +54,10 @@ import SubmitReqForm from './pages/department/SubmitReqForm.jsx';
 import SendApproval from './pages/approver/SendApproval.jsx';
 import ProjectCreationForm from './pages/PO_BU/ProjectCreationForm.jsx';
 import PO_BuHome from './pages/PO_BU/PO_BuHome.jsx';
+import { AddReqCard } from './pages/PO_BU/AddItemCard.jsx';
+import ProjectList from './pages/PO_BU/ProjectList.jsx';
+
+
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
   const location = useLocation();
@@ -183,7 +187,8 @@ const App = () => {
           <Route path="/SendApproval/:id" element={<SendApproval/>} />
 
           <Route path="/ProjectCreationForm/" element={<ProjectCreationForm/>} />
-         
+          <Route path="/ReqSelection/:procId" element={<AddReqCard/>} />
+          <Route path="/CreatedProjects" element={<ProjectList/>} />
           <Route path="/PO_BuHome/:id" element={<PO_BuHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />      
         
       </Routes>
