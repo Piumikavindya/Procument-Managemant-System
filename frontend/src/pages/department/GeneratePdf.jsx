@@ -24,11 +24,9 @@ const ReqForm = ({ forms }) => {
   const [usedAmount, setUsedAmount] = useState("");
   const [balanceAvailable, setBalanceAvailable] = useState("");
   const [purpose, setPurpose] = useState("Normal");
-  const [sendTo, setSendTo] = useState("dean");
+  const [sendTo, setSendTo] = useState("Dean");
   const [items, setItems] = useState({});
   const [files, setFiles] = useState({});
-  const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
-
   useEffect(() => {
     const formDataFromStorage = localStorage.getItem("formData");
     if (formDataFromStorage) {
@@ -148,6 +146,24 @@ const ReqForm = ({ forms }) => {
   };
 
   const handleGeneratePDF = async () => {
+    let email;
+
+    // Determine the email address based on the sendTo state
+    switch (sendTo) {
+      case "dean":
+        email = "imashanaw1999@gmail.com";
+        break;
+      case "registrar":
+        email = "piyumikavindyappk@gmail.com";
+        break;
+      case "viceChancellor":
+        email = "usertestoneapp@gmail.com";
+        break;
+      default:
+        email = ""; // Provide a default email or handle this case accordingly
+        break;
+    }
+
     const data = {
       requestId,
       department,
@@ -162,15 +178,31 @@ const ReqForm = ({ forms }) => {
       sendTo,
       items,
       files,
+      email, // Include the determined email address in the data object
     };
 
     try {
       // Create PDF
       await axios.post("http://localhost:8000/createPdf", data);
 
+      // Fetching the generated PDF
+      const response = await axios.get("http://localhost:8000/fetchPdf", {
+        responseType: "blob",
+      });
+      const pdfBlob = new Blob([response.data], { type: "application/pdf" });
+      saveAs(pdfBlob, "InvoiceDocument.pdf");
 
       // Clear form inputs after downloading
       clearFormInputs();
+
+      // Sending PDF via email
+      if (email) {
+        await axios.post("http://localhost:8000/sendPdf", { email });
+        alert("PDF sent successfully");
+      } else {
+        console.error("No email address provided.");
+        alert("An error occurred. Email address not provided.");
+      }
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred. Please try again.");
@@ -339,18 +371,12 @@ const ReqForm = ({ forms }) => {
                       Department/Branch :
                     </label>
                     <div className="mt-2">
-                      <select
+                      <input
+                        type="text"
                         value={department}
                         onChange={(e) => setDepartment(e.target.value)}
                         className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      >
-                        <option value="">Select your department</option>
-                        {departments.map((type, index) => (
-                          <option key={index} value={type}>
-                            {type}
-                          </option>
-                        ))}
-                      </select>
+                      />
                     </div>
                   </div>
 
@@ -705,6 +731,8 @@ const ReqForm = ({ forms }) => {
                             name="sendTo"
                             type="radio"
                             value="dean"
+                            checked={sendTo === "dean"}
+                            onChange={() => setSendTo("dean")}
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
@@ -720,6 +748,8 @@ const ReqForm = ({ forms }) => {
                             name="sendTo"
                             type="radio"
                             value="registrar"
+                            checked={sendTo === "registrar"}
+                            onChange={() => setSendTo("registrar")}
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
@@ -735,6 +765,8 @@ const ReqForm = ({ forms }) => {
                             name="sendTo"
                             type="radio"
                             value="viceChancellor"
+                            checked={sendTo === "viceChancellor"}
+                            onChange={() => setSendTo("viceChancellor")}
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
@@ -760,7 +792,7 @@ const ReqForm = ({ forms }) => {
                   handleGeneratePDF();
                 }}
               >
-                <span>Create New Request</span>
+                <span>Submit, Download & Send</span>
               </button>
             </div>
           </form>

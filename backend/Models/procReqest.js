@@ -18,7 +18,7 @@ const fileSchema = new Schema({
           return 'Item' + String(this.constructor.counter++).padStart(3, '0');
       },
   },
-      itemName: {type: String,},
+    itemName: {type: String,},
       cost: {type: Number,},
       qtyRequired: {type: Number,},
       qtyAvailable: {type: Number,},
@@ -36,7 +36,7 @@ const procRequestSchema = new Schema({
   date:{type: Date,},
   contactPerson: {type: String,},
   contactNo: {type: Number,},
-  budgetAllocation: {type: Number,},
+   budgetAllocation: {type: Number,},
   usedAmount:{type: Number,},
   balanceAvailable:{type: Number,},
   purpose:{
@@ -49,10 +49,17 @@ const procRequestSchema = new Schema({
     default: 'dean',
     enum: ['','dean', 'registrar','viceChancellor']
   },
+  
+  status: {
+    type: String,
+    enum: ["Pending", "Approved", "Rejected"],
+    default: "Pending",
+  },
   items: [itemSchema],  // Array of items within ProcurementRequest schema
   files: [fileSchema],  // Array of files within ProcurementRequest schema
 
 });
+
 
 const procReqest = mongoose.model('procRequest', procRequestSchema);
 
