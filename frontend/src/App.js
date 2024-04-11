@@ -189,6 +189,7 @@ const App = () => {
           <Route path="/ProjectCreationForm/" element={<ProjectCreationForm/>} />
           <Route path="/ReqSelection/:procId" element={<AddReqCard/>} />
           <Route path="/CreatedProjects" element={<ProjectList/>} />
+          
           <Route path="/PO_BuHome/:id" element={<PO_BuHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />      
         
       </Routes>

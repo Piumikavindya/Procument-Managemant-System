@@ -1,32 +1,34 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import React, { useEffect } from "react";
+import { ExclamationTriangleIcon, EyeIcon } from "@heroicons/react/24/outline";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ProjectCreationForm from "./ProjectCreationForm";
 import { useSnackbar } from "notistack";
 import { Tooltip } from "flowbite-react";
 import { IconButton } from "@material-tailwind/react";
-import { EyeIcon } from "@heroicons/react/24/outline";
 import {} from "react-icons/md";
+import axios from "axios";
 
 export const AddReqCard = ({ handleAddItemsClick, handleViewProcItems }) => {
   const [open, setOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
-  const [requests, setRequests] = useState([
-    // Sample data
-    { requestId: "REQ001", department: "IT", purpose: "Purchase of laptops" },
-    { requestId: "REQ002", department: "HR", purpose: "Recruitment tools" },
-    {
-      requestId: "REQ003",
-      department: "Finance",
-      purpose: "Software licenses",
-    },
-  ]);
-  const filteredRequests = requests.filter((request) =>
-    request[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(false);
+  
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get("http://localhost:8000/procReqest/viewRequests")
+      .then((response) => {
+        setRequests(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching requests:", error);
+        setLoading(false);
+      });
+  }, []);
 
   const navigate = useNavigate();
 
@@ -34,6 +36,20 @@ export const AddReqCard = ({ handleAddItemsClick, handleViewProcItems }) => {
     setOpen(false);
     navigate("/ProjectCreationForm");
   };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchOptionChange = (e) => {
+    setSearchOption(e.target.value);
+  };
+  
+  const filteredRequests = requests.filter((request) =>
+    request[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+
   return (
     <div>
       <ProjectCreationForm />
