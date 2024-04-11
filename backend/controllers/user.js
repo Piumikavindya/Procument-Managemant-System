@@ -5,21 +5,26 @@ const { generateRandomByte, sendError } = require('../Utils/helper');
 const user = require('../Models/user');
 
 // request from the frontend
-exports.create = async (req,res) =>{
-    const {username,firstname,lastname,email, password,role,department,employeeNumber} = req.body;
-// response will send to frontend
-const newUser= new User({username,firstname,lastname,email, password,role,department,employeeNumber})
-//save the data in the database
-try {
-    console.log('New User:', newUser);
-    await newUser.save();
-    
-    res.json({ user: newUser });
-} catch (error) {
-    console.error('Error saving user:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-}
+// request from the frontend
+exports.create = async (req, res) => {
+    const { username, firstname, lastname, email, password, role, department, employeeNumber } = req.body;
+
+    // Create a new instance of the User model
+    const newUser = new User({ username, firstname, lastname, email, password, role, department, employeeNumber });
+
+    try {
+        console.log('New User:', newUser);
+
+        // Save the new user to the database
+        await newUser.save();
+
+        res.json({ user: newUser });
+    } catch (error) {
+        console.error('Error saving user:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 };
+
 
 
 // get the all the users

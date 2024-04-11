@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
-import { Breadcrumb } from "flowbite-react";
+import DefaultPagination from "../../components/DefaultPagination";
+import Breadcrumb from "../../components/Breadcrumb";
 
 function ProgressTracker() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
+  const [currentPage, setCurrentPage] = useState(1); // State to manage current page
+  const itemsPerPage = 5; // Number of items per page
 
   // Fetch requests data from your API endpoint
   useEffect(() => {
@@ -26,10 +29,12 @@ function ProgressTracker() {
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset current page when search query changes
   };
 
   const handleSearchOptionChange = (e) => {
     setSearchOption(e.target.value);
+    setCurrentPage(1); // Reset current page when search option changes
   };
 
   // Filter the requests based on searchQuery and searchOption
@@ -37,6 +42,19 @@ function ProgressTracker() {
     request[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Calculate index of the last item to display on the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  // Calculate index of the first item to display on the current page
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // Slice the array of filtered requests to display only the items for the current page
+  const currentItems = filteredRequests.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   return (
     <div>
       <div>
@@ -54,6 +72,13 @@ function ProgressTracker() {
         />
           <div className="w-full max-w-full px-3  mb-6 mx-auto">
             <div className="relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem] bg-white m-5">
+              <Breadcrumb
+                crumbs={[
+                  { label: "Home", link: "/department/:departmentId/:userId" },
+                  { label: "Requisition Tracker", link: "/ProgressTrack" },
+                ]}
+                selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
+              />
               <div className="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
                 <div className="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
                   <h3 className="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
@@ -75,9 +100,7 @@ function ProgressTracker() {
                       className="px-6 py-2 border border-gray-300 focus:outline-none focus:ring focus:ring-brandPrimary focus:ring-opacity-50 rounded-md ml-3"
                     >
                       <option value="requestId">Request ID</option>
-                      <option value="shortDescription">
-                        Short Description
-                      </option>
+                      <option value="purpose">Purpose</option>
                     </select>
                   </div>
                 </div>
@@ -86,15 +109,11 @@ function ProgressTracker() {
                     <table className="w-full my-0 align-middle text-dark border-neutral-200">
                       <thead className="align-bottom bg-NeutralBlack ">
                         <tr className="font-semibold text-[0.95rem] text-white">
-                          <th className="p-4 text-start min-w-[100px]">
-                            Request ID
-                          </th>
-                          <th className="p-4 text-start min-w-[175px]">
-                            Department
-                          </th>
-                          <th className="p-4 text-start">Date</th>
-                          <th className="p-4 text-start">Purpose</th>
+                          <th className="p-4 text-start ">Request ID</th>
+                          <th className="p-4 text-start ">Purpose</th>
+                          <th className="p-4 text-start">Department</th>
                           <th className="p-4 text-start">Last Action</th>
+                          <th className="p-4 text-start">Last Action Date</th>
                           <th className="p-4 text-start">
                             Next Pending Action
                           </th>
@@ -103,24 +122,14 @@ function ProgressTracker() {
                         </tr>
                       </thead>
                       <tbody>
-                        {filteredRequests.map((request, index) => (
+                        {currentItems.map((request, index) => (
                           <tr
                             key={index}
                             className="border-b border-dashed last:border-b-0"
                           >
-                            <td className="pr-0 text-start">
+                            <td className="pr-0 pl-4 text-start">
                               <span className="font-semibold text-light-inverse text-md/normal">
                                 {request.requestId}
-                              </span>
-                            </td>
-                            <td className="p-3 pr-0 text-start">
-                              <span className="font-semibold text-light-inverse text-md/normal">
-                                {request.department}
-                              </span>
-                            </td>
-                            <td className="p-3 pr-0 text-start">
-                              <span className="font-semibold text-light-inverse text-md/normal">
-                                {request.date}
                               </span>
                             </td>
                             <td className="p-3 pr-0 text-start">
@@ -128,18 +137,23 @@ function ProgressTracker() {
                                 {request.purpose}
                               </span>
                             </td>
+                            <td className="p-3 pr-0 text-start">
+                              <span className="font-semibold text-light-inverse text-md/normal">
+                                {request.department}
+                              </span>
+                            </td>
+
                             <td className="pt-3 pb-3 pr-12 text-start">
                               <span
                                 className={`text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg ${
-                                  request.lastAction === "Bid opening closing"
+                                  request.lastAction === "Request Sent"
                                     ? "text-blue-500 bg-blue-200"
-                                    : request.lastAction === "Tender request"
+                                    : request.lastAction === "Approval"
                                     ? "text-green-500 bg-green-200"
                                     : request.lastAction ===
-                                      "Approve and Forward"
+                                      "Bid Opening Closing"
                                     ? "text-yellow-500 bg-yellow-100"
-                                    : request.lastAction ===
-                                      "Send purchase request"
+                                    : request.lastAction === ""
                                     ? "text-purple-500 bg-purple-200"
                                     : request.lastAction === "Rejected"
                                     ? "text-red-500 bg-red-300"
@@ -149,20 +163,23 @@ function ProgressTracker() {
                                 {request.lastAction}
                               </span>
                             </td>
+                            <td className="p-3 pr-0 text-start">
+                              <span className="font-semibold text-light-inverse text-md/normal">
+                                {new Date(request.date).toLocaleDateString()}{" "}
+                                {/* Convert date to readable format */}
+                              </span>
+                            </td>
                             <td className="pr-0 text-start">
                               <span
                                 className={`text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg ${
-                                  request.nextPendingAction ===
-                                  "Bid opening closing"
+                                  request.nextPendingAction === "Request Sent"
                                     ? "text-blue-500 bg-blue-200"
-                                    : request.nextPendingAction ===
-                                      "Tender request"
+                                    : request.nextPendingAction === "Approval"
                                     ? "text-green-500 bg-green-200"
                                     : request.nextPendingAction ===
-                                      "Approve and Forward"
+                                      "Bid Opening Closing"
                                     ? "text-yellow-500 bg-yellow-100"
-                                    : request.nextPendingAction ===
-                                      "Send purchase request"
+                                    : request.nextPendingAction === "Approval"
                                     ? "text-purple-500 bg-purple-200"
                                     : request.nextPendingAction === "Rejected"
                                     ? "text-red-500 bg-red-300"
@@ -206,6 +223,7 @@ function ProgressTracker() {
                   </div>
                 </div>
               </div>
+              <DefaultPagination onPageChange={handlePageChange} />
             </div>
           </div>
         </div>

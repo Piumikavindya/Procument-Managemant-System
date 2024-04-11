@@ -3,58 +3,62 @@ const express = require('express');
 const { PDFDocument } = require('pdf-lib');
 const { readFile, writeFile } = require('fs/promises');
 const PdfRequest = require('../Models/pdfprocrequest');
+const procReqest = require('../Models/procReqest');
 const fs = require('fs');
-
 exports.createPdf = async (req, res) => {
     try {
-        const { inputPath, outputPath } = req.body;
+        // Extract requestId from route parameters
+        const requestId = req.params.requestId;
 
-        const newRequest = new PdfRequest({ inputPath, outputPath });
-        await newRequest.save(); // Save request details (optional)
+        // Fetch data from the database
+        const requestData = await procReqest.findOne({ requestId });
 
-        let loadedPdfDoc; // Declare loadedPdfDoc outside the nested try...catch block
+        // Load the PDF document
+        const pdfDoc = await PDFDocument.load(await readFile('Requestion_form1.pdf'));
+        const form = pdfDoc.getForm();
+        const fields = form.getFields();
 
-        try {
-            const fileData = await fs.promises.readFile(inputPath);
-            loadedPdfDoc = await PDFDocument.load(fileData); // Assign to loadedPdfDoc only if successful
-        } catch (error) {
-            if (error.code === 'ENOENT') {
-                console.error(`Error: File not found: ${inputPath}`);
-                res.status(404).send('File not found');
-            } else {
-                console.error("Error reading or loading PDF:", error);
-                res.status(500).send('Error creating PDF');
-            }
-        }
+        // Map between PDF form field names and database field names
+        const fieldMap = {
+            'Text-vzEQJHbvSD': 'faculty',
+            'Text-GKhWp3mWid': 'requestId',
+            'Text-qD5Z1ICzXZ': 'date',
+            'Text-o2aYzrJWlX': '',
+            'Text-HqDzzcZGZS': 'department',
+            'Text-tOrlO4jNBA': 'contactPerson',
+            // Add more mappings as needed
+        };
 
-        if (loadedPdfDoc) {
-            const fields = loadedPdfDoc.getForm().getFields();
+        // Loop through each field in the form
+        for (let i = 0; i < fields.length; i++) {
+            const fieldName = fields[i].getName();
+            let fieldValue = '';
 
-            if (fields.length > 0) {
-                const formattedFields = [];
-                for (const field of fields) {
-                    formattedFields.push({ name: field.name, value: field.getValue() });
+            // Set the text of specific fields based on the database data
+            const dbFieldName = fieldMap[fieldName];
+            if (dbFieldName) {
+                // Check if the field is a date field
+                if (dbFieldName === 'date' && requestData.date) {
+                    fieldValue = requestData.date.toLocaleDateString(); // Convert date to string
+                } else {
+                    fieldValue = requestData[dbFieldName] || '';
                 }
-
-                res.send(formattedFields); // Send extracted fields in a JSON array
-                console.log({ fields });
-                const pdfBytes = await loadedPdfDoc.save();
-                await writeFile(outputPath, pdfBytes, (err) => {
-                    if (err) {
-                        console.error(`Error writing PDF file: ${err}`);
-                        res.status(500).send('Error creating PDF');
-                    } else {
-                        res.send('PDF created successfully!');
-                    }
-                });
             } else {
-                console.log("No form fields found in the PDF document.");
-                res.status(404).send('No form fields found in the PDF document.');
+                fieldValue = `Field ${i + 1}`;
             }
+
+            console.log(`${fieldName}: ${fieldValue}`);
+            fields[i].setText(fieldValue); // Set the text of the field
         }
+
+        const pdfBytes = await pdfDoc.save();
+        await writeFile('output5.pdf', pdfBytes);
+        console.log('PDF created successfully!');
+        
+        res.status(200).send('PDF created successfully!');
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Error creating PDF');
+        console.error('Error generating PDF:', error);
+        res.status(500).json({ error: 'Error generating PDF', message: error.message });
     }
 };
 

@@ -18,7 +18,7 @@ const UserTypeNavbar = ({ userType }) => {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
-  
+
   useEffect(() => {
     console.log("UserTypeNavbar received userType:", userType);
     const handleScroll = () => {
@@ -32,8 +32,8 @@ const UserTypeNavbar = ({ userType }) => {
     return () => {
       window.removeEventListener("scroll", handleScroll); // Change to removeEventListener
     };
-  }, []); 
- 
+  }, []);
+
   //NAVITEMS ARRAY
   const AdminOptions = [
     { link: "Manage Users", path: "/userList" },
@@ -48,17 +48,17 @@ const UserTypeNavbar = ({ userType }) => {
   ];
 
   const DepartmentOptions = [
-    { link: "Purchase Requisition", path: "/reqform" },
+    { link: "Purchase Requisition", path: `/reqform` },
     { link: "Requisition Tracker", path: "/ProgressTrack" },
   ];
 
   const procOfficerOptions = [
-    { link: "User Registration", path: "Home" },
-    { link: "Vendor Registration", path: "guidelines" },
-    { link: "Add Items", path: "notices" },
-    { link: "Dashboard", path: "budget" },
-    { link: "Manage Documents", path: "vendors" },
-    { link: "Budget & Plan", path: "events" },
+    { link: "ProjectCreationForm", path: `/ProjectCreationForm` },
+    // { link: "Vendor Registration", path: "guidelines" },
+    // { link: "Add Items", path: "notices" },
+    // { link: "Dashboard", path: "budget" },
+    // { link: "Manage Documents", path: "vendors" },
+    // { link: "Budget & Plan", path: "events" },
   ];
 
   const TECofficerOptions = [
@@ -81,7 +81,6 @@ const UserTypeNavbar = ({ userType }) => {
 
   const ApproverOptions = [
     { link: "Pending Approval list", path: "/ViewForApproval" },
-    
   ];
 
   return (

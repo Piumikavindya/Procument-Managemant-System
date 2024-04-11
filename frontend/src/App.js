@@ -164,13 +164,13 @@ const App = () => {
         <Route path="/reqform" element={<ReqForm />} />
         <Route path="/additem/:requestId" element={<AddItemCard/>}/>
        
-        <Route path="/itemDetails" element={<ItemDetails/>} />
+      
           <Route path="/AddItems" element={<AddItems/>} />
           <Route path="/updateItems" element={<UpdateItems/>} />
           <Route path="/formview/:requestId" element={<FormView />} />
           <Route path="/additem/:requestId" element={<AddItemCard/>}/>
 
-          <Route path="/itemDetails" element={<ItemDetails/>} />
+         
           <Route path="/AddItems" element={<AddItems/>} />
           <Route path="/updateItems" element={<UpdateItems/>} />
           <Route path="/previewItemDetails/:id" element={<PreviewItemDetails />} />
