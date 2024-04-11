@@ -49,6 +49,9 @@ import DenyRequest from './pages/approver/DenyRequest.jsx';
 import ApprovalForm from './pages/approver/ApprovalForm.jsx';
 import ApproverHome from './pages/approver/ApproverHome.jsx';
 import DeleteProcItem from './pages/department/DeleteProcItem.jsx';
+import ProjectCreationForm from './pages/PO_BU/ProjectCreationForm.jsx';
+
+
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -160,13 +163,13 @@ const App = () => {
         <Route path="/reqform" element={<ReqForm />} />
         <Route path="/additem/:requestId" element={<AddItemCard/>}/>
        
-        <Route path="/itemDetails" element={<ItemDetails/>} />
+      
           <Route path="/AddItems" element={<AddItems/>} />
           <Route path="/updateItems" element={<UpdateItems/>} />
           <Route path="/formview/:requestId" element={<FormView />} />
           <Route path="/additem/:requestId" element={<AddItemCard/>}/>
 
-          <Route path="/itemDetails" element={<ItemDetails/>} />
+         
           <Route path="/AddItems" element={<AddItems/>} />
           <Route path="/updateItems" element={<UpdateItems/>} />
           <Route path="/previewItemDetails/:id" element={<PreviewItemDetails />} />
@@ -175,7 +178,10 @@ const App = () => {
           <Route path="/ViewForApproval" element={<ApprovalList/>} />
           <Route path="/DenyApproval/:requestId" element={<DenyRequest/>} />
           <Route path="/ApprovalForm" element={<ApprovalForm/>} />
-        
+
+          <Route path="/ProjectCreationForm" element={<ProjectCreationForm/>} />
+         
+          
       </Routes>
 
       {renderCommonFooter()}
