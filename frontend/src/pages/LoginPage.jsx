@@ -49,7 +49,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
               navigate(`/department/${response.data.user.department}/${response.data.user.id}`);
               break;
           case "procurement Officer":
-            navigate("/procurementOfficer/" + response.data.user.id);
+            navigate("/PO_BuHome/" + response.data.user.id);
             break;
           case "TECofficer":
             navigate("/TECofficer/" + response.data.user.id);

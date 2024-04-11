@@ -53,12 +53,12 @@ const UserTypeNavbar = ({ userType }) => {
   ];
 
   const procOfficerOptions = [
-    { link: "User Registration", path: "Home" },
-    { link: "Vendor Registration", path: "guidelines" },
-    { link: "Add Items", path: "notices" },
-    { link: "Dashboard", path: "budget" },
-    { link: "Manage Documents", path: "vendors" },
-    { link: "Budget & Plan", path: "events" },
+    { link: "ProjectCreationForm", path: `/ProjectCreationForm` },
+    // { link: "Vendor Registration", path: "guidelines" },
+    // { link: "Add Items", path: "notices" },
+    // { link: "Dashboard", path: "budget" },
+    // { link: "Manage Documents", path: "vendors" },
+    // { link: "Budget & Plan", path: "events" },
   ];
 
   const TECofficerOptions = [
