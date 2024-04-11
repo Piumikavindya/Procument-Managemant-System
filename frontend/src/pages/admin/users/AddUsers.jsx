@@ -41,7 +41,7 @@ export default function AddUsers() {
       .post("http://localhost:8000/user/create", newUser)
 
       .then(() => {
-        alert("user added");
+        alert("User added successfully”");
         setLoading(false);
         setRole("");
         setEmail("");

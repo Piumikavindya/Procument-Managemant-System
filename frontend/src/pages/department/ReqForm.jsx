@@ -24,8 +24,8 @@ const ReqForm = ({ forms }) => {
   const [budgetAllocation, setBudgetAllocation] = useState("");
   const [usedAmount, setUsedAmount] = useState("");
   const [balanceAvailable, setBalanceAvailable] = useState("");
-  const [purpose, setPurpose] = useState("normal");
-  const [sendTo, setSendTo] = useState("dean");
+  const [purpose, setPurpose] = useState("Normal");
+  const [sendTo, setSendTo] = useState("Dean");
   const [items, setItems] = useState({});
   const [files, setFiles] = useState({});
   useEffect(() => {
@@ -299,16 +299,8 @@ const ReqForm = ({ forms }) => {
   return (
     <div>
       <UserTypeNavbar userType="department" />
-      <div className="max-w-7xl mx-auto  ">
-        <Breadcrumb
-          crumbs={[
-            { label: "Home", link: "/department/:departmentId/:userId" },
-            { label: "Purchase Requisition", link: "/ProgressTrack" },
-          ]}
-          selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
-        />
-      </div>
-      <div className="max-w-6xl mx-auto ">
+
+      <div className="max-w-6xl mx-auto mt-40 ">
         <div className="block w-full h-auto rounded-md border border-black bg-black py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           <Dropdown />
         </div>

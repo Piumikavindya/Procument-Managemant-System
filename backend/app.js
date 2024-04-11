@@ -17,13 +17,14 @@ const guidanceRouter = require('./routes/guidanceDoc');
 const noticeRouter = require('./routes/noticeDoc');
 const procReqestRouter = require('./routes/procReqest');
 const pdfRoutes = require('./routes/pdfprocrequest');
-const procProjectRouter = require('./routes/procProject');
-
-
+const approvalRoute =require('./routes/approvalReqest');
+const sendMailRoute =require('./routes/sendMail');
 const PORT = process.env.PORT || 8000;
 const env = require('dotenv')
+const procProjectRouter = require('./routes/procProject');
 const pdfRoute = require('./routes/pdfRoutes');
 const path = require('path')
+
 require('dotenv').config();
 env.config()
 
@@ -64,7 +65,8 @@ app.use('/pdf', pdfRoutes);
 
 app.use('/procProject',procProjectRouter);
 app.use(pdfRoute)
-
+app.use('/approvalReqest',approvalRoute)
+app.use('/send',sendMailRoute)
 app.listen(PORT, () => {
     console.log(`The server is listening on port: ${PORT}`);
   });
