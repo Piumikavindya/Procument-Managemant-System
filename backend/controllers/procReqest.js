@@ -1,3 +1,4 @@
+
 const procReqest = require('../Models/procReqest');
 const user = require('../Models/user');
 const path = require("path");
@@ -119,52 +120,36 @@ exports.viewAllRequests = async (req, res) => {
 };
 
 
-
-
-// exports.viewAllRequests = async (req,res) =>{
-//   procReqest.find().then((procReqests)=>{
-//    res.json(procReqests)
-//   }).catch((err)=>{
-//    console.log(err);
-//   })
-
-// };
-// Middleware to check if the password reset token is valid
-
-
-
-// Middleware to verify authentication and attach user information to request object
-
-// // Controller to view all requests
-// exports.viewAllRequests = async (req, res) => {
-//   try {
-//       // Retrieve the department from the logged-in user's object
-//       const department = req.procReqest.department;
-
-//       // Fetch all requests from the database with the specified department
-//       const requestsByDepartment = await procReqest.find({ department });
-
-//       // Send the list of requests for the specified department as a response
-//       res.json(requestsByDepartment);
-//   } catch (error) {
-//       console.error("Error fetching requests for department:", error);
-//       // Handle errors and send an appropriate response
-//       res.status(500).json({ error: error.message });
-//   }
-// };
-
-
-
-
-
-exports.deleteRequest = async (req, res) => {
+exports.viewRequestById = async (req, res) => {
   try {
-    await procReqest.deleteOne({ requestId: req.params.requestId });
-    res.json({ message: 'Request deleted successfully' });
+    const { requestId } = req.params;
+
+    // Find the request by ID
+    const request = await procReqest.findOne({ requestId });
+
+    if (!request) {
+      return res.status(404).json({ error: "Request not found" });
+    }
+
+    // Send the request as a response
+    res.json(request);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error fetching request by ID:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+exports.deleteRequest = async (req, res) => {
+  let requestID = req.params.id;
+
+  try {
+    await procReqest.findByIdAndDelete(requestID);
+    res.status(200).send({ status: "Request is deleted" });
+  } catch (err) {
+    res.status(500).send({ status: "Error with delete request" });
+  }
+};
+
 
 // Add Item to Request
 

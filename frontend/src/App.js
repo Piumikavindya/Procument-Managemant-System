@@ -46,12 +46,12 @@ import PreviewItemDetails from './pages/admin/items/PreviewItemDetails.jsx';
 import ProgressTracker from './pages/department/ProgressTracker.jsx';
 import ApprovalList from './pages/approver/ApprovalList.jsx';
 import DenyRequest from './pages/approver/DenyRequest.jsx';
-import ApprovalForm from './pages/approver/ApprovalForm.jsx';
+import EditApproval from './pages/approver/UpdateApproval.jsx';
 import ApproverHome from './pages/approver/ApproverHome.jsx';
 import DeleteProcItem from './pages/department/DeleteProcItem.jsx';
-import ProjectCreationForm from './pages/PO_BU/ProjectCreationForm.jsx';
-import PO_BuHome from './pages/PO_BU/PO_BuHome.jsx';
-
+import ProcurementOfficerHome  from './pages/procurementOfficer/ProcurementOfficerHome.jsx';
+import SubmitReqForm from './pages/department/SubmitReqForm.jsx';
+import SendApproval from './pages/approver/SendApproval.jsx';
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -140,10 +140,10 @@ const App = () => {
 
         <Route path="/yearplanner" element={<YearPlanner />} />
 
-        <Route path="/reqform/:department" element={<ReqForm />} />
+        <Route path="/reqform" element={<ReqForm />} />
         <Route path="/department/:departmentId/:userId" 
   element={<DepartmentHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} />} />
-        <Route path="/ProgressTrack/" element={<ProgressTracker />} />
+        <Route path="/ProgressTrack" element={<ProgressTracker />} />
         <Route path="/DeleteItem/:requestId/:itemId" element={<DeleteProcItem />} />
 
         <Route path="/ManageGuidance" element={<ManageGuidance />} />
@@ -176,12 +176,13 @@ const App = () => {
 
           <Route path="/approver/:id" element={<ApproverHome/>}/>
           <Route path="/ViewForApproval" element={<ApprovalList/>} />
-          <Route path="/DenyApproval/:requestId" element={<DenyRequest/>} />
-          <Route path="/ApprovalForm" element={<ApprovalForm/>} />
+          <Route path="/DenyApproval/:id" element={<DenyRequest/>} />
+          <Route path="/ApprovalForm/:id" element={<EditApproval/>} />
+          <Route path="/SubmitApprovalForm/:requestId" element={<SubmitReqForm/>} />
+          <Route path="/SendApproval/:id" element={<SendApproval/>} />
 
-          <Route path="/ProjectCreationForm/" element={<ProjectCreationForm/>} />
          
-          <Route path="/PO_BuHome/:id" element={<PO_BuHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />      
+        
       </Routes>
 
       {renderCommonFooter()}

@@ -16,36 +16,27 @@ const itemSchema = new Schema({
       return "Item" + String(this.constructor.counter++).padStart(3, "0");
     },
   },
-  itemName: { type: String },
-  cost: { type: Number },
-  qtyRequired: { type: Number },
-  qtyAvailable: { type: Number },
-  action: { type: String },
-});
+      itemName: {type: String,},
+      cost: {type: Number,},
+      qtyRequired: {type: Number,},
+      qtyAvailable: {type: Number,},
+      action: {type: String,},
+   
+  });
 const procRequestSchema = new Schema({
   requestId: {
     type: String,
     unique: true,
   },
-  lastAction: {
-    type: String,
-    default: 'Request Sent',
-    
-  },
-  nextPendingAction: {
-    type: String,
-    default: 'Approval',
-   
-  },
-  faculty: { type: String },
-  department: { type: String },
-  date: { type: Date },
-  contactPerson: { type: String },
-  contactNo: { type: Number },
-  budgetAllocation: { type: Number },
-  usedAmount: { type: Number },
-  balanceAvailable: { type: Number },
-  purpose: {
+  faculty: {type: String,},
+  department: {type: String,},
+  date:{type: Date,},
+  contactPerson: {type: String,},
+  contactNo: {type: Number,},
+  budgetAllocation: {type: Number,},
+  usedAmount:{type: Number,},
+  balanceAvailable:{type: Number,},
+  purpose:{
     type: String,
     default: "normal",
     enum: ["", "normal", "Fast Track", "Urgent", "Normal"],
