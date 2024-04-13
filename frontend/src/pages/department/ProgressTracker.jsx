@@ -18,7 +18,11 @@ function ProgressTracker() {
     axios
       .get("http://localhost:8000/procReqest/viewRequests")
       .then((response) => {
-        setRequests(response.data);
+        const requestsWithNextPendingAction = response.data.map((request) => ({
+          ...request,
+          nextPendingAction: getNextPendingAction(request.status),
+        }));
+        setRequests(requestsWithNextPendingAction);
         setLoading(false);
       })
       .catch((error) => {
@@ -26,7 +30,7 @@ function ProgressTracker() {
         setLoading(false);
       });
   }, []);
-
+  
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
     setCurrentPage(1); // Reset current page when search query changes
@@ -55,6 +59,25 @@ function ProgressTracker() {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+
+  const getNextPendingAction = (status) => {
+    switch (status) {
+      case "Pending":
+        return "Approval";
+      case "Pending":
+          return "Rejected";
+      case "Approved":
+        return "Bid Opening Closing"; // Example next pending action
+      case "Bid Opening Closing":
+        return "Another Action"; // Example next pending action
+      // Add cases for other statuses if needed
+      default:
+        return "No Pending Action";
+    }
+  };
+
+  
   return (
     <div>
       <div>
@@ -146,21 +169,21 @@ function ProgressTracker() {
                             <td className="pt-3 pb-3 pr-12 text-start">
                               <span
                                 className={`text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg ${
-                                  request.lastAction === "Request Sent"
-                                    ? "text-blue-500 bg-blue-200"
-                                    : request.lastAction === "Approval"
+                                  request.status === "Pending"
+                                    ? "text-purple-500 bg-purple-200"
+                                    : request.status === "Approved"
                                     ? "text-green-500 bg-green-200"
-                                    : request.lastAction ===
+                                    : request.status ===
                                       "Bid Opening Closing"
                                     ? "text-yellow-500 bg-yellow-100"
-                                    : request.lastAction === ""
-                                    ? "text-purple-500 bg-purple-200"
-                                    : request.lastAction === "Rejected"
+                                    : request.status === ""
+                                    ? "text-blue-500 bg-blue-200"
+                                    : request.status === "Rejected"
                                     ? "text-red-500 bg-red-300"
                                     : "text-primary bg-primary-light" // default style if action doesn't match
                                 }`}
                               >
-                                {request.lastAction}
+                                {request.status}
                               </span>
                             </td>
                             <td className="p-3 pr-0 text-start">
