@@ -53,6 +53,8 @@ import ProcurementOfficerHome  from './pages/procurementOfficer/ProcurementOffic
 import SubmitReqForm from './pages/department/SubmitReqForm.jsx';
 import SendApproval from './pages/approver/SendApproval.jsx';
 import RequestList from './pages/department/RequestList.jsx';
+import DownloadRequest from './pages/department/DownloadRequest.jsx';
+import SendRequest from './pages/department/SendRequest.jsx';
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -180,8 +182,10 @@ const App = () => {
           <Route path="/DenyApproval/:id" element={<DenyRequest/>} />
           <Route path="/ApprovalForm/:id" element={<EditApproval/>} />
           <Route path="/SubmitApprovalForm/:requestId" element={<SubmitReqForm/>} />
-          <Route path="/SendApproval/:id" element={<SendApproval/>} />
+          <Route path="/SendApproval/:requestId" element={<SendApproval/>} />
           <Route path="/ViewForRequest" element={<RequestList/>} />
+          <Route path="/DownloadRequest/:requestId" element={<DownloadRequest/>} />
+          <Route path="/SendRequest/:requestId/:sendTo" element={<SendRequest/>} />
 
          
         

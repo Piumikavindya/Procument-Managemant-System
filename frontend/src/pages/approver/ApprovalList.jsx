@@ -129,7 +129,7 @@ const ApprovalList = () => {
                         </Link>
                       )}
                       {request.status === "Approved" && (
-                        <Link to={`/SendApproval/${request._id}`}>
+                        <Link to={`/SendApproval/${request.requestId}`}>
                           <AiOutlineSend className="text-2xl text-green-600" />
                         </Link>
                       )}

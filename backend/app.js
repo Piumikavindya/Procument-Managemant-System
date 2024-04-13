@@ -21,10 +21,8 @@ const approvalRoute =require('./routes/approvalReqest');
 const sendMailRoute =require('./routes/sendMail');
 const PORT = process.env.PORT || 8000;
 const env = require('dotenv')
-const procProjectRouter = require('./routes/procProject');
 const pdfRoute = require('./routes/pdfRoutes');
 const path = require('path')
-
 require('dotenv').config();
 env.config()
 
@@ -60,10 +58,8 @@ app.use('/guidance',guidanceRouter);
 app.use('/notice',noticeRouter);
 //this is Procurement request route
 app.use('/procReqest',procReqestRouter);
-
 app.use('/pdf', pdfRoutes);
 
-app.use('/procProject',procProjectRouter);
 app.use(pdfRoute)
 app.use('/approvalReqest',approvalRoute)
 app.use('/send',sendMailRoute)
