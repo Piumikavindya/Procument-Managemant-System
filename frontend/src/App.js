@@ -53,6 +53,8 @@ import ProcurementOfficerHome  from './pages/procurementOfficer/ProcurementOffic
 import SubmitReqForm from './pages/department/SubmitReqForm.jsx';
 import SendApproval from './pages/approver/SendApproval.jsx';
 import RequestList from './pages/department/RequestList.jsx';
+import DownloadRequest from './pages/department/DownloadRequest.jsx';
+import SendRequest from './pages/department/SendRequest.jsx';
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -185,11 +187,7 @@ const App = () => {
           <Route path="/DownloadRequest/:requestId" element={<DownloadRequest/>} />
           <Route path="/SendRequest/:requestId/:sendTo" element={<SendRequest/>} />
 
-          <Route path="/ProjectCreationForm/" element={<ProjectCreationForm/>} />
-          <Route path="/ReqSelection/:procId" element={<AddReqCard/>} />
-          <Route path="/CreatedProjects" element={<ProjectList/>} />
-          
-          <Route path="/PO_BuHome/:id" element={<PO_BuHome isAuthenticated={isAuthenticated} loggedInUser={loggedInUser} handleSignOut={handleSignOut} handleSignIn={handleSignIn} />} />      
+         
         
       </Routes>
 
