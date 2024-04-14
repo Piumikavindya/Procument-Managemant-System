@@ -123,3 +123,28 @@ exports.sendPdf = async (req, res) => {
     }
   };
   
+
+
+exports.viewPdf = (req, res) => {
+  try {
+    const requestId = req.params.requestId;
+    const pdfFileName = `Purchase_Requisition_${requestId}.pdf`;
+    const pdfFilePath = path.join(__dirname, "..", "download", pdfFileName);
+
+    // Check if the file exists
+    if (!fs.existsSync(pdfFilePath)) {
+      return res.status(404).send("PDF not found");
+    }
+
+    // Set the content type header
+    res.setHeader("Content-Type", "application/pdf");
+
+
+    // Stream the file to the response
+    const stream = fs.createReadStream(pdfFilePath);
+    stream.pipe(res);
+  } catch (error) {
+    console.error("Error viewing PDF:", error);
+    res.status(500).send("An error occurred while viewing the PDF");
+  }
+};

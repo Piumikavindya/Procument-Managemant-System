@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { MdSimCardDownload } from "react-icons/md";
+import { MdSimCardDownload,MdPreview } from "react-icons/md";
 import { AiOutlineSend } from "react-icons/ai";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import Breadcrumb from "../../components/Breadcrumb";
@@ -75,7 +75,7 @@ const RequestList = () => {
                   </th>
                   <th
                     className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider"
-                    style={{ width: "500px" }}
+                  
                   >
                     Department
                   </th>
@@ -134,6 +134,9 @@ const RequestList = () => {
                         </Link>
                         <Link to={`/DownloadRequest/${request.requestId}`}>
                           <MdSimCardDownload className="text-2xl text-green-600" />
+                        </Link>
+                        <Link to={`/ViewFormRequest/${request.requestId}`}>
+                          <MdPreview className="text-2xl text-green-800" />
                         </Link>
                       </div>
                     </td>
