@@ -50,11 +50,13 @@ const UserTypeNavbar = ({ userType }) => {
   const DepartmentOptions = [
     { link: "Purchase Requisition", path: `/reqform` },
     { link: "Requisition Tracker", path: "/ProgressTrack" },
+    { link: "Request List", path: "/ViewForRequest" },
   ];
 
   const procOfficerOptions = [
     { link: "Created Projects", path: "/CreatedProjects" },
     { link: "Create New Project", path: "/ProjectCreationForm" },
+    
     
   ];
 
