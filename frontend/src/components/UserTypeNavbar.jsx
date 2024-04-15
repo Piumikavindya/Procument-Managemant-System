@@ -56,8 +56,7 @@ const UserTypeNavbar = ({ userType }) => {
   const procOfficerOptions = [
     { link: "Created Projects", path: "/CreatedProjects" },
     { link: "Create New Project", path: "/ProjectCreationForm" },
-    
-    
+    { link: "Approved Purchase Requisition List ", path: "/ApprovedRequestList" },
   ];
 
   const TECofficerOptions = [

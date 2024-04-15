@@ -2,13 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Dropdown from "../../components/DropDown";
-import { saveAs } from "file-saver";
 import { AddItemCard } from "./AddItemCard ";
-import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
-
 import UserTypeNavbar from "../../components/UserTypeNavbar";
-import Breadcrumb from "../../components/Breadcrumb";
+
 const ReqForm = ({ forms }) => {
   const navigate = useNavigate();
 
@@ -24,11 +21,12 @@ const ReqForm = ({ forms }) => {
   const [budgetAllocation, setBudgetAllocation] = useState("");
   const [usedAmount, setUsedAmount] = useState("");
   const [balanceAvailable, setBalanceAvailable] = useState("");
-  const [purpose, setPurpose] = useState("Normal");
+  const [purpose, setPurpose] = useState("normal");
   const [sendTo, setSendTo] = useState("dean");
   const [items, setItems] = useState({});
   const [files, setFiles] = useState({});
   const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
+  const [requestCreated, setRequestCreated] = useState(false);
 
   useEffect(() => {
     const formDataFromStorage = localStorage.getItem("formData");
@@ -163,12 +161,12 @@ const ReqForm = ({ forms }) => {
       sendTo,
       items,
       files,
+      
     };
 
     try {
       // Create PDF
       await axios.post("http://localhost:8000/createPdf", data);
-
 
       // Clear form inputs after downloading
       clearFormInputs();
@@ -245,8 +243,13 @@ const ReqForm = ({ forms }) => {
       console.error("Error submitting request", error);
       console.dir(error);
     }
+    setRequestCreated(true);
   };
 
+  const navigateToViewRequest = () => {
+   
+    navigate('/ViewForRequest'); 
+  };
   const clearFormInputs = () => {
     setRequestId("");
     setFaculty("");
@@ -464,7 +467,7 @@ const ReqForm = ({ forms }) => {
                     Requesting Item Details
                   </h2>
 
-                  <button type="button" onClick={handleAddItemsClick}>
+                  <button  onClick={handleAddItemsClick} class="button">
                     <span className="c-main">
                       <span className="c-ico">
                         <span className="c-blur"></span>{" "}
@@ -706,6 +709,8 @@ const ReqForm = ({ forms }) => {
                             name="sendTo"
                             type="radio"
                             value="dean"
+                            checked={sendTo === "dean"}
+                            onChange={() => setSendTo("dean")}
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
@@ -721,6 +726,8 @@ const ReqForm = ({ forms }) => {
                             name="sendTo"
                             type="radio"
                             value="registrar"
+                            checked={sendTo === "registrar"}
+                            onChange={() => setSendTo("registrar")}
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
@@ -736,6 +743,8 @@ const ReqForm = ({ forms }) => {
                             name="sendTo"
                             type="radio"
                             value="viceChancellor"
+                            checked={sendTo === "viceChancellor"}
+                            onChange={() => setSendTo("viceChancellor")}
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
@@ -753,18 +762,28 @@ const ReqForm = ({ forms }) => {
             </div>
 
             <div className="mt-3 flex items-center justify-end gap-x-6">
-              <button
-                className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-                type="submit"
-                onClick={(e) => {
-                  handleSubmit(e);
-                  handleGeneratePDF();
-                }}
-              >
-                <span>Create New Request</span>
-              </button>
+            {requestCreated ? (
+        <button
+        className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+        onClick={navigateToViewRequest}
+        >
+          Next
+        </button>
+      ) : (
+        <button
+          className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+          type="submit"
+          onClick={(e) => {
+            handleSubmit(e);
+            handleGeneratePDF();
+          }}
+        >
+          <span>Create New Request</span>
+        </button>
+      )}
             </div>
           </form>
+        
         </div>
       </div>
     </div>
