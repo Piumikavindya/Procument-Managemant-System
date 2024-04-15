@@ -1,6 +1,6 @@
 import { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Typography } from "@material-tailwind/react";
+import { Typography , DialogHeader,  DialogBody,} from "@material-tailwind/react";
 import { Button } from "flowbite-react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -91,6 +91,12 @@ export default function ApprovalForm() {
               <Dialog.Overlay className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
             </Transition.Child>
 
+            <span
+              className="hidden sm:inline-block sm:align-middle sm:h-screen"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -104,6 +110,19 @@ export default function ApprovalForm() {
                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
                     <div className="mt-3 text-left sm:mt-0 sm:ml-4">
+                    <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+
+                    <DialogHeader className="grid place-items-center">
+                    <Typography variant="h5" color="red" className="text-center">
+                      <h4>Approve Purchase Requisition</h4>
+                    </Typography>
+                  </DialogHeader>
+                  <DialogBody divider className="grid place-items-center">
+                    <img
+                      src="https://www.bitdefender.com/images/Knowledge%20Base%20SMB/admonitions/important.png"
+                      alt=""
+                      className="max-w-24 h-24  md:max-w-md lg:max-w-24 md:h-24 w-24"
+                    ></img>
                       <Typography className="mt-4 mb-2" variant="h6">
                         Are you sure to approve?
                       </Typography>
@@ -114,7 +133,7 @@ export default function ApprovalForm() {
                         <select
                           value={status}
                           onChange={(e) => setStatus(e.target.value)}
-                          className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
+                          className="bg-gray-100 border border-gray-200 rounded py-1 px-6 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
                         >
                           <option value="">Update your status</option>
                           {statuses.map((type, index) => (
@@ -124,13 +143,15 @@ export default function ApprovalForm() {
                           ))}
                         </select>
                       </div>
-
+                      </DialogBody>
                       <div className="mt-4 flex justify-center">
                         <Button className="mr-2" onClick={handleOutsideClick}>
                           No
                         </Button>
                         <Button onClick={handleUpdateStatus}>Yes</Button>
+                       
                       </div>
+                      </Dialog.Panel>
                     </div>
                   </div>
                 </div>

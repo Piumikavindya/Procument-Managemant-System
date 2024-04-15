@@ -1,22 +1,22 @@
+// RequestList.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { AiOutlineEdit, AiOutlineSend, AiOutlineDelete } from "react-icons/ai";
+import { MdSimCardDownload,MdPreview } from "react-icons/md";
+import { AiOutlineSend } from "react-icons/ai";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import Breadcrumb from "../../components/Breadcrumb";
-import { useParams } from "react-router-dom";
 
 const RequestList = () => {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
   const [requests, setRequests] = useState([]);
-  const { filename } = useParams();
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8000/procRequest/viewRequests")
+      .get("http://localhost:8000/procReqest/viewRequests") 
       .then((response) => {
         setRequests(response.data);
         setLoading(false);
@@ -27,16 +27,6 @@ const RequestList = () => {
       });
   }, []);
 
-  // Function to extract the request ID from the file name
-  const extractRequestIdFromFile = (fileName) => {
-    // Assuming the format is "Purchase_Requisition_REQXXX.pdf"
-    const parts = fileName.split("_");
-    if (parts.length === 3 && parts[2].endsWith(".pdf")) {
-      return parts[2].replace(".pdf", "");
-    }
-    return "";
-  };
-
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -45,17 +35,26 @@ const RequestList = () => {
     setSearchOption(e.target.value);
   };
 
-  const PDF_BASE_URL = 'http://localhost:8000/pdf/';
+  const generateFileName = (requestId) => {
+    return `Purchase_Requisition_${requestId}.pdf`;
+  };
 
-  const filteredRequests = requests.filter((request) =>
-    request[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredRequests = requests.filter((request) => {
+    const searchValue = request[searchOption];
+    return (
+      searchValue &&
+      searchValue.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
 
   return (
     <div className="p-4">
       <UserTypeNavbar userType="department" />
+      <UserTypeNavbar userType="department" />
       <Breadcrumb
         crumbs={[
+          { label: "Home", link: "/Home/:id" },
+          { label: "Purchase Requisition List", link: "/ViewForRequest" },
           { label: "Home", link: "/DepartmentHome" },
           { label: "Pending Approval list", link: "/ViewForApproval" },
         ]}
@@ -72,8 +71,18 @@ const RequestList = () => {
                     Request ID
                   </th>
                   <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
-                    File
+                    Request Form Name
                   </th>
+                  <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
+                    Sender
+                  </th>
+                  <th
+                    className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider"
+                  
+                  >
+                    Department
+                  </th>
+
                   <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
                     Actions
                   </th>
@@ -91,27 +100,48 @@ const RequestList = () => {
                         </div>
                       </div>
                     </td>
+
                     <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                       <div className="flex items-center">
                         <div>
                           <div className="text-sm leading-5 text-gray-900">
-                            <a href={PDF_BASE_URL + request.file} target="_blank" rel="noopener noreferrer">
-                              {request.file}
-                            </a>
+                            {generateFileName(request.requestId)}{" "}
                           </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
-                      <Link to={`/ApprovalForm/${request._id}`}>
-                        <AiOutlineEdit className="text-2xl text-blue-800" />
-                      </Link>
-                      <Link to={`/SendApproval/${request._id}`}>
-                        <AiOutlineSend className="text-2xl text-green-600" />
-                      </Link>
-                      <Link to={`/DenyApproval/${request._id}`}>
-                        <AiOutlineDelete className="text-2xl text-red-600 " />
-                      </Link>
+                      <div className="flex items-center">
+                        <div>
+                          <div className="text-sm leading-5 text-gray-900">
+                            {request.sendTo}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                      <div className="flex items-center">
+                        <div>
+                          <div className="text-sm leading-5 text-gray-900">
+                            {request.department}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                      <div className="icon-link flex justify-center gap-x-4">
+                        <Link
+                          to={`/SendRequest/${request.requestId}/${request.sendTo}`}
+                        >
+                          <AiOutlineSend className="text-2xl text-green-600" />
+                        </Link>
+                        <Link to={`/DownloadRequest/${request.requestId}`}>
+                          <MdSimCardDownload className="text-2xl text-green-600" />
+                        </Link>
+                        <Link to={`/ViewFormRequest/${request.requestId}`}>
+                          <MdPreview className="text-2xl text-green-800" />
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                 ))}

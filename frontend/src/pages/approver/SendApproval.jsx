@@ -17,7 +17,7 @@ const SendApproval = () => {
   const [emailSent, setEmailSent] = useState(false); // State to track email sending status
   const cancelButtonRef = useRef(null);
   const navigate = useNavigate();
-
+  const {requestId} = useParams();
   const handleOutsideClick = () => {
     setOpen(false);
     navigate("/ViewForApproval");
@@ -28,7 +28,7 @@ const SendApproval = () => {
   const sendPDF = async () => {
     try {
       // Sending PDF via email
-      await axios.post(`http://localhost:8000/send/sendMail`);
+      await axios.post(`http://localhost:8000/send/sendMail/${requestId}`);
  alert("PDF sent successfully");
       navigate("/ViewForApproval");
     } catch (error) {
