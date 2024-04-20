@@ -3,11 +3,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { AiOutlineEdit, AiOutlineSend, AiOutlineDelete } from "react-icons/ai"; // Import icons for edit, send, and delete
-import { MdPreview } from "react-icons/md"; // Import icons for edit, send, and delete
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import Breadcrumb from "../../components/Breadcrumb";
 
-const ApprovalList = () => {
+const ProcurementOfficerHome = () => {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
@@ -56,7 +55,7 @@ const ApprovalList = () => {
 
   return (
     <div className="p-4">
-      <UserTypeNavbar userType="procOfficer" />
+      <UserTypeNavbar userType="approver" />
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/ApproverHome/:id" },
@@ -124,10 +123,7 @@ const ApprovalList = () => {
                     <td className={`px-6 py-2 whitespace-no-wrap border-b border-gray-500`}>
                       <button className={`py-1 px-2 rounded ${getStatusColor(request.status)}  text-sm`}>{request.status}</button>
                     </td>
-                    <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500 ">
-                    <div className="icon-link flex justify-center gap-x-6">
-
-                 
+                    <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                       {request.status === "Pending" && (
                         <Link to={`/ApprovalForm/${request._id}`}>
                           <AiOutlineEdit className="text-2xl text-blue-800" />
@@ -143,10 +139,6 @@ const ApprovalList = () => {
                           <AiOutlineDelete className="text-2xl text-red-600 " />
                         </Link>
                       )}
-                       <Link to={`/ViewForApproval/${request.requestId}`}>
-                          <MdPreview className="text-2xl text-blue-800" />
-                        </Link>
-                        </div>
                     </td>
                   </tr>
                 ))}
@@ -159,4 +151,4 @@ const ApprovalList = () => {
   );
 };
 
-export default ApprovalList;
+export default ProcurementOfficerHome;

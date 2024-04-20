@@ -50,15 +50,13 @@ const UserTypeNavbar = ({ userType }) => {
   const DepartmentOptions = [
     { link: "Purchase Requisition", path: `/reqform` },
     { link: "Requisition Tracker", path: "/ProgressTrack" },
+    { link: "Request List", path: "/ViewForRequest" },
   ];
 
   const procOfficerOptions = [
-    { link: "ProjectCreationForm", path: `/ProjectCreationForm` },
-    // { link: "Vendor Registration", path: "guidelines" },
-    // { link: "Add Items", path: "notices" },
-    // { link: "Dashboard", path: "budget" },
-    // { link: "Manage Documents", path: "vendors" },
-    // { link: "Budget & Plan", path: "events" },
+    { link: "Created Projects", path: "/CreatedProjects" },
+    { link: "Create New Project", path: "/ProjectCreationForm" },
+    { link: "Approved Purchase Requisition List ", path: "/ApprovedRequestList" },
   ];
 
   const TECofficerOptions = [
@@ -129,7 +127,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -142,7 +140,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -155,7 +153,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>
@@ -169,7 +167,7 @@ const UserTypeNavbar = ({ userType }) => {
                   smooth={true}
                   offset={-100}
                   key={path}
-                  className="block no-underline text-white hover:text-black first:font-medium cursor-pointer"
+                  className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >
                   {link}
                 </Link>

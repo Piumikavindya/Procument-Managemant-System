@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Dropdown from "../../components/DropDown";
+import { saveAs } from "file-saver";
 import { AddItemCard } from "./AddItemCard ";
+import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
+import { Breadcrumb } from "flowbite-react";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
-
 const ReqForm = ({ forms }) => {
   const navigate = useNavigate();
 
@@ -21,13 +23,10 @@ const ReqForm = ({ forms }) => {
   const [budgetAllocation, setBudgetAllocation] = useState("");
   const [usedAmount, setUsedAmount] = useState("");
   const [balanceAvailable, setBalanceAvailable] = useState("");
-  const [purpose, setPurpose] = useState("normal");
-  const [sendTo, setSendTo] = useState("dean");
+  const [purpose, setPurpose] = useState("Normal");
+  const [sendTo, setSendTo] = useState("Dean");
   const [items, setItems] = useState({});
   const [files, setFiles] = useState({});
-  const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
-  const [requestCreated, setRequestCreated] = useState(false);
-
   useEffect(() => {
     const formDataFromStorage = localStorage.getItem("formData");
     if (formDataFromStorage) {
@@ -147,6 +146,24 @@ const ReqForm = ({ forms }) => {
   };
 
   const handleGeneratePDF = async () => {
+    let email;
+
+    // Determine the email address based on the sendTo state
+    switch (sendTo) {
+      case "dean":
+        email = "imashanaw1999@gmail.com";
+        break;
+      case "registrar":
+        email = "piyumikavindyappk@gmail.com";
+        break;
+      case "viceChancellor":
+        email = "usertestoneapp@gmail.com";
+        break;
+      default:
+        email = ""; // Provide a default email or handle this case accordingly
+        break;
+    }
+
     const data = {
       requestId,
       department,
@@ -161,15 +178,31 @@ const ReqForm = ({ forms }) => {
       sendTo,
       items,
       files,
-      
+      email, // Include the determined email address in the data object
     };
 
     try {
       // Create PDF
       await axios.post("http://localhost:8000/createPdf", data);
 
+      // Fetching the generated PDF
+      const response = await axios.get("http://localhost:8000/fetchPdf", {
+        responseType: "blob",
+      });
+      const pdfBlob = new Blob([response.data], { type: "application/pdf" });
+      saveAs(pdfBlob, "InvoiceDocument.pdf");
+
       // Clear form inputs after downloading
       clearFormInputs();
+
+      // Sending PDF via email
+      if (email) {
+        await axios.post("http://localhost:8000/sendPdf", { email });
+        alert("PDF sent successfully");
+      } else {
+        console.error("No email address provided.");
+        alert("An error occurred. Email address not provided.");
+      }
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred. Please try again.");
@@ -243,13 +276,8 @@ const ReqForm = ({ forms }) => {
       console.error("Error submitting request", error);
       console.dir(error);
     }
-    setRequestCreated(true);
   };
 
-  const navigateToViewRequest = () => {
-   
-    navigate('/ViewForRequest'); 
-  };
   const clearFormInputs = () => {
     setRequestId("");
     setFaculty("");
@@ -343,18 +371,12 @@ const ReqForm = ({ forms }) => {
                       Department/Branch :
                     </label>
                     <div className="mt-2">
-                      <select
+                      <input
+                        type="text"
                         value={department}
                         onChange={(e) => setDepartment(e.target.value)}
                         className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      >
-                        <option value="">Select your department</option>
-                        {departments.map((type, index) => (
-                          <option key={index} value={type}>
-                            {type}
-                          </option>
-                        ))}
-                      </select>
+                      />
                     </div>
                   </div>
 
@@ -467,7 +489,7 @@ const ReqForm = ({ forms }) => {
                     Requesting Item Details
                   </h2>
 
-                  <button  onClick={handleAddItemsClick} class="button">
+                  <button type="button" onClick={handleAddItemsClick}>
                     <span className="c-main">
                       <span className="c-ico">
                         <span className="c-blur"></span>{" "}
@@ -762,28 +784,18 @@ const ReqForm = ({ forms }) => {
             </div>
 
             <div className="mt-3 flex items-center justify-end gap-x-6">
-            {requestCreated ? (
-        <button
-        className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-        onClick={navigateToViewRequest}
-        >
-          Next
-        </button>
-      ) : (
-        <button
-          className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-          type="submit"
-          onClick={(e) => {
-            handleSubmit(e);
-            handleGeneratePDF();
-          }}
-        >
-          <span>Create New Request</span>
-        </button>
-      )}
+              <button
+                className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                type="submit"
+                onClick={(e) => {
+                  handleSubmit(e);
+                  handleGeneratePDF();
+                }}
+              >
+                <span>Submit, Download & Send</span>
+              </button>
             </div>
           </form>
-        
         </div>
       </div>
     </div>

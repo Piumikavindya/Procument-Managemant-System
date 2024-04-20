@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Dropdown from "../../components/DropDown";
+import { saveAs } from "file-saver";
 import { AddItemCard } from "./AddItemCard ";
+import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
+import { Breadcrumb } from "flowbite-react";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 
-const ReqForm = ({ forms }) => {
+const EditRequest = ({ forms }) => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -21,13 +24,12 @@ const ReqForm = ({ forms }) => {
   const [budgetAllocation, setBudgetAllocation] = useState("");
   const [usedAmount, setUsedAmount] = useState("");
   const [balanceAvailable, setBalanceAvailable] = useState("");
-  const [purpose, setPurpose] = useState("normal");
-  const [sendTo, setSendTo] = useState("dean");
+  const [purpose, setPurpose] = useState("Normal");
+  const [sendTo, setSendTo] = useState("Dean");
   const [items, setItems] = useState({});
   const [files, setFiles] = useState({});
   const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
-  const [requestCreated, setRequestCreated] = useState(false);
-
+  const { id } = useParams();
   useEffect(() => {
     const formDataFromStorage = localStorage.getItem("formData");
     if (formDataFromStorage) {
@@ -55,24 +57,9 @@ const ReqForm = ({ forms }) => {
     handleViewProcItems();
   }, [requestId]);
 
-  // Function to handle the generation of request ID
-  const handleGenerateRequestId = async () => {
-    try {
-      console.log("Generate Request ID button clicked");
-      const response = await axios.post(
-        `http://localhost:8000/procReqest/generateRequestId`
-      );
-      // Assuming the response contains the generated ID
-      const generatedId = response.data.requestId;
-      setRequestId(generatedId);
-    } catch (error) {
-      console.error("Error generating request ID", error);
-    }
-  };
+  
 
-  const handleCheckboxClick = (selectedPurpose) => {
-    setPurpose(selectedPurpose);
-  };
+ 
 
   const handleAddItemsClick = (itemData) => {
     setShowAddItemCard(true);
@@ -110,27 +97,7 @@ const ReqForm = ({ forms }) => {
     localStorage.setItem("formData", JSON.stringify(formData));
   };
 
-  const handleFileUpload = async (requestId, files) => {
-    const formData = new FormData();
-    files.forEach((file) => {
-      formData.append("files", file);
-    });
 
-    try {
-      const response = await axios.post(
-        `http://localhost:8000/procReqest/uploadFile/${requestId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log("File uploaded successfully:", response.data);
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
-  };
   const handleViewProcItems = async () => {
     try {
       const response = await axios.get(
@@ -147,6 +114,7 @@ const ReqForm = ({ forms }) => {
   };
 
   const handleGeneratePDF = async () => {
+
     const data = {
       requestId,
       department,
@@ -161,15 +129,24 @@ const ReqForm = ({ forms }) => {
       sendTo,
       items,
       files,
-      
+      email, // Include the determined email address in the data object
     };
 
     try {
       // Create PDF
       await axios.post("http://localhost:8000/createPdf", data);
 
-      // Clear form inputs after downloading
+      // Fetching the generated PDF
+      const response = await axios.get("http://localhost:8000/fetchPdf", {
+        responseType: "blob",
+      });
+      const pdfBlob = new Blob([response.data], { type: "application/pdf" });
+      saveAs(pdfBlob, "InvoiceDocument.pdf");
+
+     // Clear form inputs after downloading
       clearFormInputs();
+
+      
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred. Please try again.");
@@ -237,35 +214,13 @@ const ReqForm = ({ forms }) => {
       console.log("Request submitted successfully", createResponse.data);
       await handleFileUpload(requestId, e.target.files);
 
-      // Fetch updated items after submitting the form
-      // handleViewProcItems();
+      ;
     } catch (error) {
       console.error("Error submitting request", error);
       console.dir(error);
     }
-    setRequestCreated(true);
   };
 
-  const navigateToViewRequest = () => {
-   
-    navigate('/ViewForRequest'); 
-  };
-  const clearFormInputs = () => {
-    setRequestId("");
-    setFaculty("");
-    setDepartment("");
-    setFaculty("");
-    setDate("");
-    setContactNo("");
-    setContactPerson("");
-    setBudgetAllocation("");
-    setBalanceAvailable("");
-    setUsedAmount("");
-    setPurpose("Normal");
-    setItems({});
-    setFiles({});
-    setSendTo("dean");
-  };
 
   return (
     <div>
@@ -467,7 +422,7 @@ const ReqForm = ({ forms }) => {
                     Requesting Item Details
                   </h2>
 
-                  <button  onClick={handleAddItemsClick} class="button">
+                  <button type="button" onClick={handleAddItemsClick}>
                     <span className="c-main">
                       <span className="c-ico">
                         <span className="c-blur"></span>{" "}
@@ -709,9 +664,7 @@ const ReqForm = ({ forms }) => {
                             name="sendTo"
                             type="radio"
                             value="dean"
-                            checked={sendTo === "dean"}
-                            onChange={() => setSendTo("dean")}
-                            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
                             htmlFor="dean"
@@ -726,8 +679,7 @@ const ReqForm = ({ forms }) => {
                             name="sendTo"
                             type="radio"
                             value="registrar"
-                            checked={sendTo === "registrar"}
-                            onChange={() => setSendTo("registrar")}
+                        
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
@@ -743,8 +695,7 @@ const ReqForm = ({ forms }) => {
                             name="sendTo"
                             type="radio"
                             value="viceChancellor"
-                            checked={sendTo === "viceChancellor"}
-                            onChange={() => setSendTo("viceChancellor")}
+                            
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
@@ -762,31 +713,21 @@ const ReqForm = ({ forms }) => {
             </div>
 
             <div className="mt-3 flex items-center justify-end gap-x-6">
-            {requestCreated ? (
-        <button
-        className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-        onClick={navigateToViewRequest}
-        >
-          Next
-        </button>
-      ) : (
-        <button
-          className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-          type="submit"
-          onClick={(e) => {
-            handleSubmit(e);
-            handleGeneratePDF();
-          }}
-        >
-          <span>Create New Request</span>
-        </button>
-      )}
+              <button
+                className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                type="submit"
+                onClick={(e) => {
+                  handleSubmit(e);
+                  handleGeneratePDF();
+                }}
+              >
+                <span>Submit, Download & Send</span>
+              </button>
             </div>
           </form>
-        
         </div>
       </div>
     </div>
   );
 };
-export default ReqForm;
+export default EditRequest;

@@ -1,13 +1,11 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { AiOutlineEdit, AiOutlineSend, AiOutlineDelete } from "react-icons/ai"; // Import icons for edit, send, and delete
-import { MdPreview } from "react-icons/md"; // Import icons for edit, send, and delete
+import {  MdPreview } from 'react-icons/md';
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import Breadcrumb from "../../components/Breadcrumb";
 
-const ApprovalList = () => {
+const ApprovedRequestList = () => {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
@@ -18,7 +16,11 @@ const ApprovalList = () => {
     axios
       .get("http://localhost:8000/procReqest/viewRequests")
       .then((response) => {
-        setRequests(response.data);
+        // Filter requests to display only approved ones
+        const approvedRequests = response.data.filter(
+          (request) => request.status === "Approved"
+        );
+        setRequests(approvedRequests);
         setLoading(false);
       })
       .catch((error) => {
@@ -35,32 +37,21 @@ const ApprovalList = () => {
     setSearchOption(e.target.value);
   };
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case "Pending":
-        return "bg-yellow-300 text-yellow-800";
-      case "Approved":
-        return "bg-green-400 text-green-800";
-      case "Rejected":
-        return "bg-red-400 text-red-800";
-      default:
-        return "bg-gray-500";
-    }
-  };
-
   const filteredRequests = requests.filter((request) => {
     const searchValue = request[searchOption];
-    return searchValue && searchValue.toLowerCase().includes(searchQuery.toLowerCase());
-});
-
+    return (
+      searchValue &&
+      searchValue.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
 
   return (
     <div className="p-4">
-      <UserTypeNavbar userType="procOfficer" />
+      <UserTypeNavbar userType="procurement Officer" />
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/ApproverHome/:id" },
-          { label: "Pending Approval list", link: "/ViewForApproval" },
+          { label: "Approved Requests", link: "/ApprovedRequestList" },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />
@@ -121,32 +112,22 @@ const ApprovalList = () => {
                         </div>
                       </div>
                     </td>
-                    <td className={`px-6 py-2 whitespace-no-wrap border-b border-gray-500`}>
-                      <button className={`py-1 px-2 rounded ${getStatusColor(request.status)}  text-sm`}>{request.status}</button>
+                    <td
+                      className={`px-6 py-2 whitespace-no-wrap border-b border-gray-500`}
+                    >
+                      <button
+                        className={`py-1 px-2 rounded bg-green-400 text-green-800 text-sm`}
+                      >
+                        {request.status}
+                      </button>
                     </td>
-                    <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500 ">
-                    <div className="icon-link flex justify-center gap-x-6">
-
-                 
-                      {request.status === "Pending" && (
-                        <Link to={`/ApprovalForm/${request._id}`}>
-                          <AiOutlineEdit className="text-2xl text-blue-800" />
-                        </Link>
-                      )}
-                      {request.status === "Approved" && (
-                        <Link to={`/SendApproval/${request.requestId}`}>
-                          <AiOutlineSend className="text-2xl text-green-600" />
-                        </Link>
-                      )}
-                      {request.status === "Rejected" && (
-                        <Link to={`/DenyApproval/${request._id}`}>
-                          <AiOutlineDelete className="text-2xl text-red-600 " />
-                        </Link>
-                      )}
-                       <Link to={`/ViewForApproval/${request.requestId}`}>
+                    <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                        <Link to={`/ViewApprovedForm/${request.requestId}`}>
                           <MdPreview className="text-2xl text-blue-800" />
                         </Link>
-                        </div>
+                    
+                     
+                  
                     </td>
                   </tr>
                 ))}
@@ -159,4 +140,4 @@ const ApprovalList = () => {
   );
 };
 
-export default ApprovalList;
+export default ApprovedRequestList;

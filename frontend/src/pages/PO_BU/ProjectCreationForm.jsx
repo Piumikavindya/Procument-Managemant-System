@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios"; // Import axios library
 // import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import UserTypeNavbar from "../../components/UserTypeNavbar";
@@ -10,6 +11,7 @@ import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { AiFillPlusCircle } from "react-icons/ai";
 
 export default function ProjectCreationForm() {
+
   const [showAddItemCard, setShowAddItemCard] = useState(false);
   const [items, setItems] = useState({});
   const handleAddItemsClick = (itemData) => {
@@ -19,14 +21,60 @@ export default function ProjectCreationForm() {
       [Date.now()]: itemData,
     }));
   };
+  const [projectId, setProjectId] = useState("");
+  const [formData, setFormData] = useState({
+    projectId: "",
+    projectTitle: "",
+    biddingType: "",
+    closingDate: "",
+    closingTime: "",
+    appointTEC: "",
+    appointBOCommite: "",
+  });
+
+  const handleGenerateProjectId = async () => {
+    try {
+      console.log("Generate Request ID button clicked");
+      const response = await axios.get(
+        `http://localhost:8000/procProject/generateProjectId`
+      );
+      // Assuming the response contains the generated ID
+      const generatedId = response.data.projectId;
+      setProjectId(generatedId);
+    } catch (error) {
+      console.error("Error generating request ID", error);
+    }
+  };
+
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Make a POST request to create a new project
+      const response = await axios.post(`http://localhost:8000/procProject/createProject/${projectId}`, formData);
+      console.log("Project created:", response.data);
+      // Handle successful response
+    } catch (error) {
+      console.error("Error creating project:", error);
+      // Handle error
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
-    <form>
+    <form onSubmit={handleFormSubmit}>
       <div className="space-y-12 ml-40 mr-40 mt-40">
         <UserTypeNavbar userType="procurement Officer" />
 
+
         <Breadcrumb
           crumbs={[
-            { label: "Home", link: "/PO_Home/:id" },
+            { label: "Home", link: "/PO_BuHome/:id" },
             { label: "Procurement Project List", link: "/CreatedProjects" },
 
             { label: "Project Form Creation", link: "/addUsers" },
@@ -39,19 +87,22 @@ export default function ProjectCreationForm() {
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
-              <label
-                htmlFor="first-name"
-                className="block text-sm font-medium leading-6 text-gray-900 "
-              >
-                <h5> Project ID </h5>
-              </label>
+            <Button
+        className="flex items-center gap-3 h-10 bg-NeutralBlack"
+        size="sm"
+        onClick={handleGenerateProjectId}
+      >
+        <AiFillPlusCircle strokeWidth={2} className="h-5 w-5" />
+        <h6 className="mt-2">Generate Project ID</h6>
+      </Button>
               <div className="mt-2">
                 <input
                   type="text"
+                  value={projectId}
                   name="first-name"
+                  onChange={(e) => setProjectId(e.target.value)}
                   id="first-name"
-                  autoComplete="given-name"
-                  placeholder="Enter the Project ID"
+                  disabled={true}
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -85,7 +136,7 @@ export default function ProjectCreationForm() {
                 <Button
                   className="flex items-center gap-3 h-10 bg-NeutralBlack"
                   size="sm"
-                  onclick="popuphandler(true)"
+                  onclick={handleAddItemsClick}
                 >
                   <AiFillPlusCircle strokeWidth={2} className="h-5 w-5" />
                   <Link
