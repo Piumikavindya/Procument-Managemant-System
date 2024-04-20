@@ -32,17 +32,17 @@ export default function ProjectCreationForm() {
     appointBOCommite: "",
   });
 
-
-
-  const handleGenerateId = async () => {
+  const handleGenerateProjectId = async () => {
     try {
-      // Make a GET request to generate a new project ID
-      const response = await axios.post("http://localhost:8000/procProject/generateProjectId");
-      
-      setProjectId(response.data.projectId);
+      console.log("Generate Request ID button clicked");
+      const response = await axios.get(
+        `http://localhost:8000/procProject/generateProjectId`
+      );
+      // Assuming the response contains the generated ID
+      const generatedId = response.data.projectId;
+      setProjectId(generatedId);
     } catch (error) {
-      console.error("Error generating project ID:", error);
-      // Handle error
+      console.error("Error generating request ID", error);
     }
   };
 
@@ -51,7 +51,7 @@ export default function ProjectCreationForm() {
     e.preventDefault();
     try {
       // Make a POST request to create a new project
-      const response = await axios.post(`http://localhost:8000/procProject/createProject`, formData);
+      const response = await axios.post(`http://localhost:8000/procProject/createProject/${projectId}`, formData);
       console.log("Project created:", response.data);
       // Handle successful response
     } catch (error) {
@@ -90,7 +90,7 @@ export default function ProjectCreationForm() {
             <Button
         className="flex items-center gap-3 h-10 bg-NeutralBlack"
         size="sm"
-        onClick={handleGenerateId}
+        onClick={handleGenerateProjectId}
       >
         <AiFillPlusCircle strokeWidth={2} className="h-5 w-5" />
         <h6 className="mt-2">Generate Project ID</h6>
@@ -136,7 +136,7 @@ export default function ProjectCreationForm() {
                 <Button
                   className="flex items-center gap-3 h-10 bg-NeutralBlack"
                   size="sm"
-                  onclick="popuphandler(true)"
+                  onclick={handleAddItemsClick}
                 >
                   <AiFillPlusCircle strokeWidth={2} className="h-5 w-5" />
                   <Link

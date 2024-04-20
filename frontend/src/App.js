@@ -57,6 +57,7 @@ import DownloadRequest from "./pages/department/DownloadRequest.jsx";
 import SendRequest from "./pages/department/SendRequest.jsx";
 import ProjectCreationForm from "./pages/PO_BU/ProjectCreationForm.jsx";
 import PO_BuHome from "./pages/PO_BU/PO_BuHome.jsx";
+import { AddReqCard } from './pages/PO_BU/AddItemCard.jsx';
 import ApprovedRequestList from "./pages/PO_BU/ApprovedRequestList.jsx";
 import ViewApprovedForm  from "./pages/PO_BU/ViewApprovedForm.jsx";
 import ViewFormRequest from "./pages/department/ViewFormRequest.jsx";
@@ -227,7 +228,7 @@ const App = () => {
           element={<SendRequest />}
         />
         <Route path="/ProjectCreationForm/" element={<ProjectCreationForm />} />
-
+        <Route path="/ReqSelection/:procId" element={<AddReqCard/>} />
         <Route
           path="/PO_BuHome/:id"
           element={

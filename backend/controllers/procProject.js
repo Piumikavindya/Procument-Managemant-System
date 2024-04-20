@@ -2,48 +2,43 @@ const procProject = require('../Models/ProcProject');
 const path = require("path");
 const procRequest = require('../Models/procReqest');
 
-// Generate Project ID
+
+
 exports.generateProjectId = async (req, res) => {
-    try {
-        // Determine the latest project
-        const latestProject = await procProject.findOne({}, {}, { sort: { projectId: -1 } });
+  try {
+    // Determine the latest project
+    const latestProject = await procProject.findOne({}, {}, { sort: { projectId: -1 } });
 
-        // Extract year from the current date
-       
-        // Generate a new project ID based on the latest project ID or start with 001 if no projects exist
-        const newProjectId = latestProject
-            ? getNextProjectId(latestProject.projectId)
-            : `RUH/ENG/NCB/C/2024/001`;
+    // Generate a new project ID based on the latest project ID or start with 001 if no projects exist
+    const newProjectId = latestProject
+      ? getNextProjectId(latestProject.projectId)
+      : 'RUH/ENG/NCB/C/2024/001';
 
-        // Create a new instance of the model
-        const newProjectInstance = new procProject({
-            projectId: newProjectId,
-            // Add other relevant fields here
-        });
+    // Create a new instance of the model
+    const newProjectInstance = new procProject({
+      projectId: newProjectId,
+      // Add other relevant fields here
+    });
 
-        // Save the instance to the database
-        const savedProject = await newProjectInstance.save();
+    // Save the instance to the database
+    const savedProject = await newProjectInstance.save();
 
-        // Respond with the generated ID and the saved document
-        res.json({ projectId: savedProject.projectId, savedProject });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+    // Respond with the generated ID and the saved document
+    res.json({ projectId: savedProject.projectId, savedProject });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
+
 
 // Function to get the next project ID
 function getNextProjectId(previousProjectId) {
-    const parts = previousProjectId.split('/');
-    const lastPart = parseInt(parts.pop().replace(/^0+/, ''), 10);
-    const incrementedPart = (lastPart + 1).toString().padStart(3, '0');
-    return [...parts, incrementedPart].join('/');
+  const parts = previousProjectId.split('/');
+  const lastPart = parseInt(parts.pop().split(/[^0-9]/).pop(), 10);
+  const incrementedPart = (lastPart + 1).toString().padStart(3, '0');
+  const yearPart = new Date().getFullYear();
+  return `RUH/ENG/NCB/C/${yearPart}/${incrementedPart}`;
 }
-
-// Function to get the initials from a string
-function getInitials(str) {
-    return str.split(' ').map(part => part.charAt(0).toUpperCase()).join('');
-}
-
 
 
 
