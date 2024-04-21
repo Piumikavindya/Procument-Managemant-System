@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
@@ -62,6 +62,8 @@ import ApprovedRequestList from "./pages/PO_BU/ApprovedRequestList.jsx";
 import ViewApprovedForm  from "./pages/PO_BU/ViewApprovedForm.jsx";
 import ViewFormRequest from "./pages/department/ViewFormRequest.jsx";
 import ViewFormApproval from "./pages/approver/ViewFormApproval.jsx";
+import EventPlanner from "./pages/admin/eventPlanner/EventPlanner.jsx";
+import ContextWrapper from "./context/ContextWrapper.js";
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -244,6 +246,11 @@ const App = () => {
         <Route path="/ViewApprovedForm/:requestId" element={<ViewApprovedForm />} />
         <Route path="/ViewFormRequest/:requestId" element={<ViewFormRequest />} />
         <Route path="/ViewForApproval/:requestId" element={<ViewFormApproval />} />
+
+          
+          <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
+        
+        
 
       </Routes>
 
