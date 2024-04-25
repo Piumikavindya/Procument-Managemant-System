@@ -9,13 +9,15 @@ import { IconButton } from "@material-tailwind/react";
 import {} from "react-icons/md";
 import axios from "axios";
 
-export const AddReqCard = ({ handleAddItemsClick, handleViewProcItems }) => {
+export const AddReqCard = ({ handleViewProcItems }) => {
   const [open, setOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+  const [selectedRequests, setSelectedRequests] = useState([]);
+  const [projectId, setProjectId] = useState("");
+ 
   useEffect(() => {
     setLoading(true);
     axios
@@ -48,6 +50,40 @@ export const AddReqCard = ({ handleAddItemsClick, handleViewProcItems }) => {
   const filteredRequests = requests.filter((request) =>
     request[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleCheckboxChange = (requestId) => {
+    // Toggle the selection status of the request ID
+    setSelectedRequests((prevSelectedRequests) =>
+      prevSelectedRequests.includes(requestId)
+        ? prevSelectedRequests.filter((id) => id !== requestId)
+        : [...prevSelectedRequests, requestId]
+    );
+  };
+
+  const handleAddItemsClick = async () => {
+    try {
+      // Make a POST request to add the selected request IDs to the project
+
+        const response = await axios.get(
+          `http://localhost:8000/procProject/addRequestsData/${projectId}`,
+          {
+             projectId, // Send the projectId along with selected requestIds
+        requestIds: selectedRequests,
+          }
+        );
+      const newItemData = response.data.newItem;
+      // Show success message using snackbar or any other notification method
+      console.log("Selected requests added successfully");
+      // Close the dialog
+      setOpen(false);
+      // Navigate to desired location
+      navigate("/ProjectCreationForm");
+    } catch (error) {
+      console.error("Error adding requests:", error);
+      // Show error message using snackbar or any other notification method
+    }
+  };
+
 
 
   return (
@@ -176,7 +212,11 @@ export const AddReqCard = ({ handleAddItemsClick, handleViewProcItems }) => {
                                 <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                                   <div className="flex items-center">
                                     <div>
-                                      <input type="checkbox" />
+                                    <input
+  type="checkbox"
+  checked={selectedRequests.includes(request.requestId)}
+  onChange={() => handleCheckboxChange(request.requestId)}
+/>
                                     </div>
                                   </div>
                                 </td>
@@ -203,7 +243,7 @@ export const AddReqCard = ({ handleAddItemsClick, handleViewProcItems }) => {
                     </button>
 
                     <button
-                      onClick={handleCloseClick}
+                      onClick={handleAddItemsClick}
                       type="submit"
                       className="rounded-md bg-blue-600 h-10 w-30  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >

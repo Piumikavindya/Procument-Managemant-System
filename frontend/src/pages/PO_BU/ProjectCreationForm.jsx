@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios"; // Import axios library
+import axios from "axios"; 
 // import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import UserTypeNavbar from "../../components/UserTypeNavbar";
@@ -14,13 +14,6 @@ export default function ProjectCreationForm() {
 
   const [showAddItemCard, setShowAddItemCard] = useState(false);
   const [items, setItems] = useState({});
-  const handleAddItemsClick = (itemData) => {
-    setShowAddItemCard(true);
-    setItems((prevItems) => ({
-      ...prevItems,
-      [Date.now()]: itemData,
-    }));
-  };
   const [projectId, setProjectId] = useState("");
   const [formData, setFormData] = useState({
     projectId: "",
@@ -31,6 +24,28 @@ export default function ProjectCreationForm() {
     appointTEC: "",
     appointBOCommite: "",
   });
+
+  useEffect(() => {
+    const formDataFromStorage = localStorage.getItem("formData");
+    if (formDataFromStorage) {
+      const storedFormData = JSON.parse(formDataFromStorage);
+      setProjectId(storedFormData.projectId);
+      setFormData(storedFormData.formData);
+    } else {
+      // handleGenerateProjectId();
+    }
+  }, []);
+  
+
+  const handleAddItemsClick = (itemData) => {
+    setShowAddItemCard(true);
+    setItems((prevItems) => ({
+      ...prevItems,
+      [Date.now()]: itemData,
+    }));
+    localStorage.setItem("formData", JSON.stringify(formData));
+  };
+
 
   const handleGenerateProjectId = async () => {
     try {
