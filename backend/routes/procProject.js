@@ -9,9 +9,9 @@ router.get("/generateProjectId", generateProjectId, (req, res) => {
   });
 
 
-  router.post('/addRequestsData', addRequestsData);
+  router.get('/addRequestsData/:projectId', addRequestsData);
 
-  router.post("/createProject/projectId", createProject, (req, res) => {
+  router.post("/createProject/:projectId", createProject, (req, res) => {
     console.log("Received a request to create a procurement project:", req.body);
     createRequest(req, res);
   });

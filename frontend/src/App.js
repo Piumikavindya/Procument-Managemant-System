@@ -228,7 +228,7 @@ const App = () => {
           element={<SendRequest />}
         />
         <Route path="/ProjectCreationForm/" element={<ProjectCreationForm />} />
-        <Route path="/ReqSelection/:procId" element={<AddReqCard/>} />
+        <Route path="/ReqSelection/:projectId" element={<AddReqCard/>} />
         <Route
           path="/PO_BuHome/:id"
           element={

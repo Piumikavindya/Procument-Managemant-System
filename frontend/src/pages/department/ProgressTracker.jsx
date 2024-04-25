@@ -72,6 +72,8 @@ function ProgressTracker() {
       case "Bid Opening Closing":
         return "Another Action"; // Example next pending action
       // Add cases for other statuses if needed
+      case "Rejected":
+        return "No Pending Action";
       default:
         return "No Pending Action";
     }

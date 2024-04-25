@@ -55,10 +55,12 @@ async function fetchDataFromDatabase(requestIds) {
   }
 
 
-}exports.addRequestsData = async (req, res) => {
-  try {
-    const { projectId, requestIds } = req.body;
+}
 
+exports.addRequestsData = async (req, res) => {
+  try {
+    const {requestIds } = req.body;
+    const { projectId } = req.params;
     // Fetch data related to the selected request IDs from the database
     const requestData = await fetchDataFromDatabase(requestIds);
 
