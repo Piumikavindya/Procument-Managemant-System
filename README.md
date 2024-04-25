@@ -5,7 +5,7 @@ Engineering. Basically, the PMS lets users effectively create, monitor, and hand
 
 ## Installation
 
-- Clone the repository to your local machine: 
+- Clone the repository to your local machine: https://github.com/Piumikavindya/Procument-Managemant-System.git
 - Open the project folder using Vs code
 - Open the terminal and go to frontend folder using cd frontend command
 - Run npm init to install node modules
