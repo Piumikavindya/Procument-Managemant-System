@@ -6,13 +6,28 @@ import axios from "axios";
 // import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import UserTypeNavbar from "../../components/UserTypeNavbar";
-import { Button } from "@material-tailwind/react";
-import { UserPlusIcon } from "@heroicons/react/24/solid";
+import { Button, IconButton, Tooltip } from "@material-tailwind/react";
+import {
+  EyeDropperIcon,
+  EyeIcon,
+  UserPlusIcon,
+} from "@heroicons/react/24/solid";
 import { AiFillPlusCircle } from "react-icons/ai";
 
 export default function ProjectCreationForm() {
-
   const [showAddItemCard, setShowAddItemCard] = useState(false);
+  const [requests, setRequests] = useState([
+    // Sample data
+    { requestId: "REQ001", department: "IT", purpose: "Purchase of laptops" },
+    { requestId: "REQ002", department: "HR", purpose: "Recruitment tools" },
+    {
+      requestId: "REQ003",
+      department: "Finance",
+      purpose: "Software licenses",
+    },
+  ]);
+  const [searchOption, setSearchOption] = useState("requestId");
+  const [searchQuery, setSearchQuery] = useState("");
   const [items, setItems] = useState({});
   const [projectId, setProjectId] = useState("");
   const [formData, setFormData] = useState({
@@ -61,12 +76,14 @@ export default function ProjectCreationForm() {
     }
   };
 
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
       // Make a POST request to create a new project
-      const response = await axios.post(`http://localhost:8000/procProject/createProject/${projectId}`, formData);
+      const response = await axios.post(
+        `http://localhost:8000/procProject/createProject/${projectId}`,
+        formData
+      );
       console.log("Project created:", response.data);
       // Handle successful response
     } catch (error) {
@@ -81,11 +98,13 @@ export default function ProjectCreationForm() {
       [e.target.name]: e.target.value,
     });
   };
+  const filteredRequests = requests.filter((request) =>
+    request[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <form onSubmit={handleFormSubmit}>
       <div className="space-y-12 ml-40 mr-40 mt-40">
         <UserTypeNavbar userType="procurement Officer" />
-
 
         <Breadcrumb
           crumbs={[
@@ -102,15 +121,14 @@ export default function ProjectCreationForm() {
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
-            <Button
-        className="flex items-center gap-3 h-10 bg-NeutralBlack"
-        size="sm"
-        onClick={handleGenerateProjectId}
-      >
-        <AiFillPlusCircle strokeWidth={2} className="h-5 w-5" />
-        <h6 className="mt-2">Generate Project ID</h6>
-      </Button>
-              <div className="mt-2">
+              <Button
+                className="flex items-center gap-3 h-10 bg-NeutralBlack"
+                size="sm"
+                onClick={handleGenerateProjectId}
+              >
+                <p className="mt-3">Generate Project ID</p>
+              </Button>
+              <div className="mt-0">
                 <input
                   type="text"
                   value={projectId}
@@ -118,7 +136,7 @@ export default function ProjectCreationForm() {
                   onChange={(e) => setProjectId(e.target.value)}
                   id="first-name"
                   disabled={true}
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mt-2"
                 />
               </div>
             </div>
@@ -130,41 +148,31 @@ export default function ProjectCreationForm() {
               >
                 <h5> Project Title</h5>
               </label>
-              <div className="mt-2">
+              <div className="mt-4">
                 <input
                   type="text"
                   name="last-name"
                   id="last-name"
                   autoComplete="family-name"
                   placeholder="Enter the Project Title"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mt-2"
                 />
               </div>
             </div>
 
             <div className="sm:col-span-3">
-              <legend className="text-sm font-semibold leading-6 text-gray-900">
-                <h5>Add the Requests into Projects</h5>
-              </legend>
-
-              <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                <Button
-                  className="flex items-center gap-3 h-10 bg-NeutralBlack"
-                  size="sm"
-                  onclick={handleAddItemsClick}
+              <div className="sm:col-span-4 mt-2">
+                <label
+                  htmlFor="closingDate"
+                  className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  <AiFillPlusCircle strokeWidth={2} className="h-5 w-5" />
-                  <Link
-                    to={"/ReqSelection/:${procId}"}
-                    class="text-white"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <h6 className="mt-2">Add Request</h6>
-                  </Link>
-                </Button>
+                  <h5>Closing Date & Time</h5>
+                </label>
+                <input type="date" className="mr-6 rounded"></input>
+                <input type="time" className="rounded"></input>
               </div>
 
-              <div className="mt-6 space-y-6">
+              {/* <div className="mt-6 space-y-6">
                 <div className="relative flex gap-x-3">
                   <div className="flex h-6 items-center"></div>
                   <div className="text-sm leading-6">
@@ -183,7 +191,7 @@ export default function ProjectCreationForm() {
                     <h6>3. Requisition from Department COM</h6>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="sm:col-span-3">
@@ -208,19 +216,95 @@ export default function ProjectCreationForm() {
                   </option>
                 </select>
               </div>
-
-              <div className="sm:col-span-4 mt-2">
-                <label
-                  htmlFor="closingDate"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  <h5>Closing Date & Time</h5>
-                </label>
-                <input type="date" className="mr-6 rounded"></input>
-                <input type="time" className="rounded"></input>
-              </div>
             </div>
 
+           
+          </div>
+
+          <legend className="text-sm font-semibold leading-6 text-gray-900 mt-10">
+            <h5>Add the Requests into Projects</h5>
+          </legend>
+
+          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+            <Button
+              className="flex items-center gap-3 h-10 bg-NeutralBlack"
+              size="sm"
+              onclick={handleAddItemsClick}
+            >
+              <AiFillPlusCircle strokeWidth={2} className="h-5 w-5" />
+              <Link
+                to={"/ReqSelection/:${procId}"}
+                class="text-white"
+                style={{ textDecoration: "none" }}
+              >
+                <h6 className="mt-2">Add Request</h6>
+              </Link>
+            </Button>
+          </div>
+
+          <div className="mt-6 space-y-6 sm:col-span-3">
+            <div className="  align-middle inline-block min-w-full  overflow-hidden bg-white shadow-dashboard  pt-3 rounded-bl-lg rounded-br-lg">
+              <table className="min-w-full">
+                <thead className="text-xs text-white uppercase bg-NeutralBlack  dark:bg-gray-200 dark:text-gray-400">
+                  {" "}
+                  <tr>
+                    <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
+                      Request ID
+                    </th>
+                    <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
+                      Department
+                    </th>
+
+                    <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
+                      Purpose
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white">
+                  {filteredRequests.map((request) => (
+                    <tr key={request.requestId} className="reservation-row">
+                      <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                        <div className="flex items-center">
+                          <div>
+                            <div className="text-sm leading-5 text-gray-900">
+                              {request.requestId}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                        <div className="flex items-center">
+                          <div>
+                            <div className="text-sm leading-5 text-gray-900">
+                              {request.department}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                        <div className="flex items-center">
+                          <div>
+                            <div className="text-sm leading-5 text-gray-900">
+                              {request.purpose}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
+                <div>
+                  <nav className="relative z-0 inline-flex shadow-sm"></nav>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <fieldset>
                 <legend className="text-sm mt-10 font-semibold leading-6 text-gray-900">
@@ -348,6 +432,8 @@ export default function ProjectCreationForm() {
                 </div>
               </fieldset>
             </div>
+
+
           </div>
         </div>
       </div>
