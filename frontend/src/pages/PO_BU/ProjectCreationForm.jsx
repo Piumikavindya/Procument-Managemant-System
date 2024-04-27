@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios"; 
@@ -13,58 +13,47 @@ import {
   UserPlusIcon,
 } from "@heroicons/react/24/solid";
 import { AiFillPlusCircle } from "react-icons/ai";
+import { AddReqCard } from "./AddItemCard";
 
-export default function ProjectCreationForm() {
-  const [showAddItemCard, setShowAddItemCard] = useState(false);
-  const [requests, setRequests] = useState([
-    // Sample data
-    { requestId: "REQ001", department: "IT", purpose: "Purchase of laptops" },
-    { requestId: "REQ002", department: "HR", purpose: "Recruitment tools" },
-    {
-      requestId: "REQ003",
-      department: "Finance",
-      purpose: "Software licenses",
-    },
-  ]);
+export default function ProjectCreationForm({ forms }) {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [showAddRequestCard, setShowAddRequestCard] = useState(false);
+  const [requests, setRequests] = useState([]);
   const [searchOption, setSearchOption] = useState("requestId");
   const [searchQuery, setSearchQuery] = useState("");
   const [items, setItems] = useState({});
   const [projectId, setProjectId] = useState("");
   const [formData, setFormData] = useState({
     projectId: "",
+    procurementRequests: [],
     projectTitle: "",
     biddingType: "",
     closingDate: "",
     closingTime: "",
-    appointTEC: "",
-    appointBOCommite: "",
+    appointTEC: [],
+    appointBOCommite: [],
   });
+  const [projectCreated, setProjectCreated] = useState(false);
 
   useEffect(() => {
     const formDataFromStorage = localStorage.getItem("formData");
     if (formDataFromStorage) {
       const storedFormData = JSON.parse(formDataFromStorage);
-      setProjectId(storedFormData.projectId);
-      setFormData(storedFormData.formData);
+      setFormData(storedFormData);
     } else {
-      // handleGenerateProjectId();
+      handleGenerateProjectId();
     }
   }, []);
   
 
-  const handleAddItemsClick = (itemData) => {
-    setShowAddItemCard(true);
-    setItems((prevItems) => ({
-      ...prevItems,
-      [Date.now()]: itemData,
-    }));
-    localStorage.setItem("formData", JSON.stringify(formData));
-  };
-
+  useEffect(() => {
+    handleViewRequest();
+  }, [projectId]);
 
   const handleGenerateProjectId = async () => {
     try {
-      console.log("Generate Request ID button clicked");
+      console.log("Generate Project ID button clicked");
       const response = await axios.get(
         `http://localhost:8000/procProject/generateProjectId`
       );
@@ -76,21 +65,111 @@ export default function ProjectCreationForm() {
     }
   };
 
+
+  const handleAddRequestClick = (requestData) => {
+    // Show the AddReqCard component
+    setShowAddRequestCard(true);
+    // Set the items state
+    setRequests((prevRequests) => ({
+      ...prevRequests,
+      [Date.now()]: requestData,  
+    }));
+    const formData ={
+      projectId: "",
+      procurementRequests: [],
+      projectTitle: "",
+      biddingType: "",
+      closingDate: "",
+      closingTime: "",
+      appointTEC: [],
+      appointBOCommite: [],
+    }
+    setLoading(true);
+    try {
+      // Fetch updated items after submitting the form
+    } catch (error) {
+      console.error("Error submitting project", error);
+      console.dir(error);
+    }
+        // Navigate to the specified route after updating items
+        navigate(`/projectCreationForm/${projectId}`);
+    localStorage.setItem("formData", JSON.stringify(formData));
+  };
+
+
+  const handleViewRequest = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/procProject/viewAddedRequests/${projectId}`
+      );
+      const requestData = response.data;
+  
+      // Merge the existing requests with the new data
+      setRequests((prevRequests) => ({
+        ...prevRequests,
+         ...requestData}));
+
+    } catch (error) {
+      console.error("Error fetching requests:", error);
+    }
+  };
+  
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
+      const newProject = {
+        projectId: projectId,
+        procurementRequests: requests,
+        projectTitle: formData.projectTitle,
+        biddingType: formData.biddingType,
+        closingDate: formData.closingDate,
+        closingTime: formData.closingTime,
+        appointTEC: formData.appointTEC,
+        appointBOCommite: formData.appointBOCommite,
+      };
+      setLoading(true);
+      
       // Make a POST request to create a new project
       const response = await axios.post(
         `http://localhost:8000/procProject/createProject/${projectId}`,
-        formData
+        newProject
       );
-      console.log("Project created:", response.data);
+  const updatedProject = response.data.updatedProject;
       // Handle successful response
+      console.log("Project created:", response.data);
+      alert("Project created successfully");
+      setFormData("");
+      // Reset form inputs
+      clearFormInputs();
+      localStorage.removeItem("formData");
+      console.log("Request submitted successfully", response.data);
+      // Navigate to view the newly created project
+      navigateToViewProject();
     } catch (error) {
       console.error("Error creating project:", error);
       // Handle error
+    } finally {
+      setLoading(false);
     }
   };
+  
+  const navigateToViewProject = () => {
+    navigate(`/viewProject`);
+  };
+  
+  const clearFormInputs = () => {
+    setFormData({
+      projectId: "",
+      projectTitle: "",
+      biddingType: "",
+      closingDate: "",
+      closingTime: "",
+      appointTEC: [],
+      appointBOCommite: [],
+    });
+    setRequests([]);
+  };
+  
 
   const handleInputChange = (e) => {
     setFormData({
@@ -101,7 +180,9 @@ export default function ProjectCreationForm() {
   const filteredRequests = requests.filter((request) =>
     request[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
   );
+
   return (
+
     <form onSubmit={handleFormSubmit}>
       <div className="space-y-12 ml-40 mr-40 mt-40">
         <UserTypeNavbar userType="procurement Officer" />
@@ -155,6 +236,8 @@ export default function ProjectCreationForm() {
                   id="last-name"
                   autoComplete="family-name"
                   placeholder="Enter the Project Title"
+                  value={formData.projectTitle}
+                  onChange={(e) =>setFormData({ ...formData, projectTitle: e.target.value })}
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mt-2"
                 />
               </div>
@@ -168,7 +251,10 @@ export default function ProjectCreationForm() {
                 >
                   <h5>Closing Date & Time</h5>
                 </label>
-                <input type="date" className="mr-6 rounded"></input>
+                <input type="date" className="mr-6 
+                rounded"
+                value={formData.date}
+                onChange={(e) =>setFormData({ ...formData, date: e.target.value })}></input>
                 <input type="time" className="rounded"></input>
               </div>
 
@@ -206,6 +292,8 @@ export default function ProjectCreationForm() {
                   id="country"
                   name="country"
                   autoComplete="country-name"
+                  value={formData.biddingType}
+                  onChange={(e) => setFormData({ ...formData, biddingType: e.target.value })}
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
                 >
                   <option value="">Direct Purchasing</option>
@@ -220,7 +308,7 @@ export default function ProjectCreationForm() {
 
            
           </div>
-
+          <div className="border-b border-gray-900/10 pb-12">
           <legend className="text-sm font-semibold leading-6 text-gray-900 mt-10">
             <h5>Add the Requests into Projects</h5>
           </legend>
@@ -229,73 +317,84 @@ export default function ProjectCreationForm() {
             <Button
               className="flex items-center gap-3 h-10 bg-NeutralBlack"
               size="sm"
-              onclick={handleAddItemsClick}
+              onclick={handleAddRequestClick}
             >
               <AiFillPlusCircle strokeWidth={2} className="h-5 w-5" />
+             
               <Link
-                to={"/ReqSelection/:${procId}"}
+                to={`/ReqSelection/${projectId}`}
                 class="text-white"
                 style={{ textDecoration: "none" }}
               >
-                <h6 className="mt-2">Add Request</h6>
+                 <h6 className="mt-2">Add Request</h6>
               </Link>
             </Button>
           </div>
 
           <div className="mt-6 space-y-6 sm:col-span-3">
-            <div className="  align-middle inline-block min-w-full  overflow-hidden bg-white shadow-dashboard  pt-3 rounded-bl-lg rounded-br-lg">
-              <table className="min-w-full">
-                <thead className="text-xs text-white uppercase bg-NeutralBlack  dark:bg-gray-200 dark:text-gray-400">
-                  {" "}
-                  <tr>
-                    <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
-                      Request ID
-                    </th>
-                    <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
-                      Department
-                    </th>
+  <div className="align-middle inline-block min-w-full overflow-hidden bg-white shadow-dashboard pt-3 rounded-bl-lg rounded-br-lg">
+    <table className="min-w-full" key={Object.keys(requests).length}>
+      <thead className="text-xs text-white uppercase bg-NeutralBlack">
+        <tr>
+          <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
+            Index
+          </th>
+          <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
+            Request ID
+          </th>
+          <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
+            Department
+          </th>
+          <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
+            Purpose
+          </th>
+        </tr>
+      </thead>
+      <tbody className="bg-white">
+        {filteredRequests.map((request, index) => (
+          <tr key={request.requestId} className="reservation-row">
+            <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+              <div className="flex items-center">
+                <div>
+                  <div className="text-sm leading-5 text-gray-900">
+                    {index + 1}
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+              <div className="flex items-center">
+                <div>
+                  <div className="text-sm leading-5 text-gray-900">
+                    {request.requestId}
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+              <div className="flex items-center">
+                <div>
+                  <div className="text-sm leading-5 text-gray-900">
+                    {request.department}
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+              <div className="flex items-center">
+                <div>
+                  <div className="text-sm leading-5 text-gray-900">
+                    {request.purpose}
+                  </div>
+                </div>
+              </div>
+            </td>
+         
+          </tr>
+        ))}
+      </tbody>
+    </table>
 
-                    <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
-                      Purpose
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white">
-                  {filteredRequests.map((request) => (
-                    <tr key={request.requestId} className="reservation-row">
-                      <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
-                        <div className="flex items-center">
-                          <div>
-                            <div className="text-sm leading-5 text-gray-900">
-                              {request.requestId}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
-                        <div className="flex items-center">
-                          <div>
-                            <div className="text-sm leading-5 text-gray-900">
-                              {request.department}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
-                        <div className="flex items-center">
-                          <div>
-                            <div className="text-sm leading-5 text-gray-900">
-                              {request.purpose}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
               <div className="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
                 <div>
                   <nav className="relative z-0 inline-flex shadow-sm"></nav>
@@ -303,7 +402,13 @@ export default function ProjectCreationForm() {
               </div>
             </div>
           </div>
-
+          {showAddRequestCard && (
+                  <AddReqCard
+                  handleAddRequestClick={handleAddRequestClick}
+                    handleViewRequest={handleViewRequest}
+                  />
+                )}
+          </div>
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <fieldset>
