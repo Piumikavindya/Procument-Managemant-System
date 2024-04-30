@@ -91,7 +91,8 @@ async function fetchDataFromDatabase(requestIds) {
 // Controller function to create a new Procurement Project
 exports.createProject = async (req, res) => {
   try {
-    const { projectId, projectTitle, biddingType, closingDate, closingTime, appointTEC, appointBOCommite } = req.body;
+    // const projectId = req.params.projectId;
+    const { projectTitle, biddingType, closingDate, closingTime, appointTEC, appointBOCommite } = req.body;
 
     // Check if a project with the same project ID already exists
     const existingProject = await procProject.findOne({ projectId });

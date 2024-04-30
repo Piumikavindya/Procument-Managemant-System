@@ -4,11 +4,11 @@ import axios from "axios";
 import { useParams,useNavigate } from "react-router-dom";
 // Ensure pdfjs worker is correctly loaded
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.js",
+  "pdfjs-dist/build/pdf.worker.min.mjs",
   import.meta.url
 ).toString();
 
-const ViewApprovedForm = () => {
+const ViewFormApproval = () => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -48,11 +48,12 @@ const ViewApprovedForm = () => {
 
   // Function to handle going back to the previous page
   const goBack = () => {
-    navigate("/ApprovedRequestList");
+    navigate("/ViewForApproval");
   };
 
   return (
     <div className="flex justify-center items-center h-full bg-gray-200 mt-24">
+     
       {loading ? (
         <div className="text-gray-600">Loading...</div>
       ) : (
@@ -102,4 +103,4 @@ const ViewApprovedForm = () => {
   );
 };
 
-export default ViewApprovedForm;
+export default ViewFormApproval;
