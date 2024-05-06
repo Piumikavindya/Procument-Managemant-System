@@ -15,6 +15,7 @@ import {
 import { AiFillPlusCircle } from "react-icons/ai";
 import { AddReqCard } from "./AddItemCard";
 
+
 export default function ProjectCreationForm({ forms }) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -34,18 +35,35 @@ export default function ProjectCreationForm({ forms }) {
     appointTEC: [],
     appointBOCommite: [],
   });
+  const [procurementRequests, setProcurementRequests] = useState([]);
+  const [projectTitle, setProjectTitle] = useState("");
+  const [biddingType, setBiddingType] = useState("");
+  const [closingDate, setClosingDate] = useState("");
+  const [closingTime, setClosingTime] = useState("");
+  const [appointTEC, setAppointTEC] = useState([]);
+  const [appointBOCommite, setAppointBOCommite] = useState([]);
+
   const [projectCreated, setProjectCreated] = useState(false);
 
   useEffect(() => {
     const formDataFromStorage = localStorage.getItem("formData");
     if (formDataFromStorage) {
-      const storedFormData = JSON.parse(formDataFromStorage);
-      setFormData(storedFormData);
+      const formData = JSON.parse(formDataFromStorage);
+      setProjectId(formData.projectId);
+      setProjectTitle(formData.projectTitle);
+      setProcurementRequests(formData.procurementRequests);
+      setBiddingType(formData.biddingType);
+      setClosingDate(formData.closingDate);
+      setClosingTime(formData.closingTime);
+      setAppointTEC(formData.appointTEC);
+      setAppointBOCommite(formData.appointBOCommite);
+      
+     
+      
     } else {
       handleGenerateProjectId();
     }
   }, []);
-  
 
   useEffect(() => {
     handleViewRequest();
@@ -57,32 +75,30 @@ export default function ProjectCreationForm({ forms }) {
       const response = await axios.get(
         `http://localhost:8000/procProject/generateProjectId`
       );
-      // Assuming the response contains the generated ID
       const generatedId = response.data.projectId;
       setProjectId(generatedId);
     } catch (error) {
-      console.error("Error generating request ID", error);
+      console.error("Error generating project ID", error);
     }
   };
-
 
   const handleAddRequestClick = (requestData) => {
     // Show the AddReqCard component
     setShowAddRequestCard(true);
     // Set the items state
-    setRequests((prevRequests) => ({
+    setRequests((prevRequests) => [
       ...prevRequests,
-      [Date.now()]: requestData,  
-    }));
+      requestData,
+    ]);
     const formData ={
-      projectId: "",
-      procurementRequests: [],
-      projectTitle: "",
-      biddingType: "",
-      closingDate: "",
-      closingTime: "",
-      appointTEC: [],
-      appointBOCommite: [],
+      projectId,
+      procurementRequests,
+      projectTitle,
+      biddingType,
+      closingDate,
+      closingTime,
+      appointTEC,
+      appointBOCommite,
     }
     setLoading(true);
     try {
@@ -92,7 +108,7 @@ export default function ProjectCreationForm({ forms }) {
       console.dir(error);
     }
         // Navigate to the specified route after updating items
-        navigate(`/projectCreationForm/${projectId}`);
+        navigate(`/ReqSelection/${projectId}`);
     localStorage.setItem("formData", JSON.stringify(formData));
   };
 
@@ -105,9 +121,7 @@ export default function ProjectCreationForm({ forms }) {
       const requestData = response.data;
   
       // Merge the existing requests with the new data
-      setRequests((prevRequests) => ({
-        ...prevRequests,
-         ...requestData}));
+      setRequests(requestData);
 
     } catch (error) {
       console.error("Error fetching requests:", error);
@@ -292,8 +306,8 @@ export default function ProjectCreationForm({ forms }) {
                   id="country"
                   name="country"
                   autoComplete="country-name"
-                  value={formData.biddingType}
-                  onChange={(e) => setFormData({ ...formData, biddingType: e.target.value })}
+                  value={biddingType}
+                  onChange={(e) => setBiddingType(e.target.value )}
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
                 >
                   <option value="">Direct Purchasing</option>
@@ -314,21 +328,15 @@ export default function ProjectCreationForm({ forms }) {
           </legend>
 
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button
-              className="flex items-center gap-3 h-10 bg-NeutralBlack"
-              size="sm"
-              onclick={handleAddRequestClick}
-            >
-              <AiFillPlusCircle strokeWidth={2} className="h-5 w-5" />
-             
-              <Link
-                to={`/ReqSelection/${projectId}`}
-                class="text-white"
-                style={{ textDecoration: "none" }}
-              >
-                 <h6 className="mt-2">Add Request</h6>
-              </Link>
-            </Button>
+          <button  onClick={handleAddRequestClick} class="button">
+                    <span className="c-main">
+                      <span className="c-ico">
+                        <span className="c-blur"></span>{" "}
+                        <span className="ico-text">+</span>
+                      </span>
+                      Add Requests
+                    </span>
+                  </button>
           </div>
 
           <div className="mt-6 space-y-6 sm:col-span-3">

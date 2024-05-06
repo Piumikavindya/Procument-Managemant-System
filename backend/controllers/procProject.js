@@ -42,25 +42,25 @@ function getNextProjectId(previousProjectId) {
 
 
 
+// Function to fetch data from the database based on request IDs
 async function fetchDataFromDatabase(requestIds) {
   try {
     // Fetch data from the database based on the provided request IDs
     const requestData = await procRequest.find({ requestId: { $in: requestIds } });
-
     return requestData;
   } catch (error) {
     // Handle any errors
     console.error('Error fetching data from database:', error);
     throw error;
   }
-
-
 }
 
+// Controller function to add request data to the Procurement Project
 exports.addRequestsData = async (req, res) => {
   try {
-    const {requestIds } = req.body;
+    const { requestIds } = req.body;
     const { projectId } = req.params;
+
     // Fetch data related to the selected request IDs from the database
     const requestData = await fetchDataFromDatabase(requestIds);
 
@@ -72,7 +72,7 @@ exports.addRequestsData = async (req, res) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    // Add fetched data to the Procurement Project's procurementRequests field
+    // Push the fetched data into the procurementRequests field of the project
     project.procurementRequests.push(...requestData);
 
     // Save the updated project to the database

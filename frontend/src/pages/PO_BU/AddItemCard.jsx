@@ -9,6 +9,7 @@ import { IconButton } from "@material-tailwind/react";
 import {} from "react-icons/md";
 import axios from "axios";
 
+
 export const AddReqCard = ({ handleViewRequest }) => {
 
   const [open, setOpen] = useState(true);
@@ -18,7 +19,10 @@ export const AddReqCard = ({ handleViewRequest }) => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedRequests, setSelectedRequests] = useState([]);
-  const [projectId, setProjectId] = useState("");
+  const {projectId} = useParams();
+
+
+  // const [projectId, setProjectId] = useState("");
  
   useEffect(() => {
     setLoading(true);
@@ -37,7 +41,7 @@ export const AddReqCard = ({ handleViewRequest }) => {
   const navigate = useNavigate();
 
   const handleCloseClick = () => {
-    setOpen(false);
+ 
     navigate("/ProjectCreationForm");
   };
 
@@ -64,29 +68,30 @@ export const AddReqCard = ({ handleViewRequest }) => {
 
   const handleAddRequestClick = async () => {
     try {
-      // Make a POST request to add the selected request IDs to the project
       const response = await axios.post(
         `http://localhost:8000/procProject/addRequestsData/${projectId}`,
-        { requestIds: selectedRequests }
+        {
+          requestIds: selectedRequests,
+          items: [] // Include an empty items array
+        }
       );
+
       const newRequestData = response.data.newRequest;
-      // Show success message using snackbar or any other notification method
-      console.log("Selected requests added successfully");
-      // Close the dialog
-      setOpen(false);
-      // Pass the selected requests to the ProjectCreationForm component
-      handleViewRequest(selectedRequests);
+      setRequests([]);
+      navigate("/ProjectCreationForm");
+      console.log("Selected requests added successfully",newRequestData);
+      // handleViewRequest();
     } catch (error) {
       console.error("Error adding requests:", error);
-      // Show error message using snackbar or any other notification method
     }
   };
+  
 
 
 
   return (
     <div>
-      <ProjectCreationForm />
+    
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
