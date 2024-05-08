@@ -25,6 +25,7 @@ export default function ProjectCreationForm({ forms }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [items, setItems] = useState({});
   const [projectId, setProjectId] = useState("");
+  const [selectedRequests, setSelectedRequests] = ("");
   const [formData, setFormData] = useState({
     projectId: "",
     procurementRequests: [],
@@ -42,7 +43,6 @@ export default function ProjectCreationForm({ forms }) {
   const [closingTime, setClosingTime] = useState("");
   const [appointTEC, setAppointTEC] = useState([]);
   const [appointBOCommite, setAppointBOCommite] = useState([]);
-
   const [projectCreated, setProjectCreated] = useState(false);
 
   useEffect(() => {
@@ -198,6 +198,7 @@ export default function ProjectCreationForm({ forms }) {
   return (
 
     <form onSubmit={handleFormSubmit}>
+       
       <div className="space-y-12 ml-40 mr-40 mt-40">
         <UserTypeNavbar userType="procurement Officer" />
 
@@ -345,7 +346,7 @@ export default function ProjectCreationForm({ forms }) {
       <thead className="text-xs text-white uppercase bg-NeutralBlack">
         <tr>
           <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
-            Index
+            No
           </th>
           <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
             Request ID
@@ -403,19 +404,16 @@ export default function ProjectCreationForm({ forms }) {
       </tbody>
     </table>
 
-              <div className="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
-                <div>
-                  <nav className="relative z-0 inline-flex shadow-sm"></nav>
-                </div>
-              </div>
-            </div>
-          </div>
-          {showAddRequestCard && (
+              
+              {showAddRequestCard && (
                   <AddReqCard
                   handleAddRequestClick={handleAddRequestClick}
                     handleViewRequest={handleViewRequest}
                   />
                 )}
+            </div>
+          </div>
+         
           </div>
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
