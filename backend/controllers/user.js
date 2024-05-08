@@ -9,6 +9,8 @@ const user = require('../Models/user');
 exports.create = async (req, res) => {
     const { username, firstname, lastname, email, password, role, department, employeeNumber } = req.body;
 
+
+    
     // Create a new instance of the User model
     const newUser = new User({ username, firstname, lastname, email, password, role, department, employeeNumber });
 
@@ -19,6 +21,7 @@ exports.create = async (req, res) => {
         await newUser.save();
 
         res.json({ user: newUser });
+    
     } catch (error) {
         console.error('Error saving user:', error);
         res.status(500).json({ error: 'Internal Server Error' });

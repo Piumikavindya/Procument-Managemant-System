@@ -9,14 +9,20 @@ import { IconButton } from "@material-tailwind/react";
 import {} from "react-icons/md";
 import axios from "axios";
 
-export const AddReqCard = ({ handleViewProcItems }) => {
+
+export const AddReqCard = ({ handleViewRequest }) => {
+
   const [open, setOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
+  const [showAddRequestCard, setShowAddRequestCard] = useState(false);
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedRequests, setSelectedRequests] = useState([]);
-  const [projectId, setProjectId] = useState("");
+  const {projectId} = useParams();
+
+
+  // const [projectId, setProjectId] = useState("");
  
   useEffect(() => {
     setLoading(true);
@@ -35,7 +41,7 @@ export const AddReqCard = ({ handleViewProcItems }) => {
   const navigate = useNavigate();
 
   const handleCloseClick = () => {
-    setOpen(false);
+ 
     navigate("/ProjectCreationForm");
   };
 
@@ -60,35 +66,32 @@ export const AddReqCard = ({ handleViewProcItems }) => {
     );
   };
 
-  const handleAddItemsClick = async () => {
+  const handleAddRequestClick = async () => {
     try {
-      // Make a POST request to add the selected request IDs to the project
+      const response = await axios.post(
+        `http://localhost:8000/procProject/addRequestsData/${projectId}`,
+        {
+          requestIds: selectedRequests,
+          items: [] // Include an empty items array
+        }
+      );
 
-        const response = await axios.get(
-          `http://localhost:8000/procProject/addRequestsData/${projectId}`,
-          {
-             projectId, // Send the projectId along with selected requestIds
-        requestIds: selectedRequests,
-          }
-        );
-      const newItemData = response.data.newItem;
-      // Show success message using snackbar or any other notification method
-      console.log("Selected requests added successfully");
-      // Close the dialog
-      setOpen(false);
-      // Navigate to desired location
+      const newRequestData = response.data.newRequest;
+      setRequests([]);
       navigate("/ProjectCreationForm");
+      console.log("Selected requests added successfully",newRequestData);
+      // handleViewRequest();
     } catch (error) {
       console.error("Error adding requests:", error);
-      // Show error message using snackbar or any other notification method
     }
   };
+  
 
 
 
   return (
     <div>
-      <ProjectCreationForm />
+    
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
@@ -243,7 +246,7 @@ export const AddReqCard = ({ handleViewProcItems }) => {
                     </button>
 
                     <button
-                      onClick={handleAddItemsClick}
+                      onClick={handleAddRequestClick}
                       type="submit"
                       className="rounded-md bg-blue-600 h-10 w-30  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >

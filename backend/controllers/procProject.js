@@ -12,7 +12,7 @@ exports.generateProjectId = async (req, res) => {
     // Generate a new project ID based on the latest project ID or start with 001 if no projects exist
     const newProjectId = latestProject
       ? getNextProjectId(latestProject.projectId)
-      : 'RUH/ENG/NCB/C/2024/001';
+      : 'RUH_ENG_NCB_C_2024_001';
 
     // Create a new instance of the model
     const newProjectInstance = new procProject({
@@ -37,30 +37,30 @@ function getNextProjectId(previousProjectId) {
   const lastPart = parseInt(parts.pop().split(/[^0-9]/).pop(), 10);
   const incrementedPart = (lastPart + 1).toString().padStart(3, '0');
   const yearPart = new Date().getFullYear();
-  return `RUH/ENG/NCB/C/${yearPart}/${incrementedPart}`;
+  return `RUH_ENG_NCB_C_${yearPart}_${incrementedPart}`;
 }
 
 
 
+// Function to fetch data from the database based on request IDs
 async function fetchDataFromDatabase(requestIds) {
   try {
     // Fetch data from the database based on the provided request IDs
     const requestData = await procRequest.find({ requestId: { $in: requestIds } });
-
     return requestData;
   } catch (error) {
     // Handle any errors
     console.error('Error fetching data from database:', error);
     throw error;
   }
-
-
 }
 
+// Controller function to add request data to the Procurement Project
 exports.addRequestsData = async (req, res) => {
   try {
-    const {requestIds } = req.body;
+    const { requestIds } = req.body;
     const { projectId } = req.params;
+
     // Fetch data related to the selected request IDs from the database
     const requestData = await fetchDataFromDatabase(requestIds);
 
@@ -72,7 +72,7 @@ exports.addRequestsData = async (req, res) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    // Add fetched data to the Procurement Project's procurementRequests field
+    // Push the fetched data into the procurementRequests field of the project
     project.procurementRequests.push(...requestData);
 
     // Save the updated project to the database
@@ -84,6 +84,33 @@ exports.addRequestsData = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+
+exports.viewAddedRequests = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+
+    // Find the Procurement Project by projectId
+    const project = await procProject.findOne({ projectId }).select('procurementRequests');
+
+    // If project not found, handle error
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    
+
+    res.status(200).json(project.procurementRequests);
+  } catch (error) {
+    console.error("Error fetching added requests:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+
+
 
 // Controller function to create a new Procurement Project
 exports.createProject = async (req, res) => {

@@ -43,7 +43,7 @@ const ReqForm = ({ forms }) => {
       setBalanceAvailable(formData.balanceAvailable);
       setPurpose(formData.purpose);
       setSendTo(formData.sendTo);
-      setItems(formData.items);
+      setItems(formData.items || {}); // Ensure items is initialized properly
       setFiles(formData.files);
     } else if (!requestId) {
       // Add this condition
@@ -131,6 +131,7 @@ const ReqForm = ({ forms }) => {
       console.error("Error uploading file:", error);
     }
   };
+  
   const handleViewProcItems = async () => {
     try {
       const response = await axios.get(

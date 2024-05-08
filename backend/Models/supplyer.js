@@ -7,7 +7,7 @@ const supplyerSchema = new Schema({
   username: {  // Add a unique username field
     type: String,
     unique: true, // Ensure uniqueness
-    required: true,
+    // required: true,
   },
  
   supplierId:{
@@ -16,7 +16,7 @@ const supplyerSchema = new Schema({
   }, 
   supplierName:{
     type: String,
-    required: true,
+    // required: true,
   }, 
   email: {
     type: [String,]
