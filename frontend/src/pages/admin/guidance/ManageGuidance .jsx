@@ -99,7 +99,7 @@ const ManageGuidance = () => {
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/adminhome/:id" },
-          { label: "Manage Guidance", link: "/ManageGiidance" },
+          { label: "Manage Guidance", link: "/ManageGuidance" },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />

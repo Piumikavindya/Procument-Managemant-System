@@ -53,10 +53,8 @@ const RequestList = () => {
       <UserTypeNavbar userType="department" />
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/Home/:id" },
+          { label: "Home", link: "/department/:departmentId/:userId" },
           { label: "Purchase Requisition List", link: "/ViewForRequest" },
-          { label: "Home", link: "/DepartmentHome" },
-          { label: "Pending Approval list", link: "/ViewForApproval" },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />
