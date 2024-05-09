@@ -27,7 +27,7 @@ function Home() {
                 ></img>
               </div>
               <div className="md:w-1/2 pt-8">
-                <h1 className=" text-1xl md:text-3xl lg:text-3xl font-semibold mb-1 text-NeutralDGrey md:w-3/4 leading-snug">
+                <h1 className=" text-1xl md:text-3xl lg:text-5xl font-semibold mb-16 text-NeutralDGrey md:w-3/4 leading-snug">
                   Guidelines{" "}
                   <span className="text-brandPrimary leading-snug">
                     on utilizing the system

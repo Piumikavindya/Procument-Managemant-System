@@ -56,7 +56,7 @@ function AdminHome() {
             ></img>
           </div>
           <div className="md:w-3/4">
-            <h1 className="text-1xl  md:text-3xl lg:text-5xl font-semibold  mb-16 text-NeutralDGrey md:w-3/4 leading-snug">
+            <h1 className="text-1xl  md:text-3xl lg:text-5xl font-semibold  mb-1 text-NeutralDGrey md:w-3/4 leading-snug">
               Take a moment to read the{" "}
               <span className="text-brandPrimary leading-snug">
                 procurement notices.
