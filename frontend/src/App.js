@@ -64,6 +64,7 @@ import ViewFormRequest from "./pages/department/ViewFormRequest.jsx";
 import ViewFormApproval from "./pages/approver/ViewFormApproval.jsx";
 import EventPlanner from "./pages/admin/eventPlanner/EventPlanner.jsx";
 import ContextWrapper from "./context/ContextWrapper.js";
+import ViewVendorDetails from "./pages/generalUsers/ViewVenderDetails.jsx";
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -113,6 +114,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/viewVendors" element={<ViewVendorDetails/>}/>
         <Route
           path="/loginpage"
           element={
