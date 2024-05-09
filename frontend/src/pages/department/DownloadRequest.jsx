@@ -26,9 +26,12 @@ const DownloadRequest = () => {
     const fetchPDF = async () => {
       try {
         // Fetching the generated PDF with requestId
-        const response = await axios.get(`http://localhost:8000/fetchPdf/${requestId}`, {
-          responseType: "blob",
-        });
+        const response = await axios.get(
+          `http://localhost:8000/fetchPdf/${requestId}`,
+          {
+            responseType: "blob",
+          }
+        );
         const pdfBlob = new Blob([response.data], { type: "application/pdf" });
         saveAs(pdfBlob, `Purchase_Requisition_${requestId}.pdf`);
 
@@ -45,8 +48,7 @@ const DownloadRequest = () => {
 
   return (
     <div>
-      <RequestList/>
-     
+      <RequestList />
     </div>
   );
 };

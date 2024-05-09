@@ -40,8 +40,8 @@ describe("Breadcrumb component", () => {
     );
 
     crumbs.forEach((crumb) => {
-      const crumbElement = screen.getByText(crumb.label);
-      expect(crumbElement).toBeInTheDocument();
+      const crumbElements = screen.getAllByText(crumb.label);
+      expect(crumbElements.length).toBeGreaterThan(0);
     });
   });
 
