@@ -7,7 +7,11 @@ const fileSchema = new Schema({
     filepath:{type: String,},
     
   });
-  
+  const specificationSchema = new Schema({
+    filename: {type: String,},
+    file: {type: String,},
+    filepath:{type: String,},
+});
   const itemSchema = new Schema({
     itemId: {
       type: String,
@@ -57,7 +61,7 @@ const procRequestSchema = new Schema({
  
   items: [itemSchema],  // Array of items within ProcurementRequest schema
   files: [fileSchema],  // Array of files within ProcurementRequest schema
-
+  specifications: [specificationSchema]
 });
 
 

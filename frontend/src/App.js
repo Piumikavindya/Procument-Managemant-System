@@ -58,9 +58,9 @@ import SendRequest from "./pages/department/SendRequest.jsx";
 import ProjectCreationForm from "./pages/PO_BU/ProjectCreationForm.jsx";
 import PO_BuHome from "./pages/PO_BU/PO_BuHome.jsx";
 import ApprovedRequestList from "./pages/PO_BU/ApprovedRequestList.jsx";
-import ViewApprovedForm  from "./pages/PO_BU/ViewApprovedForm.jsx";
+import {ViewApprovedForm}  from "./pages/PO_BU/ViewApprovedForm.jsx";
 import ViewFormRequest from "./pages/department/ViewFormRequest.jsx";
-import ViewFormApproval from "./pages/approver/ViewFormApproval.jsx";
+import {ViewFormApproval} from "./pages/approver/ViewFormApproval.jsx";
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook

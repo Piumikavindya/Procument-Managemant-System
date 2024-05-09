@@ -112,9 +112,9 @@ export default function EditUserDetails() {
         <Breadcrumb
           crumbs={[
             { label: "Home", link: "/adminhome/:id" },
-            { label: "User Details", link: "/AllItem" },
+            { label: "User Details", link: "/userList" },
 
-            { label: "Add User Details", link: "/additem" },
+            { label: "Edit User Details", link: "/editUsers/${user._id}" },
           ]}
           selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
         />

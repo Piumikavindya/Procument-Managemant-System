@@ -44,7 +44,7 @@ const UserTypeNavbar = ({ userType }) => {
     { link: "Manage Notices", path: "/ManageNotice" },
     { link: "Department", path: "" },
     { link: "Budget & Plan", path: "" },
-    { link: "Manage Year Plan", path: "/yearplanner" },
+    { link: "Manage Year Plan", path: "/EventPlanner" },
   ];
 
   const DepartmentOptions = [
