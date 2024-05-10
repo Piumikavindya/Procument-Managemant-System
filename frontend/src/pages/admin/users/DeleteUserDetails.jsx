@@ -36,7 +36,7 @@ const DeleteUserDetails = () => {
       .then(() => {
         setLoading(false);
         enqueueSnackbar('User deleted', { variant: 'success' });
-        navigate('/AllUsers');
+        navigate('/userList');
       })
       .catch((error) => {
         setLoading(false);

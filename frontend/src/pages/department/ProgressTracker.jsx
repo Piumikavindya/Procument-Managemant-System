@@ -85,16 +85,8 @@ function ProgressTracker() {
       <div>
         <UserTypeNavbar userType="department" />
 
-        <div className="flex flex-wrap -mx-3 mt-40">
-        <Breadcrumb
-          crumbs={[
-            { label: "Home", link: "/adminhome/:id" },
-            { label: "User Details", link: "/userList" },
-
-            { label: "Add User Details", link: "/addUsers" },
-          ]}
-          selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
-        />
+      
+        
           <div className="w-full max-w-full px-3  mb-6 mx-auto">
             <div className="relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem] bg-white m-5">
               <Breadcrumb
@@ -251,7 +243,7 @@ function ProgressTracker() {
               <DefaultPagination onPageChange={handlePageChange} />
             </div>
           </div>
-        </div>
+      
       </div>
     </div>
   );

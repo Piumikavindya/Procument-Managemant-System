@@ -1,12 +1,13 @@
 import { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { Button } from "flowbite-react";
 import VendorDetails from "./VendorDetails";
+
+
 
 export default function PreviewVendorDetails() {
   const [open, setOpen] = useState(true);
