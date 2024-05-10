@@ -50,7 +50,7 @@ const ApprovedRequestList = () => {
       <UserTypeNavbar userType="procurement Officer" />
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/ApproverHome/:id" },
+          { label: "Home", link: "/PO_BuHome/:id" },
           { label: "Approved Requests", link: "/ApprovedRequestList" },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
