@@ -15,8 +15,8 @@ try {
     console.log('New Supplyer:', newSupplyer);
     await newSupplyer.save();
     
-    res.json({ supplyer: newSupplyer });
-    console.error(' save to the database')
+    res.json({ supplyer: newSupplyer.toObject() });
+    console.log(' save to the database')
 } catch (error) {
     console.error('Error saving user:', error);
     res.status(500).json({ error: 'Internal Server Error' });
