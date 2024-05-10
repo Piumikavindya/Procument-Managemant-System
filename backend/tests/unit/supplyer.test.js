@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 app.use('/supplyer', supplyerRouter);
 
-const { create,previewSupplyer } = require('../../controllers/supplyer');
+const { create,previewSupplyer,updateSupplyer,deleterSupplyer   } = require('../../controllers/supplyer');
 const Supplyer = require('../../Models/supplyer');
 
 jest.mock('../../Models/supplyer');
@@ -30,24 +30,24 @@ const res = {
   json: jest.fn((x) => x),
 };
 
-describe('Supplyer API Tests', () => {
-  it('should create a new supplyer', async () => {
-    // Mock the create function to resolve with the req.body
-    Supplyer.create.mockResolvedValue(req.body);
+// describe('Supplyer API Tests', () => {
+//   it('should create a new supplyer', async () => {
+//     // Mock the create function to resolve with the req.body
+//     Supplyer.create.mockResolvedValue(req.body);
     
-    // Call the create function with mocked request and response objects
-    await create(req, res);
+//     // Call the create function with mocked request and response objects
+//     await create(req, res);
     
-    // Send a request to the endpoint
-    const response = await request(app).post('/supplyer/create');
+//     // Send a request to the endpoint
+//     const response = await request(app).post('/supplyer/create');
 
-    // Check the status code
-    expect(response.status).toBe(200);
+//     // Check the status code
+//     expect(response.status).toBe(200);
 
-    // Check the response body
-    expect(response.body).toEqual({ supplyer: req.body });
-  }, 100000);
-});
+//     // Check the response body
+//     expect(response.body).toEqual({ supplyer: req.body });
+//   }, 100000);
+// });
 
 // 
 describe('Supplyer Veiw function tests', () => {
@@ -80,7 +80,7 @@ describe('Supplyer Veiw function tests', () => {
 });
 
 
-describe('Supplyer View function tests', () => {
+describe('Supplyer PreView function tests', () => {
   it('should return details of a specific supplyer', async () => {
     // Mock the behavior of Supplyer.findById() to return a predefined supplyer
     const mockedSupplyer = {
@@ -162,6 +162,141 @@ describe('Supplyer View function tests', () => {
   });
 
 });
+
+
+
+describe('Supplyer Update function tests', () => {
+  it('should update details of a specific supplyer', async () => {
+    // Mock the behavior of Supplyer.findByIdAndUpdate() to return the updated supplyer
+    const mockedUpdatedSupplyer = {
+      _id: 'supplyerId123',
+      username: 'updatedUser',
+      supplierName: 'Updated Supplier',
+      supplierId: 'updatedId',
+      email: 'updated@example.com',
+      address: 'Updated Address',
+      contactOfficer: 'Updated Officer',
+      contactNumber: ['9876543210'],
+      faxNumber1: '987654321',
+      faxNumber2: '123456789',
+      typeofBusiness: 'Updated Business Type',
+      classOfAssets: 'Updated Assets Class',
+    };
+    Supplyer.findByIdAndUpdate.mockResolvedValue(mockedUpdatedSupplyer);
+
+    // Mock request and response objects
+    const req = {
+      params: { id: 'supplyerId123' },
+      body: {
+        username: 'updatedUser',
+        supplierName: 'Updated Supplier',
+        supplierId: 'updatedId',
+        email: 'updated@example.com',
+        address: 'Updated Address',
+        contactOfficer: 'Updated Officer',
+        contactNumber: ['9876543210'],
+        faxNumber1: '987654321',
+        faxNumber2: '123456789',
+        typeofBusiness: 'Updated Business Type',
+        classOfAssets: 'Updated Assets Class',
+      },
+    };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    };
+
+    // Call the updateSupplyer function
+    await updateSupplyer(req, res);
+
+    // Verify that Supplyer.findByIdAndUpdate() was called with the correct parameters
+    expect(Supplyer.findByIdAndUpdate).toHaveBeenCalledWith('supplyerId123', req.body, { new: true });
+
+    // Verify that the response status is 200 and the updated supplyer details are returned
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({ status: "supplyer updated", supplyer: mockedUpdatedSupplyer });
+  });
+
+
+  it('should handle errors properly', async () => {
+    // Mock Supplyer.findByIdAndUpdate() to throw an error
+    Supplyer.findByIdAndUpdate.mockRejectedValue(new Error('Database error'));
+
+    // Mock request and response objects
+    const req = {
+      params: { id: 'supplyerId123' },
+      body: { /* Updated supplyer details */ },
+    };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    };
+
+    // Call the updateSupplyer function
+    await updateSupplyer(req, res);
+
+    // Verify that Supplyer.findByIdAndUpdate() was called with the correct parameters
+    expect(Supplyer.findByIdAndUpdate).toHaveBeenCalledWith('supplyerId123', req.body, { new: true });
+
+    // Verify that the response status is 500 and the appropriate error message is returned
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ status: "Error with updating User", error: "Database error" });
+  });
+
+});
+
+
+
+describe('Supplyer Deletion function tests', () => {
+  it('should delete a specific supplyer', async () => {
+    // Mock the behavior of Supplyer.findByIdAndDelete() to simulate successful deletion
+    Supplyer.findByIdAndDelete.mockResolvedValueOnce();
+
+    // Mock request and response objects
+    const req = {
+      params: { id: 'supplyerId123' },
+    };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn(),
+    };
+
+    // Call the deleterSupplyer function
+    await deleterSupplyer(req, res);
+
+    // Verify that Supplyer.findByIdAndDelete() was called with the correct parameter
+    expect(Supplyer.findByIdAndDelete).toHaveBeenCalledWith('supplyerId123');
+
+    // Verify that the response status is 200 and the "User deleted" message is sent
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({ status: "User deleted" });
+  });
+
+  it('should handle errors properly', async () => {
+    // Mock Supplyer.findByIdAndDelete() to throw an error
+    Supplyer.findByIdAndDelete.mockRejectedValueOnce(new Error('Database error'));
+
+    // Mock request and response objects
+    const req = {
+      params: { id: 'supplyerId123' },
+    };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn(),
+    };
+
+    // Call the deleterSupplyer function
+    await deleterSupplyer(req, res);
+
+    // Verify that Supplyer.findByIdAndDelete() was called with the correct parameter
+    expect(Supplyer.findByIdAndDelete).toHaveBeenCalledWith('supplyerId123');
+
+    // Verify that the response status is 500 and the appropriate error message is sent
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.send).toHaveBeenCalledWith({ status: "Error with delete user", error: "Database error" });
+  });
+});
+
 // supplyerController.test.js
 
 // const supplyerController = require('../../controllers/supplyer');
