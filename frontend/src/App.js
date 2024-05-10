@@ -6,9 +6,6 @@ import reportWebVitals from "./reportWebVitals";
 import AdminHome from "./pages/admin/AdminHome.jsx";
 import DeleteUsers from "./pages/admin/users/Delete.jsx";
 import PreviewUser from "./pages/admin/users/PreviewUser.jsx";
-import DeleteVendor from "./pages/admin/vendors/DeleteVendors.jsx";
-import PreviewVendor from "./pages/admin/vendors/PreviewVendors.jsx";
-import UpdateVendor from "./pages/admin/vendors/UpdateVendors.jsx";
 import CommonFooter from "./components/CommonFooter.jsx";
 import Navbar from "./components/Navbar.jsx";
 import YearPlanner from "./pages/admin/yearPlanner/YearPlanner.jsx";
@@ -49,7 +46,6 @@ import DenyRequest from "./pages/approver/DenyRequest.jsx";
 import EditApproval from "./pages/approver/UpdateApproval.jsx";
 import ApproverHome from "./pages/approver/ApproverHome.jsx";
 import DeleteProcItem from "./pages/department/DeleteProcItem.jsx";
-import ProcurementOfficerHome from "./pages/procurementOfficer/ProcurementOfficerHome.jsx";
 import SubmitReqForm from "./pages/department/SubmitReqForm.jsx";
 import SendApproval from "./pages/approver/SendApproval.jsx";
 import RequestList from "./pages/department/RequestList.jsx";
@@ -151,17 +147,11 @@ const App = () => {
         />
 
         <Route path="/allvendors" element={<VendorDetails />} />
-        <Route path="/addvendors" element={<AddSupplier />} />
-        <Route path="/deletevendor/:id" element={<DeleteVendor />} />
-        <Route path="/previewvendor/:id" element={<PreviewVendor />} />
-        <Route path="/updatevendor/:id" element={<UpdateVendor />} />
         <Route
           path="/previewVendorDetails/:id"
           element={<PreviewVendorDetails />}
         />
-
         <Route path="/addSupplier" element={<AddSupplier />} />
-        <Route path="/vendorsDetails" element={<VendorDetails />} />
         <Route path="/updateSupplier/:id" element={<UpdateSupplier />} />
         <Route path="/deleteSupplier/:id" element={<DeleteSupplier />} />
 
