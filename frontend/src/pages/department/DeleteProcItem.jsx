@@ -18,8 +18,7 @@ const DeleteProcItem = () => {
   const { requestId } = useParams();
   const { itemId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-  // const [requestId, setRequestId] = useState('');
-  // const [itemId, setItemId] = useState('');
+ 
 
   useEffect(() => {
     handleDeleteItem();

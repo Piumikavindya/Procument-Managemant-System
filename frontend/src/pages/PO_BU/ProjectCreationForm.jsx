@@ -205,7 +205,7 @@ export default function ProjectCreationForm({ forms }) {
         <Breadcrumb
           crumbs={[
             { label: "Home", link: "/PO_BuHome/:id" },
-            { label: "Procurement Project List", link: "/CreatedProjects" },
+            { label: "Procurement Project List", link: "/projectList" },
 
             { label: "Project Form Creation", link: "/addUsers" },
           ]}
@@ -273,26 +273,7 @@ export default function ProjectCreationForm({ forms }) {
                 <input type="time" className="rounded"></input>
               </div>
 
-              {/* <div className="mt-6 space-y-6">
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center"></div>
-                  <div className="text-sm leading-6">
-                    <h6>1. Requisition from Department MME</h6>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center"></div>
-                  <div className="text-sm leading-6">
-                    <h6>2. Requisition from Department EIE</h6>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center"></div>
-                  <div className="text-sm leading-6">
-                    <h6>3. Requisition from Department COM</h6>
-                  </div>
-                </div>
-              </div> */}
+             
             </div>
 
             <div className="sm:col-span-3">
