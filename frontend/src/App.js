@@ -202,12 +202,12 @@ const App = () => {
         <Route path="/additem/:requestId" element={<AddItemCard />} />
 
         <Route path="/AddItems" element={<AddItems />} />
-        <Route path="/updateItems" element={<UpdateItems />} />
+        <Route path="/updateItems/:id" element={<UpdateItems />} />
         <Route path="/formview/:requestId" element={<FormView />} />
         <Route path="/additem/:requestId" element={<AddItemCard />} />
 
         <Route path="/AddItems" element={<AddItems />} />
-        <Route path="/updateItems" element={<UpdateItems />} />
+        <Route path="/updateItems/:id" element={<UpdateItems />} />
         <Route
           path="/previewItemDetails/:id"
           element={<PreviewItemDetails />}

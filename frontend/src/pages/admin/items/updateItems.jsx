@@ -119,12 +119,8 @@ export default function UpdateItems() {
          
        
               >
-                <option value=''>Update your role</option>
-                {AssetsClass.map((type, index) => (
-                  <option key={index} value={type}>
-                    {type}
-                  </option>
-                ))}
+               
+                
               </select>
               </div>
             </div>

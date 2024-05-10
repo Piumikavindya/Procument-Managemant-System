@@ -97,7 +97,7 @@ const ItemTable = ({ items }) => {
                     <Link to={`/PreveiwItem/:id`}>
                       <MdPreview className="text-2xl text-green-600" />
                     </Link>
-                    <Link to={`/`}>
+                    <Link to={`/updateItems/:id`}>
                       <AiOutlineEdit className="text-2xl text-blue-800 " />
                     </Link>
                     <Link to={`/DeleteItem/:id`}>
