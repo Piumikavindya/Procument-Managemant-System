@@ -92,13 +92,13 @@ exports.updateUser = async (req,res)=>{
 //delete user
 exports.deleterUser = async (req,res)=>{
     let userId = req.params.id;
-
-    await user.findByIdAndDelete(userId).then(()=>{
-        res.status(200).send({status:"User deleted"}).catch((err)=>{
-            res.status(500).send({status: "Error with delete user"})
-        })
-    });
-};
+    try {
+    await user.findByIdAndDelete(userId);
+        res.status(200).send({status:"User deleted"});
+    } catch (err) {
+            res.status(500).send({status: "Error with delete user", error: err.message });
+        }
+    };
 
 
 // change the password of particular user
