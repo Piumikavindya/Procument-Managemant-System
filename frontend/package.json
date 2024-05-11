@@ -25,7 +25,7 @@
     "html-pdf": "^3.0.1",
     "https-browserify": "^1.0.0",
     "notistack": "^3.0.1",
-    "pdfjs-dist": "^4.1.392",
+    "pdfjs-dist": "^2.16.105",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icon": "^1.0.0",

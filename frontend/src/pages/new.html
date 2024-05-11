@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Table Example with Tailwind CSS</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mx-auto px-4 py-8">
+
+  <table class="table-auto border-collapse border border-gray-400">
+    <thead>
+      <tr>
+        <th class="px-2 py-2 bg-gray-200 border border-gray-400">Column 1</th>
+        <th class="px-60 py-2 bg-gray-200 border border-gray-400">Column 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="px-4 py-2 border border-gray-400"></td>
+        <td class="px-4 py-2 border border-gray-400">
+            <div class="flex items-center">
+                <label for="date" class="text-sm" style="width: 80px; margin-right: 20px;">Faculty/Admin:</label> <!-- Increased margin-right -->
+                <input type="text" class="px-3 py-1 border border-gray-300" style="width: calc(50% - 100px); height: 30px; margin-right: 20px;" placeholder="Input 1"> <!-- Adjusted width and height using inline style -->
+                <label for="date" class="text-sm" style="width: 80px; margin-right: 20px;">Department:</label> <!-- Increased margin-right -->
+                <input type="text" class="px-3 py-1 border border-gray-300" style="width: calc(50% - 100px); height: 30px;" placeholder="Input 2"> <!-- Adjusted width and height using inline style -->
+            </div>
+        
+                <div class="flex">
+                    <div style="flex: 1;">
+                        <label class="text-sm" style="margin-right: 20px;">Budget Allocation Rs.:</label>
+                        <input type="text" class="px-3 py-1 border border-gray-300" style="width: calc(25% - 100px); height: 30px; margin-right: 20px;">
+                        <label class="text-sm" style="margin-right: 20px;">Used Amount So far Rs.:</label>
+                        <input type="text" class="px-3 py-1 border border-gray-300" style="width: calc(25% - 100px); height: 30px; margin-right: 20px;">
+                        <label class="text-sm" style="margin-right: 20px;">Balance Available Rs:</label>
+                        <input type="text" class="px-3 py-1 border border-gray-300" style="width: calc(25% - 100px); height: 30px;">
+                    </div>
+                    <div style="flex: 1;">
+                        <label class="text-sm" style="margin-right: 20px;">If No should get the Vice Chancellor's Approval:</label>
+                        <label class="text-sm" style="margin-right: 20px;">Approved:</label>
+                        <input type="text" class="px-3 py-1 border border-gray-300" style="width: calc(25% - 100px); height: 30px; margin-right: 20px;">
+                        <label class="text-sm" style="margin-right: 20px;">Vice Chancellor:</label>
+                        <input type="text" class="px-3 py-1 border border-gray-300" style="width: calc(25% - 100px); height: 30px;">
+                    </div>
+                </div>
+            
+        </td>
+        
+        
+      </tr>
+      <tr>
+        <td class="px-4 py-2 border border-gray-400">Row 2, Cell 1</td>
+        <td class="px-4 py-2 border border-gray-400">Row 2, Cell 2</td>
+      </tr>
+      <tr>
+        <td class="px-4 py-2 border border-gray-400">Row 3, Cell 1</td>
+        <td class="px-4 py-2 border border-gray-400">Row 3, Cell 2</td>
+      </tr>
+      <tr>
+        <td class="px-4 py-2 border border-gray-400">Row 4, Cell 1</td>
+        <td class="px-4 py-2 border border-gray-400">Row 4, Cell 2</td>
+      </tr>
+      <tr>
+        <td class="px-4 py-2 border border-gray-400">Row 5, Cell 1</td>
+        <td class="px-4 py-2 border border-gray-400">Row 5, Cell 2</td>
+      </tr>
+      <tr>
+        <td class="px-4 py-2 border border-gray-400">Row 6, Cell 1</td>
+        <td class="px-4 py-2 border border-gray-400">Row 6, Cell 2</td>
+      </tr>
+      <tr>
+        <td class="px-4 py-2 border border-gray-400">Row 7, Cell 1</td>
+        <td class="px-4 py-2 border border-gray-400">Row 7, Cell 2</td>
+      </tr>
+      <tr>
+        <td class="px-4 py-2 border border-gray-400">Row 8, Cell 1</td>
+        <td class="px-4 py-2 border border-gray-400">Row 8, Cell 2</td>
+      </tr>
+      <tr>
+        <td class="px-4 py-2 border border-gray-400">Row 9, Cell 1</td>
+        <td class="px-4 py-2 border border-gray-400">Row 9, Cell 2</td>
+      </tr>
+      <tr>
+        <td class="px-4 py-2 border border-gray-400">Row 10, Cell 1</td>
+        <td class="px-4 py-2 border border-gray-400">Row 10, Cell 2</td>
+      </tr>
+      <tr>
+        <td class="px-4 py-2 border border-gray-400">Row 11, Cell 1</td>
+        <td class="px-4 py-2 border border-gray-400">Row 11, Cell 2</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+</body>
+</html>

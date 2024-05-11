@@ -6,7 +6,7 @@ const path = require("path");
 
 exports.upload = async (req, res) => {
   try {
-    const { username,name} = req.body;
+    const { name} = req.body;
 
     // Check if req.file is defined
     if (!req.file) {
@@ -35,7 +35,7 @@ exports.upload = async (req, res) => {
     console.log("Actual File Name:", name);
 
     // Rest of your code for creating and saving the guidance
-    const newGuidance = new Guidance({ username, name: name ? name : actualName, file });
+    const newGuidance = new Guidance({ name: name ? name : actualName, file });
 
     // Log the new guidance object to ensure it's correct
     console.log("New guidance:", newGuidance);
@@ -133,16 +133,15 @@ exports.downloadGuidance = async (req, res) => {
 // };
 
 // delete guidance
-exports.deleterGuidance = async (req, res) => {
+exports.deleteGuidance = async (req, res) => {
   let guidanceId = req.params.id;
   try {
-    // Use await here to wait for the deletion to complete
-    await Guidance.findByIdAndDelete(guidanceId);
-    res.status(200).send({ status: "guidance deleted" });
+    const deletedGuidance = await Guidance.findByIdAndDelete(guidanceId);
+    if (!deletedGuidance) {
+      return res.status(404).send({ status: 'Guidance not found' });
+    }
+    res.status(200).send({ status: 'Guidance deleted' });
   } catch (err) {
-    // Use status 500 for server errors
-    res
-      .status(500)
-      .send({ status: "Error with delete guidance", error: err.message });
+    res.status(500).send({ status: 'Error with delete guidance', error: err.message });
   }
 };
