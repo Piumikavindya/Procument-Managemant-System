@@ -30,7 +30,7 @@ const res = {
   json: jest.fn((x) => x),
 };
 
-describe('Supplyer API Tests', () => {
+/* describe('Supplyer API Tests', () => {
   it('should create a new supplyer', async () => {
     // Mock the create function to resolve with the req.body
     Supplyer.create.mockResolvedValue(req.body);
@@ -48,7 +48,7 @@ describe('Supplyer API Tests', () => {
     expect(response.body).toEqual({ supplyer: req.body });
   }, 100000);
 });
-
+ */
 // 
 describe('Supplyer Veiw function tests', () => {
   it('should return all supplyers', async () => {

@@ -9,6 +9,8 @@ const user = require('../Models/user');
 exports.create = async (req, res) => {
     const { username, firstname, lastname, email, password, role, department, employeeNumber } = req.body;
 
+
+    
     // Create a new instance of the User model
     const newUser = new User({ username, firstname, lastname, email, password, role, department, employeeNumber });
 
@@ -19,6 +21,7 @@ exports.create = async (req, res) => {
         await newUser.save();
 
         res.json({ user: newUser });
+    
     } catch (error) {
         console.error('Error saving user:', error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -89,13 +92,13 @@ exports.updateUser = async (req,res)=>{
 //delete user
 exports.deleterUser = async (req,res)=>{
     let userId = req.params.id;
-
-    await user.findByIdAndDelete(userId).then(()=>{
-        res.status(200).send({status:"User deleted"}).catch((err)=>{
-            res.status(500).send({status: "Error with delete user"})
-        })
-    });
-};
+    try {
+    await user.findByIdAndDelete(userId);
+        res.status(200).send({status:"User deleted"});
+    } catch (err) {
+            res.status(500).send({status: "Error with delete user", error: err.message });
+        }
+    };
 
 
 // change the password of particular user
