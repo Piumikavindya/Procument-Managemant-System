@@ -72,7 +72,7 @@ export default function AddItems() {
               <select
                   id="assets"
                   name="assets"
-                  value={assets}
+                  value={AssetsClass}
               onChange={(e) => setAssetsClass(e.target.value)}
                   autoComplete="country-name"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
