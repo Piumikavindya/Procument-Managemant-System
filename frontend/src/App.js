@@ -4,8 +4,6 @@ import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import reportWebVitals from "./reportWebVitals";
 import AdminHome from "./pages/admin/AdminHome.jsx";
-import DeleteUsers from "./pages/admin/users/Delete.jsx";
-import PreviewUser from "./pages/admin/users/PreviewUser.jsx";
 import CommonFooter from "./components/CommonFooter.jsx";
 import Navbar from "./components/Navbar.jsx";
 import YearPlanner from "./pages/admin/yearPlanner/YearPlanner.jsx";
@@ -31,7 +29,6 @@ import VendorDetails from "./pages/admin/vendors/VendorDetails.jsx";
 import ItemDetails from "./pages/admin/items/ItemDetails.jsx";
 import EditUserDetails from "./pages/admin/users/EditUserDetails.jsx";
 import DeleteUserDetails from "./pages/admin/users/DeleteUserDetails.jsx";
-import ViewUserDetails from "./pages/admin/users/ViewUserDetails.jsx";
 import UpdateSupplier from "./pages/admin/vendors/UpdateSupplier.jsx";
 import DeleteSupplier from "./pages/admin/vendors/DeleteSupplier.jsx";
 import UpdateItems from "./pages/admin/items/updateItems.jsx";
@@ -61,6 +58,7 @@ import ViewFormApproval from "./pages/approver/ViewFormApproval.jsx";
 import EventPlanner from "./pages/admin/eventPlanner/EventPlanner.jsx";
 import ContextWrapper from "./context/ContextWrapper.js";
 import ViewVendorDetails from "./pages/generalUsers/ViewVenderDetails.jsx";
+import ProjectList from "./pages/PO_BU/ProjectList.jsx";
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -134,13 +132,12 @@ const App = () => {
           }
         />
 
-        <Route path="/deleteusers/:id" element={<DeleteUsers />} />
-        <Route path="/previewuser/:id" element={<PreviewUser />} />
+  
         <Route path="/addUsers" element={<AddUsers />} />
         <Route path="/editUsers/:id" element={<EditUserDetails />} />
         <Route path="/userList" element={<UserList />} />
         <Route path="/deleteUserDetails/:id" element={<DeleteUserDetails />} />
-        <Route path="/viewUserDetails/:id" element={<ViewUserDetails />} />
+       
         <Route
           path="/previewUserDetails/:id"
           element={<PreviewUserDetails />}
@@ -155,7 +152,7 @@ const App = () => {
         <Route path="/updateSupplier/:id" element={<UpdateSupplier />} />
         <Route path="/deleteSupplier/:id" element={<DeleteSupplier />} />
 
-        <Route path="/yearplanner" element={<YearPlanner />} />
+        
 
         <Route path="/reqform" element={<ReqForm />} />
         <Route
@@ -238,7 +235,7 @@ const App = () => {
         <Route path="/ViewApprovedForm/:requestId" element={<ViewApprovedForm />} />
         <Route path="/ViewFormRequest/:requestId" element={<ViewFormRequest />} />
         <Route path="/ViewForApproval/:requestId" element={<ViewFormApproval />} />
-
+        <Route path="/projectList" element={<ProjectList/>}/>
           
           <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
         

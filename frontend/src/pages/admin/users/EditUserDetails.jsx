@@ -90,7 +90,7 @@ export default function EditUserDetails() {
         setEmpNo('');
         setLoading(false);
         enqueueSnackbar('User account is updated successfully', { variant: 'success' });
-        navigate('/AllUsers');
+        navigate('/userList');
       })
       .catch((error) => {
         setLoading(false);
@@ -120,7 +120,7 @@ export default function EditUserDetails() {
         />
 
         <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-gray-900">USER REGISTRATION</h2>
+          <h2 className="text-gray-900">EDIT USER DETAILS</h2>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">

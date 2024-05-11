@@ -15,11 +15,10 @@ describe('DownloadRequest component', () => {
     render(
       <MemoryRouter>
         <Routes>
+          <Route path="/" element={<div>Home</div>} />
           <Route path="/downloadRequest" element={<DownloadRequest />} />
         </Routes>
       </MemoryRouter>
     );
   });
-
- 
 });
