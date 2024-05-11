@@ -1,5 +1,5 @@
-const catchAsyncErrors = require("../../../middlewares/catchAsyncErrors");
-const procReqest = require("../../../Models/procReqest");
+const catchAsyncErrors = require("../../middlewares/catchAsyncErrors.js");
+const procReqest = require("../../Models/procReqest.js");
 
 describe("Update Request Controller", () => {
   let req, res, next;
@@ -34,7 +34,7 @@ describe("Update Request Controller", () => {
       .fn()
       .mockResolvedValue(updatedRequest);
 
-    await require("../../../controllers/approvalReqest")(req, res, next);
+    await require("../../controllers/approvalReqest.js")(req, res, next);
 
     expect(procReqest.findByIdAndUpdate).toHaveBeenCalledWith(
       req.params.id,
@@ -51,7 +51,7 @@ describe("Update Request Controller", () => {
   });
 
  
-  const { errorMiddleware } = require("../../../middlewares/errornew.js");
+  const { errorMiddleware } = require("../../middlewares/errornew.js");
 
   it("should return 404 if the request is not found", async () => {
     procReqest.findByIdAndUpdate = jest.fn().mockResolvedValue(null);
@@ -76,7 +76,7 @@ describe("Update Request Controller", () => {
     const error = new Error("Database error");
     procReqest.findByIdAndUpdate = jest.fn().mockRejectedValue(error);
 
-    await require("../../../controllers/approvalReqest")(req, res, next);
+    await require("../../controllers/approvalReqest.js")(req, res, next);
 
     expect(procReqest.findByIdAndUpdate).toHaveBeenCalledWith(
       req.params.id,

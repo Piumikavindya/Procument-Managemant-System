@@ -2,18 +2,18 @@
 
 const request = require("supertest");
 const express = require("express");
-const itemRouter = require("../../../routes/Item");
+const itemRouter = require("../../routes/Item");
 const app = express();
 app.use(express.json());
 app.use("/item", itemRouter);
-const Item = require("../../../Models/item");
+const Item = require("../../Models/item");
 
 const {
   create,
   updateItem,
   deleteItem,
   previewItem,
-} = require("../../../controllers/Item");
+} = require("../../controllers/Item");
 jest.mock("../../../Models/item");
 
 // test case for create item controller

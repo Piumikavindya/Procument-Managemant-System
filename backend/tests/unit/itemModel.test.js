@@ -1,7 +1,7 @@
 // test for item model
 
 const mongoose = require("mongoose");
-const Item = require("../../../Models/item");
+const Item = require("../../Models/item");
 
 describe("Item Model", () => {
   // Connect to MongoDB before running tests

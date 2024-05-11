@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Notice = require("../../../Models/noticeDoc");
+const Notice = require("../../Models/noticeDoc");
 const path = require("path");
 const fs = require("fs");
 
@@ -34,7 +34,7 @@ describe("uploadnotice", () => {
   });
  */
   it("should handle file upload error", async () => {
-    const uploadnotice = require("../../../controllers/noticeDoc").uploadnotice;
+    const uploadnotice = require("../../controllers/noticeDoc").uploadnotice;
     req.file = undefined;
     await uploadnotice(req, res);
     expect(res.status).toHaveBeenCalledWith(400);
@@ -44,7 +44,7 @@ describe("uploadnotice", () => {
 
 describe("viewNotice", () => {
   it("should fetch all notices", async () => {
-    const viewNotice = require("../../../controllers/noticeDoc").viewNotice;
+    const viewNotice = require("../../controllers/noticeDoc").viewNotice;
     const mockNotices = [{ name: "Notice 1" }, { name: "Notice 2" }];
     jest.spyOn(Notice, "find").mockResolvedValueOnce(mockNotices);
     const res = {
@@ -55,7 +55,7 @@ describe("viewNotice", () => {
   });
 
   it("should handle error when fetching notices", async () => {
-    const viewNotice = require("../../../controllers/noticeDoc").viewNotice;
+    const viewNotice = require("../../controllers/noticeDoc").viewNotice;
     jest
       .spyOn(Notice, "find")
       .mockRejectedValueOnce(new Error("Database error"));
@@ -72,7 +72,7 @@ describe("viewNotice", () => {
 describe("downloadNotice", () => {
   it("should download a notice", async () => {
     const downloadNotice =
-      require("../../../controllers/noticeDoc").downloadNotice;
+      require("../../controllers/noticeDoc").downloadNotice;
     const mockNotice = { file: "test-file.pdf" };
     jest.spyOn(Notice, "findById").mockResolvedValueOnce(mockNotice);
     const res = {
@@ -88,7 +88,7 @@ describe("downloadNotice", () => {
 
   it("should handle notice not found", async () => {
     const downloadNotice =
-      require("../../../controllers/noticeDoc").downloadNotice;
+      require("../../controllers/noticeDoc").downloadNotice;
     jest.spyOn(Notice, "findById").mockResolvedValueOnce(null);
     const res = {
       status: jest.fn().mockReturnThis(),
@@ -103,7 +103,7 @@ describe("downloadNotice", () => {
 describe("deleterNotice", () => {
   it("should delete a notice", async () => {
     const deleterNotice =
-      require("../../../controllers/noticeDoc").deleterNotice;
+      require("../../controllers/noticeDoc").deleterNotice;
     const mockDelete = jest.fn();
     jest.spyOn(Notice, "findByIdAndDelete").mockResolvedValueOnce(mockDelete);
     const res = {
@@ -117,7 +117,7 @@ describe("deleterNotice", () => {
 
   it("should handle error while deleting a notice", async () => {
     const deleterNotice =
-      require("../../../controllers/noticeDoc").deleterNotice;
+      require("../../controllers/noticeDoc").deleterNotice;
     jest
       .spyOn(Notice, "findByIdAndDelete")
       .mockRejectedValueOnce(new Error("Database error"));

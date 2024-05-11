@@ -1,11 +1,11 @@
 // guidanceController.test.js
 const request = require('supertest');
 const express = require('express');
-const guidanceRouter = require('../../../routes/guidanceDoc');
+const guidanceRouter = require('../../routes/guidanceDoc');
 const app = express();
 app.use(express.json());
 app.use('/guidance', guidanceRouter);
-const Guidance = require('../../../Models/guidanceDoc');
+const Guidance = require('../../Models/guidanceDoc');
 const path = require('path');
 
 const {
@@ -13,7 +13,7 @@ const {
   viewGuidance,
   downloadGuidance,
   deleteGuidance,
-} = require('../../../controllers/guidanceDoc');
+} = require('../../controllers/guidanceDoc');
 
 jest.mock('../../../Models/guidanceDoc');
 

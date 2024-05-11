@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const  noticedocSchema  = require('../../../Models/noticeDoc');
+const  noticedocSchema  = require('../../Models/noticeDoc');
 
 describe('noticedocSchema', () => {
   beforeAll(async () => {
