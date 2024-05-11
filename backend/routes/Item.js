@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { create,updateItem, viewItem,deleterItem, previewItem } = require('../controllers/Item');
+const { create,updateItem, viewItem,deleteItem, previewItem } = require('../controllers/Item');
 
 
 // Add item create route
@@ -10,5 +10,5 @@ router.post("/create", create, (req, res) => {
   router.get('/view-item', viewItem);
   router.get("/preview-item/:id",   previewItem)
   router.put("/update/:id", updateItem);
-  router.delete("/delete/:id", deleterItem);
+  router.delete("/delete/:id", deleteItem);
   module.exports = router;

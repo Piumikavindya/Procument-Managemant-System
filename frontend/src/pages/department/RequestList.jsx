@@ -50,11 +50,13 @@ const RequestList = () => {
   return (
     <div className="p-4">
       <UserTypeNavbar userType="department" />
-      <UserTypeNavbar userType="department" />
+     
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/department/:departmentId/:userId" },
+          { label: "Home", link: "/Home/:id" },
+          { label: "Purchase Requisition", link: "/reqForm" },
           { label: "Purchase Requisition List", link: "/ViewForRequest" },
+         
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />
