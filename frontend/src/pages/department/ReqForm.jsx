@@ -44,7 +44,7 @@ const ReqForm = ({ forms }) => {
       setBalanceAvailable(formData.balanceAvailable);
       setPurpose(formData.purpose);
       setSendTo(formData.sendTo);
-      setItems(formData.items);
+      setItems(formData.items || {}); // Ensure items is initialized properly
       setFiles(formData.files);
       setSpecifications(formData.specifications);
     } else if (!requestId) {

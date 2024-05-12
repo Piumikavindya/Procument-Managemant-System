@@ -54,7 +54,7 @@ const UserTypeNavbar = ({ userType }) => {
   ];
 
   const procOfficerOptions = [
-    { link: "Created Projects", path: "/CreatedProjects" },
+    { link: "Created Projects", path: "/projectList" },
     { link: "Create New Project", path: "/ProjectCreationForm" },
     { link: "Approved Purchase Requisition List ", path: "/ApprovedRequestList" },
   ];
@@ -97,8 +97,6 @@ const UserTypeNavbar = ({ userType }) => {
               AdminOptions.map(({ link, path }) => (
                 <Link
                   to={path}
-                  spy={true}
-                  smooth={true}
                   offset={-100}
                   key={path}
                   className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
@@ -110,9 +108,7 @@ const UserTypeNavbar = ({ userType }) => {
               DepartmentOptions.map(({ link, path }) => (
                 <Link
                   to={path}
-                  spy={true}
-                  smooth={true}
-                  offset={-100}
+                 offset={-100}
                   key={path}
                   className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >
@@ -123,8 +119,6 @@ const UserTypeNavbar = ({ userType }) => {
               TECofficerOptions.map(({ link, path }) => (
                 <Link
                   to={path}
-                  spy={true}
-                  smooth={true}
                   offset={-100}
                   key={path}
                   className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
@@ -136,9 +130,7 @@ const UserTypeNavbar = ({ userType }) => {
               procOfficerOptions.map(({ link, path }) => (
                 <Link
                   to={path}
-                  spy={true}
-                  smooth={true}
-                  offset={-100}
+                   offset={-100}
                   key={path}
                   className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >
@@ -149,8 +141,6 @@ const UserTypeNavbar = ({ userType }) => {
               FinanceOfficersOptions.map(({ link, path }) => (
                 <Link
                   to={path}
-                  spy={true}
-                  smooth={true}
                   offset={-100}
                   key={path}
                   className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
@@ -163,8 +153,6 @@ const UserTypeNavbar = ({ userType }) => {
               ApproverOptions.map(({ link, path }) => (
                 <Link
                   to={path}
-                  spy={true}
-                  smooth={true}
                   offset={-100}
                   key={path}
                   className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
@@ -199,8 +187,6 @@ const UserTypeNavbar = ({ userType }) => {
             AdminOptions.map(({ link, path }) => (
               <Link
                 to={path}
-                spy={true}
-                smooth={true}
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
@@ -214,8 +200,6 @@ const UserTypeNavbar = ({ userType }) => {
             DepartmentOptions.map(({ link, path }) => (
               <Link
                 to={path}
-                spy={true}
-                smooth={true}
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
@@ -229,8 +213,6 @@ const UserTypeNavbar = ({ userType }) => {
             TECofficerOptions.map(({ link, path }) => (
               <Link
                 to={path}
-                spy={true}
-                smooth={true}
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
@@ -244,8 +226,6 @@ const UserTypeNavbar = ({ userType }) => {
             procOfficerOptions.map(({ link, path }) => (
               <Link
                 to={path}
-                spy={true}
-                smooth={true}
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
@@ -259,8 +239,6 @@ const UserTypeNavbar = ({ userType }) => {
             FinanceOfficersOptions.map(({ link, path }) => (
               <Link
                 to={path}
-                spy={true}
-                smooth={true}
                 offset={-100}
                 key={path}
                 onClick={closeMenu}
@@ -274,8 +252,6 @@ const UserTypeNavbar = ({ userType }) => {
             ApproverOptions.map(({ link, path }) => (
               <Link
                 to={path}
-                spy={true}
-                smooth={true}
                 offset={-100}
                 key={path}
                 onClick={closeMenu}

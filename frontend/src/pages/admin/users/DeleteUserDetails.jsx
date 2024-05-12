@@ -5,6 +5,7 @@ import React from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import AllUsers from './AllUsers';
 
 import {
   Button,
@@ -35,7 +36,7 @@ const DeleteUserDetails = () => {
       .then(() => {
         setLoading(false);
         enqueueSnackbar('User deleted', { variant: 'success' });
-        navigate('/AllUsers');
+        navigate('/userList');
       })
       .catch((error) => {
         setLoading(false);

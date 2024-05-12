@@ -9,13 +9,21 @@ import { IconButton } from "@material-tailwind/react";
 import {} from "react-icons/md";
 import axios from "axios";
 
-export const AddReqCard = ({ handleAddItemsClick, handleViewProcItems }) => {
+
+export const AddReqCard = ({ handleViewRequest }) => {
+
   const [open, setOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
+  const [showAddRequestCard, setShowAddRequestCard] = useState(false);
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+  const [selectedRequests, setSelectedRequests] = useState([]);
+  const {projectId} = useParams();
+
+
+  // const [projectId, setProjectId] = useState("");
+ 
   useEffect(() => {
     setLoading(true);
     axios
@@ -33,7 +41,7 @@ export const AddReqCard = ({ handleAddItemsClick, handleViewProcItems }) => {
   const navigate = useNavigate();
 
   const handleCloseClick = () => {
-    setOpen(false);
+ 
     navigate("/ProjectCreationForm");
   };
 
@@ -49,10 +57,41 @@ export const AddReqCard = ({ handleAddItemsClick, handleViewProcItems }) => {
     request[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleCheckboxChange = (requestId) => {
+    // Toggle the selection status of the request ID
+    setSelectedRequests((prevSelectedRequests) =>
+      prevSelectedRequests.includes(requestId)
+        ? prevSelectedRequests.filter((id) => id !== requestId)
+        : [...prevSelectedRequests, requestId]
+    );
+  };
+
+  const handleAddRequestClick = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/procProject/addRequestsData/${projectId}`,
+        {
+          requestIds: selectedRequests,
+          items: [] // Include an empty items array
+        }
+      );
+
+      const newRequestData = response.data.newRequest;
+      setRequests([]);
+      navigate("/ProjectCreationForm");
+      console.log("Selected requests added successfully",newRequestData);
+      // handleViewRequest();
+    } catch (error) {
+      console.error("Error adding requests:", error);
+    }
+  };
+  
+
+
 
   return (
     <div>
-      <ProjectCreationForm />
+    
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
@@ -176,7 +215,11 @@ export const AddReqCard = ({ handleAddItemsClick, handleViewProcItems }) => {
                                 <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                                   <div className="flex items-center">
                                     <div>
-                                      <input type="checkbox" />
+                                    <input
+  type="checkbox"
+  checked={selectedRequests.includes(request.requestId)}
+  onChange={() => handleCheckboxChange(request.requestId)}
+/>
                                     </div>
                                   </div>
                                 </td>
@@ -203,7 +246,7 @@ export const AddReqCard = ({ handleAddItemsClick, handleViewProcItems }) => {
                     </button>
 
                     <button
-                      onClick={handleCloseClick}
+                      onClick={handleAddRequestClick}
                       type="submit"
                       className="rounded-md bg-blue-600 h-10 w-30  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
