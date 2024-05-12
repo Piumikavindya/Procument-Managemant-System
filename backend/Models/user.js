@@ -7,7 +7,7 @@ const userSchema = new Schema({
   username: {  // Add a unique username field
     type: String,
     unique: true, // Ensure uniqueness
-    required: true,
+
   },
   firstname:{
     type: String,

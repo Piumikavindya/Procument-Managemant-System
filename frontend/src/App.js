@@ -1,14 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import reportWebVitals from "./reportWebVitals";
 import AdminHome from "./pages/admin/AdminHome.jsx";
-import DeleteUsers from "./pages/admin/users/Delete.jsx";
-import PreviewUser from "./pages/admin/users/PreviewUser.jsx";
-import DeleteVendor from "./pages/admin/vendors/DeleteVendors.jsx";
-import PreviewVendor from "./pages/admin/vendors/PreviewVendors.jsx";
-import UpdateVendor from "./pages/admin/vendors/UpdateVendors.jsx";
 import CommonFooter from "./components/CommonFooter.jsx";
 import Navbar from "./components/Navbar.jsx";
 import YearPlanner from "./pages/admin/yearPlanner/YearPlanner.jsx";
@@ -34,7 +29,6 @@ import VendorDetails from "./pages/admin/vendors/VendorDetails.jsx";
 import ItemDetails from "./pages/admin/items/ItemDetails.jsx";
 import EditUserDetails from "./pages/admin/users/EditUserDetails.jsx";
 import DeleteUserDetails from "./pages/admin/users/DeleteUserDetails.jsx";
-import ViewUserDetails from "./pages/admin/users/ViewUserDetails.jsx";
 import UpdateSupplier from "./pages/admin/vendors/UpdateSupplier.jsx";
 import DeleteSupplier from "./pages/admin/vendors/DeleteSupplier.jsx";
 import UpdateItems from "./pages/admin/items/updateItems.jsx";
@@ -49,7 +43,6 @@ import DenyRequest from "./pages/approver/DenyRequest.jsx";
 import EditApproval from "./pages/approver/UpdateApproval.jsx";
 import ApproverHome from "./pages/approver/ApproverHome.jsx";
 import DeleteProcItem from "./pages/department/DeleteProcItem.jsx";
-import ProcurementOfficerHome from "./pages/procurementOfficer/ProcurementOfficerHome.jsx";
 import SubmitReqForm from "./pages/department/SubmitReqForm.jsx";
 import SendApproval from "./pages/approver/SendApproval.jsx";
 import RequestList from "./pages/department/RequestList.jsx";
@@ -57,10 +50,16 @@ import DownloadRequest from "./pages/department/DownloadRequest.jsx";
 import SendRequest from "./pages/department/SendRequest.jsx";
 import ProjectCreationForm from "./pages/PO_BU/ProjectCreationForm.jsx";
 import PO_BuHome from "./pages/PO_BU/PO_BuHome.jsx";
+import { AddReqCard } from './pages/PO_BU/AddItemCard.jsx';
 import ApprovedRequestList from "./pages/PO_BU/ApprovedRequestList.jsx";
 import {ViewApprovedForm}  from "./pages/PO_BU/ViewApprovedForm.jsx";
 import ViewFormRequest from "./pages/department/ViewFormRequest.jsx";
 import {ViewFormApproval} from "./pages/approver/ViewFormApproval.jsx";
+// import ViewFormApproval from "./pages/approver/ViewFormApproval.jsx";
+import EventPlanner from "./pages/admin/eventPlanner/EventPlanner.jsx";
+import ContextWrapper from "./context/ContextWrapper.js";
+import ViewVendorDetails from "./pages/generalUsers/ViewVenderDetails.jsx";
+import ProjectList from "./pages/PO_BU/ProjectList.jsx";
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -110,6 +109,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/viewVendors" element={<ViewVendorDetails/>}/>
         <Route
           path="/loginpage"
           element={
@@ -133,34 +133,27 @@ const App = () => {
           }
         />
 
-        <Route path="/deleteusers/:id" element={<DeleteUsers />} />
-        <Route path="/previewuser/:id" element={<PreviewUser />} />
+  
         <Route path="/addUsers" element={<AddUsers />} />
         <Route path="/editUsers/:id" element={<EditUserDetails />} />
         <Route path="/userList" element={<UserList />} />
         <Route path="/deleteUserDetails/:id" element={<DeleteUserDetails />} />
-        <Route path="/viewUserDetails/:id" element={<ViewUserDetails />} />
+       
         <Route
           path="/previewUserDetails/:id"
           element={<PreviewUserDetails />}
         />
 
         <Route path="/allvendors" element={<VendorDetails />} />
-        <Route path="/addvendors" element={<AddSupplier />} />
-        <Route path="/deletevendor/:id" element={<DeleteVendor />} />
-        <Route path="/previewvendor/:id" element={<PreviewVendor />} />
-        <Route path="/updatevendor/:id" element={<UpdateVendor />} />
         <Route
           path="/previewVendorDetails/:id"
           element={<PreviewVendorDetails />}
         />
-
         <Route path="/addSupplier" element={<AddSupplier />} />
-        <Route path="/vendorsDetails" element={<VendorDetails />} />
         <Route path="/updateSupplier/:id" element={<UpdateSupplier />} />
         <Route path="/deleteSupplier/:id" element={<DeleteSupplier />} />
 
-        <Route path="/yearplanner" element={<YearPlanner />} />
+        
 
         <Route path="/reqform" element={<ReqForm />} />
         <Route
@@ -197,12 +190,12 @@ const App = () => {
         <Route path="/additem/:requestId" element={<AddItemCard />} />
 
         <Route path="/AddItems" element={<AddItems />} />
-        <Route path="/updateItems" element={<UpdateItems />} />
+        <Route path="/updateItems/:id" element={<UpdateItems />} />
         <Route path="/formview/:requestId" element={<FormView />} />
         <Route path="/additem/:requestId" element={<AddItemCard />} />
 
         <Route path="/AddItems" element={<AddItems />} />
-        <Route path="/updateItems" element={<UpdateItems />} />
+        <Route path="/updateItems/:id" element={<UpdateItems />} />
         <Route
           path="/previewItemDetails/:id"
           element={<PreviewItemDetails />}
@@ -227,7 +220,7 @@ const App = () => {
           element={<SendRequest />}
         />
         <Route path="/ProjectCreationForm/" element={<ProjectCreationForm />} />
-
+        <Route path="/ReqSelection/:projectId" element={<AddReqCard/>} />
         <Route
           path="/PO_BuHome/:id"
           element={
@@ -243,6 +236,11 @@ const App = () => {
         <Route path="/ViewApprovedForm/:requestId" element={<ViewApprovedForm />} />
         <Route path="/ViewFormRequest/:requestId" element={<ViewFormRequest />} />
         <Route path="/ViewForApproval/:requestId" element={<ViewFormApproval />} />
+        <Route path="/projectList" element={<ProjectList/>}/>
+          
+          <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
+        
+        
 
       </Routes>
 

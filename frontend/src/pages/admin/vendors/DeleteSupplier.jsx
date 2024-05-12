@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import VenderList from "../../../components/VenderList";
-import AllVenders from "./AllVendors";
+
 import VendorDetails from "./VendorDetails";
 
 const DeleteSupplier = () => {

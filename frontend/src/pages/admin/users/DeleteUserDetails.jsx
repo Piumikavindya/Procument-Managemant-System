@@ -5,7 +5,6 @@ import React from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import AllUsers from './AllUsers';
 
 import {
   Button,
