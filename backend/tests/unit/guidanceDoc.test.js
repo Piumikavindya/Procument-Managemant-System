@@ -15,68 +15,9 @@ const {
   deleteGuidance,
 } = require('../../controllers/guidanceDoc');
 
-jest.mock('../../../Models/guidanceDoc');
+jest.mock('../../Models/guidanceDoc');
 
-/* describe('upload', () => {
-  it('should upload a new guidance and return the created guidance', async () => {
-    // Mock the file upload
-    const mockFile = {
-      path: path.join(__dirname, 'test.pdf'),
-    };
 
-    const req = {
-      body: {
-        name: 'Test Guidance',
-      },
-      file: mockFile,
-    };
-
-    const savedGuidance = {
-      name: 'Test Guidance',
-      file: mockFile.path,
-      _id: '63e270eee7493d3dedd27ed',
-    };
-
-    const guidanceInstanceMock = {
-      save: jest.fn().mockResolvedValue(savedGuidance),
-    };
-
-    Guidance.mockImplementation(() => guidanceInstanceMock);
-
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
-
-    await upload(req, res);
-
-    expect(guidanceInstanceMock.save).toHaveBeenCalledWith();
-    expect(res.status).not.toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({
-      guidance: savedGuidance,
-      message: 'File successfully uploaded',
-    });
-  });
-
-  it('should return 400 if no file is uploaded', async () => {
-    const req = {
-      body: {
-        name: 'Test Guidance',
-      },
-      file: undefined,
-    };
-
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
-
-    await upload(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ error: 'No file uploaded' });
-  });
-}); */
 
 describe('viewGuidance', () => {
   it('should return all guidance documents', async () => {
@@ -128,7 +69,7 @@ describe('downloadGuidance', () => {
 
     expect(Guidance.findById).toHaveBeenCalledWith('63e270eee7493d3dedd27ed');
     expect(res.download).toHaveBeenCalledWith(
-      path.join(__dirname, '../../../', mockGuidance.file)
+      path.join(__dirname, '../../', mockGuidance.file)
     );
   });
 
@@ -226,3 +167,66 @@ describe('deleteGuidance', () => {
     });
   });
 });
+
+
+
+/* describe('upload', () => {
+  it('should upload a new guidance and return the created guidance', async () => {
+    // Mock the file upload
+    const mockFile = {
+      path: path.join(__dirname, 'test.pdf'),
+    };
+
+    const req = {
+      body: {
+        name: 'Test Guidance',
+      },
+      file: mockFile,
+    };
+
+    const savedGuidance = {
+      name: 'Test Guidance',
+      file: mockFile.path,
+      _id: '63e270eee7493d3dedd27ed',
+    };
+
+    const guidanceInstanceMock = {
+      save: jest.fn().mockResolvedValue(savedGuidance),
+    };
+
+    Guidance.mockImplementation(() => guidanceInstanceMock);
+
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    };
+
+    await upload(req, res);
+
+    expect(guidanceInstanceMock.save).toHaveBeenCalledWith();
+    expect(res.status).not.toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      guidance: savedGuidance,
+      message: 'File successfully uploaded',
+    });
+  });
+
+  it('should return 400 if no file is uploaded', async () => {
+    const req = {
+      body: {
+        name: 'Test Guidance',
+      },
+      file: undefined,
+    };
+
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    };
+
+    await upload(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ error: 'No file uploaded' });
+  });
+}); */

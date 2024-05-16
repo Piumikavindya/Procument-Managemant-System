@@ -14,7 +14,7 @@ const {
   deleteItem,
   previewItem,
 } = require("../../controllers/Item");
-jest.mock("../../../Models/item");
+jest.mock("../../Models/item");
 
 // test case for create item controller
 

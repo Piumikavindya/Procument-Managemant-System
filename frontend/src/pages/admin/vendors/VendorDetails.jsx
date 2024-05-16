@@ -423,7 +423,7 @@ export default function VendorDetails() {
                           </IconButton>
                         </Tooltip>
                       </Link>
-                      <Link to={`/deleteSupplier/:${supplyer._id}`}>
+                      <Link to={`/deleteSupplier/${supplyer._id}`}>
                         <Tooltip content="Delete Vendor">
                           <IconButton variant="text">
                             <TrashIcon className="h-6 w-6  text-red-500" />
