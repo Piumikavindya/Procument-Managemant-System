@@ -29,14 +29,14 @@ export default function UpdateItems() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:8000/user/preview-user/${id}`)
+      .get(`http://localhost:8000/item/preview-item/${id}`)
       .then((response) => {
-        const item = response.data;
-
-        console.log("Fetched user data:", item);
-        setAssetsClass(item.AssetsClass);
-        setAssetsSubClass(item.AssetsSubClass);
-        setItemName(item.itemName);
+        const itemData = response.data;
+      
+        console.log('Fetched user data:', itemData);
+        setAssetsClass(itemData.AssetsClass);
+        setAssetsSubClass(itemData.AssetsSubClass);
+        setItemName(itemData.itemName);
 
         setLoading(false);
       })
@@ -72,7 +72,7 @@ export default function UpdateItems() {
         enqueueSnackbar("Item details are updated successfully", {
           variant: "success",
         });
-        navigate("/AllUsers");
+        navigate("/AllItem");
       })
       .catch((error) => {
         setLoading(false);
