@@ -30,7 +30,7 @@ exports.createPdf = async (req, res) => {
     doc.font("Helvetica");
     // Load university logo
     const logoPath =
-      "E:\\5sem\\Procument-Managemant-System\\backend\\images\\logo.jpg";
+      "E:/Procument-Managemant-System/backend/images/logo.jpg";
     doc.image(logoPath, 10, 10, { width: 60 });
 
     // University header text
@@ -847,7 +847,7 @@ exports.sendPdf = async (req, res) => {
     let recipients;
     switch (sender) {
       case "dean":
-        recipients = "imashanaw1999@gmail.com";
+        recipients = "piyumikavindyappk@gmail.com";
         break;
       case "registrar":
         recipients = "imashanaw1999@gmail.com";
