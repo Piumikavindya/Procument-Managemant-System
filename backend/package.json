@@ -6,8 +6,6 @@
   "scripts": {
     "start": "nodemon app.js",
     "test": "jest"
-    
-   
   },
   "author": "piumikavindya",
   "license": "ISC",
@@ -43,8 +41,5 @@
     "jest-mock-req-res": "^1.0.2",
     "nodemon": "^3.1.0",
     "supertest": "^7.0.0"
-   
-   
-    
   }
 }
