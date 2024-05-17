@@ -13,6 +13,8 @@ import {
   DialogFooter,
   Typography,
 } from "@material-tailwind/react";
+
+
 import VendorDetails from "./VendorDetails";
 
 const DeleteSupplier = () => {
@@ -30,7 +32,7 @@ const DeleteSupplier = () => {
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Supplier deleted", { variant: "success" });
-        navigate("/vendorsDetails");
+        navigate("/allvendors");
       })
       .catch((error) => {
         setLoading(false);
