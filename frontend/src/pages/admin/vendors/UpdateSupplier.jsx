@@ -46,6 +46,8 @@ export default function UpdateSupplier() {
     axios
       .get(`http://localhost:8000/supplyer/preview-supplyer/${id}`)
       .then((response) => {
+        const userData = response.data;
+        console.log('Fetched user data:', userData);
         setUsername(response.data.username);
         setSupplierId(response.data.supplierId);
         setSupplierName(response.data.supplierName);

@@ -1,34 +1,37 @@
-
-const procReqest = require('../Models/procReqest');
-const user = require('../Models/user');
+const procReqest = require("../Models/procReqest");
+const user = require("../Models/user");
 const path = require("path");
 // const fs = require('fs').promises;
 
-const { PDFDocument, rgb } = require('pdf-lib');
+const { PDFDocument, rgb } = require("pdf-lib");
 // const fs = require('fs').promises;
 
 // Generate Request ID
 exports.generateRequestId = async (req, res) => {
-    try {
-        const latestRequest = await procReqest.findOne({}, {}, { sort: { requestId: -1 } });
-        const newRequestId = latestRequest
-          ? 'REQ' + String(Number(latestRequest.requestId.slice(3)) + 1).padStart(3, '0')
-          : 'REQ001';
-    
-        // Creating an instance of the model
-        const newRequestInstance = new procReqest({
-          requestId: newRequestId,
-      });
+  try {
+    const latestRequest = await procReqest.findOne(
+      {},
+      {},
+      { sort: { requestId: -1 } }
+    );
+    const newRequestId = latestRequest
+      ? "REQ" +
+        String(Number(latestRequest.requestId.slice(3)) + 1).padStart(3, "0")
+      : "REQ001";
 
-      // Saving the instance to the database
-      const savedRequest = await newRequestInstance.save();
+    // Creating an instance of the model
+    const newRequestInstance = new procReqest({
+      requestId: newRequestId,
+    });
 
-      // Respond with the generated ID and the saved document
-      res.json({ requestId: savedRequest.requestId, savedRequest });
-      } catch (error) {
+    // Saving the instance to the database
+    const savedRequest = await newRequestInstance.save();
 
-        res.status(500).json({ error: error.message });
-      }
+    // Respond with the generated ID and the saved document
+    res.json({ requestId: savedRequest.requestId, savedRequest });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 exports.createRequest = async (req, res) => {
@@ -44,8 +47,8 @@ exports.createRequest = async (req, res) => {
     balanceAvailable,
     purpose,
     sendTo,
-    // items,
-    // files
+    //items,
+    //files
   } = req.body;
 
   try {
@@ -71,7 +74,7 @@ exports.createRequest = async (req, res) => {
 
       // Save the updated document to the database
       const updatedRequest = await existingRequest.save();
-console.log(updatedRequest);
+      console.log(updatedRequest);
       // Send the updated document as a response
       res.json(updatedRequest);
     } else {
@@ -119,7 +122,6 @@ exports.viewAllRequests = async (req, res) => {
   }
 };
 
-
 exports.viewRequestById = async (req, res) => {
   try {
     const { requestId } = req.params;
@@ -150,7 +152,6 @@ exports.deleteRequest = async (req, res) => {
   }
 };
 
-
 // Add Item to Request
 
 exports.addProcItem = async (req, res) => {
@@ -161,7 +162,6 @@ exports.addProcItem = async (req, res) => {
     const updatedRequest = await procReqest.findOneAndUpdate(
       { requestId },
       {
-
         $push: {
           items: {
             itemName,
@@ -174,8 +174,7 @@ exports.addProcItem = async (req, res) => {
       { new: true }
     );
 
-
-    res.json({ message: 'Item added successfully', updatedRequest });
+    res.json({ message: "Item added successfully", updatedRequest });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -186,7 +185,7 @@ exports.veiwProcItems = async (req, res) => {
     const { requestId } = req.params;
 
     // Find the request by ID and select only the items field
-    const request = await procReqest.findOne({ requestId }).select('items');
+    const request = await procReqest.findOne({ requestId }).select("items");
 
     // Check if request is null
     if (!request) {
@@ -202,11 +201,6 @@ exports.veiwProcItems = async (req, res) => {
   }
 };
 
-
-
-
-
-
 // Delete Item from Request
 exports.deleteProcItem = async (req, res) => {
   try {
@@ -216,17 +210,11 @@ exports.deleteProcItem = async (req, res) => {
       { new: true }
     );
 
-    res.json({message: 'Item deleted successfully',updatedRequest});
+    res.json({ message: "Item deleted successfully", updatedRequest });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-
-
-
-
-
-
 
 exports.uploadFile = async (req, res) => {
   try {
@@ -247,6 +235,26 @@ exports.uploadFile = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+exports.uploadSpecification = async (req, res) => {
+  try {
+    const specificationData = {
+      filepath: req.file.path, // Store the full path to the file
+      filename: req.file.originalname,
+    };
+
+    // Update the document in the database with the specifications
+    const updatedRequest = await procReqest.findOneAndUpdate(
+      { requestId: req.params.requestId },
+      { $push: { specifications: specificationData } },
+      { new: true }
+    );
+
+    res.json(updatedRequest);
+  } catch (error) {
+    console.error("Error uploading specification:", error);
+    res.status(500).json({ error: "Failed to upload specification" });
+  }
+};
 
 exports.downloadFile = async (req, res) => {
   try {
@@ -262,15 +270,15 @@ exports.downloadFile = async (req, res) => {
     const file = request.files.find((file) => file._id.toString() === fileId);
 
     if (!file) {
-      return res.status(404).json({ error: 'File not found' });
+      return res.status(404).json({ error: "File not found" });
     }
 
     // Replace backslashes with forward slashes in the file path
-    const filepath = file.filepath.replace(/\\/g, '/');
+    const filepath = file.filepath.replace(/\\/g, "/");
 
     // Check if the file exists
     if (!fs.existsSync(filepath)) {
-      return res.status(404).json({ error: 'File not found on the server' });
+      return res.status(404).json({ error: "File not found on the server" });
     }
 
     // Send the file for download
@@ -279,8 +287,6 @@ exports.downloadFile = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-
 
 exports.viewFiles = async (req, res) => {
   try {
@@ -299,13 +305,10 @@ exports.viewFiles = async (req, res) => {
 
     res.json({ files: allFiles });
   } catch (error) {
-    console.error('Error fetching files:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error fetching files:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-
-
 
 exports.deleteFile = async (req, res) => {
   try {
@@ -315,17 +318,11 @@ exports.deleteFile = async (req, res) => {
       { new: true }
     );
 
-    res.json({message : 'file deleted successfully',updatedRequest});
+    res.json({ message: "file deleted successfully", updatedRequest });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-
-
-
-
-
-
 
 exports.generatePdf = async (req, res) => {
   try {
@@ -335,7 +332,7 @@ exports.generatePdf = async (req, res) => {
     const request = await procReqest.findOne({ requestId });
 
     if (!request) {
-      return res.status(404).json({ error: 'Request not found' });
+      return res.status(404).json({ error: "Request not found" });
     }
 
     // Create a new PDF document
@@ -354,7 +351,7 @@ exports.generatePdf = async (req, res) => {
       Balance Available: ${request.balanceAvailable}
       Purpose: ${request.purpose}
       Send To: ${request.sendTo}
-      Items: ${request.items.map(item => item.itemName).join(', ')}
+      Items: ${request.items.map((item) => item.itemName).join(", ")}
     `;
     page.drawText(text, {
       x: 50,
@@ -365,19 +362,21 @@ exports.generatePdf = async (req, res) => {
     const pdfBytes = await pdfDoc.save();
 
     // Set response headers for PDF download
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="${requestId}.pdf"`);
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${requestId}.pdf"`
+    );
 
     // Send the PDF as a downloadable file
     res.send(pdfBytes);
-
   } catch (error) {
-    console.error('Error generating PDF:', error);
-    res.status(500).json({ error: 'Error generating PDF', message: error.message });
+    console.error("Error generating PDF:", error);
+    res
+      .status(500)
+      .json({ error: "Error generating PDF", message: error.message });
   }
 };
-
-
 
 exports.downloadPdf = async (req, res) => {
   const requestId = req.params.requestId;
@@ -387,21 +386,22 @@ exports.downloadPdf = async (req, res) => {
     const pdfBytes = await exports.generatePdf(requestId);
 
     // Set response headers for PDF download
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="request_${requestId}.pdf"`);
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="request_${requestId}.pdf"`
+    );
 
     // Send the PDF as a downloadable file
     res.send(pdfBytes);
-
   } catch (error) {
-    if (error.message === 'Request not found') {
-      return res.status(404).json({ error: 'Request not found' });
+    if (error.message === "Request not found") {
+      return res.status(404).json({ error: "Request not found" });
     }
-    console.error('Error downloading PDF:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error downloading PDF:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
 
 // const fs = require('fs').promises;
 // const docx = require('docx');
@@ -468,18 +468,15 @@ exports.downloadPdf = async (req, res) => {
 //   }
 // };
 
-
-
-
-const fs = require('fs');
-const { promisify } = require('util');
-const Docxtemplater = require('docxtemplater');
+const fs = require("fs");
+const { promisify } = require("util");
+const Docxtemplater = require("docxtemplater");
 
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
 
-const inputPath = 'test1.docx'; // Path to your Word template
-const outputPath = 'output.docx'; // Path to save the generated document
+const inputPath = "test1.docx"; // Path to your Word template
+const outputPath = "output.docx"; // Path to save the generated document
 
 exports.generateWordDocument = async (req, res) => {
   try {
@@ -489,15 +486,15 @@ exports.generateWordDocument = async (req, res) => {
     const data = await procReqest.findOne({ requestId });
 
     if (!data) {
-      return res.status(404).send('Request not found');
+      return res.status(404).send("Request not found");
     }
 
-    console.log('Data:', data);
+    console.log("Data:", data);
 
     // Read the Word template
-    const templateData = await readFileAsync(inputPath, 'binary');
+    const templateData = await readFileAsync(inputPath, "binary");
 
-    console.log('Template data:', templateData);
+    console.log("Template data:", templateData);
 
     // Initialize the docxtemplater with the template data
     const doc = new Docxtemplater();
@@ -509,7 +506,7 @@ exports.generateWordDocument = async (req, res) => {
       requestId: data.requestId,
       department: data.department,
       purpose: data.purpose,
-      sendTo: data.sendTo
+      sendTo: data.sendTo,
       // Add other placeholders and corresponding data fields as needed
     });
 
@@ -517,19 +514,22 @@ exports.generateWordDocument = async (req, res) => {
     doc.render();
 
     // Get the rendered document as a binary buffer
-    const renderedBuffer = doc.getZip().generate({ type: 'nodebuffer' });
+    const renderedBuffer = doc.getZip().generate({ type: "nodebuffer" });
 
     // Write the rendered document to the output path
     await writeFileAsync(outputPath, renderedBuffer);
 
     // Set response headers for Word download
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-    res.setHeader('Content-Disposition', `attachment; filename="output.docx"`);
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    );
+    res.setHeader("Content-Disposition", `attachment; filename="output.docx"`);
 
     // Send the Word document as a downloadable file
     res.sendFile(outputPath);
   } catch (error) {
-    console.error('Error generating Word document:', error);
-    res.status(500).send('Error creating Word document');
+    console.error("Error generating Word document:", error);
+    res.status(500).send("Error creating Word document");
   }
 };

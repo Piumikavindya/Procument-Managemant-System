@@ -1,93 +1,95 @@
+const Item = require("../Models/item");
 
-const Item = require('../Models/Item');
+exports.create = async (req, res) => {
+    const { username, itemName, AssetsClass, AssetsSubClass } = req.body;
+  
+    try {
+      const newItem = new Item({ username, itemName, AssetsClass, AssetsSubClass });
+      const savedItem = await newItem.save();
+      return res.status(201).json({ item: savedItem });
+    } catch (error) {
+      console.error('Error saving item:', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
 
-
-
-
-// request from the frontend
-exports.create = async (req,res) =>{
-    const {username,itemName,AssetsClass, AssetsSubClass} = req.body;
-// response will send to frontend
-const newItem= new Item({username,itemName,AssetsClass, AssetsSubClass})
-//save the data in the database
-try {
-    console.log('New Item:', newItem);
-    await newItem.save();
-    
-    res.json({ item: newItem });
-    console.error(' save to the database')
-} catch (error) {
-    console.error('Error saving item:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-}
-};
-
-
-// get the all the supplyers
-exports.viewItem = async (req,res) =>{
-    Item.find().then((Items)=>{
-     res.json(Items)
-    }).catch((err)=>{
-     console.log(err);
+// Get all items
+exports.viewItem = async (req, res) => {
+  Item.find()
+    .then((Supplyers) => {
+      res.json(Supplyers);
     })
- 
- };
-
-
-// view details of perticular user
-exports.previewItem = async (req,res) =>{
-    const itemId = req.params.id;
-
-    try {
-        const item = await Item.findById(itemId);
-        if (!item) {
-            
-            return res.status(404).json({ status: "item not found" });
-        }
-        
-
-        res.status(200).json(item); 
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ status: "Error with getting Item", error: err.message });
-    }
- 
- };
-
-
-//update user details
-exports.updateItem = async (req,res)=>{
-    let itemId = req.params.id;
-
-    const { itemName,AssetsClass, AssetsSubClass} = req.body;
-
-    const updateItem = {
-       
-       itemName,
-       AssetsClass,
-       AssetsSubClass,
-      
-    };
-
-    try {
-        const updatedItem = await Item.findByIdAndUpdate(itemId, updateItem, { new: true });
-        res.status(200).json({ status: "item updated", Item: updatedItem });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ status: "Error with updating item", error: err.message });
-    }
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
+// View details of a particular item
+exports.previewItem = async (req, res) => {
+  const itemId = req.params.id;
 
-//delete user
-exports.deleterItem = async (req,res)=>{
-    let itemId = req.params.id;
-    try {
-        // Use await here to wait for the deletion to complete
-        await Item.findByIdAndDelete(itemId);
-        res.status(200).send({ status: "Item deleted" });
-      } catch (err) {
-        // Use status 500 for server errors
-        res.status(500).send({ status: "Error with delete user", error: err.message });
-      }
+  try {
+    /* if (!itemId.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).json({ error: 'Invalid item ID' });
+        } */
+
+    const item = await Item.findById(itemId);
+    if (!item) {
+      return res.status(404).json({ status: "Item not found" });
+    }
+
+    res.status(200).json(item);
+  } catch (err) {
+    console.error(err.message);
+    res
+      .status(500)
+      .json({ status: "Error with getting item", error: err.message });
+  }
+};
+
+// Update item details
+exports.updateItem = async (req, res) => {
+  const itemId = req.params.id;
+  const { username, itemName, AssetsClass, AssetsSubClass } = req.body;
+
+  try {
+    /*  if (!itemId.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).json({ error: 'Invalid item ID' });
+        } */
+
+    const updatedItem = await Item.findByIdAndUpdate(
+      itemId,
+      { username, itemName, AssetsClass, AssetsSubClass },
+      { new: true }
+    );
+    if (!updatedItem) {
+      return res.status(404).json({ status: "Item not found" });
+    }
+
+    res.status(200).json({ status: "Item updated", Item: updatedItem });
+  } catch (err) {
+    console.error("Error updating item:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+// Delete an item
+exports.deleteItem = async (req, res) => {
+  const itemId = req.params.id;
+
+  try {
+   /*  if (!itemId.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({ error: "Invalid item ID" });
+    } */
+
+    const deletedItem = await Item.findByIdAndDelete(itemId);
+    if (!deletedItem) {
+      return res.status(404).json({ status: "Item not found" });
+    }
+
+    res.status(200).json({ status: "Item deleted" });
+  } catch (err) {
+    console.error("Error deleting item:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };

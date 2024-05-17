@@ -16,7 +16,7 @@ const req ={
     firstname: 'John',
     lastname: 'Doe',
     email: 'test@example.com',
-    password: '123456', // Include the password field
+    password: '123456', 
     role: 'admin',
     department: 'DEIE',
     employeeNumber: '12345'
@@ -30,30 +30,6 @@ const req ={
 
 }
 
-// describe('User Controller Tests', () => {
- 
-//     it('should create a new user', async () => {
-        
-
-//       await create(req, res);
-
- 
-//       expect(res.json).toHaveBeenCalledWith({ newUser: req.body });
-//     });
-
-//     it('should return 500 status code on error', async () => {
-    
-
-//       await create(req, res);
-
-//       expect(res.status).toHaveBeenCalledWith(500);
-//       expect(res.json).toHaveBeenCalledWith({ error: 'Internal Server Error' });
-//     });
-//   });
-
-  // Add tests for other functions like viewUsers, previewUser, updateUser, deleteUser, changePassword, signIn, etc.;
-
-
   
 describe('User Veiw function tests', () => {
   it('should return all users', async () => {
@@ -63,7 +39,7 @@ describe('User Veiw function tests', () => {
      firstname: 'John',
      lastname: 'Doe',
      email: 'test@example.com',
-     password: '123456', // Include the password field
+     password: '123456', 
      role: 'admin',
      department: 'DEIE',
      employeeNumber: '12345'},
@@ -265,16 +241,16 @@ describe('User Delete function tests', () => {
     // Call the deleteUser function
     await deleterUser(req, res);
 
-    // Verify that Supplyer.findByIdAndDelete() was called with the correct ID
+    
     expect(User.findByIdAndDelete).toHaveBeenCalledWith('663f2c8e7127aae38779fcbe');
 
-    // Verify that the response status is 200 and the appropriate message is returned
+  
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalledWith({ status: 'User deleted' });
   });
 
   it('should handle errors properly', async () => {
-    // Mock Supplyer.findByIdAndDelete() to throw an error
+    
     User.findByIdAndDelete.mockRejectedValue(new Error('Database error'));
 
     // Mock request and response objects
@@ -377,4 +353,28 @@ describe('User Sign In function tests', () => {
 
   // Add more test cases for different scenarios (e.g., password mismatch, internal server error, etc.)
 });
+
+
+// describe('User Controller Tests', () => {
+ 
+//     it('should create a new user', async () => {
+        
+
+//       await create(req, res);
+
+ 
+//       expect(res.json).toHaveBeenCalledWith({ newUser: req.body });
+//     });
+
+//     it('should return 500 status code on error', async () => {
+    
+
+//       await create(req, res);
+
+//       expect(res.status).toHaveBeenCalledWith(500);
+//       expect(res.json).toHaveBeenCalledWith({ error: 'Internal Server Error' });
+//     });
+//   });
+
+  // Add tests for other functions like viewUsers, previewUser, updateUser, deleteUser, changePassword, signIn, etc.;
 

@@ -3,12 +3,9 @@ import { Document, Page, pdfjs } from "react-pdf";
 import axios from "axios";
 import { useParams,useNavigate } from "react-router-dom";
 // Ensure pdfjs worker is correctly loaded
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const ViewFormApproval = () => {
+export function ViewApprovedForm() {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -103,4 +100,3 @@ const ViewFormApproval = () => {
   );
 };
 
-export default ViewFormApproval;
