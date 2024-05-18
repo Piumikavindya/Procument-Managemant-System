@@ -16,7 +16,7 @@ import { EyeIcon } from "@heroicons/react/24/outline";
 import { MdDelete, MdDownload } from "react-icons/md";
 
 export default function ProjectList() {
-  const [projects, setproject] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [showUploadForm, setShowUploadForm] = useState(false);
@@ -34,9 +34,9 @@ export default function ProjectList() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8000/project/view-project")
+      .get("http://localhost:8000/procProject/viewProjects")
       .then((response) => {
-        setproject(response.data.project);
+        setProjects(response.data);
         setLoading(false);
         console.error("view project is success");
       })
@@ -187,8 +187,8 @@ export default function ProjectList() {
                       Loading...
                     </td>
                   </tr>
-                ) : (
-                  currentItems.map((project, index) => (
+               ) : (
+                projects.map((project, index) => (
                     <tr key={project._id} className="reservation-row">
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="flex items-center">
@@ -204,7 +204,7 @@ export default function ProjectList() {
                         <div className="flex items-center">
                           <div>
                             <div className="text-sm leading-5 text-gray-900">
-                              {project.name}
+                              {project.projectId}
                             </div>
                           </div>
                         </div>
