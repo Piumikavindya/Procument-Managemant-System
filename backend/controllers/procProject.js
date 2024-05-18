@@ -114,10 +114,12 @@ exports.viewAddedRequests = async (req, res) => {
 
 // Controller function to create a new Procurement Project
 exports.createProject = async (req, res) => {
-  try {
-    // const projectId = req.params.projectId;
+
+  
+    const projectId = req.params.projectId;
     const { projectTitle, biddingType, closingDate, closingTime, appointTEC, appointBOCommite } = req.body;
 
+    try { 
     // Check if a project with the same project ID already exists
     const existingProject = await procProject.findOne({ projectId });
 
