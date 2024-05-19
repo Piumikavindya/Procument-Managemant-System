@@ -60,6 +60,8 @@ import EventPlanner from "./pages/admin/eventPlanner/EventPlanner.jsx";
 import ContextWrapper from "./context/ContextWrapper.js";
 import ViewVendorDetails from "./pages/generalUsers/ViewVenderDetails.jsx";
 import ProjectList from "./pages/PO_BU/ProjectList.jsx";
+import DeleteItems from "./pages/admin/items/DeleteItems.jsx";
+import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -186,6 +188,8 @@ const App = () => {
         <Route path="/PreviewItem/:id" element={<PreviewItem />} />
         <Route path="/DeleteItem/:id" element={<DeleteItem />} />
         <Route path="/AddItem" element={<AddItem />} />
+
+
         <Route path="/reqform" element={<ReqForm />} />
         <Route path="/additem/:requestId" element={<AddItemCard />} />
 
@@ -196,6 +200,7 @@ const App = () => {
 
         <Route path="/AddItems" element={<AddItems />} />
         <Route path="/updateItems/:id" element={<UpdateItems />} />
+        <Route path="/DeleteItems/:id" element={<DeleteItems />} />
         <Route
           path="/previewItemDetails/:id"
           element={<PreviewItemDetails />}
@@ -240,7 +245,7 @@ const App = () => {
           
           <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
         
-        
+          <Route path="/PreviewProjectDetails" element={<PreviewProjectDetails/>} />
 
       </Routes>
 

@@ -34,6 +34,7 @@ const DeleteProcItem = () => {
         setLoading(false);
         
         enqueueSnackbar("Item deleted", { variant: "success" });
+        navigate(`/reqform`);
     
       })
       .catch((error) => {

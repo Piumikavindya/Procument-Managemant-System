@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export const AddItemCard = (props) => {
+export const AddItemCard = ({ handleAddItemsClick,handleViewProcItems }) => {
   const navigate = useNavigate();
   const { requestId } = useParams();
   const [itemName, setItemName] = useState("");

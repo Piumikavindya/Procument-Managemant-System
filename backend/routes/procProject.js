@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { generateProjectId,createProject,addRequestsData,viewAddedRequests} = require('../controllers/procProject');
+const { generateProjectId,createProject,addRequestsData,viewAddedRequests,viewAllProjects,deleteProject,viewProjectById} = require('../controllers/procProject');
 // const upload = require('../middlewares/multer');
 // const { isAuthenticated } = require('../middlewares/auth');
 
@@ -15,7 +15,9 @@ router.get("/generateProjectId", generateProjectId, (req, res) => {
     console.log("Received a request to create a procurement project:", req.body);
     createRequest(req, res);
   });
-
+  router.get('/viewProjects/' ,viewAllProjects);
+  router.get('/viewProject/' ,viewProjectById);
+  router.delete('/deleteProject/:projectId',deleteProject);
 
 
   
