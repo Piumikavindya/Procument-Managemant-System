@@ -16,6 +16,7 @@ const PreviewProjectDetails = () => {
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
 
+
   const handleOutsideClick = () => {
     setOpen(false);
     navigate("/allusers");
