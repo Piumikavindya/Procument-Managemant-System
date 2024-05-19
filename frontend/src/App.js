@@ -61,6 +61,7 @@ import ContextWrapper from "./context/ContextWrapper.js";
 import ViewVendorDetails from "./pages/generalUsers/ViewVenderDetails.jsx";
 import ProjectList from "./pages/PO_BU/ProjectList.jsx";
 import DeleteItems from "./pages/admin/items/DeleteItems.jsx";
+import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -244,7 +245,7 @@ const App = () => {
           
           <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
         
-        
+          <Route path="/PreviewProjectDetails" element={<PreviewProjectDetails/>} />
 
       </Routes>
 
