@@ -416,14 +416,14 @@ export default function VendorDetails() {
                         </Tooltip>
                       </Link>
 
-                      <Link to={`/updateSupplier/:${supplyer._id}`}>
+                      <Link to={`/updateSupplier/${supplyer._id}`}>
                         <Tooltip content="Edit Vendor">
                           <IconButton variant="text">
                             <PencilIcon className="h-6 w-6 text-green-500" />
                           </IconButton>
                         </Tooltip>
                       </Link>
-                      <Link to={`/deleteSupplier/:${supplyer._id}`}>
+                      <Link to={`/deleteSupplier/${supplyer._id}`}>
                         <Tooltip content="Delete Vendor">
                           <IconButton variant="text">
                             <TrashIcon className="h-6 w-6  text-red-500" />

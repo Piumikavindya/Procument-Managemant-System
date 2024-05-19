@@ -114,10 +114,12 @@ exports.viewAddedRequests = async (req, res) => {
 
 // Controller function to create a new Procurement Project
 exports.createProject = async (req, res) => {
-  try {
-    // const projectId = req.params.projectId;
+
+  
+    const projectId = req.params.projectId;
     const { projectTitle, biddingType, closingDate, closingTime, appointTEC, appointBOCommite } = req.body;
 
+    try { 
     // Check if a project with the same project ID already exists
     const existingProject = await procProject.findOne({ projectId });
 
@@ -157,5 +159,51 @@ exports.createProject = async (req, res) => {
     console.error('Error creating project:', error);
     // Handle errors and send an appropriate response
     res.status(500).json({ error: 'Error creating project', message: error.message });
+  }
+};
+
+exports.viewAllProjects = async (req, res) => {
+  try {
+    // Fetch all requests from the database
+    const allProjects = await procProject.find();
+
+    // Send the list of requests as a response
+    res.json(allProjects);
+  } catch (error) {
+    console.error("Error fetching all projects:", error);
+    // Handle errors and send an appropriate response
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+exports.viewProjectById = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+
+    // Find the request by ID
+    const project = await procReqest.findOne({ projectId });
+
+    if (!project) {
+      return res.status(404).json({ error: "project not found" });
+    }
+
+    // Send the request as a response
+    res.json(project);
+  } catch (error) {
+    console.error("Error fetching request by ID:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.deleteProject = async (req, res) => {
+  let projectId = req.params.id;
+
+  try {
+    await procProject.findByIdAndDelete(projectId);
+    res.status(200).send({ status: "Project is deleted" });
+  } catch (err) {
+    res.status(500).send({ status: "Error with delete request" });
   }
 };

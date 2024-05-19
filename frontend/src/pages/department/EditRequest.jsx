@@ -29,7 +29,7 @@ const EditRequest = ({ forms }) => {
   const [items, setItems] = useState({});
   const [files, setFiles] = useState({});
   const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
-  const { id } = useParams();
+
   useEffect(() => {
     const formDataFromStorage = localStorage.getItem("formData");
     if (formDataFromStorage) {
@@ -48,18 +48,12 @@ const EditRequest = ({ forms }) => {
       setItems(formData.items);
       setFiles(formData.files);
     } else if (!requestId) {
-      // Add this condition
-      handleGenerateRequestId();
     }
   }, []);
 
   useEffect(() => {
     handleViewProcItems();
   }, [requestId]);
-
-  
-
- 
 
   const handleAddItemsClick = (itemData) => {
     setShowAddItemCard(true);
@@ -97,7 +91,6 @@ const EditRequest = ({ forms }) => {
     localStorage.setItem("formData", JSON.stringify(formData));
   };
 
-
   const handleViewProcItems = async () => {
     try {
       const response = await axios.get(
@@ -114,7 +107,6 @@ const EditRequest = ({ forms }) => {
   };
 
   const handleGeneratePDF = async () => {
-
     const data = {
       requestId,
       department,
@@ -129,7 +121,6 @@ const EditRequest = ({ forms }) => {
       sendTo,
       items,
       files,
-      email, // Include the determined email address in the data object
     };
 
     try {
@@ -142,11 +133,6 @@ const EditRequest = ({ forms }) => {
       });
       const pdfBlob = new Blob([response.data], { type: "application/pdf" });
       saveAs(pdfBlob, "InvoiceDocument.pdf");
-
-     // Clear form inputs after downloading
-      clearFormInputs();
-
-      
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred. Please try again.");
@@ -212,15 +198,11 @@ const EditRequest = ({ forms }) => {
       setFiles({});
       localStorage.removeItem("formData");
       console.log("Request submitted successfully", createResponse.data);
-      await handleFileUpload(requestId, e.target.files);
-
-      ;
     } catch (error) {
       console.error("Error submitting request", error);
       console.dir(error);
     }
   };
-
 
   return (
     <div>
@@ -238,9 +220,7 @@ const EditRequest = ({ forms }) => {
                 <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
                   {/* Box 1 */}
                   <div className="border border-black p-2 bg-black text-white">
-                    <button type="button" onClick={handleGenerateRequestId}>
-                      Generate Request ID
-                    </button>
+                    <button type="button">Generate Request ID</button>
                   </div>
                 </div>
                 <div className=" w-1/4 ml-auto block text-sm font-medium leading-6 text-gray-900">
@@ -514,7 +494,7 @@ const EditRequest = ({ forms }) => {
                               <div>
                                 <div className="text-sm leading-5 text-gray-800">
                                   <div className="icon-link flex justify-center gap-x-4">
-                                    {/* <Link to={`/updatevendor/${item._id}`}>
+                                    {/* <Link to={/updatevendor/${item._id}}>
                       <AiOutlineEdit className="text-2xl text-blue-800 " />
                     </Link> */}
                                     <Link
@@ -664,7 +644,7 @@ const EditRequest = ({ forms }) => {
                             name="sendTo"
                             type="radio"
                             value="dean"
-                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
                             htmlFor="dean"
@@ -679,7 +659,6 @@ const EditRequest = ({ forms }) => {
                             name="sendTo"
                             type="radio"
                             value="registrar"
-                        
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
@@ -695,7 +674,6 @@ const EditRequest = ({ forms }) => {
                             name="sendTo"
                             type="radio"
                             value="viceChancellor"
-                            
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label

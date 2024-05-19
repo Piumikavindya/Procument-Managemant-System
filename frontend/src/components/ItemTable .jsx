@@ -94,13 +94,13 @@ const ItemTable = ({ items }) => {
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                   <div className="icon-link flex justify-center gap-x-4">
-                    <Link to={`/PreveiwItem/:id`}>
+                    <Link to={`/PreveiwItem/${items._id}`}>
                       <MdPreview className="text-2xl text-green-600" />
                     </Link>
-                    <Link to={`/`}>
+                    <Link to={`/updateItems/${items._id}`}>
                       <AiOutlineEdit className="text-2xl text-blue-800 " />
                     </Link>
-                    <Link to={`/DeleteItem/:id`}>
+                    <Link to={`/deleteItems/${items._id}`}>
                       <MdOutlineDelete className="text-2xl text-red-500" />
                     </Link>
                   </div>

@@ -10,6 +10,7 @@ import { DialogBody, DialogFooter, DialogHeader, Typography } from "@material-ta
 
 
 
+
 export default function DeleteItems() {
 
 
@@ -20,14 +21,14 @@ export default function DeleteItems() {
     const { id } = useParams();
     const { enqueueSnackbar } = useSnackbar();
   
-    const handleDeleteVendor = () => {
+    const handleDeleteItem = () => {
       setLoading(true);
       axios
         .delete(`http://localhost:8000/item/delete/${id}`)
         .then(() => {
           setLoading(false);
           enqueueSnackbar("Supplier deleted", { variant: "success" });
-          navigate("/itemDetails");
+          navigate("/AllItem");
         })
         .catch((error) => {
           setLoading(false);
@@ -101,7 +102,7 @@ export default function DeleteItems() {
                     <button
                       type="submit"
                       className="rounded-md bg-green-500 h-12 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      onClick={handleDeleteVendor}
+                      onClick={handleDeleteItem}
                     >
                       <h6 className="mt-2">Yes, Delete it</h6>
                     </button>

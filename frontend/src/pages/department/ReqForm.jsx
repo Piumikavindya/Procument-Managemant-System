@@ -25,6 +25,7 @@ const ReqForm = ({ forms }) => {
   const [sendTo, setSendTo] = useState("dean");
   const [items, setItems] = useState({});
   const [files, setFiles] = useState({});
+  const [specifications, setSpecifications] = useState({});
   const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
   const [requestCreated, setRequestCreated] = useState(false);
 
@@ -45,6 +46,7 @@ const ReqForm = ({ forms }) => {
       setSendTo(formData.sendTo);
       setItems(formData.items || {}); // Ensure items is initialized properly
       setFiles(formData.files);
+      setSpecifications(formData.specifications);
     } else if (!requestId) {
       // Add this condition
       handleGenerateRequestId();
@@ -95,6 +97,7 @@ const ReqForm = ({ forms }) => {
       sendTo,
       items,
       files,
+      specifications
     };
     setLoading(true);
     try {
@@ -111,11 +114,12 @@ const ReqForm = ({ forms }) => {
   };
 
   const handleFileUpload = async (requestId, files) => {
-    const formData = new FormData();
-    files.forEach((file) => {
-      formData.append("files", file);
-    });
+    files = document.getElementById("formFileMultiple").files;
 
+    const formData = new FormData();
+    Array.from(files).forEach((file) => {
+      formData.append("file", file); // Ensure the key matches the backend (file)
+    });
     try {
       const response = await axios.post(
         `http://localhost:8000/procReqest/uploadFile/${requestId}`,
@@ -131,7 +135,33 @@ const ReqForm = ({ forms }) => {
       console.error("Error uploading file:", error);
     }
   };
-  
+  const handleSpecificationUpload = async (requestId, specifications) => {
+    const specificationFiles = document.getElementById("formFileMultiple1").files;
+
+    const formData = new FormData();
+    Array.from(specificationFiles).forEach((specification) => {
+        formData.append("specification", specification);
+    });
+
+    try {
+        const response = await axios.post(
+            `http://localhost:8000/procReqest/uploadSpecification/${requestId}`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+        console.log("Specification uploaded successfully:", response.data);
+
+    } catch (error) {
+        console.error("Error uploading specification:", error);
+    }
+};
+
+
+
   const handleViewProcItems = async () => {
     try {
       const response = await axios.get(
@@ -162,7 +192,7 @@ const ReqForm = ({ forms }) => {
       sendTo,
       items,
       files,
-      
+      specifications,
     };
 
     try {
@@ -195,6 +225,7 @@ const ReqForm = ({ forms }) => {
       sendTo,
       items,
       files,
+      specifications,
     };
     const newRequest = {
       requestId,
@@ -210,6 +241,7 @@ const ReqForm = ({ forms }) => {
       sendTo,
       items,
       files,
+      specifications,
     };
     setLoading(true);
     try {
@@ -234,6 +266,7 @@ const ReqForm = ({ forms }) => {
       setSendTo("dean");
       setItems({});
       setFiles({});
+      setSpecifications({});
       localStorage.removeItem("formData");
       console.log("Request submitted successfully", createResponse.data);
       await handleFileUpload(requestId, e.target.files);
@@ -248,8 +281,7 @@ const ReqForm = ({ forms }) => {
   };
 
   const navigateToViewRequest = () => {
-   
-    navigate('/ViewForRequest'); 
+    navigate("/ViewForRequest");
   };
   const clearFormInputs = () => {
     setRequestId("");
@@ -265,6 +297,7 @@ const ReqForm = ({ forms }) => {
     setPurpose("Normal");
     setItems({});
     setFiles({});
+    setSpecifications({});
     setSendTo("dean");
   };
 
@@ -468,7 +501,7 @@ const ReqForm = ({ forms }) => {
                     Requesting Item Details
                   </h2>
 
-                  <button  onClick={handleAddItemsClick} class="button">
+                  <button onClick={handleAddItemsClick} class="button">
                     <span className="c-main">
                       <span className="c-ico">
                         <span className="c-blur"></span>{" "}
@@ -666,25 +699,27 @@ const ReqForm = ({ forms }) => {
                   </div>
                   <div className="flex-1 space-x-16  ">
                     <div className="col-span-full">
-                      <label
-                        htmlFor="about"
-                        className="mt-1 text-sm leading-6 text-gray-600"
-                      >
-                        If Urgent Provide The Justification :
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          rows={3}
-                          className="block w-full md:w-96 rounded-md border border-black py-10.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          defaultValue={""}
-                        />
-                      </div>
+                      {purpose === "Urgent" && (
+                        <div>
+                          <label
+                            htmlFor="about"
+                            class="mb-2 inline-block text-neutral-700 dark:text-neutral-200"
+                            >
+                            If Urgent Provide The Justification :
+                          </label>
+                          <input
+                            class="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
+                            type="file"
+                            id="formFileMultiple"
+                            onClick={handleFileUpload}
+                            multiple
+                          />
+                        </div>
+                      )}
 
                       <div class="mb-3">
                         <label
-                          for="formFileMultiple"
+                          htmlFor="about"
                           class="mb-2 inline-block text-neutral-700 dark:text-neutral-200"
                         >
                           Attach Specifications
@@ -692,7 +727,8 @@ const ReqForm = ({ forms }) => {
                         <input
                           class="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
                           type="file"
-                          id="formFileMultiple"
+                          id="formFileMultiple1"
+                          onClick={handleSpecificationUpload}
                           multiple
                         />
                       </div>
@@ -763,28 +799,27 @@ const ReqForm = ({ forms }) => {
             </div>
 
             <div className="mt-3 flex items-center justify-end gap-x-6">
-            {requestCreated ? (
-        <button
-        className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-        onClick={navigateToViewRequest}
-        >
-          Next
-        </button>
-      ) : (
-        <button
-          className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-          type="submit"
-          onClick={(e) => {
-            handleSubmit(e);
-            handleGeneratePDF();
-          }}
-        >
-          <span>Create New Request</span>
-        </button>
-      )}
+              {requestCreated ? (
+                <button
+                  className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                  onClick={navigateToViewRequest}
+                >
+                  Next
+                </button>
+              ) : (
+                <button
+                  className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                  type="submit"
+                  onClick={(e) => {
+                    handleSubmit(e);
+                    handleGeneratePDF();
+                  }}
+                >
+                  <span>Create New Request</span>
+                </button>
+              )}
             </div>
           </form>
-        
         </div>
       </div>
     </div>

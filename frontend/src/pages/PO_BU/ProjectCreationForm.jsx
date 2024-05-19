@@ -130,19 +130,30 @@ export default function ProjectCreationForm({ forms }) {
   
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const newProject = {
-        projectId: projectId,
-        procurementRequests: requests,
-        projectTitle: formData.projectTitle,
-        biddingType: formData.biddingType,
-        closingDate: formData.closingDate,
-        closingTime: formData.closingTime,
-        appointTEC: formData.appointTEC,
-        appointBOCommite: formData.appointBOCommite,
+    
+      const formData ={
+        projectId,
+        procurementRequests,
+        projectTitle,
+        biddingType,
+        closingDate,
+        closingTime,
+        appointTEC,
+        appointBOCommite,
       };
-      setLoading(true);
+      const newProject ={
+        projectId,
+        procurementRequests,
+        projectTitle,
+        biddingType,
+        closingDate,
+        closingTime,
+        appointTEC,
+        appointBOCommite,
+      };
       
+      setLoading(true);
+      try {
       // Make a POST request to create a new project
       const response = await axios.post(
         `http://localhost:8000/procProject/createProject/${projectId}`,
@@ -152,6 +163,8 @@ export default function ProjectCreationForm({ forms }) {
       // Handle successful response
       console.log("Project created:", response.data);
       alert("Project created successfully");
+      setLoading(false);
+
       setFormData("");
       // Reset form inputs
       clearFormInputs();
@@ -197,7 +210,7 @@ export default function ProjectCreationForm({ forms }) {
 
   return (
 
-    <form onSubmit={handleFormSubmit}>
+    <form onSubmit={(e) =>handleFormSubmit(e, requests)}>
        
       <div className="space-y-12 ml-40 mr-40 mt-40">
         <UserTypeNavbar userType="procurement Officer" />
@@ -205,7 +218,7 @@ export default function ProjectCreationForm({ forms }) {
         <Breadcrumb
           crumbs={[
             { label: "Home", link: "/PO_BuHome/:id" },
-            { label: "Procurement Project List", link: "/CreatedProjects" },
+            { label: "Procurement Project List", link: "/projectList" },
 
             { label: "Project Form Creation", link: "/addUsers" },
           ]}
@@ -251,8 +264,8 @@ export default function ProjectCreationForm({ forms }) {
                   id="last-name"
                   autoComplete="family-name"
                   placeholder="Enter the Project Title"
-                  value={formData.projectTitle}
-                  onChange={(e) =>setFormData({ ...formData, projectTitle: e.target.value })}
+                  value={projectTitle}
+                  onChange={(e) =>setProjectTitle(e.target.value )}
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mt-2"
                 />
               </div>
@@ -268,31 +281,12 @@ export default function ProjectCreationForm({ forms }) {
                 </label>
                 <input type="date" className="mr-6 
                 rounded"
-                value={formData.date}
-                onChange={(e) =>setFormData({ ...formData, date: e.target.value })}></input>
+                value={closingDate}
+                onChange={(e) =>setClosingDate(e.target.value)}></input>
                 <input type="time" className="rounded"></input>
               </div>
 
-              {/* <div className="mt-6 space-y-6">
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center"></div>
-                  <div className="text-sm leading-6">
-                    <h6>1. Requisition from Department MME</h6>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center"></div>
-                  <div className="text-sm leading-6">
-                    <h6>2. Requisition from Department EIE</h6>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center"></div>
-                  <div className="text-sm leading-6">
-                    <h6>3. Requisition from Department COM</h6>
-                  </div>
-                </div>
-              </div> */}
+             
             </div>
 
             <div className="sm:col-span-3">
@@ -560,6 +554,7 @@ export default function ProjectCreationForm({ forms }) {
         </Link>
         <button
           type="submit"
+          onClick={(e) => {handleFormSubmit(e)}}
           className="rounded-md bg-blue-600 h-14 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           CREATE PROJECT

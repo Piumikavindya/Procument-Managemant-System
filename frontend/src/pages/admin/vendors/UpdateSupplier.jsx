@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
 
@@ -46,6 +46,8 @@ export default function UpdateSupplier() {
     axios
       .get(`http://localhost:8000/supplyer/preview-supplyer/${id}`)
       .then((response) => {
+        const userData = response.data;
+        console.log('Fetched user data:', userData);
         setUsername(response.data.username);
         setSupplierId(response.data.supplierId);
         setSupplierName(response.data.supplierName);
@@ -474,12 +476,14 @@ export default function UpdateSupplier() {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6 mr-40 mb-10">
+      <Link to="/allvendors">
         <button
           type="button"
           className="rounded-md  h-12 w-20 bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Cancel
         </button>
+      </Link>  
         <button
           type="submit"
           className="rounded-md bg-blue-600  h-12 w-20 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

@@ -3,7 +3,7 @@ import axios from "axios";
 import Breadcrumb from "../../../components/Breadcrumb";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
-
+ import { Link } from "react-router-dom";
 export default function EditUserDetails() {
 
 
@@ -90,7 +90,7 @@ export default function EditUserDetails() {
         setEmpNo('');
         setLoading(false);
         enqueueSnackbar('User account is updated successfully', { variant: 'success' });
-        navigate('/AllUsers');
+        navigate('/userList');
       })
       .catch((error) => {
         setLoading(false);
@@ -112,15 +112,15 @@ export default function EditUserDetails() {
         <Breadcrumb
           crumbs={[
             { label: "Home", link: "/adminhome/:id" },
-            { label: "User Details", link: "/AllItem" },
+            { label: "User Details", link: "/userList" },
 
-            { label: "Add User Details", link: "/additem" },
+            { label: "Edit User Details", link: "/editUsers/${user._id}" },
           ]}
           selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
         />
 
         <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-gray-900">USER REGISTRATION</h2>
+          <h2 className="text-gray-900">EDIT USER DETAILS</h2>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
@@ -305,12 +305,14 @@ export default function EditUserDetails() {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6 mr-40 mb-10">
-        <button
-          type="button"
-          className="rounded-md  h-12 w-20 bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          <h6 className="mt-1"> Cancel</h6>
-        </button>
+      <Link to="/userList">
+      <button
+        type="button"
+        className="rounded-md h-12 w-20 bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      >
+        Cancel
+      </button>
+      </Link>
         <button
           type="submit"
           className="rounded-md bg-blue-600 h-12 w-20 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
