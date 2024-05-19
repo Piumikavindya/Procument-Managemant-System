@@ -16,7 +16,7 @@ router.get("/generateProjectId", generateProjectId, (req, res) => {
     createRequest(req, res);
   });
   router.get('/viewProjects/' ,viewAllProjects);
-  router.get('/viewProject/' ,viewProjectById);
+  router.get('/viewProject/:projectId' ,viewProjectById);
   router.delete('/deleteProject/:projectId',deleteProject);
 
 

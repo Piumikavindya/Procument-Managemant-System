@@ -183,7 +183,7 @@ exports.viewProjectById = async (req, res) => {
     const { projectId } = req.params;
 
     // Find the request by ID
-    const project = await procReqest.findOne({ projectId });
+    const project = await procProject.findOne({ projectId });
 
     if (!project) {
       return res.status(404).json({ error: "project not found" });

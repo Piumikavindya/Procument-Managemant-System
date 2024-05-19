@@ -245,7 +245,7 @@ const App = () => {
           
           <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
         
-          <Route path="/PreviewProjectDetails" element={<PreviewProjectDetails/>} />
+          <Route path="/PreviewProjectDetails/:projectId" element={<PreviewProjectDetails/>} />
 
       </Routes>
 

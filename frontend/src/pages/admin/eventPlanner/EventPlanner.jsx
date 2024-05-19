@@ -6,6 +6,7 @@ import Sidebar from "../../../components/Sidebar";
 import Month from "../../../components/Month";
 import GlobalContext from "../../../context/GlobalContext";
 import EventModal from "../../../components/EventModal";
+import { Breadcrumb } from "flowbite-react";
 function EventPlanner() {
   const [currenMonth, setCurrentMonth] = useState(getMonth());
   const { monthIndex, showEventModal } = useContext(GlobalContext);
@@ -16,8 +17,15 @@ function EventPlanner() {
 
   return (
     <React.Fragment>
+         <Breadcrumb
+        crumbs={[
+          { label: "Home", link: "/adminhome/:id" },
+          { label: "Event Planner", link: "/EventPlanner" },
+        ]}
+        selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
+      />
       {showEventModal && <EventModal />}
-
+   
       <div className="h-screen flex flex-col mt-20">
         <CalendarHeader />
         <div className="flex flex-1">
