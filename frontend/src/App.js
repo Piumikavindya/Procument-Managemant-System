@@ -245,7 +245,11 @@ const App = () => {
           
           <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
         
+<<<<<<< HEAD
           <Route path="/PreviewProjectDetails/:projectId" element={<PreviewProjectDetails/>} />
+=======
+          <Route path="/PreviewProjectDetails" element={<PreviewProjectDetails/>} />
+>>>>>>> 68032d0836f8b5717ff0bbef99277c4a89025353
 
       </Routes>
 
