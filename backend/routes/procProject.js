@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { generateProjectId,createProject,addRequestsData,viewAddedRequests, createPdf, viewShippingMethodPdf} = require('../controllers/procProject');
+const { generateProjectId,createProject,addRequestsData,viewAddedRequests,createPdf, viewShippingMethodPdf} = require('../controllers/procProject');
 // const upload = require('../middlewares/multer');
 // const { isAuthenticated } = require('../middlewares/auth');
 
