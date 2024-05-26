@@ -16,7 +16,7 @@ import { EyeIcon } from "@heroicons/react/24/outline";
 import { MdDelete, MdDownload } from "react-icons/md";
 
 export default function ProjectList() {
-  const [projects, setproject] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [showUploadForm, setShowUploadForm] = useState(false);
@@ -34,9 +34,9 @@ export default function ProjectList() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8000/project/view-project")
+      .get("http://localhost:8000/procProject/viewProjects")
       .then((response) => {
-        setproject(response.data.project);
+        setProjects(response.data);
         setLoading(false);
         console.error("view project is success");
       })
@@ -162,7 +162,7 @@ export default function ProjectList() {
 
           <div className="align-middle inline-block min-w-full  overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
             <table className="min-w-full">
-              <thead className="text-xs text-white uppercase bg-NeutralBlack  dark:bg-gray-200 dark:text-gray-400">
+              <thead className="text-xs text-white uppercase bg-NeutralBlack   dark:text-gray-400">
                 {" "}
                 <tr>
                   <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
@@ -187,8 +187,8 @@ export default function ProjectList() {
                       Loading...
                     </td>
                   </tr>
-                ) : (
-                  currentItems.map((project, index) => (
+               ) : (
+                projects.map((project, index) => (
                     <tr key={project._id} className="reservation-row">
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="flex items-center">
@@ -204,7 +204,7 @@ export default function ProjectList() {
                         <div className="flex items-center">
                           <div>
                             <div className="text-sm leading-5 text-gray-900">
-                              {project.name}
+                              {project.projectId}
                             </div>
                           </div>
                         </div>
@@ -212,7 +212,7 @@ export default function ProjectList() {
 
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="icon-link flex justify-center gap-x-4">
-                          <Link to={`/Viewprojects/${project._id}`}>
+                          <Link to={`/PreviewProjectDetails/${project.projectId}`}>
                             <Tooltip content="Preview the Project">
                               <IconButton variant="text">
                                 <EyeIcon className="h-6 w-6 text-green-500" />

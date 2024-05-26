@@ -43,8 +43,8 @@ describe("createPdf function", () => {
     await createPdf(req, res);
 
     // Check if the PDF is saved to MongoDB and response is sent
-    // expect(savePdfToMongoDB).toHaveBeenCalledWith(pdfData, pdfFileName);
-    expect(res.send).toHaveBeenCalledWith("An error occurred while generating PDF");
+    expect(savePdfToMongoDB).toHaveBeenCalledWith(pdfData, pdfFileName);
+    expect(res.send).toHaveBeenCalledWith("PDF generated, stored in MongoDB, and uploaded successfully");
   });
 
   it("should handle PDF generation error", async () => {

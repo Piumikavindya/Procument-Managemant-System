@@ -259,7 +259,7 @@ export default function VendorDetails() {
             </div>
           </div>
         </CardHeader>
-        <CardBody className="w-4/5  overflow-scroll px-0 ">
+        <CardBody className="w-5/5  overflow-scroll px-0 ">
           <table className="mt-4 w-full  table-auto text-center ">
             <thead className="bg-NeutralBlack">
               <tr>
@@ -416,14 +416,14 @@ export default function VendorDetails() {
                         </Tooltip>
                       </Link>
 
-                      <Link to={`/updateSupplier/:${supplyer._id}`}>
+                      <Link to={`/updateSupplier/${supplyer._id}`}>
                         <Tooltip content="Edit Vendor">
                           <IconButton variant="text">
                             <PencilIcon className="h-6 w-6 text-green-500" />
                           </IconButton>
                         </Tooltip>
                       </Link>
-                      <Link to={`/deleteSupplier/:${supplyer._id}`}>
+                      <Link to={`/deleteSupplier/${supplyer._id}`}>
                         <Tooltip content="Delete Vendor">
                           <IconButton variant="text">
                             <TrashIcon className="h-6 w-6  text-red-500" />

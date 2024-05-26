@@ -19,6 +19,10 @@ router.get("/generateProjectId", generateProjectId, (req, res) => {
 
   router.get('/view-Pdf/:projectId',viewShippingMethodPdf) // to generate pdf 
 
+  router.post('/createPdf',createPdf) // to generate pdf 
+
+  router.get('/view-Pdf/:projectId',viewShippingMethodPdf) // to generate pdf 
+
 
 
   

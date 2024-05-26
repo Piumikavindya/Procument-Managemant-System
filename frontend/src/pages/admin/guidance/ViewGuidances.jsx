@@ -156,13 +156,12 @@ const ManageGuidance = () => {
             </div>
           </div>
           <hr className="border-t border-black-500 my-3  " />
-
-          <div className="align-middle inline-block min-w-full  overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
-            <table className="min-w-full">
-              <thead className="text-xs text-white uppercase bg-NeutralBlack  dark:bg-gray-200 dark:text-gray-400">
-                {" "}
-                <tr>
-                  <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
+          <div class="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
+              <table class="min-w-full">
+              <thead className="text-xs text-white-700 uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
+                  {" "}
+                  <tr>
+                  <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white-900 tracking-wider">
                     No
                   </th>
                   <th
