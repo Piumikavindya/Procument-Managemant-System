@@ -206,7 +206,7 @@ export default function ProjectCreationForm({ forms }) {
   };
   
   const navigateToViewProject = () => {
-    navigate(`/ViewPdf/${projectId}`);
+    navigate(`/biddingDocuments`);
   };
   
   const clearFormInputs = () => {
@@ -580,9 +580,9 @@ export default function ProjectCreationForm({ forms }) {
         </Link>
         <button
           type="submit"
-          onClick={(e) => {handleFormSubmit(e)}}
+          onClick={(e) => {handleFormSubmit(e); handleGeneratePDF();}}
           className="rounded-md bg-blue-600 h-14 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          onClick={handleGeneratePDF} // Directly pass the function reference
+         
 
        >
           CREATE PROJECT

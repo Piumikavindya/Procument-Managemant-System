@@ -176,6 +176,54 @@ exports.createProject = async (req, res) => {
   }
 };
 
+
+exports.viewAllProjects = async (req, res) => {
+  try {
+    // Fetch all requests from the database
+    const allProjects = await procProject.find();
+
+    // Send the list of requests as a response
+    res.json(allProjects);
+  } catch (error) {
+    console.error("Error fetching all projects:", error);
+    // Handle errors and send an appropriate response
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+exports.viewProjectById = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+
+    // Find the request by ID
+    const project = await procProject.findOne({ projectId });
+
+    if (!project) {
+      return res.status(404).json({ error: "project not found" });
+    }
+
+    // Send the request as a response
+    res.json(project);
+  } catch (error) {
+    console.error("Error fetching request by ID:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.deleteProject = async (req, res) => {
+  let projectId = req.params.id;
+
+  try {
+    await procProject.findByIdAndDelete(projectId);
+    res.status(200).send({ status: "Project is deleted" });
+  } catch (err) {
+    res.status(500).send({ status: "Error with delete request" });
+  }
+};
+
+
 // Function to create PDF for "Shipping Method" bidding type
 
 exports.createPdf = async (req, res) => {
@@ -206,7 +254,7 @@ exports.createPdf = async (req, res) => {
 
     // Add front page content
     const logoPath =
-      "E:\\5sem\\Procument-Managemant-System\\backend\\images\\logo.jpg";
+      "E:/Procument-Managemant-System/backend/images/logo.jpg";
     doc.image(logoPath, 50, 25, { width: 80 });
 
     doc.font(fontPathBold);

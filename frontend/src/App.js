@@ -61,6 +61,10 @@ import ContextWrapper from "./context/ContextWrapper.js";
 import ViewVendorDetails from "./pages/generalUsers/ViewVenderDetails.jsx";
 import ProjectList from "./pages/PO_BU/ProjectList.jsx";
 import {ViewShippingPdf} from "./pages/PO_BU/ViewBidDocumnet.jsx"
+import DeleteItems from "./pages/admin/items/DeleteItems.jsx";
+import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
+import BiddingDocumentsList from "./pages/PO_BU/BiddingDocumentsList.jsx";
+
 
 
 const App = () => {
@@ -200,7 +204,7 @@ const App = () => {
 
         <Route path="/AddItems" element={<AddItems />} />
         <Route path="/updateItems/:id" element={<UpdateItems />} />
-        {/* <Route path="/DeleteItems/:id" element={<DeleteItems />} /> */}
+        <Route path="/DeleteItems/:id" element={<DeleteItems />} />
         <Route
           path="/previewItemDetails/:id"
           element={<PreviewItemDetails />}
@@ -226,7 +230,7 @@ const App = () => {
         />
         <Route path="/ProjectCreationForm/" element={<ProjectCreationForm />} />
         <Route path="/ReqSelection/:projectId" element={<AddReqCard/>} />
-        <Route path="/ViewPdf/:projectId" element={<ViewShippingPdf />} />
+    
 
         <Route
           path="/PO_BuHome/:id"
@@ -244,9 +248,13 @@ const App = () => {
         <Route path="/ViewFormRequest/:requestId" element={<ViewFormRequest />} />
         <Route path="/ViewForApproval/:requestId" element={<ViewFormApproval />} />
         <Route path="/projectList" element={<ProjectList/>}/>
-          
+ <Route path="/PreviewProjectDetails/:projectId" element={<PreviewProjectDetails/>} />
+ <Route path="/biddingDocuments" element={<BiddingDocumentsList/>}/>
+  <Route path="/ViewBidDoc/:projectId" element={<ViewShippingPdf />} />
+
+
           <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
-        
+         
          
       </Routes>
 
@@ -256,3 +264,7 @@ const App = () => {
 };
 reportWebVitals();
 export default App;
+
+
+
+
