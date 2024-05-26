@@ -15,6 +15,9 @@ router.get("/generateProjectId", generateProjectId, (req, res) => {
     console.log("Received a request to create a procurement project:", req.body);
     createRequest(req, res);
   });
+  router.post('/createPdf',createPdf) // to generate pdf 
+
+  router.get('/view-Pdf/:projectId',viewShippingMethodPdf) // to generate pdf 
 
   router.post('/createPdf',createPdf) // to generate pdf 
 

@@ -9,9 +9,7 @@ import { IconButton } from "@material-tailwind/react";
 import {} from "react-icons/md";
 import axios from "axios";
 
-
 export const AddReqCard = ({ handleViewRequest }) => {
-
   const [open, setOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
@@ -19,11 +17,10 @@ export const AddReqCard = ({ handleViewRequest }) => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedRequests, setSelectedRequests] = useState([]);
-  const {projectId} = useParams();
-
+  const { projectId } = useParams();
 
   // const [projectId, setProjectId] = useState("");
- 
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -41,7 +38,6 @@ export const AddReqCard = ({ handleViewRequest }) => {
   const navigate = useNavigate();
 
   const handleCloseClick = () => {
- 
     navigate("/ProjectCreationForm");
   };
 
@@ -52,7 +48,7 @@ export const AddReqCard = ({ handleViewRequest }) => {
   const handleSearchOptionChange = (e) => {
     setSearchOption(e.target.value);
   };
-  
+
   const filteredRequests = requests.filter((request) =>
     request[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -72,26 +68,22 @@ export const AddReqCard = ({ handleViewRequest }) => {
         `http://localhost:8000/procProject/addRequestsData/${projectId}`,
         {
           requestIds: selectedRequests,
-          items: [] // Include an empty items array
+          items: [], // Include an empty items array
         }
       );
 
       const newRequestData = response.data.newRequest;
       setRequests([]);
       navigate("/ProjectCreationForm");
-      console.log("Selected requests added successfully",newRequestData);
+      console.log("Selected requests added successfully", newRequestData);
       // handleViewRequest();
     } catch (error) {
       console.error("Error adding requests:", error);
     }
   };
-  
-
-
 
   return (
     <div>
-    
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
@@ -201,7 +193,7 @@ export const AddReqCard = ({ handleViewRequest }) => {
                                 <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                                   <div className="icon-link flex justify-center gap-x-4">
                                     <Link
-                                      to={`/DenyApproval/${request.requestId}`}
+                                      to={`/ViewApprovedForm/${request.requestId}`}
                                     >
                                       <Tooltip content="View">
                                         <IconButton variant="text">
@@ -215,11 +207,17 @@ export const AddReqCard = ({ handleViewRequest }) => {
                                 <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                                   <div className="flex items-center">
                                     <div>
-                                    <input
-  type="checkbox"
-  checked={selectedRequests.includes(request.requestId)}
-  onChange={() => handleCheckboxChange(request.requestId)}
-/>
+                                      <input
+                                        type="checkbox"
+                                        checked={selectedRequests.includes(
+                                          request.requestId
+                                        )}
+                                        onChange={() =>
+                                          handleCheckboxChange(
+                                            request.requestId
+                                          )
+                                        }
+                                      />
                                     </div>
                                   </div>
                                 </td>

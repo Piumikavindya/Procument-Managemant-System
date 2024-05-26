@@ -62,6 +62,7 @@ import ViewVendorDetails from "./pages/generalUsers/ViewVenderDetails.jsx";
 import ProjectList from "./pages/PO_BU/ProjectList.jsx";
 import {ViewShippingPdf} from "./pages/PO_BU/ViewBidDocumnet.jsx"
 
+
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
   const location = useLocation();
@@ -226,6 +227,7 @@ const App = () => {
         <Route path="/ProjectCreationForm/" element={<ProjectCreationForm />} />
         <Route path="/ReqSelection/:projectId" element={<AddReqCard/>} />
         <Route path="/ViewPdf/:projectId" element={<ViewShippingPdf />} />
+
         <Route
           path="/PO_BuHome/:id"
           element={

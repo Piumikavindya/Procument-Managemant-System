@@ -1,18 +1,24 @@
-const procProject = require('../Models/ProcProject');
+const procProject = require("../Models/ProcProject");
 const path = require("path");
-const procRequest = require('../Models/procReqest');
+const procRequest = require("../Models/procReqest");
 
-
+const fs = require("fs");
+const mongoose = require("mongoose");
+const PDFDocument = require("pdfkit-table");
 
 exports.generateProjectId = async (req, res) => {
   try {
     // Determine the latest project
-    const latestProject = await procProject.findOne({}, {}, { sort: { projectId: -1 } });
+    const latestProject = await procProject.findOne(
+      {},
+      {},
+      { sort: { projectId: -1 } }
+    );
 
     // Generate a new project ID based on the latest project ID or start with 001 if no projects exist
     const newProjectId = latestProject
       ? getNextProjectId(latestProject.projectId)
-      : 'RUH_ENG_NCB_C_2024_001';
+      : "RUH_ENG_NCB_C_2024_001";
 
     // Create a new instance of the model
     const newProjectInstance = new procProject({
@@ -30,27 +36,32 @@ exports.generateProjectId = async (req, res) => {
   }
 };
 
-
 // Function to get the next project ID
 function getNextProjectId(previousProjectId) {
-  const parts = previousProjectId.split('/');
-  const lastPart = parseInt(parts.pop().split(/[^0-9]/).pop(), 10);
-  const incrementedPart = (lastPart + 1).toString().padStart(3, '0');
+  const parts = previousProjectId.split("/");
+  const lastPart = parseInt(
+    parts
+      .pop()
+      .split(/[^0-9]/)
+      .pop(),
+    10
+  );
+  const incrementedPart = (lastPart + 1).toString().padStart(3, "0");
   const yearPart = new Date().getFullYear();
   return `RUH_ENG_NCB_C_${yearPart}_${incrementedPart}`;
 }
-
-
 
 // Function to fetch data from the database based on request IDs
 async function fetchDataFromDatabase(requestIds) {
   try {
     // Fetch data from the database based on the provided request IDs
-    const requestData = await procRequest.find({ requestId: { $in: requestIds } });
+    const requestData = await procRequest.find({
+      requestId: { $in: requestIds },
+    });
     return requestData;
   } catch (error) {
     // Handle any errors
-    console.error('Error fetching data from database:', error);
+    console.error("Error fetching data from database:", error);
     throw error;
   }
 }
@@ -85,21 +96,19 @@ exports.addRequestsData = async (req, res) => {
   }
 };
 
-
-
 exports.viewAddedRequests = async (req, res) => {
   try {
     const { projectId } = req.params;
 
     // Find the Procurement Project by projectId
-    const project = await procProject.findOne({ projectId }).select('procurementRequests');
+    const project = await procProject
+      .findOne({ projectId })
+      .select("procurementRequests");
 
     // If project not found, handle error
     if (!project) {
       return res.status(404).json({ message: "Project not found" });
     }
-
-    
 
     res.status(200).json(project.procurementRequests);
   } catch (error) {
@@ -108,14 +117,9 @@ exports.viewAddedRequests = async (req, res) => {
   }
 };
 
-
-
-
-
+// Controller function to create a new Procurement Project
 // Controller function to create a new Procurement Project
 exports.createProject = async (req, res) => {
-
-  
   const projectId = req.params.projectId;
 
   try {
@@ -127,7 +131,7 @@ exports.createProject = async (req, res) => {
       appointTEC,
       appointBOCommite,
     } = req.body;
-   
+
     // Check if a project with the same project ID already exists
     const existingProject = await procProject.findOne({ projectId });
 
@@ -164,58 +168,15 @@ exports.createProject = async (req, res) => {
       res.status(201).json(createdProject);
     }
   } catch (error) {
-    console.error('Error creating project:', error);
+    console.error("Error creating project:", error);
     // Handle errors and send an appropriate response
-    res.status(500).json({ error: 'Error creating project', message: error.message });
+    res
+      .status(500)
+      .json({ error: "Error creating project", message: error.message });
   }
 };
 
-exports.viewAllProjects = async (req, res) => {
-  try {
-    // Fetch all requests from the database
-    const allProjects = await procProject.find();
-
-    // Send the list of requests as a response
-    res.json(allProjects);
-  } catch (error) {
-    console.error("Error fetching all projects:", error);
-    // Handle errors and send an appropriate response
-    res.status(500).json({ error: error.message });
-  }
-};
-
-
-
-exports.viewProjectById = async (req, res) => {
-  try {
-    const { projectId } = req.params;
-
-    // Find the request by ID
-    const project = await procProject.findOne({ projectId });
-
-    if (!project) {
-      return res.status(404).json({ error: "project not found" });
-    }
-
-    // Send the request as a response
-    res.json(project);
-  } catch (error) {
-    console.error("Error fetching request by ID:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-
-exports.deleteProject = async (req, res) => {
-  let projectId = req.params.id;
-
-  try {
-    await procProject.findByIdAndDelete(projectId);
-    res.status(200).send({ status: "Project is deleted" });
-  } catch (err) {
-    res.status(500).send({ status: "Error with delete request" });
-  }
-};
-
+// Function to create PDF for "Shipping Method" bidding type
 
 exports.createPdf = async (req, res) => {
   const requestData = req.body;

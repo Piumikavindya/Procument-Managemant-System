@@ -28,7 +28,7 @@ function EventPlanner() {
    
       <div className="h-screen flex flex-col mt-20">
         <CalendarHeader />
-        <div className="flex flex-1">
+        <div className="flex flex-1" style={{ filter: showEventModal ? 'blur(5px)' : 'none' }}>
           <Sidebar />
           <Month month={currenMonth} />
         </div>

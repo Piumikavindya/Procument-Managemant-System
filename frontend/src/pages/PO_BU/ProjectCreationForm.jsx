@@ -44,6 +44,7 @@ export default function ProjectCreationForm({ forms }) {
   const [appointTEC, setAppointTEC] = useState([]);
   const [appointBOCommite, setAppointBOCommite] = useState([]);
   const [projectCreated, setProjectCreated] = useState(false);
+  const biddingTypes = ["Direct Purchasing", "Shopping Method", "National Competitive Method (NCB)", "International Competitive Bidding (ICB)"];
 
   useEffect(() => {
     const formDataFromStorage = localStorage.getItem("formData");
@@ -127,7 +128,31 @@ export default function ProjectCreationForm({ forms }) {
       console.error("Error fetching requests:", error);
     }
   };
-  
+  const handleGeneratePDF = async () => {
+    const data = {
+      projectId,
+      procurementRequests,
+      projectTitle,
+      biddingType,
+      closingDate,
+      closingTime,
+      appointTEC,
+      appointBOCommite,
+      
+    };
+
+    try {
+      // Create PDF
+      await axios.post("http://localhost:8000/procProject/createPdf", data);
+
+      // Clear form inputs after downloading
+      clearFormInputs();
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     
@@ -181,7 +206,7 @@ export default function ProjectCreationForm({ forms }) {
   };
   
   const navigateToViewProject = () => {
-    navigate(`/viewProject`);
+    navigate(`/ViewPdf/${projectId}`);
   };
   
   const clearFormInputs = () => {
@@ -305,12 +330,13 @@ export default function ProjectCreationForm({ forms }) {
                   onChange={(e) => setBiddingType(e.target.value )}
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
                 >
-                  <option value="">Direct Purchasing</option>
-                  <option value="">Shopping Method</option>
-                  <option value="">National Competitive Method ( NCB)</option>
-                  <option value="">
-                    International Competitive Bidding (ICB)
-                  </option>
+                 {biddingTypes.map((type, index) => (
+                          <option key={index} value={type}>
+                            {type}
+                          </option>
+                        ))}                          <option value="">Select method</option>
+
+                
                 </select>
               </div>
             </div>
@@ -556,7 +582,9 @@ export default function ProjectCreationForm({ forms }) {
           type="submit"
           onClick={(e) => {handleFormSubmit(e)}}
           className="rounded-md bg-blue-600 h-14 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
+          onClick={handleGeneratePDF} // Directly pass the function reference
+
+       >
           CREATE PROJECT
         </button>
       </div>
