@@ -212,7 +212,7 @@ export default function ProjectList() {
 
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="icon-link flex justify-center gap-x-4">
-                          <Link to={`/Viewprojects/${project._id}`}>
+                          <Link to={`/PreviewProjectDetails/${project.projectId}`}>
                             <Tooltip content="Preview the Project">
                               <IconButton variant="text">
                                 <EyeIcon className="h-6 w-6 text-green-500" />

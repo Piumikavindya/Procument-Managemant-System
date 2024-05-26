@@ -259,7 +259,7 @@ export default function VendorDetails() {
             </div>
           </div>
         </CardHeader>
-        <CardBody className="w-4/5  overflow-scroll px-0 ">
+        <CardBody className="w-5/5  overflow-scroll px-0 ">
           <table className="mt-4 w-full  table-auto text-center ">
             <thead className="bg-NeutralBlack">
               <tr>

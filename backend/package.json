@@ -10,6 +10,7 @@
   "author": "piumikavindya",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1623.0",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "docx": "^8.5.0",
