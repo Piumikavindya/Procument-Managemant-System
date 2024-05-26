@@ -117,9 +117,10 @@ exports.createProject = async (req, res) => {
 
   
     const projectId = req.params.projectId;
+    try { 
     const { projectTitle, biddingType, closingDate, closingTime, appointTEC, appointBOCommite } = req.body;
 
-    try { 
+   
     // Check if a project with the same project ID already exists
     const existingProject = await procProject.findOne({ projectId });
 
