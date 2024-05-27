@@ -121,7 +121,7 @@ export default function BiddingDocumentsList() {
             <div className="flex flex-wrap items-center">
               <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                 <h3 className="font-semibold  text-blueGray-700">
-                  <i className="fa-solid fa-file-lines"></i> Generated Project List
+                  <i className="fa-solid fa-file-lines"></i> Generated Bidding Documents List
                 </h3>
               </div>
 
