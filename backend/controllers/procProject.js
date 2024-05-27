@@ -242,7 +242,7 @@ exports.createPdf = async (req, res) => {
       return res.status(404).send("Project not found");
     }
 
-    const pdfFileName = `Project_${requestData.projectId}.pdf`;
+    const pdfFileName = `Bidding_Document_${requestData.projectId}.pdf`;
     const pdfDirPath = path.join(__dirname, "..", "projects", pdfFileName);
 
     const doc = new PDFDocument({ margin: 30, size: "A4" });
@@ -740,7 +740,7 @@ exports.viewShippingMethodPdf = (req, res) => {
   try {
     const projectId = req.params.projectId;
 
-    const pdfFileName = `Project_${projectId}.pdf`; // Corrected variable name
+    const pdfFileName = `Bidding_Document_${projectId}.pdf`; // Corrected variable name
 
     const pdfDirPath = path.join(__dirname, "..", "projects", pdfFileName);
 
@@ -754,4 +754,41 @@ exports.viewShippingMethodPdf = (req, res) => {
     console.error("Error viewing PDF:", error);
     res.status(500).send("An error occurred while viewing the PDF");
   }
+};
+
+
+
+// exports.downloadBidPdf = async (req, res) => {
+//   const projectId = req.params.projectId;
+
+//   try {
+//     // Generate PDF bytes
+//     const pdfBytes = await exports.generatePdf(projectId);
+
+//     // Set response headers for PDF download
+//     res.setHeader("Content-Type", "application/pdf");
+//     res.setHeader(
+//       "Content-Disposition",
+//       `attachment; filename="request_${projectId}.pdf"`
+//     );
+
+//     // Send the PDF as a downloadable file
+//     res.send(pdfBytes);
+//   } catch (error) {
+//     if (error.message === "Request not found") {
+//       return res.status(404).json({ error: "Request not found" });
+//     }
+//     console.error("Error downloading PDF:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
+
+exports.downloadBidPdf = (req, res) => {
+  const projectId = req.params.projectId;
+
+  const pdfFileName = `Bidding_Document_${projectId}.pdf`;
+
+  const pdfFilePath = path.join(__dirname, "..", "projects", pdfFileName);
+
+  res.sendFile(pdfFilePath);
 };

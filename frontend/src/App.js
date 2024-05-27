@@ -64,6 +64,7 @@ import {ViewShippingPdf} from "./pages/PO_BU/ViewBidDocumnet.jsx"
 import DeleteItems from "./pages/admin/items/DeleteItems.jsx";
 import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
 import BiddingDocumentsList from "./pages/PO_BU/BiddingDocumentsList.jsx";
+import DownloadBidDoc from "./pages/PO_BU/DownloadBidDoc.jsx";
 
 
 
@@ -251,8 +252,8 @@ const App = () => {
  <Route path="/PreviewProjectDetails/:projectId" element={<PreviewProjectDetails/>} />
  <Route path="/biddingDocuments" element={<BiddingDocumentsList/>}/>
   <Route path="/ViewBidDoc/:projectId" element={<ViewShippingPdf />} />
-
-
+  <Route path="/DownloadBidDoc/:projectId" element={<DownloadBidDoc />} />
+  
           <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
          
          

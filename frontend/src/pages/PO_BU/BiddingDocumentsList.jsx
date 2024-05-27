@@ -4,8 +4,9 @@ import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import {
   MdOutlineDelete,
   MdPreview,
-  MdOutlineSimCardDownload,
+  MdSimCardDownload,MdDownload,
 } from "react-icons/md";
+
 import { useParams } from "react-router-dom";
 import UserTypeNavbar from "../../components/UserTypeNavbar.jsx";
 import Breadcrumb from "../../components/Breadcrumb.jsx";
@@ -13,7 +14,7 @@ import DefaultPagination from "../../components/DefaultPagination.js";
 import { Tooltip } from "flowbite-react";
 import { IconButton } from "@material-tailwind/react";
 import { EyeIcon } from "@heroicons/react/24/outline";
-import { MdDelete, MdDownload } from "react-icons/md";
+// import { MdDelete, MdDownload } from "react-icons/md";
 
 export default function BiddingDocumentsList() {
   const [projects, setProjects] = useState([]);
@@ -69,6 +70,10 @@ export default function BiddingDocumentsList() {
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const generateFileName = (projectId) => {
+    return `Bidding_Document_${projectId}.pdf`;
   };
 
   const { id } = useParams();
@@ -172,6 +177,12 @@ export default function BiddingDocumentsList() {
                     className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider"
                     style={{ width: "500px" }}
                   >
+                    Project Id
+                  </th>
+                  <th
+                    className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider"
+                    style={{ width: "500px" }}
+                  >
                     File Name
                   </th>
 
@@ -209,7 +220,15 @@ export default function BiddingDocumentsList() {
                           </div>
                         </div>
                       </td>
-
+                      <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                        <div className="flex items-center">
+                          <div>
+                            <div className="text-sm leading-5 text-gray-900">
+                            {generateFileName(project.projectId)}{" "}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="icon-link flex justify-center gap-x-4">
                           <Link to={`/ViewBidDoc/${project.projectId}`}>
@@ -220,15 +239,17 @@ export default function BiddingDocumentsList() {
                             </Tooltip>
                           </Link>
 
-                          <button
-                            onClick={() => handleDownloadClick(project._id)}
-                          >
-                            <Tooltip content="Download Project">
+                          <Link to={`/DownloadBidDoc/${project.projectId}`}>
+                          <IconButton variant="text">
+                                <MdDownload className="h-6 w-6 text-blue-500" />
+                              </IconButton>
+                        </Link>
+                            {/* <Tooltip content="Download Project">
                               <IconButton variant="text">
                                 <MdDownload className="h-6 w-6 text-blue-500" />
                               </IconButton>
                             </Tooltip>
-                          </button>
+                          */}
                         </div>
                       </td>
                     </tr>
