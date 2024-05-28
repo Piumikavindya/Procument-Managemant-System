@@ -50,23 +50,22 @@ import DownloadRequest from "./pages/department/DownloadRequest.jsx";
 import SendRequest from "./pages/department/SendRequest.jsx";
 import ProjectCreationForm from "./pages/PO_BU/ProjectCreationForm.jsx";
 import PO_BuHome from "./pages/PO_BU/PO_BuHome.jsx";
-import { AddReqCard } from './pages/PO_BU/AddItemCard.jsx';
+import { AddReqCard } from "./pages/PO_BU/AddItemCard.jsx";
 import ApprovedRequestList from "./pages/PO_BU/ApprovedRequestList.jsx";
-import {ViewApprovedForm}  from "./pages/PO_BU/ViewApprovedForm.jsx";
+import { ViewApprovedForm } from "./pages/PO_BU/ViewApprovedForm.jsx";
 import ViewFormRequest from "./pages/department/ViewFormRequest.jsx";
-import {ViewFormApproval} from "./pages/approver/ViewFormApproval.jsx";
+import { ViewFormApproval } from "./pages/approver/ViewFormApproval.jsx";
 // import ViewFormApproval from "./pages/approver/ViewFormApproval.jsx";
 import EventPlanner from "./pages/admin/eventPlanner/EventPlanner.jsx";
 import ContextWrapper from "./context/ContextWrapper.js";
 import ViewVendorDetails from "./pages/generalUsers/ViewVenderDetails.jsx";
 import ProjectList from "./pages/PO_BU/ProjectList.jsx";
-import {ViewShippingPdf} from "./pages/PO_BU/ViewBidDocumnet.jsx"
+import { ViewShippingPdf } from "./pages/PO_BU/ViewBidDocumnet.jsx";
 import DeleteItems from "./pages/admin/items/DeleteItems.jsx";
 import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
 import BiddingDocumentsList from "./pages/PO_BU/BiddingDocumentsList.jsx";
 import DownloadBidDoc from "./pages/PO_BU/DownloadBidDoc.jsx";
-
-
+import ProfilePage from "./pages/Profile settings/ProfilePage.jsx";
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -87,7 +86,7 @@ const App = () => {
   };
 
   const renderCommonFooter = () => {
-    if (location.pathname === "/loginpage" ) {
+    if (location.pathname === "/loginpage") {
       return null;
     }
 
@@ -116,7 +115,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/viewVendors" element={<ViewVendorDetails/>}/>
+        <Route path="/viewVendors" element={<ViewVendorDetails />} />
         <Route
           path="/loginpage"
           element={
@@ -140,12 +139,11 @@ const App = () => {
           }
         />
 
-  
         <Route path="/addUsers" element={<AddUsers />} />
         <Route path="/editUsers/:id" element={<EditUserDetails />} />
         <Route path="/userList" element={<UserList />} />
         <Route path="/deleteUserDetails/:id" element={<DeleteUserDetails />} />
-       
+
         <Route
           path="/previewUserDetails/:id"
           element={<PreviewUserDetails />}
@@ -159,8 +157,6 @@ const App = () => {
         <Route path="/addSupplier" element={<AddSupplier />} />
         <Route path="/updateSupplier/:id" element={<UpdateSupplier />} />
         <Route path="/deleteSupplier/:id" element={<DeleteSupplier />} />
-
-        
 
         <Route path="/reqform" element={<ReqForm />} />
         <Route
@@ -193,7 +189,6 @@ const App = () => {
         <Route path="/PreviewItem/:id" element={<PreviewItem />} />
         <Route path="/DeleteItem/:id" element={<DeleteItem />} />
         <Route path="/AddItem" element={<AddItem />} />
-
 
         <Route path="/reqform" element={<ReqForm />} />
         <Route path="/additem/:requestId" element={<AddItemCard />} />
@@ -230,8 +225,7 @@ const App = () => {
           element={<SendRequest />}
         />
         <Route path="/ProjectCreationForm/" element={<ProjectCreationForm />} />
-        <Route path="/ReqSelection/:projectId" element={<AddReqCard/>} />
-    
+        <Route path="/ReqSelection/:projectId" element={<AddReqCard />} />
 
         <Route
           path="/PO_BuHome/:id"
@@ -245,18 +239,36 @@ const App = () => {
           }
         />
         <Route path="/ApprovedRequestList" element={<ApprovedRequestList />} />
-        <Route path="/ViewApprovedForm/:requestId" element={<ViewApprovedForm />} />
-        <Route path="/ViewFormRequest/:requestId" element={<ViewFormRequest />} />
-        <Route path="/ViewForApproval/:requestId" element={<ViewFormApproval />} />
-        <Route path="/projectList" element={<ProjectList/>}/>
- <Route path="/PreviewProjectDetails/:projectId" element={<PreviewProjectDetails/>} />
- <Route path="/biddingDocuments" element={<BiddingDocumentsList/>}/>
-  <Route path="/ViewBidDoc/:projectId" element={<ViewShippingPdf />} />
-  <Route path="/DownloadBidDoc/:projectId" element={<DownloadBidDoc />} />
-  
-          <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
-         
-         
+        <Route
+          path="/ViewApprovedForm/:requestId"
+          element={<ViewApprovedForm />}
+        />
+        <Route
+          path="/ViewFormRequest/:requestId"
+          element={<ViewFormRequest />}
+        />
+        <Route
+          path="/ViewForApproval/:requestId"
+          element={<ViewFormApproval />}
+        />
+        <Route path="/projectList" element={<ProjectList />} />
+        <Route
+          path="/PreviewProjectDetails/:projectId"
+          element={<PreviewProjectDetails />}
+        />
+        <Route path="/biddingDocuments" element={<BiddingDocumentsList />} />
+        <Route path="/ViewBidDoc/:projectId" element={<ViewShippingPdf />} />
+        <Route path="/DownloadBidDoc/:projectId" element={<DownloadBidDoc />} />
+
+        <Route
+          path="/EventPlanner"
+          element={
+            <ContextWrapper>
+              <EventPlanner />{" "}
+            </ContextWrapper>
+          }
+        />
+        <Route path="/Profile" element={<ProfilePage />} />
       </Routes>
 
       {renderCommonFooter()}
@@ -265,7 +277,3 @@ const App = () => {
 };
 reportWebVitals();
 export default App;
-
-
-
-
