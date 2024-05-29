@@ -12,6 +12,7 @@ import UploadGuidance from "./pages/admin/guidance/UploadGuidance.jsx";
 import DeleteGuidance from "./pages/admin/guidance/DeleteGuidance.jsx";
 import { useNavigate } from "react-router-dom";
 import ViewGuidances from "./pages/admin/guidance/ViewGuidances.jsx";
+import ViewPdf from "./pages/admin/guidance/viewPdf.jsx";
 import DepartmentHome from "./pages/department/DepartmentHome.jsx";
 import PreviewItem from "./pages/admin/items/PreviewItem.jsx";
 import DeleteItem from "./pages/admin/items/DeleteItem.jsx";
@@ -65,6 +66,7 @@ import DeleteItems from "./pages/admin/items/DeleteItems.jsx";
 import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
 import BiddingDocumentsList from "./pages/PO_BU/BiddingDocumentsList.jsx";
 import DownloadBidDoc from "./pages/PO_BU/DownloadBidDoc.jsx";
+import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
 
 
 
@@ -183,11 +185,14 @@ const App = () => {
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
         <Route path="/DeleteGuidance/:id" element={<DeleteGuidance />} />
         <Route path="/ViewGuidances" element={<ViewGuidances />} />
+        <Route path="/viewPdf/:guidanceId" element={<ViewPdf />} />
 
         <Route path="/ManageNotice" element={<ManageNotices />} />
         <Route path="/UploadNotice" element={<UploadNotice />} />
         <Route path="/DeleteNotice/:id" element={<DeleteNotice />} />
         <Route path="/ViewNotices" element={<ViewNotice />} />
+        <Route path="/viewNoticePdf/:noticeId" element={<ViewNoticePdf />} />
+
 
         <Route path="/AllItem" element={<ItemDetails />} />
         <Route path="/PreviewItem/:id" element={<PreviewItem />} />
@@ -256,7 +261,7 @@ const App = () => {
   
           <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
          
-         
+          
       </Routes>
 
       {renderCommonFooter()}
