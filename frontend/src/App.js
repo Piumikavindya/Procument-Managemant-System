@@ -66,6 +66,7 @@ import DeleteItems from "./pages/admin/items/DeleteItems.jsx";
 import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
 import BiddingDocumentsList from "./pages/PO_BU/BiddingDocumentsList.jsx";
 import DownloadBidDoc from "./pages/PO_BU/DownloadBidDoc.jsx";
+import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
 
 
 
@@ -190,6 +191,8 @@ const App = () => {
         <Route path="/UploadNotice" element={<UploadNotice />} />
         <Route path="/DeleteNotice/:id" element={<DeleteNotice />} />
         <Route path="/ViewNotices" element={<ViewNotice />} />
+        <Route path="/viewNoticePdf/:noticeId" element={<ViewNoticePdf />} />
+
 
         <Route path="/AllItem" element={<ItemDetails />} />
         <Route path="/PreviewItem/:id" element={<PreviewItem />} />
