@@ -85,6 +85,18 @@ const ManageGuidance = () => {
       console.error("Error downloading guidance:", error);
     }
   };
+  const handleViewPdf = async (guidanceId) => {
+    try {
+      const response = await axios.get(`http://localhost:8001/viewPdf/${guidanceId}`, {
+        responseType: 'arraybuffer', // Ensure response is treated as binary data
+      });
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const pdfUrl = URL.createObjectURL(blob);
+      window.open(pdfUrl); // Open the PDF in a new tab
+    } catch (error) {
+      console.error("Error fetching PDF:", error);
+    }
+  };
 
   const selected = (crumb) => {
     console.log(crumb);
@@ -229,7 +241,7 @@ const ManageGuidance = () => {
 
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="icon-link flex justify-center gap-x-4">
-                          <Link to={`/ViewGuidances/${guidance._id}`}>
+                          <Link to={`/viewPdf/${guidance._id}`}>
                             <Tooltip content="Preview Guidelines">
                               <IconButton variant="text">
                                 <EyeIcon className="h-6 w-6 text-green-500" />

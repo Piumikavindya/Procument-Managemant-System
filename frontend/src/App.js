@@ -12,6 +12,7 @@ import UploadGuidance from "./pages/admin/guidance/UploadGuidance.jsx";
 import DeleteGuidance from "./pages/admin/guidance/DeleteGuidance.jsx";
 import { useNavigate } from "react-router-dom";
 import ViewGuidances from "./pages/admin/guidance/ViewGuidances.jsx";
+import ViewPdf from "./pages/admin/guidance/viewPdf.jsx";
 import DepartmentHome from "./pages/department/DepartmentHome.jsx";
 import PreviewItem from "./pages/admin/items/PreviewItem.jsx";
 import DeleteItem from "./pages/admin/items/DeleteItem.jsx";
@@ -183,6 +184,7 @@ const App = () => {
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
         <Route path="/DeleteGuidance/:id" element={<DeleteGuidance />} />
         <Route path="/ViewGuidances" element={<ViewGuidances />} />
+        <Route path="/viewPdf/:guidanceId" element={<ViewPdf />} />
 
         <Route path="/ManageNotice" element={<ManageNotices />} />
         <Route path="/UploadNotice" element={<UploadNotice />} />
@@ -256,7 +258,7 @@ const App = () => {
   
           <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
          
-         
+          
       </Routes>
 
       {renderCommonFooter()}
