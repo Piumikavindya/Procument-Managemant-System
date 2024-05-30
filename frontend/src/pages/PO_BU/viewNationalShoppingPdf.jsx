@@ -5,7 +5,7 @@ import { useParams,useNavigate } from "react-router-dom";
 // Ensure pdfjs worker is correctly loaded
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-export function ViewShippingPdf() {
+export function ViewNationalShoppingPdf() {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [loading, setLoading] = useState(true);

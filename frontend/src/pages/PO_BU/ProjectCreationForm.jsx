@@ -143,7 +143,7 @@ export default function ProjectCreationForm({ forms }) {
 
     try {
       // Create PDF
-      await axios.post("http://localhost:8000/procProject/createPdf", data);
+      await axios.post("http://localhost:8000/procProject/createNationalShoppingPdf", data);
 
       // Clear form inputs after downloading
       clearFormInputs();
@@ -580,10 +580,12 @@ export default function ProjectCreationForm({ forms }) {
         </Link>
         <button
           type="submit"
-          onClick={(e) => {handleFormSubmit(e)}}
+         
           className="rounded-md bg-blue-600 h-14 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          onClick={handleGeneratePDF} // Directly pass the function reference
-
+          onClick={(e) => {
+            handleFormSubmit(e);
+            handleGeneratePDF();
+          }}
        >
           CREATE PROJECT
         </button>

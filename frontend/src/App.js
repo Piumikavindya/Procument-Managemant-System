@@ -60,7 +60,8 @@ import EventPlanner from "./pages/admin/eventPlanner/EventPlanner.jsx";
 import ContextWrapper from "./context/ContextWrapper.js";
 import ViewVendorDetails from "./pages/generalUsers/ViewVenderDetails.jsx";
 import ProjectList from "./pages/PO_BU/ProjectList.jsx";
-import {ViewShippingPdf} from "./pages/PO_BU/ViewBidDocumnet.jsx"
+import {ViewNationalShoppingPdf} from "./pages/PO_BU/viewNationalShoppingPdf.jsx"
+import {ViewSmallProcurementPdf} from "./pages/PO_BU/ViewSmallProcurementPDF.jsx"
 
 
 const App = () => {
@@ -226,7 +227,8 @@ const App = () => {
         />
         <Route path="/ProjectCreationForm/" element={<ProjectCreationForm />} />
         <Route path="/ReqSelection/:projectId" element={<AddReqCard/>} />
-        <Route path="/ViewPdf/:projectId" element={<ViewShippingPdf />} />
+        <Route path="/ViewPdf/:projectId" element={<ViewNationalShoppingPdf />} />
+        <Route path="/ViewSmallProcurementPdf/:projectId" element={<ViewSmallProcurementPdf />} />
 
         <Route
           path="/PO_BuHome/:id"
