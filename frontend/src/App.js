@@ -69,7 +69,7 @@ import DownloadBidDoc from "./pages/PO_BU/DownloadBidDoc.jsx";
 import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
 import InvitesBids from "./pages/PO_BU/InvitesBids.jsx";
 import VendorsList from "./pages/PO_BU/VendorsList.jsx";
-
+import DeleteProject from "./pages/PO_BU/DeleteProject.jsx";
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -256,6 +256,7 @@ const App = () => {
         <Route path="/ViewForApproval/:requestId" element={<ViewFormApproval />} />
         <Route path="/projectList" element={<ProjectList/>}/>
  <Route path="/PreviewProjectDetails/:projectId" element={<PreviewProjectDetails/>} />
+ <Route path="/deleteProject/:projectId" element={<DeleteProject/>} />
  <Route path="/biddingDocuments" element={<BiddingDocumentsList/>}/>
   <Route path="/ViewBidDoc/:projectId" element={<ViewShippingPdf />} />
   <Route path="/DownloadBidDoc/:projectId" element={<DownloadBidDoc />} />

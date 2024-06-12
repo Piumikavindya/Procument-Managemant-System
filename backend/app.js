@@ -23,6 +23,8 @@ const sendMailRoute =require('./routes/sendMail');
 const PORT = process.env.PORT || 8000;
 const env = require('dotenv')
 const pdfRoute = require('./routes/pdfRoutes');
+const bidsRouter = require('./routes/SendVendorsMail');
+
 const path = require('path')
 require('dotenv').config();
 env.config()
@@ -64,7 +66,7 @@ app.use('/procProject', procProjectRoutes)
 app.use(pdfRoute)
 app.use('/approvalReqest',approvalRoute);
 app.use('/send',sendMailRoute)
-
+app.use('/bids', bidsRouter);
 
 app.listen(PORT, () => {
     console.log(`The server is listening on port: ${PORT}`);
