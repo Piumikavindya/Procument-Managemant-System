@@ -110,7 +110,7 @@ export default function BiddingDocumentsList() {
       <Breadcrumb
         crumbs={[
           { label: "Home", link: "/PO_BuHome/:id" },
-          { label: "Created Projects", link: "/CreatedProjects" },
+          { label: "Bidding Documents", link: "/biddingDocuments" },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />

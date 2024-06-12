@@ -31,8 +31,8 @@ env.config()
 
 
 
-app.use(express.json());
-app.use(bodyParser.json());
+app.use(express.json());                   //Parses incoming JSON requests
+app.use(bodyParser.json());                //Parses incoming request bodies in a JSON format
 app.use(cors());
 
 

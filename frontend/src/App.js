@@ -67,7 +67,8 @@ import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
 import BiddingDocumentsList from "./pages/PO_BU/BiddingDocumentsList.jsx";
 import DownloadBidDoc from "./pages/PO_BU/DownloadBidDoc.jsx";
 import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
-
+import InvitesBids from "./pages/PO_BU/InvitesBids.jsx";
+import VendorsList from "./pages/PO_BU/VendorsList.jsx";
 
 
 const App = () => {
@@ -258,9 +259,12 @@ const App = () => {
  <Route path="/biddingDocuments" element={<BiddingDocumentsList/>}/>
   <Route path="/ViewBidDoc/:projectId" element={<ViewShippingPdf />} />
   <Route path="/DownloadBidDoc/:projectId" element={<DownloadBidDoc />} />
-  
+  <Route path="/InvitesBids" element={<InvitesBids />} />
+  <Route path="/VendorsList" element={<VendorsList
+  />} />
+ 
           <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
-         
+          
           
       </Routes>
 
