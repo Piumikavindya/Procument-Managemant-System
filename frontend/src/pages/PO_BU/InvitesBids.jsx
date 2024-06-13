@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import {
   MdOutlineDelete,
   MdPreview,
-  MdSimCardDownload,MdDownload,
+  MdSimCardDownload, MdDownload,
 } from "react-icons/md";
-
 import { useParams } from "react-router-dom";
 import UserTypeNavbar from "../../components/UserTypeNavbar.jsx";
 import Breadcrumb from "../../components/Breadcrumb.jsx";
@@ -14,13 +13,16 @@ import DefaultPagination from "../../components/DefaultPagination.js";
 import { Tooltip } from "flowbite-react";
 import { IconButton } from "@material-tailwind/react";
 import { EyeIcon } from "@heroicons/react/24/outline";
-// import { MdDelete, MdDownload } from "react-icons/md";
+import InvitesBidsCard from "./InvitesBidsCard";  // Import the modal component
 
-export default function BiddingDocumentsList() {
+export default function InvitesBids() {
   const [projects, setProjects] = useState([]);
+  const [vendors, setVendors] = useState([]);  // State to hold vendors
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [showUploadForm, setShowUploadForm] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);  // State to control modal visibility
+  const [selectedProject, setSelectedProject] = useState(null);  // State to hold selected project details
   const navigate = useNavigate();
 
   const filteredprojects = projects.filter((project) =>
@@ -44,6 +46,17 @@ export default function BiddingDocumentsList() {
       .catch((error) => {
         console.error("Error fetching project:", error);
         setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+    .get("http://localhost:8000/supplyer/view-supplyers")
+      .then((response) => {
+        setVendors(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching vendors:", error);
       });
   }, []);
 
@@ -97,9 +110,15 @@ export default function BiddingDocumentsList() {
     }
   };
 
+  const handleInviteBidsClick = (project) => {
+    setSelectedProject(project);
+    setModalOpen(true);
+  };
+
   const selected = (crumb) => {
     console.log(crumb);
   };
+
   const handleUploadClick = () => {
     navigate("/Uploadproject");
   };
@@ -168,7 +187,6 @@ export default function BiddingDocumentsList() {
           <div className="align-middle inline-block min-w-full  overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
             <table className="min-w-full">
               <thead className="text-xs text-white uppercase bg-NeutralBlack   dark:text-gray-400">
-                {" "}
                 <tr>
                   <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
                     No
@@ -197,9 +215,9 @@ export default function BiddingDocumentsList() {
                     <td colSpan="3" className="text-center py-4">
                       Loading...
                     </td>
-                  </tr>
-               ) : (
-                projects.map((project, index) => (
+                    </tr>
+                ) : (
+                  projects.map((project, index) => (
                     <tr key={project._id} className="reservation-row">
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="flex items-center">
@@ -224,7 +242,7 @@ export default function BiddingDocumentsList() {
                         <div className="flex items-center">
                           <div>
                             <div className="text-sm leading-5 text-gray-900">
-                            {generateFileName(project.projectId)}{" "}
+                              {generateFileName(project.projectId)}{" "}
                             </div>
                           </div>
                         </div>
@@ -240,16 +258,17 @@ export default function BiddingDocumentsList() {
                           </Link>
 
                           <Link to={`/DownloadBidDoc/${project.projectId}`}>
-                          <IconButton variant="text">
-                                <MdDownload className="h-6 w-6 text-blue-500" />
-                              </IconButton>
-                        </Link>
-                            {/* <Tooltip content="Download Project">
-                              <IconButton variant="text">
-                                <MdDownload className="h-6 w-6 text-blue-500" />
-                              </IconButton>
-                            </Tooltip>
-                          */}
+                            <IconButton variant="text">
+                              <MdDownload className="h-6 w-6 text-blue-500" />
+                            </IconButton>
+                          </Link>
+
+                          <button
+                            onClick={() => handleInviteBidsClick(project)}
+                            className="text-white bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded"
+                          >
+                            Invite Bids
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -263,6 +282,14 @@ export default function BiddingDocumentsList() {
           </div>
         </div>
       </div>
+
+      {modalOpen && (
+        <InvitesBidsCard
+          project={selectedProject}
+          vendors={vendors}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
     </div>
   );
 }
