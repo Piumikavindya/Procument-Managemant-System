@@ -70,6 +70,7 @@ import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
 import InvitesBids from "./pages/PO_BU/InvitesBids.jsx";
 import VendorsList from "./pages/PO_BU/VendorsList.jsx";
 import DeleteProject from "./pages/PO_BU/DeleteProject.jsx";
+import PreviewSupplyerDetails from "./pages/PO_BU/PreviewSupplerDetails.jsx";
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -263,6 +264,9 @@ const App = () => {
   <Route path="/InvitesBids" element={<InvitesBids />} />
   <Route path="/VendorsList" element={<VendorsList
   />} />
+  <Route path="/PreviewSupplyerDetails/:id" element={<PreviewSupplyerDetails
+  />} /> 
+
  
           <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
           
