@@ -12,6 +12,7 @@ import UploadGuidance from "./pages/admin/guidance/UploadGuidance.jsx";
 import DeleteGuidance from "./pages/admin/guidance/DeleteGuidance.jsx";
 import { useNavigate } from "react-router-dom";
 import ViewGuidances from "./pages/admin/guidance/ViewGuidances.jsx";
+import ViewPdf from "./pages/admin/guidance/viewPdf.jsx";
 import DepartmentHome from "./pages/department/DepartmentHome.jsx";
 import PreviewItem from "./pages/admin/items/PreviewItem.jsx";
 import DeleteItem from "./pages/admin/items/DeleteItem.jsx";
@@ -65,7 +66,11 @@ import DeleteItems from "./pages/admin/items/DeleteItems.jsx";
 import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
 import BiddingDocumentsList from "./pages/PO_BU/BiddingDocumentsList.jsx";
 import DownloadBidDoc from "./pages/PO_BU/DownloadBidDoc.jsx";
-import ProfilePage from "./pages/Profile settings/ProfilePage.jsx";
+import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
+import InvitesBids from "./pages/PO_BU/InvitesBids.jsx";
+import VendorsList from "./pages/PO_BU/VendorsList.jsx";
+import DeleteProject from "./pages/PO_BU/DeleteProject.jsx";
+import PreviewSupplyerDetails from "./pages/PO_BU/PreviewSupplerDetails.jsx";
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -179,11 +184,14 @@ const App = () => {
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
         <Route path="/DeleteGuidance/:id" element={<DeleteGuidance />} />
         <Route path="/ViewGuidances" element={<ViewGuidances />} />
+        <Route path="/viewPdf/:guidanceId" element={<ViewPdf />} />
 
         <Route path="/ManageNotice" element={<ManageNotices />} />
         <Route path="/UploadNotice" element={<UploadNotice />} />
         <Route path="/DeleteNotice/:id" element={<DeleteNotice />} />
         <Route path="/ViewNotices" element={<ViewNotice />} />
+        <Route path="/viewNoticePdf/:noticeId" element={<ViewNoticePdf />} />
+
 
         <Route path="/AllItem" element={<ItemDetails />} />
         <Route path="/PreviewItem/:id" element={<PreviewItem />} />
@@ -239,36 +247,25 @@ const App = () => {
           }
         />
         <Route path="/ApprovedRequestList" element={<ApprovedRequestList />} />
-        <Route
-          path="/ViewApprovedForm/:requestId"
-          element={<ViewApprovedForm />}
-        />
-        <Route
-          path="/ViewFormRequest/:requestId"
-          element={<ViewFormRequest />}
-        />
-        <Route
-          path="/ViewForApproval/:requestId"
-          element={<ViewFormApproval />}
-        />
-        <Route path="/projectList" element={<ProjectList />} />
-        <Route
-          path="/PreviewProjectDetails/:projectId"
-          element={<PreviewProjectDetails />}
-        />
-        <Route path="/biddingDocuments" element={<BiddingDocumentsList />} />
-        <Route path="/ViewBidDoc/:projectId" element={<ViewShippingPdf />} />
-        <Route path="/DownloadBidDoc/:projectId" element={<DownloadBidDoc />} />
+        <Route path="/ViewApprovedForm/:requestId" element={<ViewApprovedForm />} />
+        <Route path="/ViewFormRequest/:requestId" element={<ViewFormRequest />} />
+        <Route path="/ViewForApproval/:requestId" element={<ViewFormApproval />} />
+        <Route path="/projectList" element={<ProjectList/>}/>
+ <Route path="/PreviewProjectDetails/:projectId" element={<PreviewProjectDetails/>} />
+ <Route path="/deleteProject/:projectId" element={<DeleteProject/>} />
+ <Route path="/biddingDocuments" element={<BiddingDocumentsList/>}/>
+  <Route path="/ViewBidDoc/:projectId" element={<ViewShippingPdf />} />
+  <Route path="/DownloadBidDoc/:projectId" element={<DownloadBidDoc />} />
+  <Route path="/InvitesBids" element={<InvitesBids />} />
+  <Route path="/VendorsList" element={<VendorsList
+  />} />
+  <Route path="/PreviewSupplyerDetails/:id" element={<PreviewSupplyerDetails
+  />} /> 
 
-        <Route
-          path="/EventPlanner"
-          element={
-            <ContextWrapper>
-              <EventPlanner />{" "}
-            </ContextWrapper>
-          }
-        />
-        <Route path="/Profile" element={<ProfilePage />} />
+ 
+          <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
+          
+          
       </Routes>
 
       {renderCommonFooter()}

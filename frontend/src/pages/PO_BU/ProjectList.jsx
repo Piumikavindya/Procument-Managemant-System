@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import {
-  MdOutlineDelete,
-  MdPreview,
-  MdOutlineSimCardDownload,
-} from "react-icons/md";
+
+  MagnifyingGlassIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
+import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import { useParams } from "react-router-dom";
 import UserTypeNavbar from "../../components/UserTypeNavbar.jsx";
 import Breadcrumb from "../../components/Breadcrumb.jsx";
@@ -229,6 +230,13 @@ export default function ProjectList() {
                               </IconButton>
                             </Tooltip>
                           </button>
+                          <Link to={`/deleteProject/${project.projectId}`}>
+                        <Tooltip content="Delete Project">
+                          <IconButton variant="text">
+                            <TrashIcon className="h-6 w-6  text-red-500" />
+                          </IconButton>
+                        </Tooltip>
+                      </Link>
                         </div>
                       </td>
                     </tr>

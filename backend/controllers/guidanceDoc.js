@@ -1,9 +1,9 @@
 const Guidance = require("../Models/guidanceDoc");
 const asyncWrapper = require("../middlewares/asyncWrapper");
 const path = require("path");
-
+const fs = require('fs');
 // request from the frontend
-
+const PDFDocument = require("pdfkit");
 exports.upload = async (req, res) => {
   try {
     const { name} = req.body;
@@ -86,6 +86,38 @@ exports.downloadGuidance = async (req, res) => {
       .json({ status: "Error while downloading guidance", error: err.message });
   }
 };
+
+exports.viewPdf = async (req, res) => {
+  try {
+    const guidanceId = req.params.id;
+
+    // Await the asynchronous call to find the guidance document
+    const guidance = await Guidance.findById(guidanceId);
+
+    if (!guidance) {
+      return res.status(404).json({ status: "guidance not found" });
+    }
+
+    const file = guidance.file;
+    const pdfFilePath = path.join(__dirname, '..', file);
+
+    // Check if the file exists
+    if (!fs.existsSync(pdfFilePath)) {
+      return res.status(404).json({ error: "File not found" });
+    }
+
+    // Set the content type header
+    res.setHeader("Content-Type", "application/pdf");
+
+    // Stream the file to the response
+    const stream = fs.createReadStream(pdfFilePath);
+    stream.pipe(res);
+  } catch (error) {
+    console.error("Error viewing PDF:", error);
+    res.status(500).send("An error occurred while viewing the PDF");
+  }
+};
+
 // // view details of perticular user
 // exports.previewSupplyer = async (req,res) =>{
 //     const supplyerId = req.params.id;
