@@ -1,16 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 import logo from "../assets/unilogo.png";
-
+import axios from "axios";
+import { useSnackbar } from "notistack";
 import { FaXmark, FaBars } from "react-icons/fa6";
 import { PowerIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { Button, Typography } from "@material-tailwind/react";
 
-const Navbar = ({ isAuthenticated, handleSignOut, username }) => {
+const Navbar = ({ isAuthenticated, handleSignOut, username,userId ,loggedInUser  }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const navigate = useNavigate(); // Initialize navigate
+
+  const { id } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/user/preview-user/${userId}`
+        );
+        console.log("User Data:", response.data);
+        setUser(response.data);
+      } catch (error) {
+        console.log("Error fetching user:", error);
+      }
+    };
+
+    getUser();
+  }, [userId]);
+
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -93,14 +116,14 @@ const Navbar = ({ isAuthenticated, handleSignOut, username }) => {
                 title="Click here to View Profile"
                 >
                 <Link
-                  to={`/Profile`}
+                  to={`/Profile/${userId}`}
                   className="flex items-center gap-2"
                   style={{ textDecoration: "none" }}
                 >
                   <UserCircleIcon className="h-10 w-10 text-blue-500 hover:bg-blue-500/10 focus:bg-blue-500/10 active:bg-blue-500/10" />
                   <Typography as="span" variant="small" className="font-normal">
-                    username
-                  </Typography>
+                {username}
+              </Typography>
                 </Link>
               </Button>
               <button
