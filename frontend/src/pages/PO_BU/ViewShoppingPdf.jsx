@@ -2,38 +2,40 @@ import React, { useState, useEffect } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import axios from "axios";
 import { useParams,useNavigate } from "react-router-dom";
-
 // Ensure pdfjs worker is correctly loaded
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const ViewPdf = () => {
+export function ViewShoppingPdf() {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [loading, setLoading] = useState(true);
   const [pdfUrl, setPdfUrl] = useState("");
   const [prevPageNumber, setPrevPageNumber] = useState(null); // Store the previous page number
-  const { guidanceId } = useParams();
+  const { projectId } = useParams();
   const navigate = useNavigate();
   // Function to fetch PDF URL based on requestId
   const fetchPdfUrl = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/guidance/viewPdf/${guidanceId}`, {
-        responseType: 'arraybuffer', // Ensure response is treated as binary data
-      });
-      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const response = await axios.get(
+        `http://localhost:8000/procProject/viewnational-Pdf/${projectId}`,
+        {
+          responseType: "arraybuffer", // Ensure response is treated as binary data
+        }
+      );
+      const blob = new Blob([response.data], { type: "application/pdf" });
       const pdfUrl = URL.createObjectURL(blob);
       setPdfUrl(pdfUrl);
-      setLoading(false);// Open the PDF in a new tab
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching PDF:", error);
+      setLoading(false);
     }
   };
-  
 
   // Call fetchPdfUrl when component mounts
   useEffect(() => {
     fetchPdfUrl();
-  }, [guidanceId]);
+  }, [projectId]);
 
   // Function to handle page change
   const onPageChange = ({ pageNumber }) => {
@@ -43,7 +45,7 @@ const ViewPdf = () => {
 
   // Function to handle going back to the previous page
   const goBack = () => {
-    navigate("/ManageGuidance");
+    navigate("/ProjectCreationForm");
   };
 
   return (
@@ -97,5 +99,3 @@ const ViewPdf = () => {
     </div>
   );
 };
-
-export default ViewPdf;

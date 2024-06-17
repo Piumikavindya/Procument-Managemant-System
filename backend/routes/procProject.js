@@ -15,13 +15,15 @@ router.get("/generateProjectId", generateProjectId, (req, res) => {
     console.log("Received a request to create a procurement project:", req.body);
     createRequest(req, res);
   });
-  router.post('/createPdf',createSmallProcurementPdf) // to generate pdf 
-  router.get('/view-Pdf/:projectId',viewSmallProcurementPdf) // to generate pdf 
+  // to generate Direct Purchasing Pdf
+  router.post('/createPdf',createSmallProcurementPdf) 
+  // Routes for view generate pdf
+  router.get('/view-Pdf/:projectId',viewSmallProcurementPdf)  
 
-  // routes for national shopping pdf
-  router.post('/createNationalShoppingPdf',createNationalShoppingPdf) // to generate pdf 
-
-  router.get('/viewnational-Pdf/:projectId',viewNationalShoppingPdf) // to generate pdf 
+  // Route for Shopping Method pdf
+  router.post('/createNationalShoppingPdf',createNationalShoppingPdf)  
+  // Route for view generate pdf
+  router.get('/viewnational-Pdf/:projectId',viewNationalShoppingPdf) 
 
   
 

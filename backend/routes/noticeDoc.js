@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { uploadnotice,viewNotice, downloadNotice, deleterNotice } = require('../controllers/noticeDoc');
+const { uploadnotice,viewNotice, downloadNotice, deleterNotice,viewPdf } = require('../controllers/noticeDoc');
 const uploads = require('../middlewares/multer');
 
 // Add user create route
@@ -14,6 +14,6 @@ router.get('/view-notice', viewNotice);
 
   router.get("/download/:id", downloadNotice);
   router.delete("/delete/:id", deleterNotice);
-
+  router.get('/viewPdf/:id', viewPdf);
   
   module.exports = router;

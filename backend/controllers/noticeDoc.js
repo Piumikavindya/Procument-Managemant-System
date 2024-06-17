@@ -3,7 +3,7 @@
 const Notice = require('../Models/noticeDoc');
 const asyncWrapper = require('../middlewares/asyncWrapper');
 const path = require("path");
-
+const fs = require('fs');
 
 
 
@@ -153,4 +153,36 @@ exports.deleterNotice = async (req,res)=>{
         // Use status 500 for server errors
         res.status(500).send({ status: "Error with delete notice", error: err.message });
       }
+};
+
+
+exports.viewPdf = async (req, res) => {
+  try {
+    const noticeId = req.params.id;
+
+    // Await the asynchronous call to find the guidance document
+    const notice = await Notice.findById(noticeId);
+
+    if (!notice) {
+      return res.status(404).json({ status: "guidance not found" });
+    }
+
+    const file = notice.file;
+    const pdfFilePath = path.join(__dirname, '..', file);
+
+    // Check if the file exists
+    if (!fs.existsSync(pdfFilePath)) {
+      return res.status(404).json({ error: "File not found" });
+    }
+
+    // Set the content type header
+    res.setHeader("Content-Type", "application/pdf");
+
+    // Stream the file to the response
+    const stream = fs.createReadStream(pdfFilePath);
+    stream.pipe(res);
+  } catch (error) {
+    console.error("Error viewing PDF:", error);
+    res.status(500).send("An error occurred while viewing the PDF");
+  }
 };

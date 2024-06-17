@@ -2,40 +2,38 @@ import React, { useState, useEffect } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import axios from "axios";
 import { useParams,useNavigate } from "react-router-dom";
+
 // Ensure pdfjs worker is correctly loaded
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-export function ViewNationalShoppingPdf() {
+const ViewNoticePdf = () => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [loading, setLoading] = useState(true);
   const [pdfUrl, setPdfUrl] = useState("");
   const [prevPageNumber, setPrevPageNumber] = useState(null); // Store the previous page number
-  const { projectId } = useParams();
+  const { noticeId } = useParams();
   const navigate = useNavigate();
   // Function to fetch PDF URL based on requestId
   const fetchPdfUrl = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/procProject/view-Pdf/${projectId}`,
-        {
-          responseType: "arraybuffer", // Ensure response is treated as binary data
-        }
-      );
-      const blob = new Blob([response.data], { type: "application/pdf" });
+      const response = await axios.get(`http://localhost:8000/notice/viewPdf/${noticeId}`, {
+        responseType: 'arraybuffer', // Ensure response is treated as binary data
+      });
+      const blob = new Blob([response.data], { type: 'application/pdf' });
       const pdfUrl = URL.createObjectURL(blob);
       setPdfUrl(pdfUrl);
-      setLoading(false);
+      setLoading(false);// Open the PDF in a new tab
     } catch (error) {
       console.error("Error fetching PDF:", error);
-      setLoading(false);
     }
   };
+
 
   // Call fetchPdfUrl when component mounts
   useEffect(() => {
     fetchPdfUrl();
-  }, [projectId]);
+  }, [noticeId]);
 
   // Function to handle page change
   const onPageChange = ({ pageNumber }) => {
@@ -45,12 +43,12 @@ export function ViewNationalShoppingPdf() {
 
   // Function to handle going back to the previous page
   const goBack = () => {
-    navigate("/ProjectCreationForm");
+    navigate("/ManageNotice");
   };
 
   return (
     <div className="flex justify-center items-center h-full bg-gray-200 mt-24">
-     
+
       {loading ? (
         <div className="text-gray-600">Loading...</div>
       ) : (
@@ -73,7 +71,7 @@ export function ViewNationalShoppingPdf() {
             <div className="space-x-2">
               <button
                 onClick={goBack} 
-              
+
                 className="py-1 px-2 rounded bg-gray-400 text-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
               >
                 Back
@@ -99,3 +97,5 @@ export function ViewNationalShoppingPdf() {
     </div>
   );
 };
+
+export default ViewNoticePdf;

@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios"; 
-// import { faPlus } from "@fortawesome/free-solid-svg-icons";
-
+import axios from "axios";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import { Button, IconButton, Tooltip } from "@material-tailwind/react";
 import {
@@ -15,7 +13,6 @@ import {
 import { AiFillPlusCircle } from "react-icons/ai";
 import { AddReqCard } from "./AddItemCard";
 
-
 export default function ProjectCreationForm({ forms }) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -25,7 +22,7 @@ export default function ProjectCreationForm({ forms }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [items, setItems] = useState({});
   const [projectId, setProjectId] = useState("");
-  const [selectedRequests, setSelectedRequests] = ("");
+  const [selectedRequests, setSelectedRequests] = "";
   const [formData, setFormData] = useState({
     projectId: "",
     procurementRequests: [],
@@ -44,23 +41,14 @@ export default function ProjectCreationForm({ forms }) {
   const [appointTEC, setAppointTEC] = useState([]);
   const [appointBOCommite, setAppointBOCommite] = useState([]);
   const [projectCreated, setProjectCreated] = useState(false);
-  const biddingTypes = ["Direct Purchasing", "Shopping Method", "National Competitive Method (NCB)", "International Competitive Bidding (ICB)"];
+  const biddingTypes = ["Direct Purchasing", "Shopping Method"];
 
   useEffect(() => {
     const formDataFromStorage = localStorage.getItem("formData");
     if (formDataFromStorage) {
-      const formData = JSON.parse(formDataFromStorage);
-      setProjectId(formData.projectId);
-      setProjectTitle(formData.projectTitle);
-      setProcurementRequests(formData.procurementRequests);
-      setBiddingType(formData.biddingType);
-      setClosingDate(formData.closingDate);
-      setClosingTime(formData.closingTime);
-      setAppointTEC(formData.appointTEC);
-      setAppointBOCommite(formData.appointBOCommite);
-      
-     
-      
+      const savedFormData = JSON.parse(formDataFromStorage);
+      setFormData(savedFormData);
+      setProjectId(savedFormData.projectId);
     } else {
       handleGenerateProjectId();
     }
@@ -84,14 +72,9 @@ export default function ProjectCreationForm({ forms }) {
   };
 
   const handleAddRequestClick = (requestData) => {
-    // Show the AddReqCard component
     setShowAddRequestCard(true);
-    // Set the items state
-    setRequests((prevRequests) => [
-      ...prevRequests,
-      requestData,
-    ]);
-    const formData ={
+    setRequests((prevRequests) => [...prevRequests, requestData]);
+    const formData = {
       projectId,
       procurementRequests,
       projectTitle,
@@ -100,7 +83,7 @@ export default function ProjectCreationForm({ forms }) {
       closingTime,
       appointTEC,
       appointBOCommite,
-    }
+    };
     setLoading(true);
     try {
       // Fetch updated items after submitting the form
@@ -108,11 +91,9 @@ export default function ProjectCreationForm({ forms }) {
       console.error("Error submitting project", error);
       console.dir(error);
     }
-        // Navigate to the specified route after updating items
-        navigate(`/ReqSelection/${projectId}`);
+    navigate(`/ReqSelection/${projectId}`);
     localStorage.setItem("formData", JSON.stringify(formData));
   };
-
 
   const handleViewRequest = async () => {
     try {
@@ -120,16 +101,45 @@ export default function ProjectCreationForm({ forms }) {
         `http://localhost:8000/procProject/viewAddedRequests/${projectId}`
       );
       const requestData = response.data;
-  
-      // Merge the existing requests with the new data
-      setRequests(requestData);
 
+      setRequests(requestData);
     } catch (error) {
       console.error("Error fetching requests:", error);
     }
   };
-  const handleGeneratePDF = async () => {
-    const data = {
+
+  const handleGenerateShoppingMethodPdf = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/procProject/createNationalShoppingPdf",
+        formData
+      );
+      console.log("Shopping Method PDF created successfully", response.data);
+      clearFormInputs();
+    } catch (error) {
+      console.error("Error generating Shopping Method PDF:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
+  const handleGenerateDirectPurchasingPdf = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/procProject/createPdf",
+        formData
+      );
+      console.log("Direct Purchasing PDF created successfully", response.data);
+      clearFormInputs();
+    } catch (error) {
+      console.error("Error generating Direct Purchasing PDF:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = {
       projectId,
       procurementRequests,
       projectTitle,
@@ -138,77 +148,47 @@ export default function ProjectCreationForm({ forms }) {
       closingTime,
       appointTEC,
       appointBOCommite,
-      
+    };
+    const newProject = {
+      projectId,
+      procurementRequests,
+      projectTitle,
+      biddingType,
+      closingDate,
+      closingTime,
+      appointTEC,
+      appointBOCommite,
     };
 
+    setLoading(true);
     try {
-      // Create PDF
-      await axios.post("http://localhost:8000/procProject/createNationalShoppingPdf", data);
-
-      // Clear form inputs after downloading
-      clearFormInputs();
-    } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred. Please try again.");
-    }
-  };
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    
-      const formData ={
-        projectId,
-        procurementRequests,
-        projectTitle,
-        biddingType,
-        closingDate,
-        closingTime,
-        appointTEC,
-        appointBOCommite,
-      };
-      const newProject ={
-        projectId,
-        procurementRequests,
-        projectTitle,
-        biddingType,
-        closingDate,
-        closingTime,
-        appointTEC,
-        appointBOCommite,
-      };
-      
-      setLoading(true);
-      try {
-      // Make a POST request to create a new project
       const response = await axios.post(
         `http://localhost:8000/procProject/createProject/${projectId}`,
         newProject
       );
-  const updatedProject = response.data.updatedProject;
-      // Handle successful response
+      const updatedProject = response.data.updatedProject;
       console.log("Project created:", response.data);
       alert("Project created successfully");
       setLoading(false);
 
       setFormData("");
-      // Reset form inputs
       clearFormInputs();
       localStorage.removeItem("formData");
       console.log("Request submitted successfully", response.data);
-      // Navigate to view the newly created project
       navigateToViewProject();
     } catch (error) {
       console.error("Error creating project:", error);
-      // Handle error
     } finally {
       setLoading(false);
     }
   };
-  
+
   const navigateToViewProject = () => {
-    navigate(`/ViewPdf/${projectId}`);
+    if (formData.biddingType === "Shopping Method")
+      navigate(`/ViewShoppingPdf/${projectId}`);
+    else navigate(`/ViewDirectPurchasingPdf/${projectId}`);
   };
-  
+
   const clearFormInputs = () => {
     setFormData({
       projectId: "",
@@ -221,7 +201,6 @@ export default function ProjectCreationForm({ forms }) {
     });
     setRequests([]);
   };
-  
 
   const handleInputChange = (e) => {
     setFormData({
@@ -229,14 +208,13 @@ export default function ProjectCreationForm({ forms }) {
       [e.target.name]: e.target.value,
     });
   };
+
   const filteredRequests = requests.filter((request) =>
     request[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-
-    <form onSubmit={(e) =>handleFormSubmit(e, requests)}>
-       
+    <form onSubmit={(e) => handleFormSubmit(e, requests)}>
       <div className="space-y-12 ml-40 mr-40 mt-40">
         <UserTypeNavbar userType="procurement Officer" />
 
@@ -290,7 +268,7 @@ export default function ProjectCreationForm({ forms }) {
                   autoComplete="family-name"
                   placeholder="Enter the Project Title"
                   value={projectTitle}
-                  onChange={(e) =>setProjectTitle(e.target.value )}
+                  onChange={(e) => setProjectTitle(e.target.value)}
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mt-2"
                 />
               </div>
@@ -304,14 +282,15 @@ export default function ProjectCreationForm({ forms }) {
                 >
                   <h5>Closing Date & Time</h5>
                 </label>
-                <input type="date" className="mr-6 
+                <input
+                  type="date"
+                  className="mr-6 
                 rounded"
-                value={closingDate}
-                onChange={(e) =>setClosingDate(e.target.value)}></input>
+                  value={closingDate}
+                  onChange={(e) => setClosingDate(e.target.value)}
+                ></input>
                 <input type="time" className="rounded"></input>
               </div>
-
-             
             </div>
 
             <div className="sm:col-span-3">
@@ -327,113 +306,110 @@ export default function ProjectCreationForm({ forms }) {
                   name="country"
                   autoComplete="country-name"
                   value={biddingType}
-                  onChange={(e) => setBiddingType(e.target.value )}
+                  onChange={(e) => setBiddingType(e.target.value)}
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
                 >
-                 {biddingTypes.map((type, index) => (
-                          <option key={index} value={type}>
-                            {type}
-                          </option>
-                        ))}                          <option value="">Select method</option>
-
-                
+                  {biddingTypes.map((type, index) => (
+                    <option key={index} value={type}>
+                      {type}
+                    </option>
+                  ))}{" "}
+                  <option value="">Select method</option>
                 </select>
               </div>
             </div>
-
-           
           </div>
           <div className="border-b border-gray-900/10 pb-12">
-          <legend className="text-sm font-semibold leading-6 text-gray-900 mt-10">
-            <h5>Add the Requests into Projects</h5>
-          </legend>
+            <legend className="text-sm font-semibold leading-6 text-gray-900 mt-10">
+              <h5>Add the Requests into Projects</h5>
+            </legend>
 
-          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-          <button  onClick={handleAddRequestClick} class="button">
-                    <span className="c-main">
-                      <span className="c-ico">
-                        <span className="c-blur"></span>{" "}
-                        <span className="ico-text">+</span>
-                      </span>
-                      Add Requests
-                    </span>
-                  </button>
-          </div>
+            <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+              <button onClick={handleAddRequestClick} class="button">
+                <span className="c-main">
+                  <span className="c-ico">
+                    <span className="c-blur"></span>{" "}
+                    <span className="ico-text">+</span>
+                  </span>
+                  Add Requests
+                </span>
+              </button>
+            </div>
 
-          <div className="mt-6 space-y-6 sm:col-span-3">
-  <div className="align-middle inline-block min-w-full overflow-hidden bg-white shadow-dashboard pt-3 rounded-bl-lg rounded-br-lg">
-    <table className="min-w-full" key={Object.keys(requests).length}>
-      <thead className="text-xs text-white uppercase bg-NeutralBlack">
-        <tr>
-          <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
-            No
-          </th>
-          <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
-            Request ID
-          </th>
-          <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
-            Department
-          </th>
-          <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
-            Purpose
-          </th>
-        </tr>
-      </thead>
-      <tbody className="bg-white">
-        {filteredRequests.map((request, index) => (
-          <tr key={request.requestId} className="reservation-row">
-            <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
-              <div className="flex items-center">
-                <div>
-                  <div className="text-sm leading-5 text-gray-900">
-                    {index + 1}
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
-              <div className="flex items-center">
-                <div>
-                  <div className="text-sm leading-5 text-gray-900">
-                    {request.requestId}
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
-              <div className="flex items-center">
-                <div>
-                  <div className="text-sm leading-5 text-gray-900">
-                    {request.department}
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
-              <div className="flex items-center">
-                <div>
-                  <div className="text-sm leading-5 text-gray-900">
-                    {request.purpose}
-                  </div>
-                </div>
-              </div>
-            </td>
-         
-          </tr>
-        ))}
-      </tbody>
-    </table>
+            <div className="mt-6 space-y-6 sm:col-span-3">
+              <div className="align-middle inline-block min-w-full overflow-hidden bg-white shadow-dashboard pt-3 rounded-bl-lg rounded-br-lg">
+                <table
+                  className="min-w-full"
+                  key={Object.keys(requests).length}
+                >
+                  <thead className="text-xs text-white uppercase bg-NeutralBlack">
+                    <tr>
+                      <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
+                        No
+                      </th>
+                      <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
+                        Request ID
+                      </th>
+                      <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
+                        Department
+                      </th>
+                      <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider">
+                        Purpose
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white">
+                    {filteredRequests.map((request, index) => (
+                      <tr key={request.requestId} className="reservation-row">
+                        <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                          <div className="flex items-center">
+                            <div>
+                              <div className="text-sm leading-5 text-gray-900">
+                                {index + 1}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                          <div className="flex items-center">
+                            <div>
+                              <div className="text-sm leading-5 text-gray-900">
+                                {request.requestId}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                          <div className="flex items-center">
+                            <div>
+                              <div className="text-sm leading-5 text-gray-900">
+                                {request.department}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                          <div className="flex items-center">
+                            <div>
+                              <div className="text-sm leading-5 text-gray-900">
+                                {request.purpose}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
 
-              
-              {showAddRequestCard && (
+                {showAddRequestCard && (
                   <AddReqCard
-                  handleAddRequestClick={handleAddRequestClick}
+                    handleAddRequestClick={handleAddRequestClick}
                     handleViewRequest={handleViewRequest}
                   />
                 )}
+              </div>
             </div>
-          </div>
-         
           </div>
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
@@ -563,8 +539,6 @@ export default function ProjectCreationForm({ forms }) {
                 </div>
               </fieldset>
             </div>
-
-
           </div>
         </div>
       </div>
@@ -578,17 +552,30 @@ export default function ProjectCreationForm({ forms }) {
             CLEAR FORM
           </button>
         </Link>
+        {formData.biddingType === "Shopping Method" ? (
+
         <button
           type="submit"
-         
           className="rounded-md bg-blue-600 h-14 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           onClick={(e) => {
             handleFormSubmit(e);
-            handleGeneratePDF();
+            handleGenerateShoppingMethodPdf();
           }}
-       >
+        >
           CREATE PROJECT
         </button>
+         ) : (
+          <button
+          type="submit"
+          className="rounded-md bg-blue-600 h-14 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          onClick={(e) => {
+            handleFormSubmit(e);
+            handleGenerateDirectPurchasingPdf();
+          }}
+        >
+          CREATE PROJECT
+        </button>
+        )}
       </div>
     </form>
   );

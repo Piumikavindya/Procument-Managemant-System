@@ -127,9 +127,9 @@ const generateTable1 = (doc) => {
   
   // Third Table
   const table3Top = table2Top + row3Height + row4Height ; // Adjust spacing
-  const row5Height = 25;
+  const row5Height = 35;
   const row6Height = 100;
-  const row7Height = 190;
+  const row7Height = 210;
 
   drawTableBorder(table3Top, row5Height + row6Height + row7Height); // Border
   drawRowDivider(tableLeft, table3Top + row5Height, tableWidth); // Row divider
@@ -201,14 +201,14 @@ const generateTable1 = (doc) => {
     "4.2",
     tableLeft + secondColumnWidth + 10,
     additionalRowTop + 70,
-    "Helvetica",
+    "Helvetica-Bold",
     12
   );
   addText(
     "Alternative offers shall not be considered. The vendors are advised not to quote different options for the same item but furnish the most competitive among the options available to the bidder.",
     tableLeft + secondColumnWidth + 30,
     additionalRowTop + 70,
-    "Helvetica",
+    "Helvetica-Bold",
     12
   ); // Text
 
@@ -217,7 +217,7 @@ const generateTable1 = (doc) => {
   addText(
     "5. Prices and\nDiscounts",
     tableLeft + 10,
-    additionalRowTop + row5Height + 130,
+    additionalRowTop + row5Height + 100,
     "Helvetica-Bold",
     12
   ); // Text

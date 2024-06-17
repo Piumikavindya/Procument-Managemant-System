@@ -75,8 +75,19 @@ const generateTable3 = (doc) => {
     12
   );
 
+  // Additional row without dividing columns
+  const additionalRowTop = table2Top + rowHeightMedium;
+  drawTableBorder(additionalRowTop, rowHeightShort);
+  addText(
+    "E: Evaluation and Comparison of Quotation ",
+    tableLeft + 180,
+    additionalRowTop + 5,
+    "Helvetica-Bold",
+    12
+  );
+
   // Third Table - Clarifications
-  const table3Top = table2Top + rowHeightMedium;
+  const table3Top = additionalRowTop + rowHeightShort;
   drawTableBorder(table3Top, rowHeightTall);
   drawColumnDivider(tableLeft + columnWidth, table3Top, rowHeightTall);
 
@@ -217,6 +228,8 @@ const generateTable3 = (doc) => {
     12
   );
   addText("17.1", tableLeft + columnWidth + 4, table6Top + 5, "Helvetica", 12);
+  
+
   addText(
     "The Purchaser reserves the right to accept or reject any quotation, and to annul the process and reject all quotations at any time prior to acceptance, without thereby incurring any liability to bidders.",
     tableLeft + columnWidth + 30,
