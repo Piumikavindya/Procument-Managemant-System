@@ -5,7 +5,7 @@ const path = require("path");
 const nodemailer = require("nodemailer");
 const env = require("dotenv");
 const PdfModel = require("../Models/pdfDetails");
-const ProcRequest = require("../Models/procReqest"); // Import your Mongoose model
+const ProcRequest= require("../Models/procReqest"); // Import your Mongoose model
 env.config();
 
 exports.createPdf = async (req, res) => {

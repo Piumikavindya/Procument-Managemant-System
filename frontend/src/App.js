@@ -20,7 +20,7 @@ import AddItem from "./pages/admin/items/AddItem.jsx";
 import FormView from "./pages/department/FormView.jsx";
 import { AddItemCard } from "./pages/department/AddItemCard .jsx";
 import UploadNotice from "./pages/admin/notices/UploadNotice.jsx";
-import ViewNotice from "./pages/admin/notices/ViewNotice.jsx";
+import ViewNotice from "./pages/admin/notices/viewNoticePdf.jsx";
 import ManageNotices from "./pages/admin/notices/ManageNotices.jsx";
 import AddSupplier from "./pages/admin/vendors/AddSupplier.jsx";
 import AddItems from "./pages/admin/items/Additems.jsx";
@@ -61,6 +61,9 @@ import EventPlanner from "./pages/admin/eventPlanner/EventPlanner.jsx";
 import ContextWrapper from "./context/ContextWrapper.js";
 import ViewVendorDetails from "./pages/generalUsers/ViewVenderDetails.jsx";
 import ProjectList from "./pages/PO_BU/ProjectList.jsx";
+import {ViewShoppingPdf} from "./pages/PO_BU/ViewShoppingPdf.jsx"
+import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
+import { ViewDirectPurchasingPdf } from "./pages/PO_BU/ViewDirectPurchasingPdf.jsx";
 import { ViewShippingPdf } from "./pages/PO_BU/ViewBidDocumnet.jsx";
 import DeleteItems from "./pages/admin/items/DeleteItems.jsx";
 import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
@@ -235,6 +238,9 @@ const App = () => {
           element={<SendRequest />}
         />
         <Route path="/ProjectCreationForm/" element={<ProjectCreationForm />} />
+        <Route path="/ReqSelection/:projectId" element={<AddReqCard/>} />
+        <Route path="/ViewShoppingPdf/:projectId" element={<ViewShoppingPdf />} />
+        <Route path="/ViewDirectPurchasingPdf/:projectId" element={<ViewDirectPurchasingPdf />} />
         <Route path="/ReqSelection/:projectId" element={<AddReqCard />} />
 
         <Route
@@ -264,6 +270,8 @@ const App = () => {
 
  
           <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
+          <Route path="/viewNoticePdf/:noticeId" element={<ViewNoticePdf />} />
+         
           
           <Route
           path="/profile/:userId"
