@@ -11,7 +11,8 @@ import ReqForm from "./pages/department/ReqForm.jsx";
 import UploadGuidance from "./pages/admin/guidance/UploadGuidance.jsx";
 import DeleteGuidance from "./pages/admin/guidance/DeleteGuidance.jsx";
 import { useNavigate } from "react-router-dom";
-import ViewGuidances from "./pages/admin/guidance/ViewGuidances.jsx";
+import ViewGuidances from "./pages/admin/guidance/ViewPdf.jsx";
+import ViewPdf from "./pages/admin/guidance/ViewPdf.jsx";
 import DepartmentHome from "./pages/department/DepartmentHome.jsx";
 import PreviewItem from "./pages/admin/items/PreviewItem.jsx";
 import DeleteItem from "./pages/admin/items/DeleteItem.jsx";
@@ -19,7 +20,7 @@ import AddItem from "./pages/admin/items/AddItem.jsx";
 import FormView from "./pages/department/FormView.jsx";
 import { AddItemCard } from "./pages/department/AddItemCard .jsx";
 import UploadNotice from "./pages/admin/notices/UploadNotice.jsx";
-import ViewNotice from "./pages/admin/notices/viewNoticePdf.jsx";
+import ViewNotice from "./pages/admin/notices/ViewNotice.jsx";
 import ManageNotices from "./pages/admin/notices/ManageNotices.jsx";
 import AddSupplier from "./pages/admin/vendors/AddSupplier.jsx";
 import AddItems from "./pages/admin/items/Additems.jsx";
@@ -50,18 +51,27 @@ import DownloadRequest from "./pages/department/DownloadRequest.jsx";
 import SendRequest from "./pages/department/SendRequest.jsx";
 import ProjectCreationForm from "./pages/PO_BU/ProjectCreationForm.jsx";
 import PO_BuHome from "./pages/PO_BU/PO_BuHome.jsx";
-import { AddReqCard } from './pages/PO_BU/AddItemCard.jsx';
+import { AddReqCard } from "./pages/PO_BU/AddItemCard.jsx";
 import ApprovedRequestList from "./pages/PO_BU/ApprovedRequestList.jsx";
-import {ViewApprovedForm}  from "./pages/PO_BU/ViewApprovedForm.jsx";
+import { ViewApprovedForm } from "./pages/PO_BU/ViewApprovedForm.jsx";
 import ViewFormRequest from "./pages/department/ViewFormRequest.jsx";
-import {ViewFormApproval} from "./pages/approver/ViewFormApproval.jsx";
+import { ViewFormApproval } from "./pages/approver/ViewFormApproval.jsx";
 // import ViewFormApproval from "./pages/approver/ViewFormApproval.jsx";
 import EventPlanner from "./pages/admin/eventPlanner/EventPlanner.jsx";
 import ContextWrapper from "./context/ContextWrapper.js";
 import ViewVendorDetails from "./pages/generalUsers/ViewVenderDetails.jsx";
 import ProjectList from "./pages/PO_BU/ProjectList.jsx";
-import {ViewShoppingPdf} from "./pages/PO_BU/ViewShoppingPdf.jsx"
+import DeleteItems from "./pages/admin/items/DeleteItems.jsx";
+import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
+import BiddingDocumentsList from "./pages/PO_BU/BiddingDocumentsList.jsx";
+import DownloadBidDoc from "./pages/PO_BU/DownloadBidDoc.jsx";
 import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
+import InvitesBids from "./pages/PO_BU/InvitesBids.jsx";
+import VendorsList from "./pages/PO_BU/VendorsList.jsx";
+import DeleteProject from "./pages/PO_BU/DeleteProject.jsx";
+import PreviewSupplyerDetails from "./pages/PO_BU/PreviewSupplerDetails.jsx";
+import ProfilePage from "./pages/Profile settings/ProfilePage.jsx";
+import { ViewShoppingPdf } from "./pages/PO_BU/ViewShoppingPdf.jsx";
 import { ViewDirectPurchasingPdf } from "./pages/PO_BU/ViewDirectPurchasingPdf.jsx";
 
 const App = () => {
@@ -76,14 +86,24 @@ const App = () => {
     }
 
     return isAuthenticated ? (
-      <Navbar isAuthenticated={isAuthenticated} handleSignOut={handleSignOut} />
+      <Navbar
+        isAuthenticated={isAuthenticated}
+        handleSignOut={handleSignOut}
+        userId={loggedInUser?.id}
+        username={loggedInUser?.username}
+      />
     ) : (
-      <Navbar isAuthenticated={isAuthenticated} handleSignIn={handleSignIn} />
+      <Navbar
+        isAuthenticated={isAuthenticated}
+        handleSignIn={handleSignIn}
+        userId={loggedInUser?.id}
+        username={loggedInUser?.username}
+      />
     );
   };
 
   const renderCommonFooter = () => {
-    if (location.pathname === "/loginpage" ) {
+    if (location.pathname === "/loginpage") {
       return null;
     }
 
@@ -112,7 +132,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/viewVendors" element={<ViewVendorDetails/>}/>
+        <Route path="/viewVendors" element={<ViewVendorDetails />} />
         <Route
           path="/loginpage"
           element={
@@ -136,12 +156,11 @@ const App = () => {
           }
         />
 
-  
         <Route path="/addUsers" element={<AddUsers />} />
         <Route path="/editUsers/:id" element={<EditUserDetails />} />
         <Route path="/userList" element={<UserList />} />
         <Route path="/deleteUserDetails/:id" element={<DeleteUserDetails />} />
-       
+
         <Route
           path="/previewUserDetails/:id"
           element={<PreviewUserDetails />}
@@ -155,8 +174,6 @@ const App = () => {
         <Route path="/addSupplier" element={<AddSupplier />} />
         <Route path="/updateSupplier/:id" element={<UpdateSupplier />} />
         <Route path="/deleteSupplier/:id" element={<DeleteSupplier />} />
-
-        
 
         <Route path="/reqform" element={<ReqForm />} />
         <Route
@@ -179,17 +196,18 @@ const App = () => {
         <Route path="/UploadGuidance" element={<UploadGuidance />} />
         <Route path="/DeleteGuidance/:id" element={<DeleteGuidance />} />
         <Route path="/ViewGuidances" element={<ViewGuidances />} />
+        <Route path="/viewPdf/:guidanceId" element={<ViewPdf />} />
 
         <Route path="/ManageNotice" element={<ManageNotices />} />
         <Route path="/UploadNotice" element={<UploadNotice />} />
         <Route path="/DeleteNotice/:id" element={<DeleteNotice />} />
         <Route path="/ViewNotices" element={<ViewNotice />} />
+        <Route path="/viewNoticePdf/:noticeId" element={<ViewNoticePdf />} />
 
         <Route path="/AllItem" element={<ItemDetails />} />
         <Route path="/PreviewItem/:id" element={<PreviewItem />} />
         <Route path="/DeleteItem/:id" element={<DeleteItem />} />
         <Route path="/AddItem" element={<AddItem />} />
-
 
         <Route path="/reqform" element={<ReqForm />} />
         <Route path="/additem/:requestId" element={<AddItemCard />} />
@@ -201,7 +219,7 @@ const App = () => {
 
         <Route path="/AddItems" element={<AddItems />} />
         <Route path="/updateItems/:id" element={<UpdateItems />} />
-        {/* <Route path="/DeleteItems/:id" element={<DeleteItems />} /> */}
+        <Route path="/DeleteItems/:id" element={<DeleteItems />} />
         <Route
           path="/previewItemDetails/:id"
           element={<PreviewItemDetails />}
@@ -226,9 +244,15 @@ const App = () => {
           element={<SendRequest />}
         />
         <Route path="/ProjectCreationForm/" element={<ProjectCreationForm />} />
-        <Route path="/ReqSelection/:projectId" element={<AddReqCard/>} />
-        <Route path="/ViewShoppingPdf/:projectId" element={<ViewShoppingPdf />} />
-        <Route path="/ViewDirectPurchasingPdf/:projectId" element={<ViewDirectPurchasingPdf />} />
+        <Route path="/ReqSelection/:projectId" element={<AddReqCard />} />
+        <Route
+          path="/ViewShoppingPdf/:projectId"
+          element={<ViewShoppingPdf />}
+        />
+        <Route
+          path="/ViewDirectPurchasingPdf/:projectId"
+          element={<ViewDirectPurchasingPdf />}
+        />
 
         <Route
           path="/PO_BuHome/:id"
@@ -242,14 +266,54 @@ const App = () => {
           }
         />
         <Route path="/ApprovedRequestList" element={<ApprovedRequestList />} />
-        <Route path="/ViewApprovedForm/:requestId" element={<ViewApprovedForm />} />
-        <Route path="/ViewFormRequest/:requestId" element={<ViewFormRequest />} />
-        <Route path="/ViewForApproval/:requestId" element={<ViewFormApproval />} />
-        <Route path="/projectList" element={<ProjectList/>}/>
-          
-          <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
-          <Route path="/viewNoticePdf/:noticeId" element={<ViewNoticePdf />} />
-         
+        <Route
+          path="/ViewApprovedForm/:requestId"
+          element={<ViewApprovedForm />}
+        />
+        <Route
+          path="/ViewFormRequest/:requestId"
+          element={<ViewFormRequest />}
+        />
+        <Route
+          path="/ViewForApproval/:requestId"
+          element={<ViewFormApproval />}
+        />
+        <Route path="/projectList" element={<ProjectList />} />
+        <Route
+          path="/PreviewProjectDetails/:projectId"
+          element={<PreviewProjectDetails />}
+        />
+        <Route path="/deleteProject/:projectId" element={<DeleteProject />} />
+        <Route path="/biddingDocuments" element={<BiddingDocumentsList />} />
+
+        <Route path="/DownloadBidDoc/:projectId" element={<DownloadBidDoc />} />
+        <Route path="/InvitesBids" element={<InvitesBids />} />
+        <Route path="/VendorsList" element={<VendorsList />} />
+        <Route
+          path="/PreviewSupplyerDetails/:id"
+          element={<PreviewSupplyerDetails />}
+        />
+
+        <Route
+          path="/EventPlanner"
+          element={
+            <ContextWrapper>
+              <EventPlanner />{" "}
+            </ContextWrapper>
+          }
+        />
+
+        <Route
+          path="/profile/:userId"
+          element={
+            <ProfilePage
+              isAuthenticated={isAuthenticated}
+              loggedInUser={loggedInUser}
+              userId={loggedInUser?.id}
+              username={loggedInUser?.username}
+            />
+          }
+        />
       </Routes>
 
       {renderCommonFooter()}

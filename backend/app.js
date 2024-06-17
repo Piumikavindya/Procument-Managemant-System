@@ -23,6 +23,7 @@ const sendMailRoute =require('./routes/sendMail');
 const PORT = process.env.PORT || 8000;
 const env = require('dotenv')
 const pdfRoute = require('./routes/pdfRoutes');
+const paperAdvertisementRoute = require('./routes/paperAdvertisement');
 const path = require('path')
 require('dotenv').config();
 env.config()
@@ -64,6 +65,8 @@ app.use('/procProject', procProjectRoutes)
 app.use(pdfRoute)
 app.use('/approvalReqest',approvalRoute);
 app.use('/send',sendMailRoute)
+app.use('/paperAdd',paperAdvertisementRoute)
+
 
 
 app.listen(PORT, () => {

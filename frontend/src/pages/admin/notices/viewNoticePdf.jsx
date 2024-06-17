@@ -28,7 +28,7 @@ const ViewNoticePdf = () => {
       console.error("Error fetching PDF:", error);
     }
   };
-
+  
 
   // Call fetchPdfUrl when component mounts
   useEffect(() => {
@@ -48,7 +48,7 @@ const ViewNoticePdf = () => {
 
   return (
     <div className="flex justify-center items-center h-full bg-gray-200 mt-24">
-
+     
       {loading ? (
         <div className="text-gray-600">Loading...</div>
       ) : (
@@ -71,7 +71,7 @@ const ViewNoticePdf = () => {
             <div className="space-x-2">
               <button
                 onClick={goBack} 
-
+              
                 className="py-1 px-2 rounded bg-gray-400 text-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
               >
                 Back

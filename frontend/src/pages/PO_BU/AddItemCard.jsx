@@ -26,7 +26,10 @@ export const AddReqCard = ({ handleViewRequest }) => {
     axios
       .get("http://localhost:8000/procReqest/viewRequests")
       .then((response) => {
-        setRequests(response.data);
+        const approvedRequests = response.data.filter(
+          (request) => request.status === "Approved"
+        );
+        setRequests(approvedRequests);
         setLoading(false);
       })
       .catch((error) => {
