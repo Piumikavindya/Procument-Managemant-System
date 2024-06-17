@@ -28,7 +28,11 @@ const ViewNoticePdf = () => {
       console.error("Error fetching PDF:", error);
     }
   };
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 1e51402872159dbee18c02cefdbc6411f6c559b0
 
   // Call fetchPdfUrl when component mounts
   useEffect(() => {
@@ -48,7 +52,11 @@ const ViewNoticePdf = () => {
 
   return (
     <div className="flex justify-center items-center h-full bg-gray-200 mt-24">
+<<<<<<< HEAD
      
+=======
+
+>>>>>>> 1e51402872159dbee18c02cefdbc6411f6c559b0
       {loading ? (
         <div className="text-gray-600">Loading...</div>
       ) : (
@@ -71,7 +79,11 @@ const ViewNoticePdf = () => {
             <div className="space-x-2">
               <button
                 onClick={goBack} 
+<<<<<<< HEAD
               
+=======
+
+>>>>>>> 1e51402872159dbee18c02cefdbc6411f6c559b0
                 className="py-1 px-2 rounded bg-gray-400 text-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
               >
                 Back
@@ -98,4 +110,8 @@ const ViewNoticePdf = () => {
   );
 };
 
+<<<<<<< HEAD
 export default ViewNoticePdf;
+=======
+export default ViewNoticePdf;
+>>>>>>> 1e51402872159dbee18c02cefdbc6411f6c559b0
