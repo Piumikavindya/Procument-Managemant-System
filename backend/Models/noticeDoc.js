@@ -23,4 +23,3 @@ const noticedocSchema = new Schema({
 
 // In guidanceDoc.js model file
 module.exports = mongoose.model('noticedoc', noticedocSchema);
-

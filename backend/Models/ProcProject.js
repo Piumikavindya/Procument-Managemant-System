@@ -17,10 +17,6 @@ const procProjectSchema = new Schema({
       budgetAllocation: { type: Number },
       usedAmount: { type: Number },
       balanceAvailable: { type: Number },
-      status: {
-        type: String,
-        enum: ["Pending", "Approved", "Rejected","Bid Opening"],
-        default: "Pending",},
       purpose: {
         type: String,
         default: "normal",

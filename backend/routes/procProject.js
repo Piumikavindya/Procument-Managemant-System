@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const { generateProjectId,createProject,addRequestsData,viewAddedRequests,createSmallProcurementPdf, viewShippingMethodPdf,createNationalShoppingPdf, viewSmallProcurementPdf, viewNationalShoppingPdf} = require('../controllers/procProject');
-const { generateProjectId,createProject,addRequestsData,viewAddedRequests,createPdf,viewAllProjects, viewProjectById, deleteProject,viewShippingMethodPdf,downloadBidPdf} = require('../controllers/procProject');
 // const upload = require('../middlewares/multer');
 // const { isAuthenticated } = require('../middlewares/auth');
 
@@ -26,16 +25,8 @@ router.get("/generateProjectId", generateProjectId, (req, res) => {
   // Route for view generate pdf
   router.get('/viewnational-Pdf/:projectId',viewNationalShoppingPdf) 
 
-  router.get('/viewProjects/' ,viewAllProjects);
-  router.get('/viewProject/:projectId' ,viewProjectById);
-  router.delete('/deleteProject/:projectId',deleteProject);
-  router.post('/createPdf',createPdf) // to generate pdf 
-
-  router.get('/view-Pdf/:projectId',viewShippingMethodPdf) // to generate pdf 
-  router.get('/downloadBidPdf/:projectId/', downloadBidPdf); 
-
-
   
+
 
 
   module.exports = router;

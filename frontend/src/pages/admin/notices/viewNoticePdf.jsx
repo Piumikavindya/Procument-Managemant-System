@@ -98,8 +98,5 @@ const ViewNoticePdf = () => {
   );
 };
 
-<<<<<<< HEAD
+
 export default ViewNoticePdf;
-=======
-export default ViewNoticePdf;
->>>>>>> 1e51402872159dbee18c02cefdbc6411f6c559b0
