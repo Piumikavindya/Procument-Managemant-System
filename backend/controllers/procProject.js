@@ -175,7 +175,55 @@ exports.createProject = async (req, res) => {
   }
 };
 
-// Function to create PDF for "Shopping Method" bidding type
+
+exports.viewAllProjects = async (req, res) => {
+  try {
+    // Fetch all requests from the database
+    const allProjects = await procProject.find();
+
+    // Send the list of requests as a response
+    res.json(allProjects);
+  } catch (error) {
+    console.error("Error fetching all projects:", error);
+    // Handle errors and send an appropriate response
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+exports.viewProjectById = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+
+    // Find the request by ID
+    const project = await procProject.findOne({ projectId });
+
+    if (!project) {
+      return res.status(404).json({ error: "project not found" });
+    }
+
+    // Send the request as a response
+    res.json(project);
+  } catch (error) {
+    console.error("Error fetching request by ID:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.deleteProject = async (req, res) => {
+  let projectId = req.params.id;
+
+  try {
+    await procProject.findByIdAndDelete(projectId);
+    res.status(200).send({ status: "Project is deleted" });
+  } catch (err) {
+    res.status(500).send({ status: "Error with delete request" });
+  }
+};
+
+
+// Function to create PDF for "Shipping Method" bidding type
 
 exports.viewSmallProcurementPdf = (req, res) => {
   try {
@@ -214,8 +262,8 @@ exports.createSmallProcurementPdf = async (req, res) => {
       return res.status(404).send("Project not found");
     }
 
-    const pdfFileName = `Project_${requestData.projectId}.pdf`;
-    const pdfDirPath = path.join(__dirname, "..", "projects","directPurchasingPdfs", pdfFileName);
+    const pdfFileName = `Bidding_Document_${requestData.projectId}.pdf`;
+    const pdfDirPath = path.join(__dirname, "..", "projects", pdfFileName);
 
     const doc = new PDFDocument({ margin: 30, size: "A4" });
     const outputStream = fs.createWriteStream(pdfDirPath);
@@ -224,9 +272,11 @@ exports.createSmallProcurementPdf = async (req, res) => {
     const fontPath = path.join(__dirname, "..", "fonts", "Iskoola Pota Regular.ttf");
     const fontPathTamil = path.join(__dirname, "..", "fonts", "VANAVIL-Avvaiyar Regular.otf");
     const fontPathBold = path.join(__dirname, "..", "fonts", "iskpotab.ttf");
-    const logoPath = path.join(__dirname, "..", "images", "logo.jpg");
+
 
     // Add front page content
+    const logoPath =
+      "E:/Procument-Managemant-System/backend/images/logo.jpg";
    
     doc.image(logoPath, 50, 25, { width: 80 });
 
@@ -809,6 +859,7 @@ exports.viewNationalShoppingPdf = (req, res) => {
   try {
     const projectId = req.params.projectId;
 
+   
     const pdfFileName = `Project_Shopping${projectId}.pdf`;
     const pdfDirPath = path.join(
       __dirname,
@@ -828,4 +879,41 @@ exports.viewNationalShoppingPdf = (req, res) => {
     console.error("Error viewing PDF:", error);
     res.status(500).send("An error occurred while viewing the PDF");
   }
+};
+
+
+
+// exports.downloadBidPdf = async (req, res) => {
+//   const projectId = req.params.projectId;
+
+//   try {
+//     // Generate PDF bytes
+//     const pdfBytes = await exports.generatePdf(projectId);
+
+//     // Set response headers for PDF download
+//     res.setHeader("Content-Type", "application/pdf");
+//     res.setHeader(
+//       "Content-Disposition",
+//       `attachment; filename="request_${projectId}.pdf"`
+//     );
+
+//     // Send the PDF as a downloadable file
+//     res.send(pdfBytes);
+//   } catch (error) {
+//     if (error.message === "Request not found") {
+//       return res.status(404).json({ error: "Request not found" });
+//     }
+//     console.error("Error downloading PDF:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
+
+exports.downloadBidPdf = (req, res) => {
+  const projectId = req.params.projectId;
+
+  const pdfFileName = `Bidding_Document_${projectId}.pdf`;
+
+  const pdfFilePath = path.join(__dirname, "..", "projects", pdfFileName);
+
+  res.sendFile(pdfFilePath);
 };

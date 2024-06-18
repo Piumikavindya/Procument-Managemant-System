@@ -11,8 +11,7 @@ import ReqForm from "./pages/department/ReqForm.jsx";
 import UploadGuidance from "./pages/admin/guidance/UploadGuidance.jsx";
 import DeleteGuidance from "./pages/admin/guidance/DeleteGuidance.jsx";
 import { useNavigate } from "react-router-dom";
-import ViewGuidances from "./pages/admin/guidance/ViewPdf.jsx";
-import ViewPdf from "./pages/admin/guidance/ViewPdf.jsx";
+import ViewGuidances from "./pages/admin/guidance/ViewGuidances.jsx";
 import DepartmentHome from "./pages/department/DepartmentHome.jsx";
 import PreviewItem from "./pages/admin/items/PreviewItem.jsx";
 import DeleteItem from "./pages/admin/items/DeleteItem.jsx";
@@ -73,6 +72,18 @@ import PreviewSupplyerDetails from "./pages/PO_BU/PreviewSupplerDetails.jsx";
 import ProfilePage from "./pages/Profile settings/ProfilePage.jsx";
 import { ViewShoppingPdf } from "./pages/PO_BU/ViewShoppingPdf.jsx";
 import { ViewDirectPurchasingPdf } from "./pages/PO_BU/ViewDirectPurchasingPdf.jsx";
+import { ViewShippingPdf } from "./pages/PO_BU/ViewBidDocumnet.jsx";
+import DeleteItems from "./pages/admin/items/DeleteItems.jsx";
+import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
+import BiddingDocumentsList from "./pages/PO_BU/BiddingDocumentsList.jsx";
+import DownloadBidDoc from "./pages/PO_BU/DownloadBidDoc.jsx";
+import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
+import InvitesBids from "./pages/PO_BU/InvitesBids.jsx";
+import VendorsList from "./pages/PO_BU/VendorsList.jsx";
+import DeleteProject from "./pages/PO_BU/DeleteProject.jsx";
+import PreviewSupplyerDetails from "./pages/PO_BU/PreviewSupplerDetails.jsx";
+import ProfilePage from "./pages/Profile settings/ProfilePage.jsx";
+
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -86,19 +97,9 @@ const App = () => {
     }
 
     return isAuthenticated ? (
-      <Navbar
-        isAuthenticated={isAuthenticated}
-        handleSignOut={handleSignOut}
-        userId={loggedInUser?.id}
-        username={loggedInUser?.username}
-      />
+      <Navbar isAuthenticated={isAuthenticated} handleSignOut={handleSignOut} />
     ) : (
-      <Navbar
-        isAuthenticated={isAuthenticated}
-        handleSignIn={handleSignIn}
-        userId={loggedInUser?.id}
-        username={loggedInUser?.username}
-      />
+      <Navbar isAuthenticated={isAuthenticated} handleSignIn={handleSignIn} />
     );
   };
 
@@ -202,7 +203,6 @@ const App = () => {
         <Route path="/UploadNotice" element={<UploadNotice />} />
         <Route path="/DeleteNotice/:id" element={<DeleteNotice />} />
         <Route path="/ViewNotices" element={<ViewNotice />} />
-        <Route path="/viewNoticePdf/:noticeId" element={<ViewNoticePdf />} />
 
         <Route path="/AllItem" element={<ItemDetails />} />
         <Route path="/PreviewItem/:id" element={<PreviewItem />} />
@@ -244,15 +244,9 @@ const App = () => {
           element={<SendRequest />}
         />
         <Route path="/ProjectCreationForm/" element={<ProjectCreationForm />} />
-        <Route path="/ReqSelection/:projectId" element={<AddReqCard />} />
-        <Route
-          path="/ViewShoppingPdf/:projectId"
-          element={<ViewShoppingPdf />}
-        />
-        <Route
-          path="/ViewDirectPurchasingPdf/:projectId"
-          element={<ViewDirectPurchasingPdf />}
-        />
+        <Route path="/ReqSelection/:projectId" element={<AddReqCard/>} />
+        <Route path="/ViewShoppingPdf/:projectId" element={<ViewShoppingPdf />} />
+        <Route path="/ViewDirectPurchasingPdf/:projectId" element={<ViewDirectPurchasingPdf />} />
 
         <Route
           path="/PO_BuHome/:id"
@@ -266,54 +260,14 @@ const App = () => {
           }
         />
         <Route path="/ApprovedRequestList" element={<ApprovedRequestList />} />
-        <Route
-          path="/ViewApprovedForm/:requestId"
-          element={<ViewApprovedForm />}
-        />
-        <Route
-          path="/ViewFormRequest/:requestId"
-          element={<ViewFormRequest />}
-        />
-        <Route
-          path="/ViewForApproval/:requestId"
-          element={<ViewFormApproval />}
-        />
-        <Route path="/projectList" element={<ProjectList />} />
-        <Route
-          path="/PreviewProjectDetails/:projectId"
-          element={<PreviewProjectDetails />}
-        />
-        <Route path="/deleteProject/:projectId" element={<DeleteProject />} />
-        <Route path="/biddingDocuments" element={<BiddingDocumentsList />} />
-
-        <Route path="/DownloadBidDoc/:projectId" element={<DownloadBidDoc />} />
-        <Route path="/InvitesBids" element={<InvitesBids />} />
-        <Route path="/VendorsList" element={<VendorsList />} />
-        <Route
-          path="/PreviewSupplyerDetails/:id"
-          element={<PreviewSupplyerDetails />}
-        />
-
-        <Route
-          path="/EventPlanner"
-          element={
-            <ContextWrapper>
-              <EventPlanner />{" "}
-            </ContextWrapper>
-          }
-        />
-
-        <Route
-          path="/profile/:userId"
-          element={
-            <ProfilePage
-              isAuthenticated={isAuthenticated}
-              loggedInUser={loggedInUser}
-              userId={loggedInUser?.id}
-              username={loggedInUser?.username}
-            />
-          }
-        />
+        <Route path="/ViewApprovedForm/:requestId" element={<ViewApprovedForm />} />
+        <Route path="/ViewFormRequest/:requestId" element={<ViewFormRequest />} />
+        <Route path="/ViewForApproval/:requestId" element={<ViewFormApproval />} />
+        <Route path="/projectList" element={<ProjectList/>}/>
+          
+          <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
+          <Route path="/viewNoticePdf/:noticeId" element={<ViewNoticePdf />} />
+         
       </Routes>
 
       {renderCommonFooter()}

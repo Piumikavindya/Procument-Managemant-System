@@ -5,8 +5,6 @@ const asyncWrapper = require('../middlewares/asyncWrapper');
 const path = require("path");
 const fs = require('fs');
 
-
-
 // request from the frontend
 
 exports.uploadnotice = async (req, res) => {
@@ -93,53 +91,41 @@ exports.downloadNotice = async (req, res) => {
     }
 
 };
-// // view details of perticular user
-// exports.previewSupplyer = async (req,res) =>{
-//     const supplyerId = req.params.id;
-
-//     try {
-//         const supplyer = await Supplyer.findById(supplyerId);
-//         if (!supplyer) {
-            
-//             return res.status(404).json({ status: "suppler not found" });
-//         }
-        
-
-//         res.status(200).json(supplyer); 
-//     } catch (err) {
-//         console.error(err.message);
-//         res.status(500).json({ status: "Error with getting supplyer", error: err.message });
-//     }
- 
-//  };
 
 
-// //update user details
-// exports.updateSupplyer = async (req,res)=>{
-//     let supplyerId = req.params.id;
 
-//     const { username,supplierName,email, address,contactOfficer,contactNumber,faxNumber,typeofBusiness,classOfAssets} = req.body;
+exports.viewPdf = async (req, res) => {
+  try {
+    const noticeId = req.params.id;
 
-//     const updateSupplyer = {
-//        username,
-//        supplierName,
-//        email,
-//        address,
-//        contactOfficer,
-//        contactNumber,
-//        faxNumber,
-//        typeofBusiness,
-//        classOfAssets,
-//     };
+    // Await the asynchronous call to find the guidance document
+    const notice = await Notice.findById(noticeId);
 
-//     try {
-//         const updatedSupplyer = await guidance.findByIdAndUpdate(supplyerId, updateSupplyer, { new: true });
-//         res.status(200).json({ status: "supplyer updated", supplyer: updatedSupplyer });
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ status: "Error with updating User", error: err.message });
-//     }
-// };
+    if (!notice) {
+      return res.status(404).json({ status: "guidance not found" });
+    }
+
+    const file = notice.file;
+    const pdfFilePath = path.join(__dirname, '..', file);
+
+    // Check if the file exists
+    if (!fs.existsSync(pdfFilePath)) {
+      return res.status(404).json({ error: "File not found" });
+    }
+
+    // Set the content type header
+    res.setHeader("Content-Type", "application/pdf");
+
+    // Stream the file to the response
+    const stream = fs.createReadStream(pdfFilePath);
+    stream.pipe(res);
+  } catch (error) {
+    console.error("Error viewing PDF:", error);
+    res.status(500).send("An error occurred while viewing the PDF");
+  }
+};
+
+
 
 
 // delete guidance
