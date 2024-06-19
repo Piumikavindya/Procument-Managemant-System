@@ -64,12 +64,11 @@ import ProjectList from "./pages/PO_BU/ProjectList.jsx";
 import {ViewShoppingPdf} from "./pages/PO_BU/ViewShoppingPdf.jsx"
 import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
 import { ViewDirectPurchasingPdf } from "./pages/PO_BU/ViewDirectPurchasingPdf.jsx";
-import { ViewShippingPdf } from "./pages/PO_BU/ViewBidDocumnet.jsx";
+import { ViewShippingPdf } from "./pages/PO_BU/ViewBidDocument.jsx";
 import DeleteItems from "./pages/admin/items/DeleteItems.jsx";
 import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
 import BiddingDocumentsList from "./pages/PO_BU/BiddingDocumentsList.jsx";
 import DownloadBidDoc from "./pages/PO_BU/DownloadBidDoc.jsx";
-import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
 import InvitesBids from "./pages/PO_BU/InvitesBids.jsx";
 import VendorsList from "./pages/PO_BU/VendorsList.jsx";
 import DeleteProject from "./pages/PO_BU/DeleteProject.jsx";

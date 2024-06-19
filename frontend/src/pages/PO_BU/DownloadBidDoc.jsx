@@ -1,11 +1,4 @@
-import { Fragment, useRef, useState, useEffect } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import {
-  DialogBody,
-  DialogFooter,
-  DialogHeader,
-  Typography,
-} from "@material-tailwind/react";
+import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { saveAs } from "file-saver";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,7 +8,7 @@ const DownloadBidDoc = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
   const navigate = useNavigate();
-  const { projectId } = useParams(); 
+  const { projectId, biddingType } = useParams(); // Include biddingType in the params
 
   const handleOutsideClick = () => {
     setOpen(false);
@@ -25,16 +18,26 @@ const DownloadBidDoc = () => {
   useEffect(() => {
     const fetchPDF = async () => {
       try {
-        // Fetching the generated PDF with requestId
+        // Fetching the generated PDF with projectId and biddingType
         const response = await axios.get(
-          `http://localhost:8000/procProject/downloadBidPdf/${projectId}`,
+          `http://localhost:8000/procProject/downloadBidPdf/${projectId}/${biddingType}`,
           {
             responseType: "blob",
           }
         );
-        
+
+        // Determine the filename based on biddingType
+        let fileName;
+        if (biddingType === 'Direct Purchasing') {
+          fileName = `Direct_Purchasing_${projectId}.pdf`;
+        } else if (biddingType === 'Shopping Method') {
+          fileName = `National_Shopping_${projectId}.pdf`;
+        } else {
+          fileName = `Bidding_Document_${projectId}.pdf`;
+        }
+
         const pdfBlob = new Blob([response.data], { type: "application/pdf" });
-        saveAs(pdfBlob, `Bidding_Document_${projectId}.pdf`);
+        saveAs(pdfBlob, fileName);
 
         // Redirecting after successful download
         navigate("/biddingDocuments");
@@ -45,7 +48,7 @@ const DownloadBidDoc = () => {
     };
 
     fetchPDF(); // Fetch PDF on component mount
-  }, [projectId, navigate]);
+  }, [projectId, biddingType, navigate]);
 
   return (
     <div>

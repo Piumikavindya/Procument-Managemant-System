@@ -22,8 +22,8 @@ export default function BiddingDocumentsList() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showUploadForm, setShowUploadForm] = useState(false);
   const navigate = useNavigate();
-
-  const filteredprojects = projects.filter((project) =>
+  const [biddingType, setBiddingType] = useState("biddingType");
+ const filteredprojects = projects.filter((project) =>
     project.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -72,30 +72,17 @@ export default function BiddingDocumentsList() {
     setCurrentPage(pageNumber);
   };
 
-  const generateFileName = (projectId) => {
-    return `Bidding_Document_${projectId}.pdf`;
-  };
-
-  const { id } = useParams();
-  const handleDownloadClick = async (id) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/project/download/${id}`,
-        {
-          responseType: "blob",
-        }
-      );
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "downloaded-project.pdf";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } catch (error) {
-      console.error("Error downloading project:", error);
+  
+  const generateFileName = (projectId, biddingType) => {
+    if (biddingType === 'Direct Purchasing') {
+      return `Direct_Purchasing_${projectId}.pdf`;
+    } else if (biddingType === 'Shopping Method') {
+      return `National_Shopping_${projectId}.pdf`;
+    } else {
+      return `Bidding_Document_${projectId}.pdf`;
     }
   };
+
 
   const selected = (crumb) => {
     console.log(crumb);
@@ -224,7 +211,7 @@ export default function BiddingDocumentsList() {
                         <div className="flex items-center">
                           <div>
                             <div className="text-sm leading-5 text-gray-900">
-                            {generateFileName(project.projectId)}{" "}
+                            {generateFileName(project.projectId, project.biddingType)}{" "}
                             </div>
                           </div>
                         </div>

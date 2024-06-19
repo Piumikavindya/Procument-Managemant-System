@@ -229,9 +229,9 @@ exports.viewSmallProcurementPdf = (req, res) => {
   try {
     const projectId = req.params.projectId;
 
-    const pdfFileName = `Project_${projectId}.pdf`; // Corrected variable name
+    const pdfFileName = `Direct_Purchasing_${projectId}.pdf`; // Corrected variable name
 
-    const pdfDirPath = path.join(__dirname, "..", "projects","directPurchasingPdfs", pdfFileName);
+    const pdfDirPath = path.join(__dirname, "..", "projects", pdfFileName);
 
     // Set the content type header
     res.setHeader("Content-Type", "application/pdf");
@@ -262,8 +262,14 @@ exports.createSmallProcurementPdf = async (req, res) => {
       return res.status(404).send("Project not found");
     }
 
-    const pdfFileName = `Bidding_Document_${requestData.projectId}.pdf`;
-    const pdfDirPath = path.join(__dirname, "..", "projects", pdfFileName);
+    const pdfFileName = `Direct_Purchasing_${requestData.projectId}.pdf`;
+    const pdfDirPath = path.join(
+      __dirname,
+      "..",
+      "projects",
+      pdfFileName
+    );
+
 
     const doc = new PDFDocument({ margin: 30, size: "A4" });
     const outputStream = fs.createWriteStream(pdfDirPath);
@@ -773,12 +779,11 @@ exports.createNationalShoppingPdf = async (req, res) => {
       return res.status(404).send("Project not found");
     }
 
-    const pdfFileName = `Project_Shopping${requestData.projectId}.pdf`;
+    const pdfFileName = `National_Shopping_${requestData.projectId}.pdf`;
     const pdfDirPath = path.join(
       __dirname,
       "..",
       "projects",
-      "shoppingMethodPdfs",
       pdfFileName
     );
 
@@ -855,17 +860,17 @@ exports.createNationalShoppingPdf = async (req, res) => {
     res.status(500).send("Error generating Shopping Method PDF");
   }
 };
+
 exports.viewNationalShoppingPdf = (req, res) => {
   try {
     const projectId = req.params.projectId;
 
    
-    const pdfFileName = `Project_Shopping${projectId}.pdf`;
+    const pdfFileName = `National_Shopping_${projectId}.pdf`;
     const pdfDirPath = path.join(
       __dirname,
       "..",
       "projects",
-      "shoppingMethodPdfs",
       pdfFileName
     );
 
@@ -908,12 +913,32 @@ exports.viewNationalShoppingPdf = (req, res) => {
 //   }
 // };
 
+
+
 exports.downloadBidPdf = (req, res) => {
   const projectId = req.params.projectId;
+  const biddingType = req.params.biddingType; // Get the type from the query parameter
 
-  const pdfFileName = `Bidding_Document_${projectId}.pdf`;
+  // Define the possible filenames
+  const pdfFileName = `Direct_Purchasing_${projectId}.pdf`;
+  const pdfFileName1 = `National_Shopping_${projectId}.pdf`;
 
-  const pdfFilePath = path.join(__dirname, "..", "projects", pdfFileName);
+  // Determine the file to send based on the type
+  let pdfFilePath;
+  if (biddingType === 'Direct Purchasing') {
+    pdfFilePath = path.join(__dirname, "..", "projects", pdfFileName);
+  } else if (biddingType === 'Shopping Method') {
+    pdfFilePath = path.join(__dirname, "..", "projects", pdfFileName1);
+  } else {
+    // Default logic if type is not provided or does not match expected values
+    pdfFilePath = path.join(__dirname, "..", "projects", pdfFileName);
+  }
 
-  res.sendFile(pdfFilePath);
+  // Check if the file exists
+  fs.access(pdfFilePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).send('File not found');
+    }
+    res.sendFile(pdfFilePath);
+  });
 };

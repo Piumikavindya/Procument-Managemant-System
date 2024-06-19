@@ -175,6 +175,11 @@ export default function ProjectCreationForm({ forms }) {
       clearFormInputs();
       localStorage.removeItem("formData");
       console.log("Request submitted successfully", response.data);
+      // if (biddingType === "Shopping Method") {
+      //   handleGenerateShoppingMethodPdf();
+      // } else {
+      //   handleGenerateDirectPurchasingPdf();
+      // }
       navigateToViewProject();
     } catch (error) {
       console.error("Error creating project:", error);
@@ -184,7 +189,7 @@ export default function ProjectCreationForm({ forms }) {
   };
 
   const navigateToViewProject = () => {
-    if (formData.biddingType === "Shopping Method")
+    if (biddingType === "Shopping Method")
       navigate(`/ViewShoppingPdf/${projectId}`);
     else navigate(`/ViewDirectPurchasingPdf/${projectId}`);
   };
@@ -552,7 +557,7 @@ export default function ProjectCreationForm({ forms }) {
             CLEAR FORM
           </button>
         </Link>
-        {formData.biddingType === "Shopping Method" ? (
+        {biddingType === "Shopping Method" ? (
 
         <button
           type="submit"
