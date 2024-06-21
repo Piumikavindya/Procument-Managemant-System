@@ -3,7 +3,7 @@ const {generateMailTransporter} = require('../Utils/mail');
 const PasswordResetToken = require("../Models/PasswordResetToken");
 const { generateRandomByte, sendError } = require('../Utils/helper');
 const user = require('../Models/user');
-
+const jwt = require("jsonwebtoken");
 // request from the frontend
 // request from the frontend
 exports.create = async (req, res) => {
@@ -175,24 +175,23 @@ res.json({ message: 'Password reset sucessfully, Now you can use new Password' }
 
 //user signin
 
-
 exports.signIn = async (req, res) => {
     const { email, password, role } = req.body;
 
     try {
-        // Find the user by email
-        const user = await User.findOne({ email });
+        // Find the user by email and role
+        const user = await User.findOne({ email, role });
 
         if (!user) {
             // If user not found, return error
-            return res.status(401).json({ success: false, message: 'Invalid email or password' });
+            return res.status(401).json({ success: false, message: 'Invalid email, password, or role' });
         }
 
         // Verify the password
         const isPasswordMatch = await user.comparePassword(password);
         if (!isPasswordMatch) {
             // If password does not match, return error
-            return res.status(401).json({ success: false, message: 'Invalid email or password' });
+            return res.status(401).json({ success: false, message: 'Invalid email, password, or role' });
         }
 
         let department = null;
@@ -204,7 +203,8 @@ exports.signIn = async (req, res) => {
 
         // If email, password, and role are correct, return user data (id, lastname, role, and department if applicable)
         const { _id, lastname, role: userRole } = user;
-        res.json({ user: { id: _id, lastname, role: userRole, department } });
+        const jwtToken = jwt.sign({ userId: _id }, process.env.SECRET);
+        res.json({ user: { id: _id, lastname, role: userRole, department, token: jwtToken } });
     } catch (error) {
         // If an error occurs, return internal server error
         console.error('Error:', error);
