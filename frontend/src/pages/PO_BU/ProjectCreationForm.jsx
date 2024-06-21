@@ -175,11 +175,7 @@ export default function ProjectCreationForm({ forms }) {
       clearFormInputs();
       localStorage.removeItem("formData");
       console.log("Request submitted successfully", response.data);
-      // if (biddingType === "Shopping Method") {
-      //   handleGenerateShoppingMethodPdf();
-      // } else {
-      //   handleGenerateDirectPurchasingPdf();
-      // }
+      
       navigateToViewProject();
     } catch (error) {
       console.error("Error creating project:", error);

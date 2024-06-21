@@ -82,7 +82,15 @@ export default function BiddingDocumentsList() {
       return `Bidding_Document_${projectId}.pdf`;
     }
   };
-
+  const navigateToViewProject = (projectId, biddingType) => {
+    if (biddingType === "Shopping Method") {
+      navigate(`/ViewShoppingPdf/${projectId}`);
+    } else if (biddingType === "Direct Purchasing") {
+      navigate(`/ViewDirectPurchasingPdf/${projectId}`);
+    } else {
+      navigate(`/ViewBidDoc/${projectId}`);
+    }
+  };
 
   const selected = (crumb) => {
     console.log(crumb);
@@ -218,15 +226,13 @@ export default function BiddingDocumentsList() {
                       </td>
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="icon-link flex justify-center gap-x-4">
-                          <Link to={`/ViewBidDoc/${project.projectId}`}>
-                            <Tooltip content="Preview the Project">
-                              <IconButton variant="text">
-                                <EyeIcon className="h-6 w-6 text-green-500" />
-                              </IconButton>
-                            </Tooltip>
-                          </Link>
+                          <Tooltip content="Preview the Project">
+                            <IconButton variant="text" onClick={() => navigateToViewProject(project.projectId, project.biddingType)}>
+                              <EyeIcon className="h-6 w-6 text-green-500" />
+                            </IconButton>
+                          </Tooltip>
 
-                          <Link to={`/DownloadBidDoc/${project.projectId}`}>
+                          <Link to={`/DownloadBidDoc/${project.projectId}/${project.biddingType}`}>
                           <IconButton variant="text">
                                 <MdDownload className="h-6 w-6 text-blue-500" />
                               </IconButton>

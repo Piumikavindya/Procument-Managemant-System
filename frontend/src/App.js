@@ -262,7 +262,7 @@ const App = () => {
  <Route path="/deleteProject/:projectId" element={<DeleteProject/>} />
  <Route path="/biddingDocuments" element={<BiddingDocumentsList/>}/>
   <Route path="/ViewBidDoc/:projectId" element={<ViewShippingPdf />} />
-  <Route path="/DownloadBidDoc/:projectId" element={<DownloadBidDoc />} />
+  <Route path="/DownloadBidDoc/:projectId/:biddingType" element={<DownloadBidDoc />} />
   <Route path="/InvitesBids" element={<InvitesBids />} />
   <Route path="/VendorsList" element={<VendorsList />} />
   <Route path="/PreviewSupplyerDetails/:id" element={<PreviewSupplyerDetails />} /> 

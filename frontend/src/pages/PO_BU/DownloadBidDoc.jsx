@@ -16,7 +16,11 @@ const DownloadBidDoc = () => {
   };
 
   useEffect(() => {
+
+    console.log("projectId:", projectId);  // Add console log
+    console.log("biddingType:", biddingType);  // Add console log
     const fetchPDF = async () => {
+     
       try {
         // Fetching the generated PDF with projectId and biddingType
         const response = await axios.get(
