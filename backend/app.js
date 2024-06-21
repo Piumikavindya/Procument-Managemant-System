@@ -16,7 +16,7 @@ const itemRouter = require('./routes/Item');
 const guidanceRouter = require('./routes/guidanceDoc');
 const noticeRouter = require('./routes/noticeDoc');
 const procReqestRouter = require('./routes/procReqest');
-const procProjectRoutes = require('./routes/procProject');
+const procProjectRouter = require('./routes/procProject');
 const pdfRoutes = require('./routes/pdfprocrequest');
 const approvalRoute =require('./routes/approvalReqest');
 const sendMailRoute =require('./routes/sendMail');
@@ -62,7 +62,7 @@ app.use('/notice',noticeRouter);
 //this is Procurement request route
 app.use('/procReqest',procReqestRouter);
 app.use('/pdf', pdfRoutes);
-app.use('/procProject', procProjectRoutes)
+app.use('/procProject', procProjectRouter)
 app.use(pdfRoute)
 app.use('/approvalReqest',approvalRoute);
 app.use('/send',sendMailRoute)

@@ -85,30 +85,27 @@ export default function InvitesBids() {
     setCurrentPage(pageNumber);
   };
 
-  const generateFileName = (projectId) => {
-    return `Bidding_Document_${projectId}.pdf`;
-  };
 
-  const { id } = useParams();
-  const handleDownloadClick = async (id) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/project/download/${id}`,
-        {
-          responseType: "blob",
-        }
-      );
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "downloaded-project.pdf";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } catch (error) {
-      console.error("Error downloading project:", error);
+  const generateFileName = (projectId, biddingType) => {
+    if (biddingType === 'Direct Purchasing') {
+      return `Direct_Purchasing_${projectId}.pdf`;
+    } else if (biddingType === 'Shopping Method') {
+      return `National_Shopping_${projectId}.pdf`;
+    } else {
+      return `Bidding_Document_${projectId}.pdf`;
     }
   };
+
+  const navigateToViewProject = (projectId, biddingType) => {
+    if (biddingType === "Shopping Method") {
+      navigate(`/ViewShoppingPdf/${projectId}`);
+    } else if (biddingType === "Direct Purchasing") {
+      navigate(`/ViewDirectPurchasingPdf/${projectId}`);
+    } else {
+      navigate(`/ViewBidDoc/${projectId}`);
+    }
+  };
+
 
   const handleInviteBidsClick = (project) => {
     setSelectedProject(project);
@@ -242,26 +239,20 @@ export default function InvitesBids() {
                         <div className="flex items-center">
                           <div>
                             <div className="text-sm leading-5 text-gray-900">
-                              {generateFileName(project.projectId)}{" "}
+                            {generateFileName(project.projectId, project.biddingType)}{" "}
                             </div>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="icon-link flex justify-center gap-x-4">
-                          <Link to={`/ViewBidDoc/${project.projectId}`}>
-                            <Tooltip content="Preview the Project">
-                              <IconButton variant="text">
-                                <EyeIcon className="h-6 w-6 text-green-500" />
-                              </IconButton>
-                            </Tooltip>
-                          </Link>
-
-                          <Link to={`/DownloadBidDoc/${project.projectId}`}>
-                            <IconButton variant="text">
-                              <MdDownload className="h-6 w-6 text-blue-500" />
+                          <Tooltip content="Preview the Project">
+                            <IconButton variant="text" onClick={() => navigateToViewProject(project.projectId, project.biddingType)}>
+                              <EyeIcon className="h-6 w-6 text-green-500" />
                             </IconButton>
-                          </Link>
+                          </Tooltip>
+
+                  
 
                           <button
                             onClick={() => handleInviteBidsClick(project)}

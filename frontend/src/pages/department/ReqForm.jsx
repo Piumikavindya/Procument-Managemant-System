@@ -136,10 +136,10 @@ const ReqForm = ({ forms }) => {
     }
   };
   const handleSpecificationUpload = async (requestId, specifications) => {
-    const specificationFiles = document.getElementById("formFileMultiple1").files;
+     specifications = document.getElementById("formFileMultiple1").specifications;
 
     const formData = new FormData();
-    Array.from(specificationFiles).forEach((specification) => {
+    Array.from(specifications).forEach((specification) => {
         formData.append("specification", specification);
     });
 

@@ -118,7 +118,6 @@ exports.viewAddedRequests = async (req, res) => {
 };
 
 // Controller function to create a new Procurement Project
-// Controller function to create a new Procurement Project
 exports.createProject = async (req, res) => {
   const projectId = req.params.projectId;
 
@@ -226,7 +225,28 @@ exports.deleteProject = async (req, res) => {
 
 // Function to create PDF for "Shipping Method" bidding type
 
-exports.createPdf = async (req, res) => {
+exports.viewSmallProcurementPdf = (req, res) => {
+  try {
+    const projectId = req.params.projectId;
+
+    const pdfFileName = `Direct_Purchasing_${projectId}.pdf`; // Corrected variable name
+
+    const pdfDirPath = path.join(__dirname, "..", "projects", pdfFileName);
+
+    // Set the content type header
+    res.setHeader("Content-Type", "application/pdf");
+
+    // Stream the file to the response
+    const stream = fs.createReadStream(pdfDirPath);
+    stream.pipe(res);
+  } catch (error) {
+    console.error("Error viewing PDF:", error);
+    res.status(500).send("An error occurred while viewing the PDF");
+  }
+};
+
+// Function to create PDF for "Direct Purchasing Method" bidding type
+exports.createSmallProcurementPdf = async (req, res) => {
   const requestData = req.body;
 
   if (!requestData.projectId) {
@@ -242,19 +262,28 @@ exports.createPdf = async (req, res) => {
       return res.status(404).send("Project not found");
     }
 
-    const pdfFileName = `Bidding_Document_${requestData.projectId}.pdf`;
-    const pdfDirPath = path.join(__dirname, "..", "projects", pdfFileName);
+    const pdfFileName = `Direct_Purchasing_${requestData.projectId}.pdf`;
+    const pdfDirPath = path.join(
+      __dirname,
+      "..",
+      "projects",
+      pdfFileName
+    );
+
 
     const doc = new PDFDocument({ margin: 30, size: "A4" });
     const outputStream = fs.createWriteStream(pdfDirPath);
     doc.pipe(outputStream);
-    const fontPath = "./fonts/Iskoola Pota Regular.ttf"; // replace with the path to your font
-    const fontPathTamil = "./fonts/VANAVIL-Avvaiyar Regular.otf"; // replace with the path to your font
-    const fontPathBold = "./fonts/iskpotab.ttf"; // replace with the path to your font
+
+    const fontPath = path.join(__dirname, "..", "fonts", "Iskoola Pota Regular.ttf");
+    const fontPathTamil = path.join(__dirname, "..", "fonts", "VANAVIL-Avvaiyar Regular.otf");
+    const fontPathBold = path.join(__dirname, "..", "fonts", "iskpotab.ttf");
+
 
     // Add front page content
     const logoPath =
       "E:/Procument-Managemant-System/backend/images/logo.jpg";
+   
     doc.image(logoPath, 50, 25, { width: 80 });
 
     doc.font(fontPathBold);
@@ -481,12 +510,7 @@ exports.createPdf = async (req, res) => {
       ); // Adjust the coordinates as needed
     doc.moveDown();
     doc.font("Helvetica");
-    doc
-      .fontSize(10)
-      .text( '"Stationery"',
-        210,
-        552
-      );
+    doc.fontSize(10).text('"Stationery"', 210, 552);
     doc.moveDown();
     doc.font("Helvetica");
     doc
@@ -561,7 +585,7 @@ exports.createPdf = async (req, res) => {
     doc.fontSize(8).text("දුරකථනය", 10, 790);
     doc.moveDown();
     doc.font(fontPathTamil);
-    doc.fontSize(8).text("bjhiyngr¨",45, 792);
+    doc.fontSize(8).text("bjhiyngr¨", 45, 792);
     doc.moveDown();
 
     doc.font("Helvetica");
@@ -572,7 +596,7 @@ exports.createPdf = async (req, res) => {
     doc.fontSize(8).text("ෆැක්ස්", 150, 792);
     doc.moveDown();
     doc.font(fontPathTamil);
-    doc.fontSize(8).text("~gf¦°",175, 792);
+    doc.fontSize(8).text("~gf¦°", 175, 792);
     doc.moveDown();
 
     doc.font("Helvetica");
@@ -604,7 +628,7 @@ exports.createPdf = async (req, res) => {
     doc.moveDown();
 
     doc.font("Helvetica");
-    doc.fontSize(8).text("(+94)91-2245762",155, 800);
+    doc.fontSize(8).text("(+94)91-2245762", 155, 800);
     doc.moveDown();
 
     doc.font("Helvetica");
@@ -614,8 +638,7 @@ exports.createPdf = async (req, res) => {
     doc.font("Helvetica");
     doc.fontSize(8).text("www.ruh.ac.lk", 375, 800);
     doc.moveDown();
- 
-    
+
     // Move to the next page
     doc.addPage();
 
@@ -626,7 +649,7 @@ exports.createPdf = async (req, res) => {
       {
         label: "Price per unit in Figures & Words",
         property: "price1",
-        width: 100
+        width: 100,
       },
       { label: "Trade Mark", property: "price2", width: 50 },
       {
@@ -637,32 +660,25 @@ exports.createPdf = async (req, res) => {
       { label: "Substitutes", property: "price4", width: 50 },
       { label: "Remarks", property: "remarks", width: 50 },
     ];
-    
+
     const rows = [];
-    
+
     project.procurementRequests.forEach((request) => {
       request.items.forEach((item) => {
-        rows.push([
-          item.itemName,
-          item.qtyRequired.toString(),
-          "",
-          "",
-          "",
-          "",
-        ]);
+        rows.push([item.itemName, item.qtyRequired.toString(), "", "", "", ""]);
       });
     });
-    
+
     const itemsPerPage = 20;
     const totalPages = Math.ceil(rows.length / itemsPerPage);
-    
+
     for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
       if (pageIndex > 0) doc.addPage();
-    
+
       const start = pageIndex * itemsPerPage;
       const end = start + itemsPerPage;
       const rowsForPage = rows.slice(start, end);
-    
+
       doc.table({
         headers: headers,
         rows: rowsForPage,
@@ -671,7 +687,7 @@ exports.createPdf = async (req, res) => {
           doc.font("Helvetica").fontSize(8);
         },
       });
-    
+
       doc.font("Helvetica");
       doc.fontSize(10).text("...........................", 100, 750);
       doc.moveDown();
@@ -681,14 +697,14 @@ exports.createPdf = async (req, res) => {
       doc.font("Helvetica");
       doc.fontSize(10).text("Name of the Firm", 100, 770);
       doc.moveDown();
-    
+
       doc.font(fontPath);
       doc.fontSize(10).text("රබර් මුද්‍රාව", 250, 755);
       doc.moveDown();
       doc.font("Helvetica");
       doc.fontSize(10).text("Rubber Stamp", 250, 770);
       doc.moveDown();
-    
+
       doc.font("Helvetica");
       doc.fontSize(10).text("......................", 370, 750);
       doc.moveDown();
@@ -698,7 +714,7 @@ exports.createPdf = async (req, res) => {
       doc.font("Helvetica");
       doc.fontSize(10).text("Signature", 370, 770);
       doc.moveDown();
-       
+
       doc.font("Helvetica");
       doc.fontSize(10).text("..............", 500, 750);
       doc.moveDown();
@@ -708,7 +724,7 @@ exports.createPdf = async (req, res) => {
       doc.font("Helvetica");
       doc.fontSize(10).text("Date", 500, 770);
       doc.moveDown();
-    
+
       doc.font("Helvetica");
       doc.fontSize(10).text("VAT Precentage %", 50, 790);
       doc.moveDown();
@@ -716,13 +732,17 @@ exports.createPdf = async (req, res) => {
       doc.fontSize(10).text("VAT No:-", 50, 800);
       doc.moveDown();
       doc.font("Helvetica");
-      doc.fontSize(10).text("Contact Telephone No:-......................", 300, 790);
+      doc
+        .fontSize(10)
+        .text("Contact Telephone No:-......................", 300, 790);
       doc.moveDown();
       doc.font("Helvetica");
-      doc.fontSize(10).text("Email Address, if any:-......................", 300,800);
+      doc
+        .fontSize(10)
+        .text("Email Address, if any:-......................", 300, 800);
       doc.moveDown();
     }
-    
+
     doc.end();
     outputStream.on("finish", () => {
       console.log(
@@ -736,13 +756,123 @@ exports.createPdf = async (req, res) => {
   }
 };
 
-exports.viewShippingMethodPdf = (req, res) => {
+// Function to create PDF for "Shipping Method" bidding type
+
+const generateTable1 = require("../controllers/tableGenaration/table1Genaration.js");
+const generateTable2 = require("../controllers/tableGenaration/table2Genaration.js");
+const generateTable3 = require("../controllers/tableGenaration/table3Genaration.js");
+const generateTable4 = require("../controllers/tableGenaration/table4Genaration.js");
+
+exports.createNationalShoppingPdf = async (req, res) => {
+  const requestData = req.body;
+
+  if (!requestData.projectId) {
+    return res.status(400).send("ProjectId is required");
+  }
+
+  try {
+    const project = await procProject
+      .findOne({ projectId: requestData.projectId })
+      .select("procurementRequests");
+
+    if (!project) {
+      return res.status(404).send("Project not found");
+    }
+
+    const pdfFileName = `National_Shopping_${requestData.projectId}.pdf`;
+    const pdfDirPath = path.join(
+      __dirname,
+      "..",
+      "projects",
+      pdfFileName
+    );
+
+    const doc = new PDFDocument({ margin: 30, size: "A4" });
+    const outputStream = fs.createWriteStream(pdfDirPath);
+    doc.pipe(outputStream);
+
+    // Add front page content
+    const logoPath = path.join(__dirname, '..', 'images', 'download.jpg');
+    doc.image(logoPath, 260, 100, { width: 80 });
+    
+
+    doc.font("Helvetica-Bold");
+    doc.fontSize(24).text("Procurement of Goods", 180, 220);
+    doc.moveDown();
+
+    doc.font("Helvetica-Bold");
+    doc.fontSize(24).text("Under ", 270, 260);
+    doc.moveDown();
+    doc.font("Helvetica-Bold");
+    doc.fontSize(24).text("National Shopping Procedures", 140, 300);
+    doc.moveDown();
+
+    doc.font("Helvetica-Bold");
+    doc.fontSize(18).text("Invitation of Quotations For", 180, 400);
+    doc.moveDown();
+    doc.font("Helvetica-Bold");
+    doc
+      .fontSize(18)
+      .text("Supply, Delivery & Installation of Air Conditioners ", 90, 440);
+    doc.moveDown();
+    doc.font("Helvetica-Bold");
+    doc.fontSize(18).text("Invitation No: RUH/SUP/FLQ/2020/06", 130, 480);
+    doc.moveDown();
+
+    const logoPathUni = path.join(__dirname, '..', 'images', 'unilogoc.jpg');
+    doc.image(logoPathUni, 285, 550, { width: 60 });
+
+    doc.font("Helvetica-Bold");
+    doc.fontSize(14).text("University of Ruhuna ", 240, 670);
+    doc.moveDown();
+
+    doc.font("Helvetica-Bold");
+    doc.fontSize(14).text("Faculty of Engineering, ", 230, 700);
+    doc.moveDown();
+    doc.font("Helvetica-Bold");
+    doc.fontSize(14).text("Hapugala , Galle , Sri Lanka.", 220, 730);
+    doc.moveDown();
+
+    // Move to the next page
+    doc.addPage();
+
+    doc.font("Helvetica-Bold");
+    doc.fontSize(18).text("Section I. Instructions to Vendors (ITV)", 180, 70);
+    doc.moveDown();
+
+    // Call the table generation function
+    generateTable1(doc);
+    doc.addPage();
+    generateTable2(doc);
+    doc.addPage();
+    generateTable3(doc);
+    doc.addPage();
+    generateTable4(doc);
+    doc.end();
+    outputStream.on("finish", () => {
+      console.log(
+        `Shopping Method PDF document ${pdfDirPath} generated successfully.`
+      );
+      res.download(pdfDirPath);
+    });
+  } catch (error) {
+    console.error("Error generating Shopping Method PDF:", error.message);
+    res.status(500).send("Error generating Shopping Method PDF");
+  }
+};
+
+exports.viewNationalShoppingPdf = (req, res) => {
   try {
     const projectId = req.params.projectId;
 
-    const pdfFileName = `Bidding_Document_${projectId}.pdf`; // Corrected variable name
-
-    const pdfDirPath = path.join(__dirname, "..", "projects", pdfFileName);
+   
+    const pdfFileName = `National_Shopping_${projectId}.pdf`;
+    const pdfDirPath = path.join(
+      __dirname,
+      "..",
+      "projects",
+      pdfFileName
+    );
 
     // Set the content type header
     res.setHeader("Content-Type", "application/pdf");
@@ -783,12 +913,32 @@ exports.viewShippingMethodPdf = (req, res) => {
 //   }
 // };
 
+
+
 exports.downloadBidPdf = (req, res) => {
   const projectId = req.params.projectId;
+  const biddingType = req.params.biddingType; // Get the type from the query parameter
 
-  const pdfFileName = `Bidding_Document_${projectId}.pdf`;
+  // Define the possible filenames
+  const pdfFileName = `Direct_Purchasing_${projectId}.pdf`;
+  const pdfFileName1 = `National_Shopping_${projectId}.pdf`;
 
-  const pdfFilePath = path.join(__dirname, "..", "projects", pdfFileName);
+  // Determine the file to send based on the type
+  let pdfFilePath;
+  if (biddingType === 'Direct Purchasing') {
+    pdfFilePath = path.join(__dirname, "..", "projects", pdfFileName);
+  } else if (biddingType === 'Shopping Method') {
+    pdfFilePath = path.join(__dirname, "..", "projects", pdfFileName1);
+  } else {
+    // Default logic if type is not provided or does not match expected values
+    pdfFilePath = path.join(__dirname, "..", "projects", pdfFileName);
+  }
 
-  res.sendFile(pdfFilePath);
+  // Check if the file exists
+  fs.access(pdfFilePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).send('File not found');
+    }
+    res.sendFile(pdfFilePath);
+  });
 };
