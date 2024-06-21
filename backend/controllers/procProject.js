@@ -282,7 +282,7 @@ exports.createSmallProcurementPdf = async (req, res) => {
 
     // Add front page content
     const logoPath =
-      "E:/Procument-Managemant-System/backend/images/logo.jpg";
+      "D:/SP_02/Procument-Managemant-System/backend/images/logo.jpg";
    
     doc.image(logoPath, 50, 25, { width: 80 });
 
@@ -572,7 +572,7 @@ exports.createSmallProcurementPdf = async (req, res) => {
     doc.fontSize(10).text("සහාකාර මූල්‍යධිකාරි/ඉංජිනේරු", 10, 770); // Adjust the coordinates as needed
     doc.moveDown();
     doc.font("Helvetica");
-    doc.fontSize(10).text("/Assistant Bursar/ Enginerring", 138, 772);
+    doc.fontSize(10).text("/Assistant Bursar/ Engineering", 138, 772);
     doc.moveDown();
 
     // Draw a horizontal line
@@ -762,6 +762,10 @@ const generateTable1 = require("../controllers/tableGenaration/table1Genaration.
 const generateTable2 = require("../controllers/tableGenaration/table2Genaration.js");
 const generateTable3 = require("../controllers/tableGenaration/table3Genaration.js");
 const generateTable4 = require("../controllers/tableGenaration/table4Genaration.js");
+const generateTable5 = require("../controllers/tableGenaration/table5Genaration.js");
+const generateTable6 = require("../controllers/tableGenaration/table6Genaration.js");
+const generateTable8 = require("../controllers/tableGenaration/table8Genaration.js");
+const generateTable10 = require("../controllers/tableGenaration/table10Genaration.js");
 
 exports.createNationalShoppingPdf = async (req, res) => {
   const requestData = req.body;
@@ -848,6 +852,14 @@ exports.createNationalShoppingPdf = async (req, res) => {
     generateTable3(doc);
     doc.addPage();
     generateTable4(doc);
+    doc.addPage({ size: [842, 595] }); // Landscape A4 dimensions
+    generateTable5(doc);
+    doc.addPage({ size: [842, 595] }); // Landscape A4 dimensions
+    generateTable6(doc);
+    doc.addPage({ size: [842, 595] }); // Landscape A4 dimensions
+    generateTable8(doc);
+    doc.addPage({ size: [842, 595] }); // Landscape A4 dimensions
+    generateTable10(doc);
     doc.end();
     outputStream.on("finish", () => {
       console.log(
