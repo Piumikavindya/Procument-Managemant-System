@@ -18,10 +18,14 @@ const InvitesBidsCard = ({ project, vendors, onClose }) => {
   };
 
   const handleInviteClick = () => {
+
+    console.log("Project ID:", project.projectId);
+    console.log("Bidding Type:", project.biddingType);
+  
     axios
-      .post(`http://localhost:8000/bids/invite/${project?.projectId}`, {
-        supplierIds: selectedVendors,
-      })
+    .post(`http://localhost:8000/bids/invite/${project.projectId}/${project.biddingType}`, {
+      supplierIds: selectedVendors,
+    })
       .then((response) => {
         console.log("Invitations sent successfully:", response.data);
         onClose(); // Close the modal on success
