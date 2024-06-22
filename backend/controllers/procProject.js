@@ -58,6 +58,13 @@ async function fetchDataFromDatabase(requestIds) {
     const requestData = await procRequest.find({
       requestId: { $in: requestIds },
     });
+
+    // Update the status of the fetched requests to "Bid Opening"
+    await procRequest.updateMany(
+      { requestId: { $in: requestIds }, status: "Approved" },
+      { $set: { status: "Bid Opening" } }
+    );
+
     return requestData;
   } catch (error) {
     // Handle any errors
@@ -89,7 +96,7 @@ exports.addRequestsData = async (req, res) => {
     // Save the updated project to the database
     await project.save();
 
-    res.status(200).json({ message: "Request data added successfully" });
+    res.status(200).json({ message: "Request data added successfully", newRequest: requestData });
   } catch (error) {
     console.error("Error adding request data:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -282,7 +289,7 @@ exports.createSmallProcurementPdf = async (req, res) => {
 
     // Add front page content
     const logoPath =
-      "D:/SP_02/Procument-Managemant-System/backend/images/logo.jpg";
+      "E:/Procument-Managemant-System/backend/images/logo.jpg";
    
     doc.image(logoPath, 50, 25, { width: 80 });
 

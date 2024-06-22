@@ -67,10 +67,11 @@ function ProgressTracker() {
       case "Pending":
         return "Rejected";
       case "Approved":
-        return "Bid Opening Closing"; // Example next pending action
-      case "Bid Opening Closing":
-        return "Another Action"; // Example next pending action
-      // Add cases for other statuses if needed
+        return "Bid Opening";
+      case "Bid Opening":
+        return "Invite Bids";
+      case "Invite Bids":
+        return "TEC Evaluation";
       case "Rejected":
         return "No Pending Action";
       default:
@@ -157,16 +158,20 @@ function ProgressTracker() {
                             <span
                               className={`text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg ${
                                 request.status === "Pending"
-                                  ? "text-purple-500 bg-purple-200"
+                                  ? "text-purple-500 bg-purple-300"
                                   : request.status === "Approved"
-                                  ? "text-green-500 bg-green-200"
-                                  : request.status === "Bid Opening Closing"
+                                  ? "text-green-500 bg-green-300"
+                                  : request.status === "Bid Opening"
                                   ? "text-yellow-500 bg-yellow-100"
-                                  : request.status === ""
-                                  ? "text-blue-500 bg-blue-200"
+                                  : request.status === "Invite Bids"
+                                  ? "text-blue-500 bg-blue-300"
+                                  : request.status === "TEC Evaluation"
+                                  ? "text-orange-400 bg-orange-200"
                                   : request.status === "Rejected"
                                   ? "text-red-500 bg-red-300"
-                                  : "text-primary bg-primary-light" // default style if action doesn't match
+                                  : request.status === "No Pending Action"
+                                  ? "text-gray-500 bg-black"
+                                  : "text-primary bg-primary-light"
                               }`}
                             >
                               {request.status}
@@ -180,15 +185,17 @@ function ProgressTracker() {
                           <td className="pr-0 text-start">
                             <span
                               className={`text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg ${
-                                request.nextPendingAction === "Request Sent"
-                                  ? "text-blue-500 bg-blue-200"
+                                request.nextPendingAction === "Pending"
+                                  ? "text-purple-500 bg-purple-300"
                                   : request.nextPendingAction === "Approval"
                                   ? "text-green-500 bg-green-200"
-                                  : request.nextPendingAction ===
-                                    "Bid Opening Closing"
+                                  : request.nextPendingAction === "Bid Opening"
                                   ? "text-yellow-500 bg-yellow-100"
-                                  : request.nextPendingAction === "Approval"
-                                  ? "text-purple-500 bg-purple-200"
+                                  : request.nextPendingAction === "Invite Bids"
+                                  ? "text-blue-500 bg-blue-300"
+                                  : request.nextPendingAction ===
+                                    "TEC Evaluation"
+                                  ? "text-orange-400 bg-orange-200"
                                   : request.nextPendingAction === "Rejected"
                                   ? "text-red-500 bg-red-300"
                                   : "text-primary bg-primary-light" // default style if action doesn't match
