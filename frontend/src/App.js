@@ -80,7 +80,7 @@ const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
   const location = useLocation();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState();
 
   const renderNavbar = () => {
     if (location.pathname === "/loginpage") {
@@ -131,13 +131,13 @@ const App = () => {
             isAuthenticated ? (
               <Navigate to="/" />
             ) : (
-              <LoginPage setIsAuthenticated={setIsAuthenticated} />
+              <LoginPage setIsAuthenticated={setIsAuthenticated} userId={loggedInUser?.id} />
             )
           }
         />
 
         <Route
-          path="/adminhome/:id"
+          path="/adminhome/:userId"
           element={
             <AdminHome
               isAuthenticated={isAuthenticated}

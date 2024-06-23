@@ -47,7 +47,7 @@ exports.previewUser = async (req,res) =>{
     const userId = req.params.id;
 
     try {
-        const user = await User.findById(userId);
+        const user = await User.findOne(userId);
         if (!user) {
             
             return res.status(404).json({ status: "user not found" });

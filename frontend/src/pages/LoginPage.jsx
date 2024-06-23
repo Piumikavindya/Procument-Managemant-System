@@ -35,7 +35,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
         console.log("User Login is Successfully:", response.data.user);
         // Update your state or localStorage with user details
         setLoggedInUser(response.data.user);
-
+        console.log(loggedInUser);
         // Update authentication state
         setIsAuthenticated(true);
 

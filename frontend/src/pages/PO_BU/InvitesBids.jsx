@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   MdOutlineDelete,
   MdPreview,
-  MdSimCardDownload, MdDownload,
+  MdSimCardDownload,
+  MdDownload,
 } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import UserTypeNavbar from "../../components/UserTypeNavbar.jsx";
@@ -13,18 +14,18 @@ import DefaultPagination from "../../components/DefaultPagination.js";
 import { Tooltip } from "flowbite-react";
 import { IconButton } from "@material-tailwind/react";
 import { EyeIcon } from "@heroicons/react/24/outline";
-import InvitesBidsCard from "./InvitesBidsCard";  // Import the modal component
+import InvitesBidsCard from "./InvitesBidsCard"; // Import the modal component
 
 export default function InvitesBids() {
   const [projects, setProjects] = useState([]);
-  const [vendors, setVendors] = useState([]);  // State to hold vendors
+  const [vendors, setVendors] = useState([]); // State to hold vendors
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [showUploadForm, setShowUploadForm] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);  // State to control modal visibility
-  const [selectedProject, setSelectedProject] = useState(null);  // State to hold selected project details
+  const [modalOpen, setModalOpen] = useState(false); // State to control modal visibility
+  const [selectedProject, setSelectedProject] = useState(null); // State to hold selected project details
   const navigate = useNavigate();
-
+  const [invitedProjects, setInvitedProjects] = useState([]);
   const filteredprojects = projects.filter((project) =>
     project.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -51,7 +52,7 @@ export default function InvitesBids() {
 
   useEffect(() => {
     axios
-    .get("http://localhost:8000/supplyer/view-supplyers")
+      .get("http://localhost:8000/supplyer/view-supplyers")
       .then((response) => {
         setVendors(response.data);
       })
@@ -85,11 +86,10 @@ export default function InvitesBids() {
     setCurrentPage(pageNumber);
   };
 
-
   const generateFileName = (projectId, biddingType) => {
-    if (biddingType === 'Direct Purchasing') {
+    if (biddingType === "Direct Purchasing") {
       return `Direct_Purchasing_${projectId}.pdf`;
-    } else if (biddingType === 'Shopping Method') {
+    } else if (biddingType === "Shopping Method") {
       return `National_Shopping_${projectId}.pdf`;
     } else {
       return `Bidding_Document_${projectId}.pdf`;
@@ -106,12 +106,17 @@ export default function InvitesBids() {
     }
   };
 
-
   const handleInviteBidsClick = (project) => {
     setSelectedProject(project);
     setModalOpen(true);
   };
+  const handleInviteSuccess = (projectId) => {
+    setInvitedProjects((prev) => [...prev, projectId]);
+  };
 
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
   const selected = (crumb) => {
     console.log(crumb);
   };
@@ -137,7 +142,8 @@ export default function InvitesBids() {
             <div className="flex flex-wrap items-center">
               <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                 <h3 className="font-semibold  text-blueGray-700">
-                  <i className="fa-solid fa-file-lines"></i> Generated Bidding Documents List
+                  <i className="fa-solid fa-file-lines"></i> Generated Bidding
+                  Documents List
                 </h3>
               </div>
 
@@ -212,7 +218,7 @@ export default function InvitesBids() {
                     <td colSpan="3" className="text-center py-4">
                       Loading...
                     </td>
-                    </tr>
+                  </tr>
                 ) : (
                   projects.map((project, index) => (
                     <tr key={project._id} className="reservation-row">
@@ -239,7 +245,10 @@ export default function InvitesBids() {
                         <div className="flex items-center">
                           <div>
                             <div className="text-sm leading-5 text-gray-900">
-                            {generateFileName(project.projectId, project.biddingType)}{" "}
+                              {generateFileName(
+                                project.projectId,
+                                project.biddingType
+                              )}{" "}
                             </div>
                           </div>
                         </div>
@@ -247,19 +256,33 @@ export default function InvitesBids() {
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="icon-link flex justify-center gap-x-4">
                           <Tooltip content="Preview the Project">
-                            <IconButton variant="text" onClick={() => navigateToViewProject(project.projectId, project.biddingType)}>
+                            <IconButton
+                              variant="text"
+                              onClick={() =>
+                                navigateToViewProject(
+                                  project.projectId,
+                                  project.biddingType
+                                )
+                              }
+                            >
                               <EyeIcon className="h-6 w-6 text-green-500" />
                             </IconButton>
                           </Tooltip>
-
-                  
-
-                          <button
-                            onClick={() => handleInviteBidsClick(project)}
-                            className="text-white bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded"
-                          >
-                            Invite Bids
-                          </button>
+                          {invitedProjects.includes(project.projectId) ? (
+                            <button
+                              className="text-white bg-green-500 px-3 py-1 rounded"
+                              disabled
+                            >
+                              Invited
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleInviteBidsClick(project)}
+                              className="text-white bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded"
+                            >
+                              Invite Bids
+                            </button>
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -278,7 +301,8 @@ export default function InvitesBids() {
         <InvitesBidsCard
           project={selectedProject}
           vendors={vendors}
-          onClose={() => setModalOpen(false)}
+          onClose={handleCloseModal}
+          onSuccess={handleInviteSuccess}
         />
       )}
     </div>

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import { Tooltip } from "flowbite-react";
 import { IconButton } from "@material-tailwind/react";
 
-const InvitesBidsCard = ({ project, vendors, onClose }) => {
+const InvitesBidsCard = ({ project, vendors, onClose, onSuccess }) => {
   const [selectedVendors, setSelectedVendors] = useState([]);
-
+  const [open, setOpen] = useState(true);
+  const navigate = useNavigate();
   const handleVendorChange = (e) => {
     const { value, checked } = e.target;
     if (checked) {
@@ -34,6 +35,8 @@ const InvitesBidsCard = ({ project, vendors, onClose }) => {
       .then((response) => {
         console.log("Invitations sent successfully:", response.data);
         alert("Invitations sent successfully!");
+        navigate("/InviteBids");
+        onSuccess(project.projectId);
         onClose();
       })
       .catch((error) => {

@@ -46,7 +46,7 @@ exports.sendMail = async (req, res) => {
 
     const pdfFileName = generateFileName(projectId, biddingType);
     const pathToAttachment = path.join(__dirname, "..", "projects", pdfFileName);
-    console.log("Path to attachment:", pathToAttachment);
+    // console.log("Path to attachment:", pathToAttachment);
 
     if (!fs.existsSync(pathToAttachment)) {
       console.log("File does not exist:", pathToAttachment);
