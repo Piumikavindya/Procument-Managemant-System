@@ -6,18 +6,18 @@ import { useParams,useNavigate } from "react-router-dom";
 // Ensure pdfjs worker is correctly loaded
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const ViewPdf = () => {
+const ViewGuidancePdf = () => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [loading, setLoading] = useState(true);
   const [pdfUrl, setPdfUrl] = useState("");
   const [prevPageNumber, setPrevPageNumber] = useState(null); // Store the previous page number
-  const { guidanceId } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   // Function to fetch PDF URL based on requestId
   const fetchPdfUrl = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/guidance/viewPdf/${guidanceId}`, {
+      const response = await axios.get(`http://localhost:8000/guidance/viewNoticePdf/${id}`, {
         responseType: 'arraybuffer', // Ensure response is treated as binary data
       });
       const blob = new Blob([response.data], { type: 'application/pdf' });
@@ -33,7 +33,7 @@ const ViewPdf = () => {
   // Call fetchPdfUrl when component mounts
   useEffect(() => {
     fetchPdfUrl();
-  }, [guidanceId]);
+  }, [id]);
 
   // Function to handle page change
   const onPageChange = ({ pageNumber }) => {
@@ -43,7 +43,7 @@ const ViewPdf = () => {
 
   // Function to handle going back to the previous page
   const goBack = () => {
-    navigate("/ManageGuidance");
+    navigate(`/ManageGuidance/${id}`);
   };
 
   return (
@@ -98,4 +98,4 @@ const ViewPdf = () => {
   );
 };
 
-export default ViewPdf;
+export default ViewGuidancePdf;

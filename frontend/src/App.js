@@ -11,7 +11,7 @@ import ReqForm from "./pages/department/ReqForm.jsx";
 import UploadGuidance from "./pages/admin/guidance/UploadGuidance.jsx";
 import DeleteGuidance from "./pages/admin/guidance/DeleteGuidance.jsx";
 import { useNavigate } from "react-router-dom";
-import viewPdf from "./pages/admin/guidance/ViewPdf.jsx";
+
 import DepartmentHome from "./pages/department/DepartmentHome.jsx";
 import PreviewItem from "./pages/admin/items/PreviewItem.jsx";
 import DeleteItem from "./pages/admin/items/DeleteItem.jsx";
@@ -72,7 +72,10 @@ import VendorsList from "./pages/PO_BU/VendorsList.jsx";
 import DeleteProject from "./pages/PO_BU/DeleteProject.jsx";
 import PreviewSupplyerDetails from "./pages/PO_BU/PreviewSupplerDetails.jsx";
 import ProfilePage from "./pages/Profile settings/ProfilePage.jsx";
-
+import ViewGuidancePdf from "./pages/admin/guidance/ViewGuidancePdf.jsx";
+import ManageBudget from "./pages/admin/budgetPlaning/ManageBudget.jsx";
+import DeleteBudget from "./pages/admin/budgetPlaning/DeleteBudget.jsx";
+import UpdateBudget from "./pages/admin/budgetPlaning/UpdateBudget.jsx";
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
   const location = useLocation();
@@ -177,13 +180,20 @@ const App = () => {
         <Route path="/UploadGuidance/:id" element={<UploadGuidance />} />
         <Route path="/DeleteGuidance/:id" element={<DeleteGuidance />} />
         {/*<Route path="/ViewGuidances" element={<ViewGuidances />} /> */}
-        <Route path="/viewPdf/:id/:guidanceId" element={<viewPdf />} />
+        <Route path="/viewPdf/:id" element={<ViewGuidancePdf />} />
 
         <Route path="/ManageNotice/:id" element={<ManageNotices />} />
         <Route path="/UploadNotice/:id" element={<UploadNotice />} />
         <Route path="/DeleteNotice/:id" element={<DeleteNotice />} />
-        <Route path="/viewNoticePdf/:id/noticeId" element={<ViewNoticePdf />} />
+        <Route path="/viewNoticePdf/:id" element={<ViewNoticePdf />} />
 
+        <Route path="/ManageBudget/:id" element={<ManageBudget />} />
+        <Route path="/DeleteBudget/:id" element={<DeleteBudget />} />
+        <Route path="/UpdateBudget/:id" element={<UpdateBudget />} />
+        
+        
+        
+        
         <Route path="/AllItem/:id" element={<ItemDetails />} />
         <Route
           path="/previewItemDetails/:id"
@@ -298,7 +308,7 @@ const App = () => {
           element={<PreviewSupplyerDetails />}
         />
         <Route
-          path="/EventPlanner"
+          path="/EventPlanner/:id"
           element={
             <ContextWrapper>
               <EventPlanner />{" "}

@@ -39,12 +39,10 @@ const {id} =useParams();
     { link: "Manage Users", path: `/userList/${id}` },
     { link: "Manage Vendors", path: `/allvendors/${id}` },
     { link: "Items", path: `/AllItem/${id}` },
-    { link: "Dashboard", path: "" },
     { link: "Manage Guidance", path: `/ManageGuidance/${id}` },
     { link: "Manage Notices", path: `/ManageNotice/${id}` },
-    { link: "Department", path: "" },
-    { link: "Budget & Plan", path: "" },
-    { link: "Manage Year Plan", path: "/EventPlanner" },
+    { link: "Budget & Plan", path: `/ManageBudget/${id}` },
+    { link: "Manage Year Plan", path: `/EventPlanner/${id}` },
   ];
 
   const DepartmentOptions = [
@@ -76,7 +74,6 @@ const {id} =useParams();
     { link: "User Registration", path: "Home" },
     { link: "Vendor Registration", path: "guidelines" },
     { link: "Add Items", path: "notices" },
-    { link: "Dashboard", path: "budget" },
     { link: "Manage Documents", path: "vendors" },
     { link: "Budget & Plan", path: "events" },
   ];

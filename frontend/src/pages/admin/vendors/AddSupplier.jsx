@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Breadcrumb from "../../../components/Breadcrumb";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams,useNavigate } from "react-router-dom";
 
 export default function AddSupplier() {
   const [username, setUsername] = useState("");
@@ -24,6 +24,7 @@ export default function AddSupplier() {
   const address = `${addressStreet}, ${addressCity}, ${addressProvince}`;
   const contactNumber = `${contactNumbers1}, ${contactNumbers2}`;
   const { id } = useParams();
+  const navigate = useNavigate();
   const types = [
     "SoleImporter",
     "SoleDistributor",
@@ -88,6 +89,7 @@ export default function AddSupplier() {
         setFaxNumber2("");
         setTypesOFBusiness("");
         setClassOfAssets("");
+        navigate(`/allvendors/${id}`)
       })
       .catch((error) => {
         console.error("Error:", error);

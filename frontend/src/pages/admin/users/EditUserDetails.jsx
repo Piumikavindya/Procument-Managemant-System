@@ -22,7 +22,7 @@ export default function EditUserDetails() {
     "approver",
     "TECofficer",
   ];
-  const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
+  const departments =  ['DEIE', 'DCEE','DMME ','DCE','DMNNE','DIS', 'NONE']
 
   // React Router Hook to get the parameter from the URL
   const { id } = useParams();

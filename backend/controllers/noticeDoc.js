@@ -156,7 +156,7 @@ exports.deleterNotice = async (req,res)=>{
 };
 
 
-exports.viewPdf = async (req, res) => {
+exports.viewNoticePdf = async (req, res) => {
   try {
     const noticeId = req.params.id;
 

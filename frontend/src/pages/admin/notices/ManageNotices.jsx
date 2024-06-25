@@ -240,7 +240,7 @@ const ManageNotices = () => {
 
                       <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="icon-link flex justify-center gap-x-4">
-                          <Link to={`/viewNoticePdf/${id}/${notice._id}`}>
+                          <Link to={`/viewNoticePdf/${notice._id}`}>
                             <Tooltip content="Preview Notice">
                               <IconButton variant="text">
                                 <EyeIcon className="h-6 w-6 text-green-500" />

@@ -116,10 +116,14 @@ export default function UpdateItems() {
                 value={AssetsClass}
                 onChange={(e) => setAssetsClass(e.target.value)}
                 class="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full" 
-         
-       
+        
               >
-               
+               <option value="">Update AssetsClass</option>
+                  {AssetsClasses.map((type, index) => (
+                    <option key={index} value={type}>
+                      {type}
+                    </option>
+                  ))}
                 
               </select>
               </div>
@@ -135,7 +139,7 @@ export default function UpdateItems() {
               <div className="mt-2">
               <input
                 type='text'
-                value={AssetsClass}
+                value={AssetsSubClass}
                 onChange={(e) => setAssetsSubClass(e.target.value)}
                 class="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
                 placeholder="Update the AssetSubClass name" 

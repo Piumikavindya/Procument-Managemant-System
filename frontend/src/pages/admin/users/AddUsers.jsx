@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Breadcrumb from "../../../components/Breadcrumb";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams,useNavigate} from "react-router-dom";
 
 export default function AddUsers() {
   const [role, setRole] = useState("");
@@ -14,6 +14,7 @@ export default function AddUsers() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
   const roles = [
     "admin",
     "procurement Officer",
@@ -22,7 +23,7 @@ export default function AddUsers() {
     "approver",
     "TECofficer",
   ];
-  const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
+  const departments =  ['DEIE', 'DCEE','DMME ','DCE','DMNNE','DIS', 'NONE']
 
   function handleSaveCreateUsers(e) {
     e.preventDefault();
@@ -52,6 +53,8 @@ export default function AddUsers() {
         setEmpNo("");
         setUsername("");
         setPassword("");
+        navigate(`/userList/${id}`);
+
       })
       .catch((error) => {
         console.error("Error:", error);

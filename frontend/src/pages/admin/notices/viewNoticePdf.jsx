@@ -12,12 +12,12 @@ const ViewNoticePdf = () => {
   const [loading, setLoading] = useState(true);
   const [pdfUrl, setPdfUrl] = useState("");
   const [prevPageNumber, setPrevPageNumber] = useState(null); // Store the previous page number
-  const { noticeId } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   // Function to fetch PDF URL based on requestId
   const fetchPdfUrl = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/notice/viewPdf/${noticeId}`, {
+      const response = await axios.get(`http://localhost:8000/notice/viewNoticePdf/${id}`, {
         responseType: 'arraybuffer', // Ensure response is treated as binary data
       });
       const blob = new Blob([response.data], { type: 'application/pdf' });
@@ -33,7 +33,7 @@ const ViewNoticePdf = () => {
   // Call fetchPdfUrl when component mounts
   useEffect(() => {
     fetchPdfUrl();
-  }, [noticeId]);
+  }, [id]);
 
   // Function to handle page change
   const onPageChange = ({ pageNumber }) => {
@@ -43,7 +43,7 @@ const ViewNoticePdf = () => {
 
   // Function to handle going back to the previous page
   const goBack = () => {
-    navigate("/ManageNotice");
+    navigate(`/ManageNotice/${id}`);
   };
 
   return (

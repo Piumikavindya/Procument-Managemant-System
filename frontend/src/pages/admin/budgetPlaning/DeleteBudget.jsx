@@ -5,15 +5,18 @@ import React from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import ItemDetails from "./ItemDetails";
+
 import {
+  Button,
+  DialogHeader,
   DialogBody,
   DialogFooter,
-  DialogHeader,
   Typography,
 } from "@material-tailwind/react";
 
-export default function DeleteItems() {
+import ManageBudget from "./ManageBudget";
+
+const DeleteBudget = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -21,14 +24,14 @@ export default function DeleteItems() {
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleDeleteItem = () => {
+  const handleDeleteBudget = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:8000/item/delete/${id}`)
+      .delete(`http://localhost:8000/budget/deleterBudget/${id}`)
       .then(() => {
         setLoading(false);
-        enqueueSnackbar("Supplier deleted", { variant: "success" });
-        navigate(`/AllItem/${id}`);
+        enqueueSnackbar("Budget deleted", { variant: "success" });
+        navigate(`/ManageBudget/${id}`);
       })
       .catch((error) => {
         setLoading(false);
@@ -38,13 +41,14 @@ export default function DeleteItems() {
   };
 
   const handleOpen = () => setOpen(!open); 
-   const handleCancel = () => {
-    setOpen(false);
-    navigate(`/AllItem/${id}`); // Navigate to userList with the id
+  const handleCancel = () => {
+   setOpen(false);
+    navigate(`/ManageBudget/${id}`);
   };
+
   return (
     <div>
-      <ItemDetails />
+      <ManageBudget />
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
@@ -77,8 +81,12 @@ export default function DeleteItems() {
               >
                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                   <DialogHeader className="grid place-items-center">
-                    <Typography variant="h5" color="red">
-                      <h4>Delete Item Details</h4>
+                    <Typography
+                      variant="h5"
+                      color="red"
+                      className="text-center"
+                    >
+                      <h4>Delete Budget Details</h4>
                     </Typography>
                   </DialogHeader>
                   <DialogBody divider className="grid place-items-center">
@@ -89,13 +97,13 @@ export default function DeleteItems() {
                     ></img>
 
                     <Typography className="text-center font-normal">
-                      <h3>Are you sure want to delete this Item details?</h3>
+                      <h3>Are you sure want to delete this Budget details?</h3>
                     </Typography>
 
                     <Typography className="text-center font-normal" color="red">
                       <h6>
-                        Note : Once you delete this Item all details of the item
-                        will be removed from the system.
+                        Note : Once you delete this Budget all details of the
+                        dudget will be removed from the system.
                       </h6>
                     </Typography>
                   </DialogBody>
@@ -103,7 +111,7 @@ export default function DeleteItems() {
                     <button
                       type="submit"
                       className="rounded-md bg-green-500 h-12 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      onClick={handleDeleteItem}
+                      onClick={handleDeleteBudget}
                     >
                       <h6 className="mt-2">Yes, Delete it</h6>
                     </button>
@@ -124,4 +132,5 @@ export default function DeleteItems() {
       </Transition.Root>
     </div>
   );
-}
+};
+export default DeleteBudget;
