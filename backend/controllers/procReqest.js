@@ -1,7 +1,7 @@
 const procReqest = require("../Models/procReqest");
 const User = require("../Models/user");
 const path = require("path");
-
+const Budget = require('../Models/budget');
 // const fs = require('fs').promises;
 
 const { PDFDocument, rgb } = require("pdf-lib");
@@ -48,11 +48,16 @@ exports.createRequest = async (req, res) => {
     balanceAvailable,
     purpose,
     sendTo,
-    //items,
-    //files
+    items,
+    files
   } = req.body;
 
   try {
+    // Check if the cost is within the budget allocation
+    if (parseFloat(usedAmount) + parseFloat(balanceAvailable) < parseFloat(budgetAllocation)) {
+      return res.status(400).json({ error: "Cost exceeds budget allocation" });
+    }
+
     // Find the existing document with the provided requestId
     const existingRequest = await procReqest.findOne({ requestId });
 
@@ -68,14 +73,31 @@ exports.createRequest = async (req, res) => {
       existingRequest.balanceAvailable = balanceAvailable;
       existingRequest.purpose = purpose;
       existingRequest.sendTo = sendTo;
-      // existingRequest.items = items;
-      // existingRequest.files = files;
-      // existingRequest.items = items;
-      // existingRequest.files = files;
+      existingRequest.items = items;
+      existingRequest.files = files;
 
       // Save the updated document to the database
       const updatedRequest = await existingRequest.save();
-      console.log(updatedRequest);
+
+      // Update available balance in the budget schema
+      const budget = await Budget.findOne({ department });
+      if (budget) {
+        budget.availableBalance = parseFloat(usedAmount) - parseFloat(budgetAllocation);
+        await budget.save();
+      }
+
+      // Automatically update usedAmount until availableBalance becomes zero
+      let remainingBalance = budget.availableBalance;
+      let newUsedAmount = parseFloat(usedAmount);
+      while (remainingBalance > 0) {
+        newUsedAmount += parseFloat(cost); // Assuming cost is defined in your code
+        remainingBalance -= parseFloat(cost);
+      }
+
+      // Update usedAmount in the Budget schema
+      budget.usedAmount = newUsedAmount;
+      await budget.save();
+
       // Send the updated document as a response
       res.json(updatedRequest);
     } else {
@@ -92,12 +114,22 @@ exports.createRequest = async (req, res) => {
         balanceAvailable,
         purpose,
         sendTo,
-        // items,
-        // files
+        items,
+        files
       });
 
       // Save the new document to the database
       const createdRequest = await newprocReqest.save();
+
+      // Update available balance in the budget schema
+      const budget = await Budget.findOne({ department });
+      if (budget) {
+        budget.availableBalance = parseFloat(usedAmount) - parseFloat(budgetAllocation);
+        await budget.save();
+      }
+
+      // Reset input fields
+      resetInputFields();
 
       // Send the created document as a response
       res.json(createdRequest);
@@ -107,7 +139,26 @@ exports.createRequest = async (req, res) => {
     // Handle errors and send an appropriate response
     res.status(500).json({ error: error.message });
   }
+
+  // Function to reset input fields
+  function resetInputFields() {
+    // Reset your state values here
+    // For example:
+    setFaculty('');
+    setDepartment('');
+    setDate('');
+    setContactNo('');
+    setContactPerson('');
+    setBudgetAllocation('');
+    setUsedAmount('');
+    setBalanceAvailable('');
+    setPurpose('normal');
+    setSendTo('dean');
+    setItems({});
+    setFiles({});
+  }
 };
+
 
 exports.viewAllRequests = async (req, res) => {
   try {

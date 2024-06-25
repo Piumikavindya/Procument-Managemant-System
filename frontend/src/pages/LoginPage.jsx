@@ -30,7 +30,8 @@ const LoginPage = () => {
 
     if (!credentials.email) newErrors.email = "Email is required";
     if (!credentials.password) newErrors.password = "Password is required";
-    if (!credentials.role || credentials.role === "role") newErrors.role = "Role is required";
+    if (!credentials.role || credentials.role === "role")
+      newErrors.role = "Role is required";
 
     return newErrors;
   };
@@ -58,7 +59,9 @@ const LoginPage = () => {
             navigate("/adminhome/" + response.data.user.id);
             break;
           case "department":
-            navigate(`/department/${response.data.user.department}/${response.data.user.id}`);
+            navigate(
+              `/department/${response.data.user.department}/${response.data.user.id}`
+            );
             break;
           case "procurement Officer":
             navigate("/PO_BuHome/" + response.data.user.id);
@@ -127,7 +130,9 @@ const LoginPage = () => {
                   name="role"
                   value={credentials.role}
                   onChange={handleChange}
-                  className={`block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6 ${errors.role ? 'ring-red-500' : ''}`}
+                  className={`block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6 ${
+                    errors.role ? "ring-red-500" : ""
+                  }`}
                 >
                   <option value="role">Select your role</option>
                   <option value="admin">Admin</option>
@@ -136,7 +141,9 @@ const LoginPage = () => {
                   <option value="department">User Department</option>
                   <option value="approver">Approver</option>
                 </select>
-                {errors.role && <p className="text-red-500 text-sm">{errors.role}</p>}
+                {errors.role && (
+                  <p className="text-red-500 text-sm">{errors.role}</p>
+                )}
               </div>
             </div>
 
@@ -154,9 +161,13 @@ const LoginPage = () => {
                   value={credentials.email}
                   onChange={handleChange}
                   placeholder="Email"
-                  className={`block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6 ${errors.email ? 'ring-red-500' : ''}`}
+                  className={`block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6 ${
+                    errors.email ? "ring-red-500" : ""
+                  }`}
                 />
-                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email}</p>
+                )}
               </div>
             </div>
 
@@ -178,9 +189,13 @@ const LoginPage = () => {
                   onChange={handleChange}
                   placeholder="Password"
                   required
-                  className={`block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6 ${errors.password ? 'ring-red-500' : ''}`}
+                  className={`block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6 ${
+                    errors.password ? "ring-red-500" : ""
+                  }`}
                 />
-                {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+                {errors.password && (
+                  <p className="text-red-500 text-sm">{errors.password}</p>
+                )}
               </div>
             </div>
 
