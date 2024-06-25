@@ -39,11 +39,9 @@ const UserTypeNavbar = ({ userType }) => {
     { link: "Manage Users", path: "/userList" },
     { link: "Manage Vendors", path: "/allvendors" },
     { link: "Items", path: "/AllItem" },
-    { link: "Dashboard", path: "" },
     { link: "Manage Guidance", path: "/ManageGuidance" },
     { link: "Manage Notices", path: "/ManageNotice" },
-    { link: "Department", path: "" },
-    { link: "Budget & Plan", path: "" },
+    { link: "Budget & Plan", path: "/ManageBudget" },
     { link: "Manage Year Plan", path: "/EventPlanner" },
   ];
 
@@ -56,11 +54,13 @@ const UserTypeNavbar = ({ userType }) => {
   const procOfficerOptions = [
     { link: "Created Projects", path: "/projectList" },
     { link: "Create New Project", path: "/ProjectCreationForm" },
-    { link: "Approved Purchase Requisition List ", path: "/ApprovedRequestList" },
+    {
+      link: "Approved Purchase Requisition List ",
+      path: "/ApprovedRequestList",
+    },
     { link: "Bidding Documents", path: "/biddingDocuments" },
     { link: "Vendors List", path: "/VendorsList" },
     { link: "Invites Bids", path: "/InvitesBids" },
-    
   ];
 
   const TECofficerOptions = [
@@ -112,7 +112,7 @@ const UserTypeNavbar = ({ userType }) => {
               DepartmentOptions.map(({ link, path }) => (
                 <Link
                   to={path}
-                 offset={-100}
+                  offset={-100}
                   key={path}
                   className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >
@@ -134,7 +134,7 @@ const UserTypeNavbar = ({ userType }) => {
               procOfficerOptions.map(({ link, path }) => (
                 <Link
                   to={path}
-                   offset={-100}
+                  offset={-100}
                   key={path}
                   className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >

@@ -12,7 +12,7 @@ router.post("/create", userValidator, validate,create, (req, res) => {
   });
   // virw all users
 router.get('/view-users', viewUsers);
-router.get("/preview-user/:userId", previewUser)
+router.get("/preview-user/:id", previewUser)
 router.put("/update/:id", updateUser);
 router.delete("/delete/:id", deleterUser)
 // add signIn route

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import axios from "axios";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 // Ensure pdfjs worker is correctly loaded
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -50,7 +50,6 @@ export function ViewShoppingPdf() {
 
   return (
     <div className="flex justify-center items-center h-full bg-gray-200 mt-24">
-     
       {loading ? (
         <div className="text-gray-600">Loading...</div>
       ) : (
@@ -72,8 +71,7 @@ export function ViewShoppingPdf() {
             </p>
             <div className="space-x-2">
               <button
-                onClick={goBack} 
-              
+                onClick={goBack}
                 className="py-1 px-2 rounded bg-gray-400 text-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
               >
                 Back
@@ -98,4 +96,4 @@ export function ViewShoppingPdf() {
       )}
     </div>
   );
-};
+}

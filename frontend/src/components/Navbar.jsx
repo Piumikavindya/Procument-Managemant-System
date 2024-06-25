@@ -11,6 +11,7 @@ import { Button, Typography } from "@material-tailwind/react";
 const Navbar = ({
   isAuthenticated,
   handleSignOut,
+  handleSignIn,
   username,
   userId,
   loggedInUser,
