@@ -74,13 +74,16 @@ import VendorsList from "./pages/PO_BU/VendorsList.jsx";
 import DeleteProject from "./pages/PO_BU/DeleteProject.jsx";
 import PreviewSupplyerDetails from "./pages/PO_BU/PreviewSupplerDetails.jsx";
 import ProfilePage from "./pages/Profile settings/ProfilePage.jsx";
-
+import { useAuth } from './context/AuthContext.js';
+import UserProfile from "./pages/Profile settings/UserProfile.jsx";
+import ManageBudget from "./pages/admin/budgetPlaning/ManageBudget.jsx";
+import DeleteBudget from "./pages/admin/budgetPlaning/DeleteBudget.jsx";
+import UpdateBudget from "./pages/admin/budgetPlaning/UpdateBudget.jsx";
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
   const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const { isAuthenticated, loggedInUser, handleSignOut, handleSignIn } = useAuth();
 
   const renderNavbar = () => {
     if (location.pathname === "/loginpage") {
@@ -102,22 +105,22 @@ const App = () => {
     return <CommonFooter />;
   };
 
-  const handleSignIn = (user) => {
-    console.log("User details:", user);
-    setIsAuthenticated(true);
-    console.log("User authenticated state:", isAuthenticated);
-    setLoggedInUser(user);
-    navigate("/loginpage");
-  };
+  // const handleSignIn = (user) => {
+  //   console.log("User details:", user);
+  //   setIsAuthenticated(true);
+  //   console.log("User authenticated state:", isAuthenticated);
+  //   setLoggedInUser(user);
+  //   navigate("/loginpage");
+  // };
 
-  const handleSignOut = () => {
-    console.log("Signing out...");
-    setIsAuthenticated(false);
-    setLoggedInUser(null);
-    console.log("User authenticated state:", isAuthenticated);
-    console.log("Logged-in user:", loggedInUser);
-    navigate("/");
-  };
+  // const handleSignOut = () => {
+  //   console.log("Signing out...");
+  //   setIsAuthenticated(false);
+  //   setLoggedInUser(null);
+  //   console.log("User authenticated state:", isAuthenticated);
+  //   console.log("Logged-in user:", loggedInUser);
+  //   navigate("/");
+  // };
   return (
     <div>
       {renderNavbar()}
@@ -125,28 +128,9 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/viewVendors" element={<ViewVendorDetails />} />
-        <Route
-          path="/loginpage"
-          element={
-            isAuthenticated ? (
-              <Navigate to="/" />
-            ) : (
-              <LoginPage setIsAuthenticated={setIsAuthenticated} />
-            )
-          }
-        />
+        <Route path="/loginpage" element={isAuthenticated ? <Navigate to="/" /> : <LoginPage />} />
 
-        <Route
-          path="/adminhome/:id"
-          element={
-            <AdminHome
-              isAuthenticated={isAuthenticated}
-              loggedInUser={loggedInUser}
-              handleSignOut={handleSignOut}
-              handleSignIn={handleSignIn}
-            />
-          }
-        />
+        <Route path="/adminhome/:userId" element={<AdminHome />} />
 
         <Route path="/addUsers" element={<AddUsers />} />
         <Route path="/editUsers/:id" element={<EditUserDetails />} />
@@ -168,16 +152,7 @@ const App = () => {
         <Route path="/deleteSupplier/:id" element={<DeleteSupplier />} />
 
         <Route path="/reqform" element={<ReqForm />} />
-        <Route
-          path="/department/:departmentId/:userId"
-          element={
-            <DepartmentHome
-              isAuthenticated={isAuthenticated}
-              loggedInUser={loggedInUser}
-              handleSignOut={handleSignOut}
-            />
-          }
-        />
+        <Route path="/department/:departmentId/:userId" element={<DepartmentHome />} />
         <Route path="/ProgressTrack" element={<ProgressTracker />} />
         <Route
           path="/DeleteItem/:requestId/:itemId"
@@ -196,7 +171,11 @@ const App = () => {
         <Route path="/ViewNotices" element={<ViewNotice />} />
         <Route path="/viewNoticePdf/:noticeId" element={<ViewNoticePdf />} />
 
-
+        <Route path="/ManageBudget" element={<ManageBudget />} />
+        <Route path="/DeleteBudget/:id" element={<DeleteBudget />} />
+        <Route path="/UpdateBudget/:id" element={<UpdateBudget />} />
+        
+        
         <Route path="/AllItem" element={<ItemDetails />} />
         <Route path="/PreviewItem/:id" element={<PreviewItem />} />
         <Route path="/DeleteItem/:id" element={<DeleteItem />} />
@@ -283,9 +262,20 @@ const App = () => {
             />
           }
         />
+ <Route
+          path="/UserProfile/:userId"
+          element={
+            <UserProfile
+              isAuthenticated={isAuthenticated}
+              loggedInUser={loggedInUser}
+              userId={loggedInUser?.id}
+              username={loggedInUser?.username}
+            />
+          }
+        />
 
       </Routes>
-
+      
       {renderCommonFooter()}
     </div>
   );

@@ -2,14 +2,19 @@ const path = require("path");
 const fs = require("fs");
 const nodemailer = require("nodemailer");
 const env = require("dotenv");
+const procProject = require("../Models/ProcProject");
 const Supplier = require('../Models/supplyer');
+const procReqest = require('../Models/procReqest');
+
 
 env.config();
+
+
 
 exports.sendMail = async (req, res) => {
   try {
     console.log("Received request:", req.params);
-    const { projectId, biddingType } = req.params;
+    const { projectId, biddingType,procurementRequests } = req.params;
     const { supplierIds } = req.body;
     console.log("Project ID:", projectId);
     console.log("Bidding Type:", biddingType);
@@ -41,7 +46,7 @@ exports.sendMail = async (req, res) => {
 
     const pdfFileName = generateFileName(projectId, biddingType);
     const pathToAttachment = path.join(__dirname, "..", "projects", pdfFileName);
-    console.log("Path to attachment:", pathToAttachment);
+    // console.log("Path to attachment:", pathToAttachment);
 
     if (!fs.existsSync(pathToAttachment)) {
       console.log("File does not exist:", pathToAttachment);
@@ -78,6 +83,30 @@ exports.sendMail = async (req, res) => {
         },
       ],
     });
+
+
+
+    const project = await procProject.findOne({ projectId: projectId });
+
+    if (!project || !project.procurementRequests || project.procurementRequests.length === 0) {
+      return res.status(400).send("No procurement requests found for the given projectId.");
+    }
+
+    const requestIds = project.procurementRequests.map(request => request.requestId);
+
+    // Update the status of those requests to "Invite Bids"
+    const procRequestUpdateResult = await procReqest.updateMany(
+      { requestId: { $in: requestIds }, status: 'Bid Opening' },
+      { $set: { status: 'Invite Bids' } }
+    );
+
+    if (procRequestUpdateResult.modifiedCount === 0) {
+      return res.status(400).send("No documents were updated. Please check the requestIds and status fields.");
+    }
+
+    console.log("ProcRequest update result:", procRequestUpdateResult);
+
+
 
     res.send("Mail has been sent to the selected vendors. Check your email.");
   } catch (error) {

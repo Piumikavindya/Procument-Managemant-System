@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-const LoginPage = ({ setIsAuthenticated }) => {
+const LoginPage = () => {
   const [loggedInUser, setLoggedInUser] = useState(null);
 
   const [credentials, setCredentials] = useState({
@@ -21,33 +22,31 @@ const LoginPage = ({ setIsAuthenticated }) => {
       [name]: value,
     });
   };
-
-  const handleSignIn = async () => {
+  const { handleSignIn } = useAuth();
+  const handleSignInClick = async () => {
     try {
       const response = await axios.post("http://localhost:8000/user/signIn", {
         email: credentials.email,
         password: credentials.password,
         role: credentials.role,
-      
       });
       console.log("User details:", response.data.user);
       if (response.data.user) {
+        handleSignIn(response.data.user);
         // Authentication successful
         console.log("User Login is Successfully:", response.data.user);
         // Update your state or localStorage with user details
-        setLoggedInUser(response.data.user);
-
-        // Update authentication state
-        setIsAuthenticated(true);
 
         // Redirect based on user role
         switch (response.data.user.role) {
           case "admin":
             navigate("/adminhome/" + response.data.user.id);
             break;
-            case "department":
-              navigate(`/department/${response.data.user.department}/${response.data.user.id}`);
-              break;
+          case "department":
+            navigate(
+              `/department/${response.data.user.department}/${response.data.user.id}`
+            );
+            break;
           case "procurement Officer":
             navigate("/PO_BuHome/" + response.data.user.id);
             break;
@@ -183,7 +182,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
             <div>
               <button
                 type="button"
-                onClick={handleSignIn}
+                onClick={handleSignInClick}
                 className="flex w-full justify-center rounded-md bg-blue-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
               >
                 Login

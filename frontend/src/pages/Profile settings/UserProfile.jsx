@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 
-const UserProfile = ({ isAuthenticated, handleSignOut, username,userId  }) => {
+const UserProfile = ({ isAuthenticated, handleSignOut, username, userId }) => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -15,6 +15,7 @@ const UserProfile = ({ isAuthenticated, handleSignOut, username,userId  }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(
           `http://localhost:8000/user/preview-user/${userId}`
         );
@@ -22,11 +23,14 @@ const UserProfile = ({ isAuthenticated, handleSignOut, username,userId  }) => {
         setUser(response.data);
       } catch (error) {
         console.log("Error fetching user:", error);
+        enqueueSnackbar("Error fetching user data", { variant: "error" });
+      } finally {
+        setLoading(false);
       }
     };
 
     getUser();
-  }, [userId]);
+  }, [userId, enqueueSnackbar]);
 
   const handleClose = () => {
     navigate("/allusers");

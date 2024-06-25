@@ -42,25 +42,22 @@ exports.viewUsers = async (req,res) =>{
 
 
 
-// view details of perticular user
-exports.previewUser = async (req,res) =>{
+// view details of particular user
+exports.previewUser = async (req, res) => {
     const userId = req.params.id;
-
+  
     try {
-        const user = await User.findById(userId);
-        if (!user) {
-            
-            return res.status(404).json({ status: "user not found" });
-        }
-        
-
-        res.status(200).json(user); 
+      const user = await User.findById(userId); // Correct method to find user by ID
+      if (!user) {
+        return res.status(404).json({ status: "user not found" });
+      }
+      res.status(200).json(user);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).json({ status: "Error with getting user", error: err.message });
+      console.error(err.message);
+      res.status(500).json({ status: "Error with getting user", error: err.message });
     }
- 
- };
+  };
+  
 
 
 //update user details

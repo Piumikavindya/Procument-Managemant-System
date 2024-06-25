@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
-import {
-
-  MagnifyingGlassIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import { useParams } from "react-router-dom";
 import UserTypeNavbar from "../../components/UserTypeNavbar.jsx";
@@ -117,7 +113,8 @@ export default function ProjectList() {
             <div className="flex flex-wrap items-center">
               <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                 <h3 className="font-semibold  text-blueGray-700">
-                  <i className="fa-solid fa-file-lines"></i> Generated Project List
+                  <i className="fa-solid fa-file-lines"></i> Generated Project
+                  List
                 </h3>
               </div>
 
@@ -173,7 +170,7 @@ export default function ProjectList() {
                     className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider"
                     style={{ width: "500px" }}
                   >
-                    File Name
+                    Project Id
                   </th>
 
                   <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white-900 tracking-wider">
@@ -188,8 +185,8 @@ export default function ProjectList() {
                       Loading...
                     </td>
                   </tr>
-               ) : (
-                projects.map((project, index) => (
+                ) : (
+                  projects.map((project, index) => (
                     <tr key={project._id} className="reservation-row">
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="flex items-center">
@@ -213,7 +210,9 @@ export default function ProjectList() {
 
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="icon-link flex justify-center gap-x-4">
-                          <Link to={`/PreviewProjectDetails/${project.projectId}`}>
+                          <Link
+                            to={`/PreviewProjectDetails/${project.projectId}`}
+                          >
                             <Tooltip content="Preview the Project">
                               <IconButton variant="text">
                                 <EyeIcon className="h-6 w-6 text-green-500" />
@@ -231,12 +230,12 @@ export default function ProjectList() {
                             </Tooltip>
                           </button>
                           <Link to={`/deleteProject/${project.projectId}`}>
-                        <Tooltip content="Delete Project">
-                          <IconButton variant="text">
-                            <TrashIcon className="h-6 w-6  text-red-500" />
-                          </IconButton>
-                        </Tooltip>
-                      </Link>
+                            <Tooltip content="Delete Project">
+                              <IconButton variant="text">
+                                <TrashIcon className="h-6 w-6  text-red-500" />
+                              </IconButton>
+                            </Tooltip>
+                          </Link>
                         </div>
                       </td>
                     </tr>

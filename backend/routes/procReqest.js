@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { generateRequestId,createRequest ,deleteRequest,addProcItem,deleteProcItem,uploadFile,downloadFile,deleteFile,viewFiles,viewAllRequests,veiwProcItems, SpecificationFile, uploadSpecificationFile, uploadSpecification} = require('../controllers/procReqest');
+const { generateRequestId,createRequest ,deleteRequest,addProcItem,deleteProcItem,uploadFile,downloadFile,deleteFile,viewFiles,viewAllRequests,viewRequestsByDepartment,veiwProcItems, SpecificationFile, uploadSpecificationFile, uploadSpecification} = require('../controllers/procReqest');
 const upload = require('../middlewares/multer');
 const specification = require('../middlewares/specificationMulter');
 
@@ -25,6 +25,7 @@ router.post("/generateRequestId", generateRequestId, (req, res) => {
   router.delete('/deleteFile/:requestId/:filename', deleteFile);
   router.get('/viewFiles', viewFiles);
   // router.get('/downloadPdf/:requestId', downloadPdf);
+  router.get("/viewRequestsByDepartment/:userId", viewRequestsByDepartment);
 
 
 
