@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Breadcrumb from "../../../components/Breadcrumb";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function AddUsers() {
   const [role, setRole] = useState("");
@@ -13,6 +13,7 @@ export default function AddUsers() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { id } = useParams();
   const roles = [
     "admin",
     "procurement Officer",
@@ -66,7 +67,7 @@ export default function AddUsers() {
       <div className="space-y-12 ml-40 mr-40 mt-40">
         <Breadcrumb
           crumbs={[
-            { label: "Home", link: "/adminhome/:id" },
+            { label: "Home", link: `/adminhome/${id}` },
             { label: "User Details", link: "/userList" },
 
             { label: "Add User Details", link: "/addUsers" },

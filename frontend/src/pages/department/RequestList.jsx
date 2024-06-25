@@ -8,49 +8,37 @@ import { AiOutlineSend } from "react-icons/ai";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import Breadcrumb from "../../components/Breadcrumb";
 import { useSnackbar } from "notistack";
-
+import { useAuth } from "../../context/AuthContext";
 const RequestList = ({
   isAuthenticated,
   handleSignOut,
   username,
   userId,
-  loggedInUser,
-  department,
+  department, // Remove if not necessary, already using loggedInUser
 }) => {
+  const { loggedInUser } = useAuth(); // Use context to get logged-in user details
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
   const [requests, setRequests] = useState([]);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   axios
-  //     .get("http://localhost:8000/procReqest/viewRequests")
-  //     .then((response) => {
-  //       setRequests(response.data);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching requests:", error);
-  //       setLoading(false);
-  //     });
-  // }, []);
-
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(
-        `http://localhost:8000/procReqest/viewRequestsByDepartment/${userId}`
-      )
-      .then((response) => {
-        setRequests(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching requests:", error);
-        setLoading(false);
-      });
-  }, [userId]);
+    if (loggedInUser) {
+      setLoading(true);
+      axios
+        .get(
+          `http://localhost:8000/procReqest/viewRequestsByDepartment/${loggedInUser.id}`
+        )
+        .then((response) => {
+          setRequests(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching requests:", error);
+          setLoading(false);
+        });
+    }
+  }, [loggedInUser]);
 
   // useEffect(() => {
   //   const fetchRequests = async () => {

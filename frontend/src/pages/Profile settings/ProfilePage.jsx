@@ -6,16 +6,12 @@ import ChangePassword from "./ChangePassword";
 import EditProfile from "./EditProfile";
 import UserProfile from "./UserProfile";
 import axios from "axios";
+import { useAuth } from "../../context/AuthContext"; // Import your AuthContext
 
-const ProfilePage = ({
-  isAuthenticated,
-  handleSignOut,
-  username,
-  userId,
-  loggedInUser,
-}) => {
+const ProfilePage = () => {
   const [view, setView] = useState("profileDetails"); // State to control which component to show
-
+  const { userId } = useParams();
+  const { loggedInUser } = useAuth();
   const bodyStyles = {
     fontFamily: "'Plus Jakarta Sans', sans-serif",
   };
@@ -32,7 +28,7 @@ const ProfilePage = ({
       try {
         const response = await axios.get(
           `http://localhost:8000/user/preview-user/${userId}`
-        );
+        ); // Use id from useParams
         console.log("User Data:", response.data);
         setUser(response.data);
       } catch (error) {
@@ -41,7 +37,7 @@ const ProfilePage = ({
     };
 
     getUser();
-  }, [userId]);
+  }, [id]);
 
   const handleClose = () => {
     navigate("/allusers");

@@ -25,7 +25,7 @@ router.post("/generateRequestId", generateRequestId, (req, res) => {
   router.delete('/deleteFile/:requestId/:filename', deleteFile);
   router.get('/viewFiles', viewFiles);
   // router.get('/downloadPdf/:requestId', downloadPdf);
-  router.get("/viewRequestsByDepartment/:userId", viewRequestsByDepartment);
+  router.get("/viewRequestsByDepartment/:id", viewRequestsByDepartment);
 
 
 

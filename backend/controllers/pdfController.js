@@ -29,8 +29,8 @@ exports.createPdf = async (req, res) => {
     // Setting font for professional look
     doc.font("Helvetica");
     // Load university logo
-    const logoPath =
-      "E:/Procument-Managemant-System/backend/images/logo.jpg";
+    const logoPath = path.join(__dirname, '..', 'images', 'logo.jpg');
+    
     doc.image(logoPath, 10, 10, { width: 60 });
 
     // University header text

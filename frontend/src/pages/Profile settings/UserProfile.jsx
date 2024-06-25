@@ -2,10 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import { useAuth } from "../../context/AuthContext";
 
-const UserProfile = ({ isAuthenticated, handleSignOut, username, userId }) => {
+const UserProfile = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
+  const { userId } = useParams();
+  const { loggedInUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -49,13 +52,13 @@ const UserProfile = ({ isAuthenticated, handleSignOut, username, userId }) => {
           <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-black">First Name</dt>
             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {user.firstName}
+              {user.firstname}
             </dd>
           </div>
           <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-black">Last Name</dt>
             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {user.lastName}
+              {user.lastname}
             </dd>
           </div>
           <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
