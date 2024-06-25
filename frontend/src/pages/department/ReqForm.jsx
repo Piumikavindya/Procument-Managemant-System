@@ -5,13 +5,19 @@ import Dropdown from "../../components/DropDown";
 import { AddItemCard } from "./AddItemCard ";
 import { MdOutlineDelete } from "react-icons/md";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
+import { ToastContainer, toast } from "react-toastify";
+
+import { Tooltip } from "@material-tailwind/react";
+import { Button } from "flowbite-react";
+import { PlusIcon } from "@heroicons/react/20/solid";
+import { useAuth } from "../../context/AuthContext";
 
 const ReqForm = ({ forms }) => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [showAddItemCard, setShowAddItemCard] = useState(false);
-
+  const { loggedInUser } = useAuth();
   const [date, setDate] = useState("");
   const [requestId, setRequestId] = useState("");
   const [department, setDepartment] = useState("");
@@ -57,6 +63,48 @@ const ReqForm = ({ forms }) => {
     handleViewProcItems();
   }, [requestId]);
 
+  useEffect(() => {
+    if (loggedInUser && loggedInUser.department) {
+      fetchBudgetData(loggedInUser.department);
+    }
+  }, [loggedInUser]);
+
+  const fetchBudgetData = async (department) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/budget/getBudgetByDepartment/${loggedInUser.id}`
+      );
+      const { budgetAllocation, usedAmount, availableBalance } = response.data;
+      setBudgetAllocation(budgetAllocation);
+      setUsedAmount(usedAmount);
+      setBalanceAvailable(availableBalance);
+    } catch (error) {
+      console.error("Error fetching budget data:", error);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (loggedInUser) {
+  //     setLoading(true);
+  //     axios
+  //       .get(
+  //         `http://localhost:8000/budget/getBudgetByDepartment/${loggedInUser.id}`
+  //       )
+  //       .then((response) => {
+  //         const { budgetAllocation, usedAmount, availableBalance } =
+  //           response.data;
+  //         setBudgetAllocation(budgetAllocation);
+  //         setUsedAmount(usedAmount);
+  //         setBalanceAvailable(availableBalance);
+  //         setLoading(false);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching requests:", error);
+  //         setLoading(false);
+  //       });
+  //   }
+  // }, [loggedInUser]);
+
   // Function to handle the generation of request ID
   const handleGenerateRequestId = async () => {
     try {
@@ -97,7 +145,7 @@ const ReqForm = ({ forms }) => {
       sendTo,
       items,
       files,
-      specifications
+      specifications,
     };
     setLoading(true);
     try {
@@ -136,31 +184,29 @@ const ReqForm = ({ forms }) => {
     }
   };
   const handleSpecificationUpload = async (requestId, specifications) => {
-     specifications = document.getElementById("formFileMultiple1").specifications;
+    specifications =
+      document.getElementById("formFileMultiple1").specifications;
 
     const formData = new FormData();
     Array.from(specifications).forEach((specification) => {
-        formData.append("specification", specification);
+      formData.append("specification", specification);
     });
 
     try {
-        const response = await axios.post(
-            `http://localhost:8000/procReqest/uploadSpecification/${requestId}`,
-            formData,
-            {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            }
-        );
-        console.log("Specification uploaded successfully:", response.data);
-
+      const response = await axios.post(
+        `http://localhost:8000/procReqest/uploadSpecification/${requestId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("Specification uploaded successfully:", response.data);
     } catch (error) {
-        console.error("Error uploading specification:", error);
+      console.error("Error uploading specification:", error);
     }
-};
-
-
+  };
 
   const handleViewProcItems = async () => {
     try {
@@ -203,7 +249,7 @@ const ReqForm = ({ forms }) => {
       clearFormInputs();
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred. Please try again.");
+      toast.success("Request created Successfully!");
     }
   };
 
@@ -250,7 +296,7 @@ const ReqForm = ({ forms }) => {
         newRequest
       );
       const updatedRequest = createResponse.data.updatedRequest;
-      alert("Request submitted successfully");
+      toast.success("Request submitted Successfully!");
       setLoading(false);
 
       setRequestId("");
@@ -351,7 +397,7 @@ const ReqForm = ({ forms }) => {
                 </h2>
                 {/* New boxes added here */}
 
-                <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
+                <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
                   <div className="sm:col-span-3">
                     <label
                       htmlFor="first-name"
@@ -432,8 +478,8 @@ const ReqForm = ({ forms }) => {
                   Annual Budget Details
                 </h2>
 
-                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                  <div className="sm:col-span-4">
+                <div className=" flex flex-wrap mt-3 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
+                  <div className=" sm:w-full">
                     <label
                       htmlFor="username"
                       className="block text-sm font-medium leading-6 text-gray-900"
@@ -452,7 +498,7 @@ const ReqForm = ({ forms }) => {
                     </div>
                   </div>
 
-                  <div className="sm:col-span-4">
+                  <div className=" sm:w-full">
                     <label
                       htmlFor="username"
                       className="block text-sm font-medium leading-6 text-gray-900"
@@ -470,7 +516,7 @@ const ReqForm = ({ forms }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="sm:col-span-4">
+                  <div className=" sm:w-full">
                     <label
                       htmlFor="username"
                       className="block text-sm font-medium leading-6 text-gray-900"
@@ -487,12 +533,12 @@ const ReqForm = ({ forms }) => {
                         />
                       </div>
                     </div>
+                    <p className="mt-2 text-sm leading-6 text-gray-600">
+                      Please check your available balance here before request to
+                      purchasing items.
+                    </p>
                   </div>
                 </div>
-                <p className="mt-2 text-sm leading-6 text-gray-600">
-                  Please check your available balance here before request to
-                  purchasing items.
-                </p>
               </div>
 
               <div className="border-b border-gray-900/10 pb-12">
@@ -501,15 +547,17 @@ const ReqForm = ({ forms }) => {
                     Requesting Item Details
                   </h2>
 
-                  <button onClick={handleAddItemsClick} class="button">
-                    <span className="c-main">
-                      <span className="c-ico">
-                        <span className="c-blur"></span>{" "}
-                        <span className="ico-text">+</span>
-                      </span>
-                      Add items
-                    </span>
-                  </button>
+                  <Button
+                    onClick={handleAddItemsClick}
+                    className="flex items-center gap-3 h-10 bg-NeutralBlack"
+                    size="sm"
+                    onclick="popuphandler(true)"
+                  >
+                    <PlusIcon strokeWidth={2} className="h-5 w-5 mt-2 mr-2" />
+                    <Link class="text-white" style={{ textDecoration: "none" }}>
+                      <h6 className="mt-2">Add Items</h6>
+                    </Link>
+                  </Button>
                 </div>
 
                 <div className="flex items-center">
@@ -624,13 +672,13 @@ const ReqForm = ({ forms }) => {
                   Purpose
                 </h2>
 
-                <div className="mt-10 flex space-x-28">
+                <div className="mt-1 flex space-x-28">
                   <div className="flex-1 space-x-20">
                     <fieldset>
                       <p className="mt-1 text-sm leading-6 text-gray-600">
                         Select methods:{" "}
                       </p>
-                      <div className="mt-6 space-y-6">
+                      <div className="mt-6 space-y-3">
                         <div className="relative flex gap-x-3">
                           <div className="flex h-6 items-center">
                             <input
@@ -704,7 +752,7 @@ const ReqForm = ({ forms }) => {
                           <label
                             htmlFor="about"
                             class="mb-2 inline-block text-neutral-700 dark:text-neutral-200"
-                            >
+                          >
                             If Urgent Provide The Justification :
                           </label>
                           <input
@@ -739,7 +787,26 @@ const ReqForm = ({ forms }) => {
                       <p className="mt-1 text-sm leading-6 text-gray-600">
                         Send the request To{" "}
                       </p>
-                      <div className="mt-6 space-y-6">
+                      <div className="mt-6 space-y-3">
+                        <div className="flex items-center gap-x-3">
+                          <input
+                            id="viceChancellor"
+                            name="sendTo"
+                            type="radio"
+                            value="viceChancellor"
+                            checked={sendTo === "viceChancellor"}
+                            onChange={() => setSendTo("viceChancellor")}
+                            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                          />
+                          <Tooltip content="Upto 1 000,000">
+                            <label
+                              htmlFor="viceChancellor"
+                              className="block text-sm font-medium leading-6 text-gray-900"
+                            >
+                              Vice Chancellor
+                            </label>
+                          </Tooltip>
+                        </div>
                         <div className="flex items-center gap-x-3">
                           <input
                             id="dean"
@@ -750,12 +817,33 @@ const ReqForm = ({ forms }) => {
                             onChange={() => setSendTo("dean")}
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
-                          <label
-                            htmlFor="dean"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                          >
-                            Dean / Registrar / Bursar
-                          </label>
+                          <Tooltip content="Upto 200 000">
+                            <label
+                              htmlFor="dean"
+                              className="block text-sm font-medium leading-6 text-gray-900"
+                            >
+                              Dean
+                            </label>
+                          </Tooltip>
+                        </div>
+                        <div className="flex items-center gap-x-3">
+                          <input
+                            id="dean"
+                            name="sendTo"
+                            type="radio"
+                            value="dean"
+                            checked={sendTo === "dean"}
+                            onChange={() => setSendTo("dean")}
+                            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                          />
+                          <Tooltip content="Upto 10 000">
+                            <label
+                              htmlFor="dean"
+                              className="block text-sm font-medium leading-6 text-gray-900"
+                            >
+                              Bursar
+                            </label>
+                          </Tooltip>
                         </div>
                         <div className="flex items-center gap-x-3">
                           <input
@@ -767,29 +855,14 @@ const ReqForm = ({ forms }) => {
                             onChange={() => setSendTo("registrar")}
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
-                          <label
-                            htmlFor="registrar"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                          >
-                            Registrar
-                          </label>
-                        </div>
-                        <div className="flex items-center gap-x-3">
-                          <input
-                            id="viceChancellor"
-                            name="sendTo"
-                            type="radio"
-                            value="viceChancellor"
-                            checked={sendTo === "viceChancellor"}
-                            onChange={() => setSendTo("viceChancellor")}
-                            className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                          />
-                          <label
-                            htmlFor="viceChancellor"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                          >
-                            Vice Chancellor
-                          </label>
+                          <Tooltip content="Upto 25 000">
+                            <label
+                              htmlFor="registrar"
+                              className="block text-sm font-medium leading-6 text-gray-900"
+                            >
+                              Registrar
+                            </label>
+                          </Tooltip>
                         </div>
                       </div>
                     </fieldset>
@@ -808,7 +881,7 @@ const ReqForm = ({ forms }) => {
                 </button>
               ) : (
                 <button
-                  className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-4 rounded inline-flex items-center"
                   type="submit"
                   onClick={(e) => {
                     handleSubmit(e);
@@ -819,6 +892,8 @@ const ReqForm = ({ forms }) => {
                 </button>
               )}
             </div>
+            {/* ToastContainer to display toast notifications */}
+            <ToastContainer className="mt-28" />
           </form>
         </div>
       </div>
