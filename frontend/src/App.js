@@ -61,11 +61,14 @@ import EventPlanner from "./pages/admin/eventPlanner/EventPlanner.jsx";
 import ContextWrapper from "./context/ContextWrapper.js";
 import ViewVendorDetails from "./pages/generalUsers/ViewVenderDetails.jsx";
 import ProjectList from "./pages/PO_BU/ProjectList.jsx";
+import {ViewShoppingPdf} from "./pages/PO_BU/ViewShoppingPdf.jsx"
+import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
+import { ViewDirectPurchasingPdf } from "./pages/PO_BU/ViewDirectPurchasingPdf.jsx";
+import { ViewShippingPdf } from "./pages/PO_BU/ViewBidDocument.jsx";
 import DeleteItems from "./pages/admin/items/DeleteItems.jsx";
 import PreviewProjectDetails from "./pages/PO_BU/PreviewProjectDetails.jsx";
 import BiddingDocumentsList from "./pages/PO_BU/BiddingDocumentsList.jsx";
 import DownloadBidDoc from "./pages/PO_BU/DownloadBidDoc.jsx";
-import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
 import InvitesBids from "./pages/PO_BU/InvitesBids.jsx";
 import VendorsList from "./pages/PO_BU/VendorsList.jsx";
 import DeleteProject from "./pages/PO_BU/DeleteProject.jsx";
@@ -266,44 +269,25 @@ const App = () => {
           }
         />
         <Route path="/ApprovedRequestList" element={<ApprovedRequestList />} />
-        <Route
-          path="/ViewApprovedForm/:requestId"
-          element={<ViewApprovedForm />}
-        />
-        <Route
-          path="/ViewFormRequest/:requestId"
-          element={<ViewFormRequest />}
-        />
-        <Route
-          path="/ViewForApproval/:requestId"
-          element={<ViewFormApproval />}
-        />
-        <Route path="/projectList" element={<ProjectList />} />
-        <Route
-          path="/PreviewProjectDetails/:projectId"
-          element={<PreviewProjectDetails />}
-        />
-        <Route path="/deleteProject/:projectId" element={<DeleteProject />} />
-        <Route path="/biddingDocuments" element={<BiddingDocumentsList />} />
+        <Route path="/ViewApprovedForm/:requestId" element={<ViewApprovedForm />} />
+        <Route path="/ViewFormRequest/:requestId" element={<ViewFormRequest />} />
+        <Route path="/ViewForApproval/:requestId" element={<ViewFormApproval />} />
+        <Route path="/projectList" element={<ProjectList/>}/>
+ <Route path="/PreviewProjectDetails/:projectId" element={<PreviewProjectDetails/>} />
+ <Route path="/deleteProject/:projectId" element={<DeleteProject/>} />
+ <Route path="/biddingDocuments" element={<BiddingDocumentsList/>}/>
+  <Route path="/ViewBidDoc/:projectId" element={<ViewShippingPdf />} />
+  <Route path="/DownloadBidDoc/:projectId/:biddingType" element={<DownloadBidDoc />} />
+  <Route path="/InvitesBids" element={<InvitesBids />} />
+  <Route path="/VendorsList" element={<VendorsList />} />
+  <Route path="/PreviewSupplyerDetails/:id" element={<PreviewSupplyerDetails />} /> 
 
-        <Route path="/DownloadBidDoc/:projectId" element={<DownloadBidDoc />} />
-        <Route path="/InvitesBids" element={<InvitesBids />} />
-        <Route path="/VendorsList" element={<VendorsList />} />
-        <Route
-          path="/PreviewSupplyerDetails/:id"
-          element={<PreviewSupplyerDetails />}
-        />
-
-        <Route
-          path="/EventPlanner"
-          element={
-            <ContextWrapper>
-              <EventPlanner />{" "}
-            </ContextWrapper>
-          }
-        />
-
-        <Route
+ 
+          <Route path="/EventPlanner" element={<ContextWrapper><EventPlanner />  </ContextWrapper>} />
+          <Route path="/viewNoticePdf/:noticeId" element={<ViewNoticePdf />} />
+         
+          
+          <Route
           path="/profile/:userId"
           element={
             <ProfilePage
