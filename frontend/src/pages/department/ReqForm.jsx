@@ -5,19 +5,19 @@ import Dropdown from "../../components/DropDown";
 import { AddItemCard } from "./AddItemCard ";
 import { MdOutlineDelete } from "react-icons/md";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
 
 import { Tooltip } from "@material-tailwind/react";
 import { Button } from "flowbite-react";
 import { PlusIcon } from "@heroicons/react/20/solid";
+import { useAuth } from "../../context/AuthContext";
 
 const ReqForm = ({ forms }) => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [showAddItemCard, setShowAddItemCard] = useState(false);
-
+  const { loggedInUser } = useAuth();
   const [date, setDate] = useState("");
   const [requestId, setRequestId] = useState("");
   const [department, setDepartment] = useState("");
@@ -62,6 +62,48 @@ const ReqForm = ({ forms }) => {
   useEffect(() => {
     handleViewProcItems();
   }, [requestId]);
+
+  useEffect(() => {
+    if (loggedInUser && loggedInUser.department) {
+      fetchBudgetData(loggedInUser.department);
+    }
+  }, [loggedInUser]);
+
+  const fetchBudgetData = async (department) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/budget/getBudgetByDepartment/${loggedInUser.id}`
+      );
+      const { budgetAllocation, usedAmount, availableBalance } = response.data;
+      setBudgetAllocation(budgetAllocation);
+      setUsedAmount(usedAmount);
+      setBalanceAvailable(availableBalance);
+    } catch (error) {
+      console.error("Error fetching budget data:", error);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (loggedInUser) {
+  //     setLoading(true);
+  //     axios
+  //       .get(
+  //         `http://localhost:8000/budget/getBudgetByDepartment/${loggedInUser.id}`
+  //       )
+  //       .then((response) => {
+  //         const { budgetAllocation, usedAmount, availableBalance } =
+  //           response.data;
+  //         setBudgetAllocation(budgetAllocation);
+  //         setUsedAmount(usedAmount);
+  //         setBalanceAvailable(availableBalance);
+  //         setLoading(false);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching requests:", error);
+  //         setLoading(false);
+  //       });
+  //   }
+  // }, [loggedInUser]);
 
   // Function to handle the generation of request ID
   const handleGenerateRequestId = async () => {
@@ -505,23 +547,17 @@ const ReqForm = ({ forms }) => {
                     Requesting Item Details
                   </h2>
 
-                  
-
                   <Button
-                  onClick={handleAddItemsClick} 
-                className="flex items-center gap-3 h-10 bg-NeutralBlack"
-                size="sm"
-                onclick="popuphandler(true)"
-              >
-                <PlusIcon strokeWidth={2} className="h-5 w-5 mt-2 mr-2" />
-                <Link
-                 
-                  class="text-white"
-                  style={{ textDecoration: "none" }}
-                >
-                  <h6 className="mt-2">Add Items</h6>
-                </Link>
-              </Button>
+                    onClick={handleAddItemsClick}
+                    className="flex items-center gap-3 h-10 bg-NeutralBlack"
+                    size="sm"
+                    onclick="popuphandler(true)"
+                  >
+                    <PlusIcon strokeWidth={2} className="h-5 w-5 mt-2 mr-2" />
+                    <Link class="text-white" style={{ textDecoration: "none" }}>
+                      <h6 className="mt-2">Add Items</h6>
+                    </Link>
+                  </Button>
                 </div>
 
                 <div className="flex items-center">
@@ -752,7 +788,7 @@ const ReqForm = ({ forms }) => {
                         Send the request To{" "}
                       </p>
                       <div className="mt-6 space-y-3">
-                      <div className="flex items-center gap-x-3">
+                        <div className="flex items-center gap-x-3">
                           <input
                             id="viceChancellor"
                             name="sendTo"
@@ -762,16 +798,13 @@ const ReqForm = ({ forms }) => {
                             onChange={() => setSendTo("viceChancellor")}
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
-                          <Tooltip
-                            content="Upto 1 000,000"
-
-                          >
-                          <label
-                            htmlFor="viceChancellor"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                          >
-                            Vice Chancellor
-                          </label>
+                          <Tooltip content="Upto 1 000,000">
+                            <label
+                              htmlFor="viceChancellor"
+                              className="block text-sm font-medium leading-6 text-gray-900"
+                            >
+                              Vice Chancellor
+                            </label>
                           </Tooltip>
                         </div>
                         <div className="flex items-center gap-x-3">
@@ -860,7 +893,7 @@ const ReqForm = ({ forms }) => {
               )}
             </div>
             {/* ToastContainer to display toast notifications */}
-     <ToastContainer className="mt-28"/>
+            <ToastContainer className="mt-28" />
           </form>
         </div>
       </div>
