@@ -1,11 +1,15 @@
 // AddUsers
 
+// AddUsers
+
 import React, { useState } from "react";
 import Breadcrumb from "../../../components/Breadcrumb";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+
 
 export default function AddUsers() {
   const [role, setRole] = useState("");
@@ -83,6 +87,11 @@ export default function AddUsers() {
       return;
     }
 
+    // Validate fields before saving
+    if (!validateFields()) {
+      return;
+    }
+
     const newUser = {
       role,
       email,
@@ -125,7 +134,6 @@ export default function AddUsers() {
           crumbs={[
             { label: "Home", link: `/adminhome/${id}` },
             { label: "User Details", link: "/userList" },
-
             { label: "Add User Details", link: "/addUsers" },
           ]}
           selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
@@ -137,15 +145,15 @@ export default function AddUsers() {
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <label
-                htmlFor="country"
+                htmlFor="role"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                <h6> Role</h6>
+                <h6>Role</h6>
               </label>
               <div className="mt-2">
                 <select
-                  id="country"
-                  name="country"
+                  id="role"
+                  name="role"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
                   autoComplete="country-name"
@@ -170,15 +178,15 @@ export default function AddUsers() {
 
             <div className="sm:col-span-3">
               <label
-                htmlFor="country"
+                htmlFor="department"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                <h6> Department</h6>
+                <h6>Department</h6>
               </label>
               <div className="mt-2">
                 <select
-                  id="country"
-                  name="country"
+                  id="department"
+                  name="department"
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
                   autoComplete="country-name"
@@ -206,9 +214,9 @@ export default function AddUsers() {
             <div className="sm:col-span-3">
               <label
                 htmlFor="first-name"
-                className="block text-sm font-medium leading-6 text-gray-900 "
+                className="block text-sm font-medium leading-6 text-gray-900"
               >
-                <h6> First name </h6>
+                <h6>First name</h6>
               </label>
               <div className="mt-2">
                 <input
@@ -238,7 +246,7 @@ export default function AddUsers() {
                 htmlFor="last-name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                <h6> Last name</h6>
+                <h6>Last name</h6>
               </label>
               <div className="mt-2">
                 <input
@@ -248,6 +256,7 @@ export default function AddUsers() {
                   value={lastname}
                   onChange={(e) => setLastName(e.target.value)}
                   autoComplete="family-name"
+                  placeholder="Enter your last name"
                   className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                     validationErrors.lastname ? "ring-red-500" : "ring-gray-300"
                   } placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
@@ -262,20 +271,20 @@ export default function AddUsers() {
 
             <div className="sm:col-span-3">
               <label
-                htmlFor="first-name"
-                className="block text-sm font-medium leading-6 text-gray-900 "
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
               >
-                <h6> Email Address </h6>
+                <h6>Email Address</h6>
               </label>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="first-name"
-                  id="first-name"
+                  name="email"
+                  id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="given-name"
-                  placeholder="Enter the email address"
+                  autoComplete="email"
+                  placeholder="Enter your email address"
                   className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                     validationErrors.email ? "ring-red-500" : "ring-gray-300"
                   } placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}

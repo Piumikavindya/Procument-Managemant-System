@@ -1,6 +1,10 @@
+// AddSuppliers
+
 import React, { useState, useEffect } from "react";
 import Breadcrumb from "../../../components/Breadcrumb";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddSupplier() {
   const [username, setUsername] = useState("");
@@ -20,6 +24,19 @@ export default function AddSupplier() {
   const [classOfAssets, setClassOfAssets] = useState("");
   const [loading, setLoading] = useState(false);
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+
+   // State variables for tracking required fields
+   const [usernameError, setUsernameError] = useState(false);
+   const [supplierIdError, setSupplierIdError] = useState(false);
+   const [supplierNameError, setSupplierNameError] = useState(false);
+   const [addressError, setAddressError] = useState(false);
+   const [faxNumberError, setFaxNumberError] = useState(false);
+   const [contactOfficerError, setContactOfficerError] = useState(false);
+   const [contactNumbersError, setContactNumbersError] = useState(false);
+   const [emailsError, setEmailsError] = useState(false);
+   const [typeofBusinessError, setTypeOfBusinessError] = useState(false);
+   const [classOfAssetsError, setClassOfAssetsError] = useState(false);
+
   const address = `${addressStreet}, ${addressCity}, ${addressProvince}`;
   const contactNumber = `${contactNumbers1}, ${contactNumbers2}`;
 
@@ -44,6 +61,38 @@ export default function AddSupplier() {
   const handleSaveAddVendors = (e) => {
     e.preventDefault();
 
+    // Validate required fields
+    if (
+      !username ||
+      !supplierId ||
+      !supplierName ||
+      !addressStreet ||
+      !addressCity ||
+      !addressProvince ||
+      !faxNumber1 ||
+      !faxNumber2 ||
+      !contactOfficer ||
+      !contactNumbers1 ||
+      !contactNumbers2 ||
+      !emails1 ||
+      !emails2 ||
+      !typeofBusiness ||
+      !classOfAssets
+    ) {
+      // Set error states for required fields
+      setUsernameError(!username);
+      setSupplierIdError(!supplierId);
+      setSupplierNameError(!supplierName);
+      setAddressError(!addressStreet || !addressCity || !addressProvince);
+      setFaxNumberError(!faxNumber1 || !faxNumber2);
+      setContactOfficerError(!contactOfficer);
+      setContactNumbersError(!contactNumbers1 || !contactNumbers2);
+      setEmailsError(!emails1 || !emails2);
+      setTypeOfBusinessError(!typeofBusiness);
+      setClassOfAssetsError(!classOfAssets);
+      return; // Exit function if any required field is empty
+    }
+
     const newSupplyer = {
       username,
       supplierId,
@@ -65,7 +114,8 @@ export default function AddSupplier() {
       .post("http://localhost:8000/supplyer/create", newSupplyer)
 
       .then(() => {
-        alert("supplyer added");
+        // Show success toast notification
+        toast.success("Supplier details successfully added!");
         setLoading(false);
 
         // Reset form fields
@@ -132,8 +182,11 @@ export default function AddSupplier() {
                   onChange={(e) => setUsername(e.target.value)}
                   autoComplete="given-name"
                   placeholder="Enter the User Name"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${usernameError ? 'border-red-500' : '' }`}
                 />
+                {usernameError && (
+                  <p className="text-red-500 text-xs mt-1">Username is required</p>
+                )}
               </div>
             </div>
 
@@ -153,8 +206,11 @@ export default function AddSupplier() {
                   onChange={(e) => setSupplierId(e.target.value)}
                   autoComplete="family-name"
                   placeholder="Enter the Supplier ID"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${supplierIdError ? 'border-red-500' : ''}`}
                 />
+                {supplierIdError && (
+                  <p className="text-red-500 text-xs mt-1">Supplier ID is required</p>
+                )}
               </div>
             </div>
 
@@ -174,8 +230,11 @@ export default function AddSupplier() {
                   onChange={(e) => setSupplierName(e.target.value)}
                   autoComplete="given-name"
                   placeholder="Enter the Supplier Name"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${supplierNameError ? 'border-red-500' : ''}`}
                 />
+                 {supplierNameError && (
+                  <p className="text-red-500 text-xs mt-1">Supplier Name is required</p>
+                )}
               </div>
             </div>
 
@@ -195,8 +254,11 @@ export default function AddSupplier() {
                   onChange={(e) => setContactOfficer(e.target.value)}
                   autoComplete="family-name"
                   placeholder="Enter the Contact Officer Name"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${contactOfficerError ? 'border-red-500' : ''}`}
                 />
+                {contactOfficerError && (
+                  <p className="text-red-500 text-xs mt-1">Contact Officer is required</p>
+                )}
               </div>
             </div>
 
@@ -219,7 +281,7 @@ export default function AddSupplier() {
                   onChange={(e) => setAddressStreet(e.target.value)}
                   autoComplete="address-level2"
                   placeholder="Street"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${addressError ? 'border-red-500' : ''}`}
                 />
               </div>
             </div>
@@ -234,7 +296,7 @@ export default function AddSupplier() {
                   onChange={(e) => setAddressCity(e.target.value)}
                   autoComplete="address-level1"
                   placeholder="City"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${addressError ? 'border-red-500' : ''}`}
                 />
               </div>
             </div>
@@ -249,8 +311,11 @@ export default function AddSupplier() {
                   onChange={(e) => setAddressProvince(e.target.value)}
                   autoComplete="postal-code"
                   placeholder="Province"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${addressError ? 'border-red-500' : ''}`}
                 />
+                 {addressError && (
+                  <p className="text-red-500 text-xs mt-1">Address is required</p>
+                )}
               </div>
             </div>
 
@@ -273,7 +338,7 @@ export default function AddSupplier() {
                   onChange={(e) => setFaxNumber1(e.target.value)}
                   autoComplete="address-level2"
                   placeholder="Fax Number 1"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${faxNumberError ? 'border-red-500' : ''}`}
                 />
               </div>
             </div>
@@ -288,8 +353,11 @@ export default function AddSupplier() {
                   onChange={(e) => setFaxNumber2(e.target.value)}
                   autoComplete="address-level1"
                   placeholder="Fax Number 2"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${faxNumberError ? 'border-red-500' : ''}`}
                 />
+                {faxNumberError&& (
+                  <p className="text-red-500 text-xs mt-1">FaxNumber are required</p>
+                )}
               </div>
             </div>
 
@@ -312,7 +380,7 @@ export default function AddSupplier() {
                   onChange={(e) => setContactNumbers1(e.target.value)}
                   autoComplete="address-level2"
                   placeholder="Contact Number 1"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6  ${contactNumbersError ? 'border-red-500' : ''}`}
                 />
               </div>
             </div>
@@ -327,8 +395,11 @@ export default function AddSupplier() {
                   onChange={(e) => setContactNumbers2(e.target.value)}
                   autoComplete="address-level1"
                   placeholder="Contact Number 2"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6  ${contactNumbersError ? 'border-red-500' : ''}`}
                 />
+                {contactNumbersError && (
+                  <p className="text-red-500 text-xs mt-1">Contact Numbers are required</p>
+                )}
               </div>
             </div>
 
@@ -351,7 +422,7 @@ export default function AddSupplier() {
                   onChange={(e) => setEmails1(e.target.value)}
                   autoComplete="address-level2"
                   placeholder="Email address 1"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${emailsError ? 'border-red-500' : ''}`}
                 />
               </div>
             </div>
@@ -366,8 +437,11 @@ export default function AddSupplier() {
                   onChange={(e) => setEmails2(e.target.value)}
                   autoComplete="address-level1"
                   placeholder="Email address 2"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${emailsError ? 'border-red-500' : ''}`}
                 />
+                 {emailsError && (
+                  <p className="text-red-500 text-xs mt-1">Email Addresses are required</p>
+                )}
               </div>
             </div>
 
@@ -385,7 +459,7 @@ export default function AddSupplier() {
                   onChange={(e) => setTypesOFBusiness(e.target.value)}
                   name="country"
                   autoComplete="country-name"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6 ${typeofBusinessError ? 'border-red-500' : ''}`}
                 >
                  <option value="">business Type</option>
                   {types.map((type, index) => (
@@ -394,6 +468,9 @@ export default function AddSupplier() {
                     </option>
                   ))}
                 </select>
+                {typeofBusinessError && (
+                  <p className="text-red-500 text-xs mt-1">Business Type is required</p>
+                )}
               </div>
             </div>
 
@@ -411,7 +488,7 @@ export default function AddSupplier() {
                   onChange={(e) => setClassOfAssets(e.target.value)}
                   name="country"
                   autoComplete="country-name"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6  ${classOfAssetsError ? 'border-red-500' : ''}`}
                 >
                   <option value="">Assets Class</option>
                   {types.map((type, index) => (
@@ -420,6 +497,9 @@ export default function AddSupplier() {
                     </option>
                   ))}
                 </select>
+                {classOfAssetsError && (
+                  <p className="text-red-500 text-xs mt-1">Class of Assets is required</p>
+                )}
               </div>
             </div>
           </div>
@@ -440,6 +520,8 @@ export default function AddSupplier() {
           Save
         </button>
       </div>
+      {/* ToastContainer to display toast notifications */}
+     <ToastContainer className="mt-14"/>
     </form>
   );
 }
