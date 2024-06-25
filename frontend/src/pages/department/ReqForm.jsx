@@ -34,6 +34,8 @@ const ReqForm = ({ forms }) => {
   const [specifications, setSpecifications] = useState({});
   const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
   const [requestCreated, setRequestCreated] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({}); // State to store validation errors
+  
 
   useEffect(() => {
     const formDataFromStorage = localStorage.getItem("formData");
@@ -62,6 +64,34 @@ const ReqForm = ({ forms }) => {
   useEffect(() => {
     handleViewProcItems();
   }, [requestId]);
+
+  // Validate the form fields
+  const validateFields = () => {
+    let errors = {};
+    let isValid = true;
+
+    if (!faculty) {
+      errors.faculty = "faculty is required";
+      isValid = false;
+    }
+    if (!department) {
+      errors.department = "Department is required";
+      isValid = false;
+    }
+    if (!contactPerson) {
+      errors.contactPerson = "ContactPerson is required";
+      isValid = false;
+    }
+    if (!contactNo) {
+      errors.contactNo = "ContactNo is required";
+      isValid = false;
+    }
+    
+
+    setValidationErrors(errors);
+    return isValid;
+  };
+
 
   // Function to handle the generation of request ID
   const handleGenerateRequestId = async () => {
@@ -215,6 +245,16 @@ const ReqForm = ({ forms }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+     // Validate fields before saving
+     if (!validateFields()) {
+      return;
+    }
+
+    // Validate fields before saving
+    if (!validateFields()) {
+      return;
+    }
     const formData = {
       requestId,
       faculty,
@@ -368,8 +408,17 @@ const ReqForm = ({ forms }) => {
                         type="text"
                         value={faculty}
                         onChange={(e) => setFaculty(e.target.value)}
-                        className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className={`block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
+                    validationErrors.faculty
+                      ? "ring-red-500"
+                      : "ring-gray-300"
+                  } placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                       />
+                      {validationErrors.faculty && (
+                  <p className="text-red-500 text-sm">
+                    {validationErrors.faculty}
+                  </p>
+                )}
                     </div>
                   </div>
 
@@ -384,7 +433,11 @@ const ReqForm = ({ forms }) => {
                       <select
                         value={department}
                         onChange={(e) => setDepartment(e.target.value)}
-                        className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className={`block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  ${
+                    validationErrors.faculty
+                      ? "ring-red-500"
+                      : "ring-gray-300"
+                  } placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                       >
                         <option value="">Select your department</option>
                         {departments.map((type, index) => (
@@ -393,6 +446,11 @@ const ReqForm = ({ forms }) => {
                           </option>
                         ))}
                       </select>
+                      {validationErrors.department && (
+                  <p className="text-red-500 text-sm">
+                    {validationErrors.department}
+                  </p>
+                )}
                     </div>
                   </div>
 
@@ -408,8 +466,17 @@ const ReqForm = ({ forms }) => {
                         type="text"
                         value={contactPerson}
                         onChange={(e) => setContactPerson(e.target.value)}
-                        className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className={`block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
+                    validationErrors.contactPerson
+                      ? "ring-red-500"
+                      : "ring-gray-300"
+                  } placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                       />
+                       {validationErrors.contactPerson && (
+                  <p className="text-red-500 text-sm">
+                    {validationErrors.contactPerson}
+                  </p>
+                )}
                     </div>
                   </div>
                   <div className="sm:col-span-3">
@@ -425,8 +492,17 @@ const ReqForm = ({ forms }) => {
                         value={contactNo}
                         onChange={(e) => setContactNo(e.target.value)}
                         autoComplete="family-name"
-                        className="block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className={`block w-full rounded-md border border-black py-1.5 text-gray-900 shadow-sm ring-1 ring-inset  ${
+                    validationErrors.contactNo
+                      ? "ring-red-500"
+                      : "ring-gray-300"
+                  } placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                       />
+                       {validationErrors.contactNo && (
+                  <p className="text-red-500 text-sm">
+                    {validationErrors.contactNo}
+                  </p>
+                )}
                     </div>
                   </div>
                 </div>
@@ -523,6 +599,7 @@ const ReqForm = ({ forms }) => {
                 </Link>
               </Button>
                 </div>
+
 
                 <div className="flex items-center">
                   <table
@@ -841,10 +918,10 @@ const ReqForm = ({ forms }) => {
             <div className="mt-3 flex items-center justify-end gap-x-6">
               {requestCreated ? (
                 <button
-                  className="bg-green-600 hover:bg-green-700 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded inline-flex items-center"
                   onClick={navigateToViewRequest}
                 >
-                  Next
+                  Generate Pdf
                 </button>
               ) : (
                 <button

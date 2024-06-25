@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import { Button, IconButton, Tooltip } from "@material-tailwind/react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   EyeDropperIcon,
   EyeIcon,
@@ -12,6 +14,8 @@ import {
 } from "@heroicons/react/24/solid";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { AddReqCard } from "./AddItemCard";
+import { PlusIcon } from "@heroicons/react/20/solid";
+
 
 export default function ProjectCreationForm({ forms }) {
   const navigate = useNavigate();
@@ -118,7 +122,9 @@ export default function ProjectCreationForm({ forms }) {
       clearFormInputs();
     } catch (error) {
       console.error("Error generating Shopping Method PDF:", error);
-      alert("An error occurred. Please try again.");
+      // Show success toast notification
+      toast.error("An error occurred. Please try again.!");
+      
     }
   };
 
@@ -132,7 +138,9 @@ export default function ProjectCreationForm({ forms }) {
       clearFormInputs();
     } catch (error) {
       console.error("Error generating Direct Purchasing PDF:", error);
-      alert("An error occurred. Please try again.");
+      // Show success toast notification
+      toast.error("An error occurred. Please try again.");
+      
     }
   };
 
@@ -168,7 +176,8 @@ export default function ProjectCreationForm({ forms }) {
       );
       const updatedProject = response.data.updatedProject;
       console.log("Project created:", response.data);
-      alert("Project created successfully");
+      // Show success toast notification
+      toast.success("Project created successfully!");
       setLoading(false);
 
       setFormData("");
@@ -326,15 +335,22 @@ export default function ProjectCreationForm({ forms }) {
             </legend>
 
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <button onClick={handleAddRequestClick} class="button">
-                <span className="c-main">
-                  <span className="c-ico">
-                    <span className="c-blur"></span>{" "}
-                    <span className="ico-text">+</span>
-                  </span>
-                  Add Requests
-                </span>
-              </button>
+          
+              <Button
+                  onClick={handleAddRequestClick} 
+                className="flex items-center gap-3 h-10 bg-NeutralBlack"
+                size="sm"
+                onclick="popuphandler(true)"
+              >
+                <PlusIcon strokeWidth={2} className="h-5 w-5 mt-1 mr-2" />
+                <Link
+                 
+                  class="text-white"
+                  style={{ textDecoration: "none" }}
+                >
+                  <h6 className="mt-2">Add Requests</h6>
+                </Link>
+              </Button>
             </div>
 
             <div className="mt-6 space-y-6 sm:col-span-3">
@@ -578,6 +594,9 @@ export default function ProjectCreationForm({ forms }) {
         </button>
         )}
       </div>
+      {/* ToastContainer to display toast notifications */}
+     <ToastContainer className="mt-24"/>
+
     </form>
   );
 }
