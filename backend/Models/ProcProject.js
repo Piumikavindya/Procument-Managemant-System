@@ -43,6 +43,7 @@ const procProjectSchema = new Schema({
   closingTime: { type: Date },
   appointTEC: [{ type: String }], // Array of appointTEC values
   appointBOCommite: [{ type: String }], // Array of appointBOCommite values
+  quauotationRequirement :{type :String}
 });
 
 const procProject = mongoose.model("procProject", procProjectSchema);

@@ -100,7 +100,7 @@ const ManageNotices = () => {
     console.log(crumb);
   };
   const handleUploadClick = () => {
-    navigate("/UploadNotice"); // Update '/inputform' with the actual route
+    navigate(`/UploadNotice/${id}`); // Update '/inputform' with the actual route
   };
 
   return (
@@ -108,8 +108,8 @@ const ManageNotices = () => {
       <UserTypeNavbar userType="admin" />
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/adminhome/:id" },
-          { label: "Manage Notice", link: "/ManageNotice" },
+          { label: "Home", link: `/adminhome/${id}` },
+          { label: "Manage Notice", link: `/ManageNotice/${id}` },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />
@@ -240,7 +240,7 @@ const ManageNotices = () => {
 
                       <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="icon-link flex justify-center gap-x-4">
-                          <Link to={`/viewNoticePdf/${notice._id}`}>
+                          <Link to={`/viewNoticePdf/${id}/${notice._id}`}>
                             <Tooltip content="Preview Notice">
                               <IconButton variant="text">
                                 <EyeIcon className="h-6 w-6 text-green-500" />

@@ -1,6 +1,5 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,7 +12,6 @@ import {
   DialogFooter,
   Typography,
 } from "@material-tailwind/react";
-
 
 import VendorDetails from "./VendorDetails";
 
@@ -32,7 +30,7 @@ const DeleteSupplier = () => {
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Supplier deleted", { variant: "success" });
-        navigate("/allvendors");
+        navigate(`/allvendors/${id}`);
       })
       .catch((error) => {
         setLoading(false);
@@ -41,7 +39,10 @@ const DeleteSupplier = () => {
       });
   };
 
-  const handleOpen = () => setOpen(!open);
+  const handleCancel = () => {
+    setOpen(false);
+    navigate(`/allvendors/${id}`);
+  };
 
   return (
     <div>
@@ -78,7 +79,11 @@ const DeleteSupplier = () => {
               >
                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                   <DialogHeader className="grid place-items-center">
-                    <Typography variant="h5" color="red" className="text-center">
+                    <Typography
+                      variant="h5"
+                      color="red"
+                      className="text-center"
+                    >
                       <h4>Delete Supplier Details</h4>
                     </Typography>
                   </DialogHeader>
@@ -88,7 +93,7 @@ const DeleteSupplier = () => {
                       alt=""
                       className="max-w-24 h-24  md:max-w-md lg:max-w-24 md:h-24 w-24"
                     ></img>
-                   
+
                     <Typography className="text-center font-normal">
                       <h3>
                         Are you sure want to delete this Supplier details?
@@ -111,9 +116,9 @@ const DeleteSupplier = () => {
                       <h6 className="mt-2">Yes, Delete it</h6>
                     </button>
                     <button
-                      type="submit"
+                      type="button"
                       className="rounded-md bg-red-600 h-12 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      onClick={() => setOpen(false)}
+                      onClick={handleCancel}
                       ref={cancelButtonRef}
                     >
                       No, Cancel

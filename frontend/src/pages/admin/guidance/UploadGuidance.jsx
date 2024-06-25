@@ -1,11 +1,8 @@
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import React from 'react';
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import ManageGiidance from './ManageGuidance ';
 import InputForm from "../../../components/InputForm";
 import ManageGuidance from './ManageGuidance ';
 
@@ -21,7 +18,7 @@ export default function UploadGuidance() {
   
     const handleOutsideClick = () => {
       setOpen(false);
-      navigate("/ManageGuidance");
+      navigate(`/ManageGuidance/${id}`);
     };
     
     return (

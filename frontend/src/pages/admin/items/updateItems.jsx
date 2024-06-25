@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Spinner from "../../../components/Spinner";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
 import UserTypeNavbar from "../../../components/UserTypeNavbar.jsx";
@@ -72,7 +72,7 @@ export default function UpdateItems() {
         enqueueSnackbar("Item details are updated successfully", {
           variant: "success",
         });
-        navigate("/AllItem");
+        navigate(`/AllItem/${id}`);
       })
       .catch((error) => {
         setLoading(false);
@@ -92,10 +92,10 @@ export default function UpdateItems() {
       <div className="space-y-12 ml-40 mr-40 mt-40">
         <Breadcrumb
           crumbs={[
-            { label: "Home", link: "/adminhome/:id" },
-            { label: "Items Details", link: "/AllItem" },
+            { label: "Home", link: `/adminhome/${id}` },
+            { label: "Item Details", link: `/AllItem/${id}` }, 
 
-            { label: "Add Item Details", link: "/additem" },
+            { label: "Update Item Details", link: `/additem/${id}` },
           ]}
           selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
         />
@@ -165,12 +165,15 @@ export default function UpdateItems() {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6 mr-40 mb-10">
+      <Link to={`/AllItem/${id}`}>
         <button
           type="button"
           className="rounded-md h-12 w-20 bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Cancel
         </button>
+        </Link>
+     
         <button
           type="submit"
           className="rounded-md bg-blue-600 h-12 w-20 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

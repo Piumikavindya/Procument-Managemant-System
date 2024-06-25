@@ -43,7 +43,7 @@ const ViewPdf = () => {
 
   // Function to handle going back to the previous page
   const goBack = () => {
-    navigate("/ManageGuidance");
+    navigate(`/ManageGuidance/${guidanceId}`);
   };
 
   return (

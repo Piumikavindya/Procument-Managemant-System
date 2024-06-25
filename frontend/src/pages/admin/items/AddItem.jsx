@@ -4,13 +4,14 @@ import "../../../styles/Scroller.css";
 import "../../../styles/button.css";
 import "../../../styles/button2.css";
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
+import { useParams } from "react-router-dom";
 
 const AddItem = () => {
   const [AssetsClass, setAssetsClass] = useState("");
   const [AssetsSubClass, setAssetsSubClass] = useState("");
   const [itemName, setItemName] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const { id } = useParams();
   function handleSaveItem(e) {
     e.preventDefault();
 
@@ -43,10 +44,10 @@ const AddItem = () => {
     <div class="app-container p-8 rounded border border-gray-200">
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/adminhome/:id" },
-          { label: "All Items", link: "/AllItem" },
+          { label: "Home", link: `/adminhome/${id}` },
+          { label: "Item Details", link: `/itemDetails/${id}` },
 
-          { label: "Add Item", link: "/additem" },
+          { label: "Add Item", link: `/additem/${id}` },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />
@@ -86,7 +87,7 @@ const AddItem = () => {
               placeholder="Assets Sub Class"
             />
           </div>
-          
+
           <div>
             <label
               for="employeenumber"

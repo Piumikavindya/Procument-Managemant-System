@@ -21,7 +21,7 @@ const DenyRequest = () => {
   const navigate = useNavigate();
   const handleOutsideClick = () => {
     setOpen(false);
-    navigate("/ViewForApproval");
+    navigate(`/ViewForApproval/${id}`);
   };
  
   const handleOpen = () => setOpen(!open);
@@ -36,7 +36,7 @@ const DenyRequest = () => {
      .then(() => {
       setLoading(false);
       alert("Request is deleted");
-       navigate("/ViewForApproval");
+      navigate(`/ViewForApproval/${id}`);
     })
     .catch((error) => {
       setLoading(false);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -22,6 +22,8 @@ export default function ProjectCreationForm({ forms }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [items, setItems] = useState({});
   const [projectId, setProjectId] = useState("");
+  const [quotationRequirement, setQuotationRequirement] = useState("");
+
   const [selectedRequests, setSelectedRequests] = "";
   const [formData, setFormData] = useState({
     projectId: "",
@@ -30,9 +32,11 @@ export default function ProjectCreationForm({ forms }) {
     biddingType: "",
     closingDate: "",
     closingTime: "",
+    quotationRequirement:"",
     appointTEC: [],
     appointBOCommite: [],
   });
+  const {id} =useParams();
   const [procurementRequests, setProcurementRequests] = useState([]);
   const [projectTitle, setProjectTitle] = useState("");
   const [biddingType, setBiddingType] = useState("");
@@ -83,6 +87,7 @@ export default function ProjectCreationForm({ forms }) {
       closingTime,
       appointTEC,
       appointBOCommite,
+      quotationRequirement
     };
     setLoading(true);
     try {
@@ -148,6 +153,7 @@ export default function ProjectCreationForm({ forms }) {
       closingTime,
       appointTEC,
       appointBOCommite,
+      quotationRequirement
     };
     const newProject = {
       projectId,
@@ -158,6 +164,7 @@ export default function ProjectCreationForm({ forms }) {
       closingTime,
       appointTEC,
       appointBOCommite,
+      quotationRequirement
     };
 
     setLoading(true);
@@ -175,7 +182,6 @@ export default function ProjectCreationForm({ forms }) {
       clearFormInputs();
       localStorage.removeItem("formData");
       console.log("Request submitted successfully", response.data);
-      
       navigateToViewProject();
     } catch (error) {
       console.error("Error creating project:", error);
@@ -185,7 +191,7 @@ export default function ProjectCreationForm({ forms }) {
   };
 
   const navigateToViewProject = () => {
-    if (biddingType === "Shopping Method")
+    if (formData.biddingType === "Shopping Method")
       navigate(`/ViewShoppingPdf/${projectId}`);
     else navigate(`/ViewDirectPurchasingPdf/${projectId}`);
   };
@@ -197,6 +203,7 @@ export default function ProjectCreationForm({ forms }) {
       biddingType: "",
       closingDate: "",
       closingTime: "",
+      quotationRequirement:"",
       appointTEC: [],
       appointBOCommite: [],
     });
@@ -221,8 +228,8 @@ export default function ProjectCreationForm({ forms }) {
 
         <Breadcrumb
           crumbs={[
-            { label: "Home", link: "/PO_BuHome/:id" },
-            { label: "Procurement Project List", link: "/projectList" },
+            { label: "Home", link: `/PO_BuHome/${id}` },
+            { label: "Procurement Project List", link: `/projectList/${id}` },
 
             { label: "Project Form Creation", link: "/addUsers" },
           ]}
@@ -318,6 +325,26 @@ export default function ProjectCreationForm({ forms }) {
                   <option value="">Select method</option>
                 </select>
               </div>
+              <div className="sm:col-span-3">
+              <label
+                htmlFor="last-name"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                <h5> Project Title</h5>
+              </label>
+              <div className="mt-4">
+                <input
+                  type="text"
+                  name="quotationRequirement"
+                  id="quotationRequirement"
+                  autoComplete="quotationRequirement"
+                  placeholder="To evaluate a quotation, the Purchaser may consider the following"
+                  value={quotationRequirement}
+                  onChange={(e) => setQuotationRequirement(e.target.value)}
+                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mt-2"
+                />
+              </div>
+            </div>
             </div>
           </div>
           <div className="border-b border-gray-900/10 pb-12">
@@ -553,7 +580,7 @@ export default function ProjectCreationForm({ forms }) {
             CLEAR FORM
           </button>
         </Link>
-        {biddingType === "Shopping Method" ? (
+        {formData.biddingType === "Shopping Method" ? (
 
         <button
           type="submit"

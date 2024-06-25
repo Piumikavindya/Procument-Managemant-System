@@ -65,7 +65,7 @@
 // }
 // };
 //   const handleCancel = () => {
-//     navigate('/ManageGuidance'); 
+//     navigate('/ManageGuidance');
 //   };
 
 //   useEffect(() => {
@@ -252,14 +252,14 @@
 
 // export default FileUploadModal;
 
-
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate, useParams } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
 
 const FileUploadModal = () => {
   const [files, setFiles] = useState({});
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const addFile = (file) => {
     const isImage = file.type.match("image.*");
@@ -316,7 +316,7 @@ const FileUploadModal = () => {
       alert("Files uploaded successfully");
 
       // Redirect or navigate to the desired page
-      navigate("/ManageGuidance");
+      navigate(`/ManageGuidance/${id}`);
     } catch (error) {
       console.error("Error uploading files:", error);
       // Handle errors, e.g., show an error message
@@ -324,7 +324,7 @@ const FileUploadModal = () => {
     }
   };
   const handleCancel = () => {
-    navigate("/ManageGuidance");
+    navigate(`/ManageGuidance/${id}`);
   };
 
   useEffect(() => {
@@ -418,7 +418,6 @@ const FileUploadModal = () => {
                     <span className="text-small text-gray-500 mb-2">
                       No files selected
                     </span>
-                
                   </li>
                 )}
                 {Object.keys(files).map((objectURL) => (

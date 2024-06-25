@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Breadcrumb from "../../../components/Breadcrumb";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function AddUsers() {
   const [role, setRole] = useState("");
@@ -13,6 +13,7 @@ export default function AddUsers() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { id } = useParams();
   const roles = [
     "admin",
     "procurement Officer",
@@ -63,13 +64,13 @@ export default function AddUsers() {
 
   return (
     <form onSubmit={handleSaveCreateUsers}>
-      <div className="space-y-12 ml-40 mr-40 mt-40">
+      <div className="space-y-10 ml-40 mr-40 mt-10">
         <Breadcrumb
           crumbs={[
-            { label: "Home", link: "/adminhome/:id" },
-            { label: "User Details", link: "/userList" },
+            { label: "Home", link: `/adminhome/${id}` },
+            { label: "User Details", link: `/userList/${id}` },
 
-            { label: "Add User Details", link: "/addUsers" },
+            { label: "Add User Details", link: `/addUsers/${id}` },
           ]}
           selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
         />
@@ -90,7 +91,7 @@ export default function AddUsers() {
                   id="country"
                   name="country"
                   value={role}
-              onChange={(e) => setRole(e.target.value)}
+                  onChange={(e) => setRole(e.target.value)}
                   autoComplete="country-name"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
                 >
@@ -116,16 +117,16 @@ export default function AddUsers() {
                   id="country"
                   name="country"
                   value={department}
-              onChange={(e) => setDepartment(e.target.value)}
+                  onChange={(e) => setDepartment(e.target.value)}
                   autoComplete="country-name"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
                 >
                   <option value="">Select your department</option>
-              {departments.map((type, index) => (
-                <option key={index} value={type}>
-                  {type}
-                </option>
-              ))}
+                  {departments.map((type, index) => (
+                    <option key={index} value={type}>
+                      {type}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -143,7 +144,7 @@ export default function AddUsers() {
                   name="first-name"
                   id="first-name"
                   value={firstname}
-              onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => setFirstName(e.target.value)}
                   autoComplete="given-name"
                   placeholder="Enter your first name"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -164,7 +165,7 @@ export default function AddUsers() {
                   name="last-name"
                   id="last-name"
                   value={lastname}
-              onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => setLastName(e.target.value)}
                   autoComplete="family-name"
                   placeholder="Enter the last name"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -185,7 +186,7 @@ export default function AddUsers() {
                   name="first-name"
                   id="first-name"
                   value={email}
-              onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   autoComplete="given-name"
                   placeholder="Enter the email address"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -206,7 +207,7 @@ export default function AddUsers() {
                   name="last-name"
                   id="last-name"
                   value={employeeNumber}
-              onChange={(e) => setEmpNo(e.target.value)}
+                  onChange={(e) => setEmpNo(e.target.value)}
                   autoComplete="family-name"
                   placeholder="Enter the employee name"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -227,7 +228,7 @@ export default function AddUsers() {
                   name="first-name"
                   id="first-name"
                   value={username}
-              onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value)}
                   autoComplete="given-name"
                   placeholder="Enter the user name"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -248,7 +249,7 @@ export default function AddUsers() {
                   name="last-name"
                   id="last-name"
                   value={password}
-              onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   autoComplete="family-name"
                   placeholder="Enter the password"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -260,14 +261,14 @@ export default function AddUsers() {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6 mr-40 mb-10">
-      <Link to="/userList">
-      <button
-        type="button"
-        className="rounded-md h-12 w-20 bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      >
-        CANCEL
-      </button>
-      </Link>
+        <Link to={`/userList/${id}`}>
+          <button
+            type="button"
+            className="rounded-md h-12 w-20 bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            CANCEL
+          </button>
+        </Link>
         <button
           type="submit"
           className="rounded-md bg-blue-600 h-12 w-20 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

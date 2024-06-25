@@ -24,7 +24,7 @@ const DeleteNotice = () => {
       .then(() => {
         setLoading(false);
         enqueueSnackbar("notice deleted", { variant: "success" });
-        navigate("/ManageNotice");
+        navigate(`/ManageNotice/${id}`);
         console.log("Notice deleted succesfully");
       })
       .catch((error) => {
@@ -34,9 +34,9 @@ const DeleteNotice = () => {
       });
   };
 
-  const handleOutsideClick = () => {
+  const handleCancel = () => {
     setOpen(false);
-    navigate("/ManageNotice");
+    navigate(`/ManageNotice/${id}`);
   };
   return (
     <div>
@@ -45,8 +45,8 @@ const DeleteNotice = () => {
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={() => handleOutsideClick()} // Use onClose to handle both closing and navigating
-          static // Add the static prop here
+          initialFocus={cancelButtonRef}
+          onClose={() => setOpen(false)}
         >
           <Transition.Child
             as={Fragment}
@@ -104,13 +104,21 @@ const DeleteNotice = () => {
                     </div>
                   </div>
 
-                  <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                  <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
+                    <button
+                       type="submit"
+                       className="rounded-md bg-green-500 h-12 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                       onClick={handleDeleteNotice}
+                    >
+                      <h6 className="mt-2">Yes, Delete it</h6>
+                      </button>
                     <button
                       type="button"
-                      className="mt-3 inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                      onClick={handleDeleteNotice}
+                      className="rounded-md bg-red-600 h-12 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      onClick={handleCancel}
+                      ref={cancelButtonRef}
                     >
-                      Delete
+                      No, Cancel
                     </button>
                   </div>
                 </Dialog.Panel>

@@ -17,12 +17,10 @@ export default function PreviewVendorDetails() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-
+  
   const handleOutsideClick = () => {
-    setOpen(false);
-    navigate("/allvendors");
+    setOpen(false); // Close the dialog
   };
-
   const [supplyer, setSupplyer] = useState({});
 
   useEffect(() => {
@@ -43,7 +41,7 @@ export default function PreviewVendorDetails() {
 
   const handleClose = () => {
     // Navigate to the "alluser" page
-    navigate("/allvendors");
+    navigate(`/allvendors/${id}`);
   };
 
   return (
@@ -54,7 +52,7 @@ export default function PreviewVendorDetails() {
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
           initialFocus={cancelButtonRef}
-          onClose={() => handleOutsideClick()} // Use onClose to handle both closing and navigating
+          onClose={handleClose} // Use handleClose to handle both closing and navigating
           static // Add the static prop here
         >
           <Transition.Child
@@ -159,10 +157,10 @@ export default function PreviewVendorDetails() {
                         </div>
 
                         <div className="flex gap-2 mt-4 justify-end">
-                          <Button
+                        <Button
                             variant="outlined"
                             className="rounded-md bg-red-600 h-12 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline "
-                            onClick={() => setOpen(false)}
+                            onClick={handleClose}
                             ref={cancelButtonRef}
                           >
                             CLOSE

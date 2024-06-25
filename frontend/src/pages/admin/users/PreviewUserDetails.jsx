@@ -1,6 +1,5 @@
 import { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -17,8 +16,7 @@ const PreviewUserDetails = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleOutsideClick = () => {
-    setOpen(false);
-    navigate("/allusers");
+    setOpen(false); // Close the dialog
   };
 
   const [user, setUser] = useState({});
@@ -40,7 +38,7 @@ const PreviewUserDetails = () => {
   }, [id]);
 
   const handleClose = () => {
-    navigate("/allusers");
+    navigate(`/userList/${id}`); 
   };
 
   return (
@@ -51,7 +49,7 @@ const PreviewUserDetails = () => {
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
           initialFocus={cancelButtonRef}
-          onClose={() => handleOutsideClick()} // Use onClose to handle both closing and navigating
+          onClose={handleClose} // Use handleClose to handle both closing and navigating
           static // Add the static prop here
         >
           <Transition.Child
@@ -78,45 +76,45 @@ const PreviewUserDetails = () => {
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
                 <Dialog.Panel>
-                  <div class="min-h-screen flex items-center justify-center px-4 mt-12">
-                    <div class="max-w-4xl  bg-white w-full rounded-lg shadow-xl     mt-11 p-12">
-                      <div class="p-2 border-b">
-                        <h1 class="text-2xl ">USER DETAILS</h1>
-                        <h3 class="text-xl text-brandPrimary">
+                  <div className="min-h-screen flex items-center justify-center px-4 mt-12">
+                    <div className="max-w-4xl bg-white w-full rounded-lg shadow-xl mt-11 p-12">
+                      <div className="p-2 border-b">
+                        <h1 className="text-2xl">USER DETAILS</h1>
+                        <h3 className="text-xl text-brandPrimary">
                           Registered User Details.
                         </h3>
                       </div>
                       <div className="mt-4">
-                        <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
-                          <h6 class="text-gray-600">Role</h6>
+                        <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
+                          <h6 className="text-gray-600">Role</h6>
                           <p> {user.role}</p>
                         </div>
-                        <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
-                          <h6 class="text-gray-600">Department</h6>
+                        <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
+                          <h6 className="text-gray-600">Department</h6>
                           <p>{user.department}</p>
                         </div>
-                        <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
-                          <h6 class="text-gray-600">First Name</h6>
+                        <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
+                          <h6 className="text-gray-600">First Name</h6>
                           <p>{user.firstname}</p>
                         </div>
-                        <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
-                          <h6 class="text-gray-600">Last Name</h6>
+                        <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
+                          <h6 className="text-gray-600">Last Name</h6>
                           <p>{user.lastname}</p>
                         </div>
-                        <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
-                          <h6 class="text-gray-600">Email</h6>
+                        <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
+                          <h6 className="text-gray-600">Email</h6>
                           <p>{user.email}</p>
                         </div>
-                        <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
-                          <h6 class="text-gray-600">Employee Number</h6>
+                        <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
+                          <h6 className="text-gray-600">Employee Number</h6>
                           <p> {user.employeeNumber}</p>
                         </div>
-                        <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
-                          <h6 class="text-gray-600">User Name</h6>
+                        <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
+                          <h6 className="text-gray-600">User Name</h6>
                           <p> {user.username}</p>
                         </div>
-                        <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
-                          <h6 class="text-gray-600">Password</h6>
+                        <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-2 border-b">
+                          <h6 className="text-gray-600">Password</h6>
                           {user.password && (
                             <div>
                               {user.password
@@ -131,11 +129,11 @@ const PreviewUserDetails = () => {
                           <Button
                             variant="outlined"
                             className="rounded-md bg-red-600 h-12 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline "
-                            onClick={() => setOpen(false)}
-                  ref={cancelButtonRef}>
+                            onClick={handleClose}
+                            ref={cancelButtonRef}
+                          >
                             CLOSE
                           </Button>
-                          
                         </div>
                       </div>
                     </div>

@@ -47,7 +47,7 @@ exports.previewUser = async (req,res) =>{
     const userId = req.params.id;
 
     try {
-        const user = await User.findById(userId);
+        const user = await User.findOne(userId);
         if (!user) {
             
             return res.status(404).json({ status: "user not found" });
@@ -81,7 +81,7 @@ exports.updateUser = async (req,res)=>{
     };
 
     try {
-        const updatedUser = await user.findByIdAndUpdate(userId, updateUser, { new: true });
+        const updatedUser = await user.findOneAndUpdate(userId, updateUser, { new: true });
         res.status(200).json({ status: "User updated", user: updatedUser });
     } catch (err) {
         console.error(err);
@@ -119,6 +119,9 @@ exports.changePassword = async (req, res) => {
   
     const resetPasswordUrl = `http://localhost:3000/reset-password?token=${token}&id=${user._id}`;
   
+
+
+    
     const transport = generateMailTransporter();
   
     const emailContent = `

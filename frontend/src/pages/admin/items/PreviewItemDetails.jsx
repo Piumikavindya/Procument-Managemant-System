@@ -15,9 +15,9 @@ export default function PreviewItemDetails() {
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
 
+
   const handleOutsideClick = () => {
-    setOpen(false);
-    navigate("/allitems");
+    setOpen(false); // Close the dialog
   };
 
   const [items, setItems] = useState({});
@@ -27,7 +27,7 @@ export default function PreviewItemDetails() {
     const getItem = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/user/preview-user/${id}`
+          `http://localhost:8000/item/preview-item/${id}`
         );
         console.log("Item Data:", response.data);
         setItems(response.data);
@@ -41,8 +41,10 @@ export default function PreviewItemDetails() {
 
   
 
+
   const handleClose = () => {
-    navigate("/allitems");
+    // Navigate to the "alluser" page
+    navigate(`/AllItem/${id}`);
   };
 
   return (
@@ -53,7 +55,7 @@ export default function PreviewItemDetails() {
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
           initialFocus={cancelButtonRef}
-          onClose={() => handleOutsideClick()} // Use onClose to handle both closing and navigating
+          onClose={handleClose} // Use handleClose to handle both closing and navigating
           static // Add the static prop here
         >
           <Transition.Child
@@ -107,7 +109,7 @@ export default function PreviewItemDetails() {
                           <Button
                             variant="outlined"
                             className="rounded-md bg-red-600 h-12 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline "
-                            onClick={() => setOpen(false)}
+                            onClick={handleClose}
                             ref={cancelButtonRef}
                           >
                             CLOSE

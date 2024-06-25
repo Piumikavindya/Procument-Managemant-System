@@ -14,11 +14,15 @@ const PreviewItem = () => {
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleOutsideClick = () => {
-    setOpen(false);
-    navigate("/allitems");
-  };
 
+  const handleOutsideClick = () => {
+    setOpen(false); // Close the dialog
+  };
+  
+
+  const handleClose = () => {
+    navigate(`/AllItems/${id}`);
+  }
   return (
     <div>
       <AllItems />
@@ -26,8 +30,8 @@ const PreviewItem = () => {
         <Dialog
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
-          initialFocus={cancelButtonRef}
-          onClose={() => handleOutsideClick()} // Use onClose to handle both closing and navigating
+         initialFocus={cancelButtonRef}
+          onClose={handleClose} // Use handleClose to handle both closing and navigating
           static // Add the static prop here
         >
           <Transition.Child

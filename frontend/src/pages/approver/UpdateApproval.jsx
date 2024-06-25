@@ -38,12 +38,12 @@ export default function ApprovalForm() {
 
   const handleOutsideClick = () => {
     setOpen(false);
-    navigate("/ViewForApproval");
+    navigate(`/ViewForApproval/${id}`);
   };
 
   const handleClose = () => {
     setOpen(false);
-    navigate("/ViewForApproval");
+    navigate(`/ViewForApproval/${id}`);
   };
 
   const handleUpdateStatus = (e) => {
@@ -58,7 +58,7 @@ export default function ApprovalForm() {
       .then(() => {
         setLoading(false);
         alert("Status is Updated");
-        navigate("/ViewForApproval");
+        navigate(`/ViewForApproval/${id}`);
       })
       .catch((error) => {
         setLoading(false);

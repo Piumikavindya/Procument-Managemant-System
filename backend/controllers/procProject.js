@@ -129,6 +129,7 @@ exports.createProject = async (req, res) => {
       closingTime,
       appointTEC,
       appointBOCommite,
+      quauotationRequirement 
     } = req.body;
 
     // Check if a project with the same project ID already exists
@@ -142,7 +143,7 @@ exports.createProject = async (req, res) => {
       existingProject.closingTime = closingTime;
       existingProject.appointTEC = appointTEC;
       existingProject.appointBOCommite = appointBOCommite;
-
+     existingProject.quauotationRequirement = quauotationRequirement ;
       // Save the updated project to the database
       const updatedProject = await existingProject.save();
 
@@ -158,6 +159,7 @@ exports.createProject = async (req, res) => {
         closingTime,
         appointTEC,
         appointBOCommite,
+        quauotationRequirement 
       });
 
       // Save the new project to the database
@@ -175,7 +177,55 @@ exports.createProject = async (req, res) => {
   }
 };
 
-// Function to create PDF for "Shopping Method" bidding type
+
+exports.viewAllProjects = async (req, res) => {
+  try {
+    // Fetch all requests from the database
+    const allProjects = await procProject.find();
+
+    // Send the list of requests as a response
+    res.json(allProjects);
+  } catch (error) {
+    console.error("Error fetching all projects:", error);
+    // Handle errors and send an appropriate response
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+exports.viewProjectById = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+
+    // Find the request by ID
+    const project = await procProject.findOne({ projectId });
+
+    if (!project) {
+      return res.status(404).json({ error: "project not found" });
+    }
+
+    // Send the request as a response
+    res.json(project);
+  } catch (error) {
+    console.error("Error fetching request by ID:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.deleteProject = async (req, res) => {
+  let projectId = req.params.id;
+
+  try {
+    await procProject.findByIdAndDelete(projectId);
+    res.status(200).send({ status: "Project is deleted" });
+  } catch (err) {
+    res.status(500).send({ status: "Error with delete request" });
+  }
+};
+
+
+// Function to create PDF for "Shipping Method" bidding type
 
 exports.viewSmallProcurementPdf = (req, res) => {
   try {
@@ -230,9 +280,10 @@ exports.createSmallProcurementPdf = async (req, res) => {
     const fontPath = path.join(__dirname, "..", "fonts", "Iskoola Pota Regular.ttf");
     const fontPathTamil = path.join(__dirname, "..", "fonts", "VANAVIL-Avvaiyar Regular.otf");
     const fontPathBold = path.join(__dirname, "..", "fonts", "iskpotab.ttf");
-    const logoPath = path.join(__dirname, "..", "images", "logo.jpg");
+
 
     // Add front page content
+    const logoPath = path.join(__dirname, "..", "images", "logo.jpg");
    
     doc.image(logoPath, 50, 25, { width: 80 });
 
@@ -522,7 +573,7 @@ exports.createSmallProcurementPdf = async (req, res) => {
     doc.fontSize(10).text("සහාකාර මූල්‍යධිකාරි/ඉංජිනේරු", 10, 770); // Adjust the coordinates as needed
     doc.moveDown();
     doc.font("Helvetica");
-    doc.fontSize(10).text("/Assistant Bursar/ Enginerring", 138, 772);
+    doc.fontSize(10).text("/Assistant Bursar/ Engineering", 138, 772);
     doc.moveDown();
 
     // Draw a horizontal line
@@ -712,6 +763,10 @@ const generateTable1 = require("../controllers/tableGenaration/table1Genaration.
 const generateTable2 = require("../controllers/tableGenaration/table2Genaration.js");
 const generateTable3 = require("../controllers/tableGenaration/table3Genaration.js");
 const generateTable4 = require("../controllers/tableGenaration/table4Genaration.js");
+const generateTable5 = require("../controllers/tableGenaration/table5Genaration.js");
+const generateTable6 = require("../controllers/tableGenaration/table6Genaration.js");
+const generateTable8 = require("../controllers/tableGenaration/table8Genaration.js");
+const generateTable10 = require("../controllers/tableGenaration/table10Genaration.js");
 
 exports.createNationalShoppingPdf = async (req, res) => {
   const requestData = req.body;
@@ -763,11 +818,15 @@ exports.createNationalShoppingPdf = async (req, res) => {
     doc.font("Helvetica-Bold");
     doc
       .fontSize(18)
-      .text("Supply, Delivery & Installation of Air Conditioners ", 90, 440);
-    doc.moveDown();
+      .text(
+        requestData.projectTitle,
+      { alignment: "center" }
+    );
+        doc.moveDown();
     doc.font("Helvetica-Bold");
-    doc.fontSize(18).text("Invitation No: RUH/SUP/FLQ/2020/06", 130, 480);
+    doc.fontSize(18).text(`Invitation No:  ${requestData.projectId}`, 130, 480);
     doc.moveDown();
+    
 
     const logoPathUni = path.join(__dirname, '..', 'images', 'unilogoc.jpg');
     doc.image(logoPathUni, 285, 550, { width: 60 });
@@ -795,9 +854,270 @@ exports.createNationalShoppingPdf = async (req, res) => {
     doc.addPage();
     generateTable2(doc);
     doc.addPage();
-    generateTable3(doc);
+ 
+      // Define constants for table dimensions and positions
+      const tableTop = 70;
+      const tableLeft = 50;
+      const tableWidth = 515;
+      const rowHeightShort = 40; // Short rows
+      const rowHeightMedium = 80; // Medium rows
+      const rowHeightTall = 125; // Tall rows
+      const columnWidth = tableWidth / 4;
+    
+      // Function to draw a table border
+      const drawTableBorder = (top, height) => {
+        doc.rect(tableLeft, top, tableWidth, height).stroke();
+      };
+    
+      // Function to draw a row divider
+      const drawRowDivider = (left, top, width) => {
+        doc
+          .moveTo(left, top)
+          .lineTo(left + width, top)
+          .stroke();
+      };
+    
+      // Function to draw a column divider
+      const drawColumnDivider = (left, top, height) => {
+        doc
+          .moveTo(left, top)
+          .lineTo(left, top + height)
+          .stroke();
+      };
+    
+      // Function to add text to the table
+      const addText = (text, left, top, font, size) => {
+        doc.font(font).fontSize(size).text(text, left, top);
+      };
+    
+      // First Table - Quotation deadline
+      drawTableBorder(tableTop, rowHeightShort);
+      drawColumnDivider(tableLeft + columnWidth, tableTop, rowHeightShort);
+      addText("Quotation", tableLeft + 10, tableTop + 5, "Helvetica-Bold", 12);
+      addText(
+        "deadline for submission of quotations, in accordance with ITV Clause 11.1 above.",
+        tableLeft + columnWidth + 30,
+        tableTop + 5,
+        "Helvetica",
+        12
+      );
+    
+      // Second Table - Opening of Quotations
+      const table2Top = tableTop + rowHeightShort;
+      drawTableBorder(table2Top, rowHeightMedium);
+      drawColumnDivider(tableLeft + columnWidth, table2Top, rowHeightMedium);
+    
+      addText(
+        "13. Opening of\nQuotations",
+        tableLeft + 10,
+        table2Top + 5,
+        "Helvetica-Bold",
+        12
+      );
+      addText("13.1", tableLeft + columnWidth + 4, table2Top + 5, "Helvetica", 12);
+      addText(
+        "The Purchaser shall conduct the opening of quotation in public at the address, date and time specified in the Data Sheet.",
+        tableLeft + columnWidth + 30,
+        table2Top + 5,
+        "Helvetica",
+        12
+      );
+      addText("13.2", tableLeft + columnWidth + 4, table2Top + 45, "Helvetica", 12);
+      addText(
+        "A representative of the bidders may be present and mark its attendance.",
+        tableLeft + columnWidth + 30,
+        table2Top + 45,
+        "Helvetica",
+        12
+      );
+    
+      // Additional row without dividing columns
+      const additionalRowTop = table2Top + rowHeightMedium;
+      drawTableBorder(additionalRowTop, rowHeightShort);
+      addText(
+        "E: Evaluation and Comparison of Quotation ",
+        tableLeft + 180,
+        additionalRowTop + 5,
+        "Helvetica-Bold",
+        12
+      );
+    
+      // Third Table - Clarifications
+      const table3Top = additionalRowTop + rowHeightShort;
+      drawTableBorder(table3Top, rowHeightTall);
+      drawColumnDivider(tableLeft + columnWidth, table3Top, rowHeightTall);
+    
+      addText(
+        "14. Clarifications",
+        tableLeft + 10,
+        table3Top + 5,
+        "Helvetica-Bold",
+        12
+      );
+      addText("14.1", tableLeft + columnWidth + 4, table3Top + 5, "Helvetica", 12);
+      addText(
+        "To assist in the examination, evaluation and comparison of the quotations, the Purchaser may, at its discretion, ask any vendor for a clarification of its quotation. Any clarification submitted by a vendor in respect to its quotation which is not in response to a request by the Purchaser shall not be considered.",
+        tableLeft + columnWidth + 30,
+        table3Top + 5,
+        "Helvetica",
+        12
+      );
+      addText(
+        "14.2 ",
+        tableLeft + columnWidth + 4,
+        table3Top + 90,
+        "Helvetica",
+        12
+      );
+    
+      addText(
+        "The Purchaser’s request for clarification and the response shall be in writing.",
+        tableLeft + columnWidth + 30,
+        table3Top + 90,
+        "Helvetica",
+        12
+      );
+    
+      // Fourth Table - Responsiveness of Quotations
+      const table4Top = table3Top + rowHeightTall;
+      drawTableBorder(table4Top, rowHeightShort + 40);
+      drawColumnDivider(tableLeft + columnWidth, table4Top, rowHeightShort + 40);
+    
+      addText(
+        "15. Responsiveness\nof Quotations",
+        tableLeft + 10,
+        table4Top + 5,
+        "Helvetica-Bold",
+        12
+      );
+      addText("15.1", tableLeft + columnWidth + 4, table4Top + 5, "Helvetica", 12);
+      addText(
+        "The Purchaser will determine the responsiveness of the quotation to the documents based on the contents of the quotation received.",
+        tableLeft + columnWidth + 30,
+        table4Top + 5,
+        "Helvetica",
+        12
+      );
+      addText("15.2", tableLeft + columnWidth + 4, table4Top + 45, "Helvetica", 12);
+      addText(
+        "If a quotation is evaluated as not substantially responsive to the documents issued, it may be rejected by the Purchaser.",
+        tableLeft + columnWidth + 30,
+        table4Top + 45,
+        "Helvetica",
+        12
+      );
+    
+      // Fifth Table - Evaluation of Quotation
+      const table5Top = table4Top + rowHeightShort + 40;
+      drawTableBorder(table5Top, rowHeightMedium + 170);
+      drawColumnDivider(tableLeft + columnWidth, table5Top, rowHeightMedium + 170);
+    
+      addText(
+        "16. Evaluation of\nQuotation",
+        tableLeft + 10,
+        table5Top + 5,
+        "Helvetica-Bold",
+        12
+      );
+      addText("16.1", tableLeft + columnWidth + 4, table5Top + 5, "Helvetica", 12);
+      addText(
+        "The Purchaser shall evaluate each quotation that has been determined to be substantially responsive.",
+        tableLeft + columnWidth + 30,
+        table5Top + 5,
+        "Helvetica",
+        12
+      );
+      addText("16.2", tableLeft + columnWidth + 4, table5Top + 35, "Helvetica", 12);
+      addText(
+        "To evaluate a quotation, the Purchaser may consider the following:",
+        tableLeft + columnWidth + 30,
+        table5Top + 35,
+        "Helvetica",
+        12
+      );
+      addText(
+        "(a) Business Registraion",
+        tableLeft + columnWidth + 40,
+        table5Top + 50,
+        "Helvetica",
+        12
+      );
+      addText(
+        "(b) the Price as quoted;",
+        tableLeft + columnWidth + 40,
+        table5Top + 65,
+        "Helvetica",
+        12
+      );
+      addText(
+        "(c) Price adjustment for correction of arithmetical errors;",
+        tableLeft + columnWidth + 40,
+        table5Top + 95,
+        "Helvetica",
+        12
+      );
+      addText(
+        "(d) Price adjustment due to discounts offered.",
+        tableLeft + columnWidth + 40,
+        table5Top + 125,
+        "Helvetica",
+        12
+      );
+      addText(
+        `(e) ${requestData.quauotationRequirement }`,
+        tableLeft + columnWidth + 40,
+        table5Top + 140,
+        "Helvetica",
+        12
+      );
+      addText(
+        "16.3",
+        tableLeft + columnWidth + 4,
+        table5Top + 160,
+        "Helvetica",
+        12
+      );
+      addText(
+        "The Purchaser’s evaluation of a quotation may require the consideration of other factors, in addition to the Price quoted if stated in Section II, Data Sheet. These factors may be related to the characteristics, performance, and terms and conditions of purchase of the Goods.",
+        tableLeft + columnWidth + 30,
+        table5Top + 150,
+        "Helvetica",
+        12
+      );
+    
+      // Sixth Table - Purchaser’s Right to Accept or Reject Quotations
+      const table6Top = table5Top + rowHeightMedium + 170;
+      drawTableBorder(table6Top, rowHeightMedium + 40);
+      drawColumnDivider(tableLeft + columnWidth, table6Top, rowHeightMedium + 40);
+    
+      addText(
+        "17. Purchaser’s\nRight to\nAccept any\nQuotation,\nand to Reject\nany or all\nQuotations",
+        tableLeft + 10,
+        table6Top + 5,
+        "Helvetica-Bold",
+        12
+      );
+      addText("17.1", tableLeft + columnWidth + 4, table6Top + 5, "Helvetica", 12);
+      
+    
+      addText(
+        "The Purchaser reserves the right to accept or reject any quotation, and to annul the process and reject all quotations at any time prior to acceptance, without thereby incurring any liability to bidders.",
+        tableLeft + columnWidth + 30,
+        table6Top + 5,
+        "Helvetica",
+        12
+      );
+    
     doc.addPage();
     generateTable4(doc);
+    doc.addPage({ size: [842, 595] }); // Landscape A4 dimensions
+    generateTable5(doc);
+    doc.addPage({ size: [842, 595] }); // Landscape A4 dimensions
+    generateTable6(doc);
+    doc.addPage({ size: [842, 595] }); // Landscape A4 dimensions
+    generateTable8(doc);
+    doc.addPage({ size: [842, 595] }); // Landscape A4 dimensions
+    generateTable10(doc);
     doc.end();
     outputStream.on("finish", () => {
       console.log(

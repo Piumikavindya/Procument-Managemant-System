@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { AiOutlineEdit, AiOutlineSend, AiOutlineDelete } from "react-icons/ai"; // Import icons for edit, send, and delete
 import { MdPreview } from "react-icons/md"; // Import icons for edit, send, and delete
 import UserTypeNavbar from "../../components/UserTypeNavbar";
@@ -12,6 +12,7 @@ const ApprovalList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
   const [requests, setRequests] = useState([]);
+ const {id} =useParams();
 
   useEffect(() => {
     setLoading(true);
@@ -59,8 +60,8 @@ const ApprovalList = () => {
       <UserTypeNavbar userType="procOfficer" />
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/ApproverHome/:id" },
-          { label: "Pending Approval list", link: "/ViewForApproval" },
+          { label: "Home", link: `/ApproverHome/${id}`},
+          { label: "Pending Approval list", link: `/ViewForApproval/${id}` },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />

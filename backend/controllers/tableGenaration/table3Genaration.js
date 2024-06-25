@@ -1,4 +1,5 @@
 const generateTable3 = (doc) => {
+  
   // Define constants for table dimensions and positions
   const tableTop = 70;
   const tableLeft = 50;
@@ -180,30 +181,44 @@ const generateTable3 = (doc) => {
     12
   );
   addText(
-    "(a) the Price as quoted;",
+    "(a) Business Registraion",
+    tableLeft + columnWidth + 40,
+    table5Top + 50,
+    "Helvetica",
+    12
+  );
+  addText(
+    "(b) the Price as quoted;",
     tableLeft + columnWidth + 40,
     table5Top + 65,
     "Helvetica",
     12
   );
   addText(
-    "(b) price adjustment for correction of arithmetical errors;",
+    "(c) Price adjustment for correction of arithmetical errors;",
     tableLeft + columnWidth + 40,
     table5Top + 95,
     "Helvetica",
     12
   );
   addText(
-    "(c) price adjustment due to discounts offered.",
+    "(d) Price adjustment due to discounts offered.",
     tableLeft + columnWidth + 40,
     table5Top + 125,
     "Helvetica",
     12
   );
   addText(
+    `(e) ${requestData.quauotationRequirement }`,
+    tableLeft + columnWidth + 40,
+    table5Top + 140,
+    "Helvetica",
+    12
+  );
+  addText(
     "16.3",
     tableLeft + columnWidth + 4,
-    table5Top + 150,
+    table5Top + 160,
     "Helvetica",
     12
   );

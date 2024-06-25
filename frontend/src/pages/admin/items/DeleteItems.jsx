@@ -6,42 +6,44 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import ItemDetails from "./ItemDetails";
-import { DialogBody, DialogFooter, DialogHeader, Typography } from "@material-tailwind/react";
-
-
-
+import {
+  DialogBody,
+  DialogFooter,
+  DialogHeader,
+  Typography,
+} from "@material-tailwind/react";
 
 export default function DeleteItems() {
+  const [open, setOpen] = useState(true);
+  const cancelButtonRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
 
+  const handleDeleteItem = () => {
+    setLoading(true);
+    axios
+      .delete(`http://localhost:8000/item/delete/${id}`)
+      .then(() => {
+        setLoading(false);
+        enqueueSnackbar("Supplier deleted", { variant: "success" });
+        navigate(`/AllItem/${id}`);
+      })
+      .catch((error) => {
+        setLoading(false);
+        enqueueSnackbar("Error deleting supplier", { variant: "error" });
+        console.log(error);
+      });
+  };
 
-    const [open, setOpen] = useState(true);
-    const cancelButtonRef = useRef(null);
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-    const { id } = useParams();
-    const { enqueueSnackbar } = useSnackbar();
-  
-    const handleDeleteItem = () => {
-      setLoading(true);
-      axios
-        .delete(`http://localhost:8000/item/delete/${id}`)
-        .then(() => {
-          setLoading(false);
-          enqueueSnackbar("Supplier deleted", { variant: "success" });
-          navigate("/AllItem");
-        })
-        .catch((error) => {
-          setLoading(false);
-          enqueueSnackbar("Error deleting supplier", { variant: "error" });
-          console.log(error);
-        });
-    };
-  
-    const handleOpen = () => setOpen(!open);
-
+  const handleOpen = () => setOpen(!open);  const handleCancel = () => {
+    setOpen(false);
+    navigate(`/AllItem/${id}`); // Navigate to userList with the id
+  };
   return (
     <div>
-      <ItemDetails/>
+      <ItemDetails />
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
@@ -84,17 +86,15 @@ export default function DeleteItems() {
                       alt=""
                       className="max-w-24 h-24  md:max-w-md lg:max-w-24 md:h-24 w-24"
                     ></img>
-                    
+
                     <Typography className="text-center font-normal">
-                      <h3>
-                        Are you sure want to delete this Item details?
-                      </h3>
+                      <h3>Are you sure want to delete this Item details?</h3>
                     </Typography>
 
                     <Typography className="text-center font-normal" color="red">
                       <h6>
-                        Note : Once you delete this Item all details of the
-                        item will be removed from the system.
+                        Note : Once you delete this Item all details of the item
+                        will be removed from the system.
                       </h6>
                     </Typography>
                   </DialogBody>
@@ -109,7 +109,7 @@ export default function DeleteItems() {
                     <button
                       type="submit"
                       className="rounded-md bg-red-600 h-12 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      onClick={() => setOpen(false)}
+                      onClick={handleCancel}
                       ref={cancelButtonRef}
                     >
                       No, Cancel
@@ -122,5 +122,5 @@ export default function DeleteItems() {
         </Dialog>
       </Transition.Root>
     </div>
-    );
-};
+  );
+}

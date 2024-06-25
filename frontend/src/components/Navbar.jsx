@@ -116,7 +116,7 @@ const Navbar = ({ isAuthenticated, handleSignOut, username,userId ,loggedInUser 
                 title="Click here to View Profile"
                 >
                 <Link
-                  to={`/Profile/${userId}`}
+                  to={`/profile`}
                   className="flex items-center gap-2"
                   style={{ textDecoration: "none" }}
                 >

@@ -1,8 +1,8 @@
 // RequestList.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { MdSimCardDownload,MdPreview } from "react-icons/md";
+import { Link, useParams } from "react-router-dom";
+import { MdSimCardDownload, MdPreview } from "react-icons/md";
 import { AiOutlineSend } from "react-icons/ai";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import Breadcrumb from "../../components/Breadcrumb";
@@ -12,11 +12,11 @@ const RequestList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
   const [requests, setRequests] = useState([]);
-
+  const { id } = useParams();
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8000/procReqest/viewRequests") 
+      .get("http://localhost:8000/procReqest/viewRequests")
       .then((response) => {
         setRequests(response.data);
         setLoading(false);
@@ -50,24 +50,23 @@ const RequestList = () => {
   return (
     <div className="p-4">
       <UserTypeNavbar userType="department" />
-     
+
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/Home/:id" },
+          { label: "Home", link: `/Home/${id}` },
           { label: "Purchase Requisition", link: "/reqForm" },
           { label: "Purchase Requisition List", link: "/ViewForRequest" },
-         
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />
 
-<div className="reservation-list-container">
+      <div className="reservation-list-container">
         <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
           <div className="align-middle inline-block min-w-full  overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
             <table className="min-w-full">
               <thead className="text-xs text-white uppercase bg-NeutralBlack   dark:text-gray-400">
                 <tr>
-                <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
+                  <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
                     Request ID
                   </th>
                   <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
@@ -76,10 +75,7 @@ const RequestList = () => {
                   <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
                     Sender
                   </th>
-                  <th
-                    className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider"
-                  
-                  >
+                  <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
                     Department
                   </th>
 

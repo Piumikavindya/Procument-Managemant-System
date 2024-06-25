@@ -21,7 +21,7 @@ export default function UploadNotice() {
   
     const handleOutsideClick = () => {
       setOpen(false);
-      navigate("/ManageNotice");
+      navigate(`/ManageNotice/${id}`);
     };
     
     return (

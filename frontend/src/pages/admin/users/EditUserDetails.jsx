@@ -3,65 +3,64 @@ import axios from "axios";
 import Breadcrumb from "../../../components/Breadcrumb";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
- import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 export default function EditUserDetails() {
+  const [role, setRole] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [employeeNumber, setEmpNo] = useState("");
+  const [department, setDepartment] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const roles = [
+    "admin",
+    "procurement Officer",
+    "Finance officers",
+    "department",
+    "approver",
+    "TECofficer",
+  ];
+  const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
 
-
-    const [role, setRole] = useState("");
-    const [email, setEmail] = useState("");
-    const [firstname, setFirstName] = useState("");
-    const [lastname, setLastName] = useState("");
-    const [employeeNumber, setEmpNo] = useState("");
-    const [department, setDepartment] = useState("");
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-    const roles = [
-      "admin",
-      "procurement Officer",
-      "Finance officers",
-      "department",
-      "approver",
-      "TECofficer",
-    ];
-    const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
-
-     // React Router Hook to get the parameter from the URL
+  // React Router Hook to get the parameter from the URL
   const { id } = useParams();
 
   // Snackbar Hook for displaying notifications
   const { enqueueSnackbar } = useSnackbar();
 
+  // Fetch user data from the API based on the ID
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`http://localhost:8000/user/preview-user/${id}`)
+      .then((response) => {
+        const userData = response.data;
 
-    // Fetch user data from the API based on the ID
-    useEffect(() => {
-        setLoading(true);
-        axios
-          .get(`http://localhost:8000/user/preview-user/${id}`)
-          .then((response) => {
-            const userData = response.data;
-      
-            console.log('Fetched user data:', userData);
-            setRole(userData.role);
-            setEmail(userData.email);
-            setFirstName(userData.firstname);
-            setLastName(userData.lastname);
-            setPassword(userData.password);
-            setUsername(userData.username);
-            setDepartment(userData.department);
-            setEmpNo(userData.employeeNumber);
-      
-            setLoading(false);
-          })
-          .catch((error) => {
-            setLoading(false);
-            enqueueSnackbar('An error occurred. Please check the console.', { variant: 'error' });
-            console.error(error);
-          });
-      }, [id]);
-  
-   // Handle updating user data
-  function handleUpdateUsers (e) {
+        console.log("Fetched user data:", userData);
+        setRole(userData.role);
+        setEmail(userData.email);
+        setFirstName(userData.firstname);
+        setLastName(userData.lastname);
+        setPassword(userData.password);
+        setUsername(userData.username);
+        setDepartment(userData.department);
+        setEmpNo(userData.employeeNumber);
+
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        enqueueSnackbar("An error occurred. Please check the console.", {
+          variant: "error",
+        });
+        console.error(error);
+      });
+  }, [id]);
+
+  // Handle updating user data
+  function handleUpdateUsers(e) {
     e.preventDefault();
     const newUser = {
       role,
@@ -78,26 +77,28 @@ export default function EditUserDetails() {
     axios
       .put(`http://localhost:8000/user/update/${id}`, newUser)
       .then(() => {
-        alert('User Updated');
+        alert("User Updated");
         // Clear the form
-        setRole('');
-        setEmail('');
-        setLastName('');
-        setFirstName('');
-        setPassword('');
-        setUsername('');
-        setDepartment('');
-        setEmpNo('');
+        setRole("");
+        setEmail("");
+        setLastName("");
+        setFirstName("");
+        setPassword("");
+        setUsername("");
+        setDepartment("");
+        setEmpNo("");
         setLoading(false);
-        enqueueSnackbar('User account is updated successfully', { variant: 'success' });
-        navigate('/userList');
+        enqueueSnackbar("User account is updated successfully", {
+          variant: "success",
+        });
+        navigate(`/userList/${id}`);
       })
       .catch((error) => {
         setLoading(false);
-        enqueueSnackbar('Error updating user account', { variant: 'error' });
+        enqueueSnackbar("Error updating user account", { variant: "error" });
         console.error(error);
       });
-  };
+  }
 
   // React Router Hook for navigation
   const navigate = useNavigate();
@@ -105,16 +106,15 @@ export default function EditUserDetails() {
     console.log(crumb);
   };
 
-
   return (
     <form onSubmit={handleUpdateUsers}>
       <div className="space-y-12 ml-40 mr-40 mt-40">
         <Breadcrumb
           crumbs={[
-            { label: "Home", link: "/adminhome/:id" },
-            { label: "User Details", link: "/userList" },
+            { label: "Home", link: `/adminhome/${id}` },
+            { label: "User Details", link: `/userList/${id}` },
 
-            { label: "Edit User Details", link: "/editUsers/${user._id}" },
+            { label: "Edit User Details", link: `/editUsers/${id}` },
           ]}
           selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
         />
@@ -135,16 +135,16 @@ export default function EditUserDetails() {
                   id="country"
                   name="country"
                   value={role}
-                onChange={(e) => setRole(e.target.value)}
+                  onChange={(e) => setRole(e.target.value)}
                   autoComplete="country-name"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
                 >
-                  <option value=''>Update your role</option>
-                {roles.map((type, index) => (
-                  <option key={index} value={type}>
-                    {type}
-                  </option>
-                ))}
+                  <option value="">Update your role</option>
+                  {roles.map((type, index) => (
+                    <option key={index} value={type}>
+                      {type}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -165,12 +165,12 @@ export default function EditUserDetails() {
                   autoComplete="country-name"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
                 >
-                  <option value=''>Update your department</option>
-                          {departments.map((type, index) => (
-                            <option key={index} value={type}>
-                              {type}
-                            </option>
-                          ))}
+                  <option value="">Update your department</option>
+                  {departments.map((type, index) => (
+                    <option key={index} value={type}>
+                      {type}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -188,9 +188,9 @@ export default function EditUserDetails() {
                   name="first-name"
                   id="first-name"
                   value={firstname}
-                onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => setFirstName(e.target.value)}
                   autoComplete="given-name"
-                  placeholder="Enter your first name"
+                  placeholder="Edit your first name"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -209,9 +209,9 @@ export default function EditUserDetails() {
                   name="last-name"
                   id="last-name"
                   value={lastname}
-                onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => setLastName(e.target.value)}
                   autoComplete="family-name"
-                  placeholder="Enter the last name"
+                  placeholder="Edit the last name"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -227,12 +227,12 @@ export default function EditUserDetails() {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="first-name"
-                  id="first-name"
+                  name="email"
+                  id="email"
                   value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   autoComplete="given-name"
-                  placeholder="Enter the email address"
+                  placeholder="Edit the email address"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -251,7 +251,7 @@ export default function EditUserDetails() {
                   name="last-name"
                   id="last-name"
                   value={employeeNumber}
-                onChange={(e) => setEmpNo(e.target.value)}
+                  onChange={(e) => setEmpNo(e.target.value)}
                   autoComplete="family-name"
                   placeholder="Enter the employee name"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -272,9 +272,9 @@ export default function EditUserDetails() {
                   name="first-name"
                   id="first-name"
                   value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value)}
                   autoComplete="given-name"
-                  placeholder="Enter the user name"
+                  placeholder="Edit the user name"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -293,7 +293,7 @@ export default function EditUserDetails() {
                   name="last-name"
                   id="last-name"
                   value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   autoComplete="family-name"
                   placeholder="Enter the password"
                   className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -305,14 +305,14 @@ export default function EditUserDetails() {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6 mr-40 mb-10">
-      <Link to="/userList">
-      <button
-        type="button"
-        className="rounded-md h-12 w-20 bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      >
-        Cancel
-      </button>
-      </Link>
+        <Link to={`/userList/${id}`}>
+          <button
+            type="button"
+            className="rounded-md h-12 w-20 bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+          >
+            Cancel
+          </button>
+        </Link>
         <button
           type="submit"
           className="rounded-md bg-blue-600 h-12 w-20 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -321,5 +321,5 @@ export default function EditUserDetails() {
         </button>
       </div>
     </form>
-  )
+  );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   EyeIcon,
   MagnifyingGlassIcon,
@@ -116,7 +116,7 @@ const TABLE_ROWS = [
 export default function VendorDetails() {
   const [vendors, setVendors] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredVendors = vendors.filter((vendor) =>
@@ -171,8 +171,8 @@ export default function VendorDetails() {
       <UserTypeNavbar userType="admin" />
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/adminhome/:id" },
-          { label: "Vendor Details", link: "/vendorsDetails" },
+          { label: "Home", link: `/adminhome/${id}` },
+          { label: "Vendor Details", link: `/allvendors/${id}` },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />
@@ -205,7 +205,7 @@ export default function VendorDetails() {
               >
                 <UserPlusIcon strokeWidth={2} className="h-5 w-5" />{" "}
                 <Link
-                  to={"/addSupplier"}
+                  to={`/addSupplier/${id}`}
                   class="text-white"
                   style={{ textDecoration: "none" }}
                 >

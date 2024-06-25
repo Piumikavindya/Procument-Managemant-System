@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Dropdown from "../../components/DropDown";
 import { AddItemCard } from "./AddItemCard ";
 import { MdOutlineDelete } from "react-icons/md";
@@ -28,7 +28,7 @@ const ReqForm = ({ forms }) => {
   const [specifications, setSpecifications] = useState({});
   const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
   const [requestCreated, setRequestCreated] = useState(false);
-
+  const { id } = useParams();
   useEffect(() => {
     const formDataFromStorage = localStorage.getItem("formData");
     if (formDataFromStorage) {
@@ -97,7 +97,7 @@ const ReqForm = ({ forms }) => {
       sendTo,
       items,
       files,
-      specifications
+      specifications,
     };
     setLoading(true);
     try {
@@ -136,31 +136,29 @@ const ReqForm = ({ forms }) => {
     }
   };
   const handleSpecificationUpload = async (requestId, specifications) => {
-     specifications = document.getElementById("formFileMultiple1").specifications;
+    specifications =
+      document.getElementById("formFileMultiple1").specifications;
 
     const formData = new FormData();
     Array.from(specifications).forEach((specification) => {
-        formData.append("specification", specification);
+      formData.append("specification", specification);
     });
 
     try {
-        const response = await axios.post(
-            `http://localhost:8000/procReqest/uploadSpecification/${requestId}`,
-            formData,
-            {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            }
-        );
-        console.log("Specification uploaded successfully:", response.data);
-
+      const response = await axios.post(
+        `http://localhost:8000/procReqest/uploadSpecification/${requestId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("Specification uploaded successfully:", response.data);
     } catch (error) {
-        console.error("Error uploading specification:", error);
+      console.error("Error uploading specification:", error);
     }
-};
-
-
+  };
 
   const handleViewProcItems = async () => {
     try {
@@ -281,7 +279,7 @@ const ReqForm = ({ forms }) => {
   };
 
   const navigateToViewRequest = () => {
-    navigate("/ViewForRequest");
+    navigate(`/ViewForRequest/${id}`);
   };
   const clearFormInputs = () => {
     setRequestId("");
@@ -704,7 +702,7 @@ const ReqForm = ({ forms }) => {
                           <label
                             htmlFor="about"
                             class="mb-2 inline-block text-neutral-700 dark:text-neutral-200"
-                            >
+                          >
                             If Urgent Provide The Justification :
                           </label>
                           <input

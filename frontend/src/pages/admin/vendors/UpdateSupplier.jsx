@@ -47,7 +47,7 @@ export default function UpdateSupplier() {
       .get(`http://localhost:8000/supplyer/preview-supplyer/${id}`)
       .then((response) => {
         const userData = response.data;
-        console.log('Fetched user data:', userData);
+        console.log("Fetched user data:", userData);
         setUsername(response.data.username);
         setSupplierId(response.data.supplierId);
         setSupplierName(response.data.supplierName);
@@ -130,7 +130,7 @@ export default function UpdateSupplier() {
         enqueueSnackbar("Vendor is updated successfully", {
           variant: "success",
         });
-        navigate("/allvendors");
+        navigate(`/allvendors/${id}`);
       })
       .catch((error) => {
         setLoading(false);
@@ -153,10 +153,10 @@ export default function UpdateSupplier() {
       <div className="space-y-12 ml-40 mr-40 mt-40">
         <Breadcrumb
           crumbs={[
-            { label: "Home", link: "/adminhome/:id" },
-            { label: "Vendor Details", link: "/allvendors" },
+            { label: "Home", link: `/adminhome/${id}` },
+            { label: "Vendor Details", link: `/allvendors/${id}` },
 
-            { label: "Add Vendor Details", link: "/addvendors" },
+            { label: "Add Vendor Details", link: `/addvendors/${id}` },
           ]}
           selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
         />
@@ -476,14 +476,14 @@ export default function UpdateSupplier() {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6 mr-40 mb-10">
-      <Link to="/allvendors">
-        <button
-          type="button"
-          className="rounded-md  h-12 w-20 bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Cancel
-        </button>
-      </Link>  
+        <Link to={`/allvendors/${id}`}>
+          <button
+            type="button"
+            className="rounded-md  h-12 w-20 bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Cancel
+          </button>
+        </Link>
         <button
           type="submit"
           className="rounded-md bg-blue-600  h-12 w-20 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

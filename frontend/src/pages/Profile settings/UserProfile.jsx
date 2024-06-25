@@ -45,13 +45,13 @@ const UserProfile = ({ isAuthenticated, handleSignOut, username,userId  }) => {
           <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-black">First Name</dt>
             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {user.firstName}
+              {user.firstname}
             </dd>
           </div>
           <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-black">Last Name</dt>
             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {user.lastName}
+              {user.lastname}
             </dd>
           </div>
           <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

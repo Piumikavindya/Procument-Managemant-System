@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from React Router
+import { Link, useParams } from "react-router-dom"; // Import Link from React Router
 // import { FaXmark, Fabars } from "react-icons/fa";
 
 import { FaXmark, FaBars } from "react-icons/fa6";
@@ -9,7 +9,7 @@ import "../pages/Home";
 const UserTypeNavbar = ({ userType }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
-
+const {id} =useParams();
   // set toggle Menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -36,29 +36,29 @@ const UserTypeNavbar = ({ userType }) => {
 
   //NAVITEMS ARRAY
   const AdminOptions = [
-    { link: "Manage Users", path: "/userList" },
-    { link: "Manage Vendors", path: "/allvendors" },
-    { link: "Items", path: "/AllItem" },
+    { link: "Manage Users", path: `/userList/${id}` },
+    { link: "Manage Vendors", path: `/allvendors/${id}` },
+    { link: "Items", path: `/AllItem/${id}` },
     { link: "Dashboard", path: "" },
-    { link: "Manage Guidance", path: "/ManageGuidance" },
-    { link: "Manage Notices", path: "/ManageNotice" },
+    { link: "Manage Guidance", path: `/ManageGuidance/${id}` },
+    { link: "Manage Notices", path: `/ManageNotice/${id}` },
     { link: "Department", path: "" },
     { link: "Budget & Plan", path: "" },
     { link: "Manage Year Plan", path: "/EventPlanner" },
   ];
 
   const DepartmentOptions = [
-    { link: "Purchase Requisition", path: `/reqform` },
+    { link: "Purchase Requisition", path: `/reqform/${id}` },
     { link: "Requisition Tracker", path: "/ProgressTrack" },
     { link: "Request List", path: "/ViewForRequest" },
   ];
 
   const procOfficerOptions = [
-    { link: "Created Projects", path: "/projectList" },
-    { link: "Create New Project", path: "/ProjectCreationForm" },
-    { link: "Approved Purchase Requisition List ", path: "/ApprovedRequestList" },
-    { link: "Bidding Documents", path: "/biddingDocuments" },
-    { link: "Vendors List", path: "/VendorsList" },
+    { link: "Created Projects", path: `/projectList/${id}` },
+    { link: "Create New Project", path: `/ProjectCreationForm/${id}` },
+    { link: "Approved Purchase Requisition List ", path: `/ApprovedRequestList/${id}`  },
+    { link: "Bidding Documents", path: `/biddingDocuments/${id}` },
+    { link: "Vendors List", path: `/VendorsList/${id}` },
     { link: "Invites Bids", path: "/InvitesBids" },
     
   ];
@@ -82,7 +82,7 @@ const UserTypeNavbar = ({ userType }) => {
   ];
 
   const ApproverOptions = [
-    { link: "Pending Approval list", path: "/ViewForApproval" },
+    { link: "Pending Approval list", path: `/ViewForApproval/${id}` },
   ];
 
   return (

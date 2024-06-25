@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {  MdPreview } from 'react-icons/md';
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import Breadcrumb from "../../components/Breadcrumb";
@@ -16,8 +16,7 @@ const ApprovedRequestList = () => {
   const [requests, setRequests] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // State to manage current page
   const itemsPerPage = 5; // Number of items per page
-
- 
+  const {id} =useParams(); 
   const filteredRequests = requests.filter((request) => {
     const searchValue = request[searchOption];
     return (
@@ -75,8 +74,8 @@ const ApprovedRequestList = () => {
       <UserTypeNavbar userType="procurement Officer" />
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/PO_BuHome/:id" },
-          { label: "Approved Requests", link: "/ApprovedRequestList" },
+          { label: "Home", link: `/PO_BuHome/${id}` },
+          { label: "Approved Requests", link: `/ApprovedRequestList/${id}` },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />

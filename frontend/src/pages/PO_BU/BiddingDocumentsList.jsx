@@ -31,7 +31,7 @@ export default function BiddingDocumentsList() {
   const [searchOption, setSearchOption] = useState("");
   const [currentPage, setCurrentPage] = useState(1); // State to manage current page
   const itemsPerPage = 5; // Number of items per page
-
+  const {id} =useParams();
   useEffect(() => {
     setLoading(true);
     axios
@@ -104,8 +104,8 @@ export default function BiddingDocumentsList() {
       <UserTypeNavbar userType="procurement Officer" />
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/PO_BuHome/:id" },
-          { label: "Bidding Documents", link: "/biddingDocuments" },
+          { label: "Home", link: `/PO_BuHome/${id}` },
+          { label: "Bidding Documents", link: `/biddingDocuments/${id}` },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />

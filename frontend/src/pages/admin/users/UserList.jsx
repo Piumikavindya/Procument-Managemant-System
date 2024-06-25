@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Breadcrumb from "../../../components/Breadcrumb.jsx";
 import {
   Card,
@@ -106,7 +106,7 @@ export default function UserList() {
   const [searchOption, setSearchOption] = useState("role");
   const [currentPage, setCurrentPage] = useState(1); // State to manage current page
   const itemsPerPage = 5; // Number of items per page
-
+const {id} =useParams();
   // Fetch users data from your API endpoint
   useEffect(() => {
     setLoading(true);
@@ -148,7 +148,7 @@ export default function UserList() {
       <UserTypeNavbar userType="admin" />
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/adminhome/:id" },
+          { label: "Home", link: `/adminhome/${id}` },
           { label: "User Details", link: "/userList" },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
@@ -184,7 +184,7 @@ export default function UserList() {
               >
                 <UserPlusIcon strokeWidth={2} className="h-5 w-5" />
                 <Link
-                  to={"/addUsers"}
+                  to={`/addUsers/${id}`}
                   class="text-white"
                   style={{ textDecoration: "none" }}
                 >
