@@ -1,7 +1,11 @@
+// AddUsers
+
 import React, { useState } from "react";
 import Breadcrumb from "../../../components/Breadcrumb";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AddUsers() {
   const [role, setRole] = useState("");
@@ -13,6 +17,9 @@ export default function AddUsers() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { id } = useParams();
+  const [validationErrors, setValidationErrors] = useState({}); // State to store validation errors
+
   const roles = [
     "admin",
     "procurement Officer",
@@ -21,10 +28,60 @@ export default function AddUsers() {
     "approver",
     "TECofficer",
   ];
-  const departments = ["DCEE", "DEIE", "MENA", "DMME", "IS", "NONE"];
+  const departments = ["DEIE", "DCEE", "DMME ", "DCE", "DMNNE", "DIS", "NONE"];
+
+  // Validate the form fields
+  const validateFields = () => {
+    let errors = {};
+    let isValid = true;
+
+    if (!role) {
+      errors.role = "Role is required";
+      isValid = false;
+    }
+    if (!department) {
+      errors.department = "Department is required";
+      isValid = false;
+    }
+    if (!firstname) {
+      errors.firstname = "First name is required";
+      isValid = false;
+    }
+    if (!lastname) {
+      errors.lastname = "Last name is required";
+      isValid = false;
+    }
+    if (!email) {
+      errors.email = "Email is required";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      errors.email = "Email address is invalid";
+      isValid = false;
+    }
+    if (!employeeNumber) {
+      errors.employeeNumber = "Employee number is required";
+      isValid = false;
+    }
+    if (!username) {
+      errors.username = "Username is required";
+      isValid = false;
+    }
+    if (!password) {
+      errors.password = "Password is required";
+      isValid = false;
+    }
+
+    setValidationErrors(errors);
+    return isValid;
+  };
 
   function handleSaveCreateUsers(e) {
     e.preventDefault();
+
+    // Validate fields before saving
+    if (!validateFields()) {
+      return;
+    }
 
     const newUser = {
       role,
@@ -39,9 +96,9 @@ export default function AddUsers() {
     setLoading(true);
     axios
       .post("http://localhost:8000/user/create", newUser)
-
       .then(() => {
-        alert("User added successfully”");
+        // Show success toast notification
+        toast.success("User details successfully added!");
         setLoading(false);
         setRole("");
         setEmail("");
@@ -66,7 +123,7 @@ export default function AddUsers() {
       <div className="space-y-12 ml-40 mr-40 mt-40">
         <Breadcrumb
           crumbs={[
-            { label: "Home", link: "/adminhome/:id" },
+            { label: "Home", link: `/adminhome/${id}` },
             { label: "User Details", link: "/userList" },
 
             { label: "Add User Details", link: "/addUsers" },
@@ -92,7 +149,9 @@ export default function AddUsers() {
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
                   autoComplete="country-name"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
+                    validationErrors.role ? "ring-red-500" : "ring-gray-300"
+                  } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 >
                   <option value="">Select your role</option>
                   {roles.map((type, index) => (
@@ -101,6 +160,11 @@ export default function AddUsers() {
                     </option>
                   ))}
                 </select>
+                {validationErrors.role && (
+                  <p className="text-red-500 text-sm">
+                    {validationErrors.role}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -118,7 +182,11 @@ export default function AddUsers() {
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
                   autoComplete="country-name"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
+                    validationErrors.department
+                      ? "ring-red-500"
+                      : "ring-gray-300"
+                  } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 >
                   <option value="">Select your department</option>
                   {departments.map((type, index) => (
@@ -127,6 +195,11 @@ export default function AddUsers() {
                     </option>
                   ))}
                 </select>
+                {validationErrors.department && (
+                  <p className="text-red-500 text-sm">
+                    {validationErrors.department}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -146,8 +219,17 @@ export default function AddUsers() {
                   onChange={(e) => setFirstName(e.target.value)}
                   autoComplete="given-name"
                   placeholder="Enter your first name"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
+                    validationErrors.firstname
+                      ? "ring-red-500"
+                      : "ring-gray-300"
+                  } placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
+                {validationErrors.firstname && (
+                  <p className="text-red-500 text-sm">
+                    {validationErrors.firstname}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -166,9 +248,15 @@ export default function AddUsers() {
                   value={lastname}
                   onChange={(e) => setLastName(e.target.value)}
                   autoComplete="family-name"
-                  placeholder="Enter the last name"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
+                    validationErrors.lastname ? "ring-red-500" : "ring-gray-300"
+                  } placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
+                {validationErrors.lastname && (
+                  <p className="text-red-500 text-sm">
+                    {validationErrors.lastname}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -188,71 +276,101 @@ export default function AddUsers() {
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="given-name"
                   placeholder="Enter the email address"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
+                    validationErrors.email ? "ring-red-500" : "ring-gray-300"
+                  } placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
+                {validationErrors.email && (
+                  <p className="text-red-500 text-sm">
+                    {validationErrors.email}
+                  </p>
+                )}
               </div>
             </div>
 
             <div className="sm:col-span-3">
               <label
-                htmlFor="last-name"
+                htmlFor="employee-number"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                <h6> Employee Number </h6>
+                <h6>Employee Number</h6>
               </label>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="last-name"
-                  id="last-name"
+                  name="employee-number"
+                  id="employee-number"
                   value={employeeNumber}
                   onChange={(e) => setEmpNo(e.target.value)}
-                  autoComplete="family-name"
-                  placeholder="Enter the employee name"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  autoComplete="employee-number"
+                  placeholder="Enter your employee number"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
+                    validationErrors.employeeNumber
+                      ? "ring-red-500"
+                      : "ring-gray-300"
+                  } placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
+                {validationErrors.employeeNumber && (
+                  <p className="text-red-500 text-sm">
+                    {validationErrors.employeeNumber}
+                  </p>
+                )}
               </div>
             </div>
 
             <div className="sm:col-span-3">
               <label
-                htmlFor="first-name"
-                className="block text-sm font-medium leading-6 text-gray-900 "
-              >
-                <h6> User Name</h6>
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="first-name"
-                  id="first-name"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  autoComplete="given-name"
-                  placeholder="Enter the user name"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="last-name"
+                htmlFor="username"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                <h6> Password</h6>
+                <h6>Username</h6>
               </label>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="last-name"
-                  id="last-name"
+                  name="username"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  autoComplete="username"
+                  placeholder="Enter your username"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
+                    validationErrors.username ? "ring-red-500" : "ring-gray-300"
+                  } placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                />
+                {validationErrors.username && (
+                  <p className="text-red-500 text-sm">
+                    {validationErrors.username}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="sm:col-span-3">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                <h6>Password</h6>
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="password"
+                  id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="family-name"
-                  placeholder="Enter the password"
-                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  autoComplete="new-password"
+                  placeholder="Enter your password"
+                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
+                    validationErrors.password ? "ring-red-500" : "ring-gray-300"
+                  } placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                 />
+                {validationErrors.password && (
+                  <p className="text-red-500 text-sm">
+                    {validationErrors.password}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -275,6 +393,8 @@ export default function AddUsers() {
           SAVE
         </button>
       </div>
+      {/* ToastContainer to display toast notifications */}
+      <ToastContainer className="mt-14" />
     </form>
   );
 }

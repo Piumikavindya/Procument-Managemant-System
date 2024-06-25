@@ -3,34 +3,47 @@ import axios from "axios";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import DefaultPagination from "../../components/DefaultPagination";
 import Breadcrumb from "../../components/Breadcrumb";
+import { useAuth } from "../../context/AuthContext";
 
-function ProgressTracker() {
-  const [requests, setRequests] = useState([]);
+function ProgressTracker({
+  isAuthenticated,
+  handleSignOut,
+  username,
+  userId,
+  department,
+}) {
+  const { loggedInUser } = useAuth(); // Use context to get logged-in user details
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    if (loggedInUser) {
+      setLoading(true);
+      axios
+        .get(
+          `http://localhost:8000/procReqest/viewRequestsByDepartment/${loggedInUser.id}`
+        )
+        .then((response) => {
+          const requestsWithNextPendingAction = response.data.map(
+            (request) => ({
+              ...request,
+              nextPendingAction: getNextPendingAction(request.status),
+            })
+          );
+          setRequests(requestsWithNextPendingAction);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching requests:", error);
+          setLoading(false);
+        });
+    }
+  }, [loggedInUser]);
+
   const [currentPage, setCurrentPage] = useState(1); // State to manage current page
   const itemsPerPage = 5; // Number of items per page
-
-  // Fetch requests data from your API endpoint
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get("http://localhost:8000/procReqest/viewRequests")
-      .then((response) => {
-        const requestsWithNextPendingAction = response.data.map((request) => ({
-          ...request,
-          nextPendingAction: getNextPendingAction(request.status),
-        }));
-        setRequests(requestsWithNextPendingAction);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching requests:", error);
-        setLoading(false);
-      });
-  }, []);
-
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
     setCurrentPage(1); // Reset current page when search query changes

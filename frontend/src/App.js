@@ -130,7 +130,7 @@ const App = () => {
         <Route path="/viewVendors" element={<ViewVendorDetails />} />
         <Route path="/loginpage" element={isAuthenticated ? <Navigate to="/" /> : <LoginPage />} />
 
-        <Route path="/adminhome/:userId" element={<AdminHome />} />
+        <Route path="/adminhome/:id" element={<AdminHome />} />
 
         <Route path="/addUsers" element={<AddUsers />} />
         <Route path="/editUsers/:id" element={<EditUserDetails />} />

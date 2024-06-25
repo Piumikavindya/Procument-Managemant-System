@@ -122,20 +122,20 @@ exports.viewAllRequests = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
+// View requests by department
 exports.viewRequestsByDepartment = async (req, res) => {
-  // const loggedInUserId = req.params.userId;
   const userId = req.params.id;
   try {
     // Fetch the logged-in user to get their department
-    const user = await User.findOne(userId);
+    const user = await User.findById(userId); // Corrected from findOne to findById
     if (!user) {
       return res.status(404).json({ status: "User not found" });
     }
 
     // Fetch requests where the department matches the logged-in user's department
     const requests = await procReqest.find({ department: user.department });
-console.log(requests);
+    console.log(requests);
+    
     // Send the filtered list of requests as a response
     res.json(requests);
   } catch (error) {
@@ -144,7 +144,6 @@ console.log(requests);
     res.status(500).json({ error: error.message });
   }
 };
-
 
 exports.viewRequestById = async (req, res) => {
   try {
