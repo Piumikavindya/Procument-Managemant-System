@@ -26,27 +26,32 @@ const DeleteProject = () => {
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { projectId } = useParams();
+    const { projectId ,id} = useParams();
     // const [projectId, setProjects] = useState([]);
     const { enqueueSnackbar } = useSnackbar();
 
-    const handleDeleteClick = async () => {
-        try {
-          await axios.delete(`http://localhost:8000/procProject/deleteProject/${projectId}`);
+    const handleDeleteClick = () => {
+      setLoading(true);
+      axios
+        .delete(`http://localhost:8000/procProject/deleteProject/${id}`)
+        .then(() => {
           setLoading(false);
-          enqueueSnackbar('project deleted', { variant: 'success' });
-          navigate('/projectList');
-        } catch (error) {
-          console.error("Error deleting project:", error);
-        }
-      };
+          enqueueSnackbar("Supplier deleted", { variant: "success" });
+          navigate(`/projectList/${id}`);
+        })
+        .catch((error) => {
+          setLoading(false);
+          enqueueSnackbar("Error deleting supplier", { variant: "error" });
+          console.log(error);
+        });
+    };
       const handleOutsideClick = () => {
         setOpen(false);
-        navigate("/projectList");
+        navigate(`/projectList/${id}`);
       };
       const handleClose = () => {
         setOpen(false);
-        navigate("/projectList");
+        navigate(`/projectList/${id}`);
       };
   const handleOpen = () => setOpen(!open);
   return (

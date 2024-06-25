@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   EyeIcon,
   MagnifyingGlassIcon,
@@ -37,7 +37,7 @@ const TABLE_HEAD = [
   "ContactNumber",
   "ContactEmail",
   "TypeofBusiness",
-  "Operations",
+ 
 ];
 
 const TABLE_ROWS = [
@@ -127,7 +127,7 @@ export default function VendorsList() {
   const [searchOption, setSearchOption] = useState("");
   const [currentPage, setCurrentPage] = useState(1); // State to manage current page
   const itemsPerPage = 5; // Number of items per page
-
+ const {id} = useParams();
   // Fetch users data from your API endpoint
   useEffect(() => {
     console.log("Suppliers:", vendors);
@@ -171,8 +171,8 @@ export default function VendorsList() {
       <UserTypeNavbar userType="procurement Officer" />
       <Breadcrumb
         crumbs={[
-          { label: "Home", link: "/PO_BuHome/:id" },
-          { label: "Vendor Details", link: "/VendorsList" },
+          { label: "Home", link: `/PO_BuHome/${id}` },
+          { label: "Vendor Details", link: `/VendorsList` },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />
@@ -395,16 +395,7 @@ export default function VendorsList() {
                       </div>
                     </td>
 
-                    <td className={classes}>
-                      <Link to={`/previewVendorDetails/${supplyer._id}`}>
-                        <Tooltip content="View Vendor">
-                          <IconButton variant="text">
-                            <EyeIcon className="h-6 w-6 text-blue-500" />
-                          </IconButton>
-                        </Tooltip>
-                      </Link>
-
-                    </td>
+                  
                   </tr>
                 );
               })}

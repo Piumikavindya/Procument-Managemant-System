@@ -28,7 +28,7 @@ router.get("/generateProjectId", generateProjectId, (req, res) => {
 
   router.get('/viewProjects/' ,viewAllProjects);
   router.get('/viewProject/:projectId' ,viewProjectById);
-  router.delete('/deleteProject/:projectId',deleteProject);
+  router.delete('/deleteProject/:id',deleteProject);
   // router.post('/createPdf',createPdf) // to generate pdf 
 
   router.get('/downloadBidPdf/:projectId/:biddingType', downloadBidPdf); 

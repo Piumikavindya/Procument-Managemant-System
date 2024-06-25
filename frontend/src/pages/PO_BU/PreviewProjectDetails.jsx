@@ -13,10 +13,10 @@ const PreviewProjectDetails = () => {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-
+ const {id} =useParams();
   const handleOutsideClick = () => {
     setOpen(false);
-    navigate("/projectList");
+    navigate(`/projectList/${id}`);
   };
 
   const [project, setProject] = useState({});
@@ -39,7 +39,7 @@ const PreviewProjectDetails = () => {
 
   const handleClose = () => {
     setOpen(false);
-    navigate("/projectList");
+    navigate(`/projectList/${id}`);
   };
 
   return (

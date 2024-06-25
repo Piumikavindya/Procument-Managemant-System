@@ -228,7 +228,7 @@ const App = () => {
           element={<DeleteProcItem />}
         />
 
-        <Route path="/ApproverHome/:id" element={<ApproverHome />} />
+        <Route path="/approver/:id" element={<ApproverHome />} />
         <Route path="/ViewForApproval/:id" element={<ApprovalList />} />
         <Route path="/DenyApproval/:id" element={<DenyRequest />} />
         <Route path="/ApprovalForm/:id" element={<EditApproval />} />
@@ -288,10 +288,10 @@ const App = () => {
         />
         <Route path="/projectList/:id" element={<ProjectList />} />
         <Route
-          path="/PreviewProjectDetails/:projectId"
+          path="/PreviewProjectDetails/:id/:projectId"
           element={<PreviewProjectDetails />}
         />
-        <Route path="/deleteProject/:projectId" element={<DeleteProject />} />
+        <Route path="/deleteProject/:id" element={<DeleteProject />} />
         <Route
           path="/biddingDocuments/:id"
           element={<BiddingDocumentsList />}

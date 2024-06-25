@@ -3,34 +3,47 @@ import axios from "axios";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import DefaultPagination from "../../components/DefaultPagination";
 import Breadcrumb from "../../components/Breadcrumb";
+import { useAuth } from "../../context/AuthContext";
 
-function ProgressTracker() {
-  const [requests, setRequests] = useState([]);
+function ProgressTracker({
+  isAuthenticated,
+  handleSignOut,
+  username,
+  userId,
+  department,
+}) {
+  const { loggedInUser } = useAuth(); // Use context to get logged-in user details
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    if (loggedInUser) {
+      setLoading(true);
+      axios
+        .get(
+          `http://localhost:8000/procReqest/viewRequestsByDepartment/${loggedInUser.id}`
+        )
+        .then((response) => {
+          const requestsWithNextPendingAction = response.data.map(
+            (request) => ({
+              ...request,
+              nextPendingAction: getNextPendingAction(request.status),
+            })
+          );
+          setRequests(requestsWithNextPendingAction);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching requests:", error);
+          setLoading(false);
+        });
+    }
+  }, [loggedInUser]);
+
   const [currentPage, setCurrentPage] = useState(1); // State to manage current page
   const itemsPerPage = 5; // Number of items per page
-
-  // Fetch requests data from your API endpoint
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get("http://localhost:8000/procReqest/viewRequests")
-      .then((response) => {
-        const requestsWithNextPendingAction = response.data.map((request) => ({
-          ...request,
-          nextPendingAction: getNextPendingAction(request.status),
-        }));
-        setRequests(requestsWithNextPendingAction);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching requests:", error);
-        setLoading(false);
-      });
-  }, []);
-
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
     setCurrentPage(1); // Reset current page when search query changes
@@ -67,10 +80,11 @@ function ProgressTracker() {
       case "Pending":
         return "Rejected";
       case "Approved":
-        return "Bid Opening Closing"; // Example next pending action
-      case "Bid Opening Closing":
-        return "Another Action"; // Example next pending action
-      // Add cases for other statuses if needed
+        return "Bid Opening";
+      case "Bid Opening":
+        return "Invite Bids";
+      case "Invite Bids":
+        return "TEC Evaluation";
       case "Rejected":
         return "No Pending Action";
       default:
@@ -157,16 +171,20 @@ function ProgressTracker() {
                             <span
                               className={`text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg ${
                                 request.status === "Pending"
-                                  ? "text-purple-500 bg-purple-200"
+                                  ? "text-purple-500 bg-purple-300"
                                   : request.status === "Approved"
-                                  ? "text-green-500 bg-green-200"
-                                  : request.status === "Bid Opening Closing"
+                                  ? "text-green-500 bg-green-300"
+                                  : request.status === "Bid Opening"
                                   ? "text-yellow-500 bg-yellow-100"
-                                  : request.status === ""
-                                  ? "text-blue-500 bg-blue-200"
+                                  : request.status === "Invite Bids"
+                                  ? "text-blue-500 bg-blue-300"
+                                  : request.status === "TEC Evaluation"
+                                  ? "text-orange-400 bg-orange-200"
                                   : request.status === "Rejected"
                                   ? "text-red-500 bg-red-300"
-                                  : "text-primary bg-primary-light" // default style if action doesn't match
+                                  : request.status === "No Pending Action"
+                                  ? "text-gray-500 bg-black"
+                                  : "text-primary bg-primary-light"
                               }`}
                             >
                               {request.status}
@@ -180,15 +198,17 @@ function ProgressTracker() {
                           <td className="pr-0 text-start">
                             <span
                               className={`text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none rounded-lg ${
-                                request.nextPendingAction === "Request Sent"
-                                  ? "text-blue-500 bg-blue-200"
+                                request.nextPendingAction === "Pending"
+                                  ? "text-purple-500 bg-purple-300"
                                   : request.nextPendingAction === "Approval"
                                   ? "text-green-500 bg-green-200"
-                                  : request.nextPendingAction ===
-                                    "Bid Opening Closing"
+                                  : request.nextPendingAction === "Bid Opening"
                                   ? "text-yellow-500 bg-yellow-100"
-                                  : request.nextPendingAction === "Approval"
-                                  ? "text-purple-500 bg-purple-200"
+                                  : request.nextPendingAction === "Invite Bids"
+                                  ? "text-blue-500 bg-blue-300"
+                                  : request.nextPendingAction ===
+                                    "TEC Evaluation"
+                                  ? "text-orange-400 bg-orange-200"
                                   : request.nextPendingAction === "Rejected"
                                   ? "text-red-500 bg-red-300"
                                   : "text-primary bg-primary-light" // default style if action doesn't match

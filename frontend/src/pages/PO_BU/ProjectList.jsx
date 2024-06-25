@@ -213,7 +213,7 @@ export default function ProjectList() {
 
                       <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                         <div className="icon-link flex justify-center gap-x-4">
-                          <Link to={`/PreviewProjectDetails/${project.projectId}`}>
+                          <Link to={`/PreviewProjectDetails/${id}/${project.projectId}`}>
                             <Tooltip content="Preview the Project">
                               <IconButton variant="text">
                                 <EyeIcon className="h-6 w-6 text-green-500" />
@@ -230,7 +230,7 @@ export default function ProjectList() {
                               </IconButton>
                             </Tooltip>
                           </button>
-                          <Link to={`/deleteProject/${project.projectId}`}>
+                          <Link to={`/deleteProject/${id}/${project.projectId}`}>
                         <Tooltip content="Delete Project">
                           <IconButton variant="text">
                             <TrashIcon className="h-6 w-6  text-red-500" />

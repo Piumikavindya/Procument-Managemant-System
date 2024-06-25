@@ -46,7 +46,7 @@ const {id} =useParams();
   ];
 
   const DepartmentOptions = [
-    { link: "Purchase Requisition", path: `/reqform/${id}` },
+    { link: "Purchase Requisition", path: "/reqform" },
     { link: "Requisition Tracker", path: "/ProgressTrack" },
     { link: "Request List", path: "/ViewForRequest" },
   ];
