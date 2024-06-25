@@ -3,9 +3,10 @@
 import React, { useState } from "react";
 import Breadcrumb from "../../../components/Breadcrumb";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link , useParams} from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function AddUsers() {
   const [role, setRole] = useState("");
@@ -17,7 +18,7 @@ export default function AddUsers() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const { id } = useParams();
   const [validationErrors, setValidationErrors] = useState({}); // State to store validation errors
 
   const roles = [
@@ -28,7 +29,7 @@ export default function AddUsers() {
     "approver",
     "TECofficer",
   ];
-  const departments = ["DCEE", "DEIE", "MENA", "MME", "IS", "NONE"];
+  const departments = ["DEIE", "DCEE", "DMME ", "DCE", "DMNNE", "DIS", "NONE"];
 
   // Validate the form fields
   const validateFields = () => {
@@ -75,15 +76,15 @@ export default function AddUsers() {
     return isValid;
   };
 
-  // Handle form submission
-  const handleSaveCreateUsers = (e) => {
+  
+  function handleSaveCreateUsers(e) {
     e.preventDefault();
 
-    // Validate fields before saving
-    if (!validateFields()) {
-      return;
-    }
-
+   // Validate fields before saving
+   if (!validateFields()) {
+    return;
+  }
+   
     const newUser = {
       role,
       email,
@@ -99,7 +100,7 @@ export default function AddUsers() {
       .post("http://localhost:8000/user/create", newUser)
       .then(() => {
          // Show success toast notification
-         toast.success("User details successfully added!");
+         toast.success("User details successfully added!")     
         setLoading(false);
         setRole("");
         setEmail("");
@@ -114,6 +115,9 @@ export default function AddUsers() {
         console.error("Error:", error);
       });
     console.log(newUser);
+  }
+  const selected = (crumb) => {
+    console.log(crumb);
   };
 
   return (

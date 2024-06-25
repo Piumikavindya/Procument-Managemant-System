@@ -30,6 +30,7 @@ exports.createPdf = async (req, res) => {
     doc.font("Helvetica");
     // Load university logo
     const logoPath = path.join(__dirname,'..',"images",'logo.jpg')
+    
     doc.image(logoPath, 10, 10, { width: 60 });
 
     // University header text
