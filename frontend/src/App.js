@@ -11,7 +11,7 @@ import ReqForm from "./pages/department/ReqForm.jsx";
 import UploadGuidance from "./pages/admin/guidance/UploadGuidance.jsx";
 import DeleteGuidance from "./pages/admin/guidance/DeleteGuidance.jsx";
 import { useNavigate } from "react-router-dom";
-import viewPdf from "./pages/admin/guidance/viewPdf.jsx";
+import viewPdf from "./pages/admin/guidance/ViewPdf.jsx";
 import DepartmentHome from "./pages/department/DepartmentHome.jsx";
 import PreviewItem from "./pages/admin/items/PreviewItem.jsx";
 import DeleteItem from "./pages/admin/items/DeleteItem.jsx";
