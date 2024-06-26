@@ -6,6 +6,7 @@ import { AddItemCard } from "./AddItemCard ";
 import { MdOutlineDelete } from "react-icons/md";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Tooltip } from "@material-tailwind/react";
 import { Button } from "flowbite-react";
@@ -82,29 +83,6 @@ const ReqForm = ({ forms }) => {
       console.error("Error fetching budget data:", error);
     }
   };
-
-  // useEffect(() => {
-  //   if (loggedInUser) {
-  //     setLoading(true);
-  //     axios
-  //       .get(
-  //         `http://localhost:8000/budget/getBudgetByDepartment/${loggedInUser.id}`
-  //       )
-  //       .then((response) => {
-  //         const { budgetAllocation, usedAmount, availableBalance } =
-  //           response.data;
-  //         setBudgetAllocation(budgetAllocation);
-  //         setUsedAmount(usedAmount);
-  //         setBalanceAvailable(availableBalance);
-  //         setLoading(false);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching requests:", error);
-  //         setLoading(false);
-  //       });
-  //   }
-  // }, [loggedInUser]);
-
   // Function to handle the generation of request ID
   const handleGenerateRequestId = async () => {
     try {

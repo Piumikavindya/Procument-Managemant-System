@@ -24,10 +24,9 @@ const SendRequest = () => {
     const sendPDF = async () => {
       try {
         await axios.post(
-          `http://localhost:8000/sendPdf/${requestId}/${sendTo}`,
-      
+          `http://localhost:8000/sendPdf/${requestId}/${sendTo}`
         );
-        alert("PDF sent successfully");
+
         navigate("/ViewForRequest");
       } catch (error) {
         console.error("Error:", error);
@@ -40,7 +39,6 @@ const SendRequest = () => {
   return (
     <div>
       <RequestList />
-     
     </div>
   );
 };

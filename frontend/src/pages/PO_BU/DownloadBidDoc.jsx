@@ -16,11 +16,9 @@ const DownloadBidDoc = () => {
   };
 
   useEffect(() => {
-
-    console.log("projectId:", projectId);  // Add console log
-    console.log("biddingType:", biddingType);  // Add console log
+    console.log("projectId:", projectId); // Add console log
+    console.log("biddingType:", biddingType); // Add console log
     const fetchPDF = async () => {
-     
       try {
         // Fetching the generated PDF with projectId and biddingType
         const response = await axios.get(
@@ -32,9 +30,9 @@ const DownloadBidDoc = () => {
 
         // Determine the filename based on biddingType
         let fileName;
-        if (biddingType === 'Direct Purchasing') {
+        if (biddingType === "Direct Purchasing") {
           fileName = `Direct_Purchasing_${projectId}.pdf`;
-        } else if (biddingType === 'Shopping Method') {
+        } else if (biddingType === "Shopping Method") {
           fileName = `National_Shopping_${projectId}.pdf`;
         } else {
           fileName = `Bidding_Document_${projectId}.pdf`;
@@ -47,7 +45,6 @@ const DownloadBidDoc = () => {
         navigate("/biddingDocuments");
       } catch (error) {
         console.error("Error:", error);
-        alert("An error occurred. Please try again.");
       }
     };
 
