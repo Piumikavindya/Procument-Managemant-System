@@ -59,7 +59,7 @@ async function fetchDataFromDatabase(requestIds) {
       requestId: { $in: requestIds },
     });
 
-    // Update the status of the fetched requests to "Bid Opening"
+    // Update the status of the fetched requests to "Buid Opening"
     await procRequest.updateMany(
       { requestId: { $in: requestIds }, status: "Approved" },
       { $set: { status: "Bid Opening" } }

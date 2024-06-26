@@ -850,11 +850,14 @@ exports.sendPdf = async (req, res) => {
         recipients = "piyumikavindyappk@gmail.com";
         break;
       case "registrar":
-        recipients = "imashanaw1999@gmail.com";
+        recipients = "piyumikavindyappk@gmail.com";
         break;
       case "viceChancellor":
         recipients = "usertestoneapp@gmail.com";
         break;
+        case "bursar":
+          recipients = "nawodi0128@gmail.com";
+          break;
       default:
         recipients = ""; // Provide a default email or handle this case accordingly
         break;
