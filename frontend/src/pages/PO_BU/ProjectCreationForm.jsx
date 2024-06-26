@@ -168,14 +168,14 @@ export default function ProjectCreationForm({ forms }) {
       );
       const updatedProject = response.data.updatedProject;
       console.log("Project created:", response.data);
-      alert("Project created successfully");
+
       setLoading(false);
 
       setFormData("");
       clearFormInputs();
       localStorage.removeItem("formData");
       console.log("Request submitted successfully", response.data);
-      
+
       navigateToViewProject();
     } catch (error) {
       console.error("Error creating project:", error);
@@ -554,28 +554,27 @@ export default function ProjectCreationForm({ forms }) {
           </button>
         </Link>
         {biddingType === "Shopping Method" ? (
-
-        <button
-          type="submit"
-          className="rounded-md bg-blue-600 h-14 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          onClick={(e) => {
-            handleFormSubmit(e);
-            handleGenerateShoppingMethodPdf();
-          }}
-        >
-          CREATE PROJECT
-        </button>
-         ) : (
           <button
-          type="submit"
-          className="rounded-md bg-blue-600 h-14 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          onClick={(e) => {
-            handleFormSubmit(e);
-            handleGenerateDirectPurchasingPdf();
-          }}
-        >
-          CREATE PROJECT
-        </button>
+            type="submit"
+            className="rounded-md bg-blue-600 h-14 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={(e) => {
+              handleFormSubmit(e);
+              handleGenerateShoppingMethodPdf();
+            }}
+          >
+            CREATE PROJECT
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="rounded-md bg-blue-600 h-14 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={(e) => {
+              handleFormSubmit(e);
+              handleGenerateDirectPurchasingPdf();
+            }}
+          >
+            CREATE PROJECT
+          </button>
         )}
       </div>
     </form>

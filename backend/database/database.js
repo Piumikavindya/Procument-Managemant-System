@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/procument_app') 
+  const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/procument_app'
+
+mongoose.connect(dbUrl) 
   .then(() => {
     console.log('DB is connected!');
   })
