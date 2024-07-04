@@ -61,33 +61,19 @@ const AddBudgetCard = ({ onSave, onCancel }) => {
           <input
             type="number"
             value={budgetAllocation}
-            onChange={(e) => {
-              const value = e.target.value;
-              if (value >= 0) {
-                setBudgetAllocation(value);
-              }
-            }}
+            onChange={(e) => setBudgetAllocation(e.target.value)}
             className="w-full px-3 py-2 border rounded"
-            min="0"
           />
         </div>
-
         <div className="mb-4">
           <label className="block text-gray-700">Available Balance</label>
           <input
             type="number"
             value={availableBalance}
-            onChange={(e) => {
-              const value = e.target.value;
-              if (value >= 0) {
-                setAvailableBalance(value);
-              }
-            }}
+            onChange={(e) => setAvailableBalance(e.target.value)}
             className="w-full px-3 py-2 border rounded"
-            min="0" // This ensures that the input field won't allow negative values to be typed
           />
         </div>
-
         <div className="mb-4">
           <label className="block text-gray-700">Used Amount</label>
           <input

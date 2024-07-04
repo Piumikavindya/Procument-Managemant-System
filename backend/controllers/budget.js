@@ -1,7 +1,7 @@
 
 const budget = require('../Models/budget')
 const Budget = require('../Models/budget');
-
+const User = require("../Models/user");
 
 
 
@@ -54,6 +54,30 @@ exports.previewBudget = async (req,res) =>{
     }
  
  };
+
+ exports.getBudgetByDepartment = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    // Fetch the logged-in user to get their department
+    const user = await User.findById(userId); // Corrected from findOne to findById
+    if (!user) {
+      return res.status(404).json({ status: "User not found" });
+    }
+
+    const budgets = await Budget.find({ department: user.department });
+    if (!budgets || budgets.length === 0) {
+      return res.status(404).json({ status: "No budgets found for this department" });
+    }
+
+    const { budgetAllocation, usedAmount, availableBalance } = budgets[0]; // Assuming one budget per department
+
+    res.status(200).json({ budgetAllocation, usedAmount, availableBalance });
+  } catch (error) {
+    console.error("Error fetching budget:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
 
 // Update budget details
 exports.updateBudget = async (req, res) => {

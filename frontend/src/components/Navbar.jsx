@@ -8,7 +8,14 @@ import { FaXmark, FaBars } from "react-icons/fa6";
 import { PowerIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { Button, Typography } from "@material-tailwind/react";
 
-const Navbar = ({ isAuthenticated, handleSignOut, username,userId ,loggedInUser  }) => {
+const Navbar = ({
+  isAuthenticated,
+  handleSignOut,
+  handleSignIn,
+  username,
+  userId,
+  loggedInUser,
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const navigate = useNavigate(); // Initialize navigate
@@ -32,9 +39,6 @@ const Navbar = ({ isAuthenticated, handleSignOut, username,userId ,loggedInUser 
 
     getUser();
   }, [userId]);
-
-
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -107,62 +111,65 @@ const Navbar = ({ isAuthenticated, handleSignOut, username,userId ,loggedInUser 
             ))}
           </div>
           <div className="lg:flex items-center hidden space-x-4">
-          {isAuthenticated ? (
-            <div className="flex items-center">
-              <Button
-                variant="text"
-                color="blue-gray"
-                className="flex items-center gap-1 rounded-full py-2 pr-2 pl-2 lg:ml-auto"
-                title="Click here to View Profile"
+            {isAuthenticated ? (
+              <div className="flex items-center">
+                <Button
+                  variant="text"
+                  color="blue-gray"
+                  className="flex items-center gap-1 rounded-full py-2 pr-2 pl-2 lg:ml-auto"
+                  title="Click here to View Profile"
                 >
-                <Link
-                  to={`/profile`}
+                  <Link
+                    to={`/Profile/${userId}`}
+                    className="flex items-center gap-2"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <UserCircleIcon className="h-10 w-10 text-blue-500 hover:bg-blue-500/10 focus:bg-blue-500/10 active:bg-blue-500/10" />
+                    <Typography
+                      as="span"
+                      variant="small"
+                      className="font-normal"
+                    >
+                      {username}
+                    </Typography>
+                  </Link>
+                </Button>
+                <button
+                  onClick={() => {
+                    handleSignOut();
+                    navigate("/");
+                  }}
                   className="flex items-center gap-2"
                   style={{ textDecoration: "none" }}
+                  title="Sign Out"
                 >
-                  <UserCircleIcon className="h-10 w-10 text-blue-500 hover:bg-blue-500/10 focus:bg-blue-500/10 active:bg-blue-500/10" />
-                  <Typography as="span" variant="small" className="font-normal">
-                {username}
-              </Typography>
-                </Link>
-              </Button>
-              <button
-                onClick={() => {
-                  handleSignOut();
-                  navigate("/");
-                }}
-                className="flex items-center gap-2"
-                style={{ textDecoration: "none" }}
-                title="Sign Out"
+                  <PowerIcon className="h-6 w-6 text-red-500 hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10" />
+                </button>
+              </div>
+            ) : (
+              <Link
+                className="bg-brandPrimary text-white py-2 px-4 no-underline transition-all duration-300 rounded hover:bg-neutralDGrey items-center mr-4 inline-block"
+                to="/loginpage"
               >
-                <PowerIcon className="h-6 w-6 text-red-500 hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10" />
-              </button>
-            </div>
-          ) : (
-            <Link
-              className="bg-brandPrimary text-white py-2 px-4 no-underline transition-all duration-300 rounded hover:bg-neutralDGrey items-center mr-4 inline-block"
-              to="/loginpage"
-            >
-              Sign In
-              <svg
-                width="9"
-                height="6"
-                viewBox="0 0 9 6"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="inline-block ml-3"
-              >
-                <path
-                  d="M6.52435 5.4707L8.24346 3.7516C8.44734 3.54772 8.44734 3.21716 8.24346 3.01328L6.52435 1.29418M8.09055 3.38244L0.433594 3.38244"
-                  stroke="white"
-                  strokeWidth="1.3"
-                />
-              </svg>
-            </Link>
-          )}
-        </div>
-        
-     
+                Sign In
+                <svg
+                  width="9"
+                  height="6"
+                  viewBox="0 0 9 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="inline-block ml-3"
+                >
+                  <path
+                    d="M6.52435 5.4707L8.24346 3.7516C8.44734 3.54772 8.44734 3.21716 8.24346 3.01328L6.52435 1.29418M8.09055 3.38244L0.433594 3.38244"
+                    stroke="white"
+                    strokeWidth="1.3"
+                  />
+                </svg>
+              </Link>
+            )}
+          </div>
+
           <div className="md:hidden">
             <button
               onClick={toggleMenu}

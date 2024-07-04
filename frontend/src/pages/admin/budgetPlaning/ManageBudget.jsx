@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   EyeIcon,
   MagnifyingGlassIcon,
@@ -40,7 +40,7 @@ export default function ManageBudget() {
   const [currentPage, setCurrentPage] = useState(1);
   const [showAddBudgetCard, setShowAddBudgetCard] = useState(false);
   const itemsPerPage = 5;
-  const {id} = useParams();
+
   const filteredBudgets = budgets.filter(
     (budget) =>
       budget.department &&
@@ -93,8 +93,8 @@ export default function ManageBudget() {
       <UserTypeNavbar userType="admin" />
       <Breadcrumb
         crumbs={[
-            { label: "Home", link: `/adminhome/${id}` },
-          { label: "Budget Details", link: `/budgetDetails/${id}` },
+          { label: "Home", link: "/adminhome/:id" },
+          { label: "Budget Details", link: "/budgetDetails" },
         ]}
         selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
       />

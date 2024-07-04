@@ -36,13 +36,13 @@ const {id} =useParams();
 
   //NAVITEMS ARRAY
   const AdminOptions = [
-    { link: "Manage Users", path: `/userList/${id}` },
-    { link: "Manage Vendors", path: `/allvendors/${id}` },
-    { link: "Items", path: `/AllItem/${id}` },
-    { link: "Manage Guidance", path: `/ManageGuidance/${id}` },
-    { link: "Manage Notices", path: `/ManageNotice/${id}` },
-    { link: "Budget & Plan", path: `/ManageBudget/${id}` },
-    { link: "Manage Year Plan", path: `/EventPlanner/${id}` },
+    { link: "Manage Users", path: "/userList" },
+    { link: "Manage Vendors", path: "/allvendors" },
+    { link: "Items", path: "/AllItem" },
+    { link: "Manage Guidance", path: "/ManageGuidance" },
+    { link: "Manage Notices", path: "/ManageNotice" },
+    { link: "Budget & Plan", path: "/ManageBudget" },
+    { link: "Manage Year Plan", path: "/EventPlanner" },
   ];
 
   const DepartmentOptions = [
@@ -52,13 +52,15 @@ const {id} =useParams();
   ];
 
   const procOfficerOptions = [
-    { link: "Created Projects", path: `/projectList/${id}` },
-    { link: "Create New Project", path: `/ProjectCreationForm/${id}` },
-    { link: "Approved Purchase Requisition List ", path: `/ApprovedRequestList/${id}`  },
-    { link: "Bidding Documents", path: `/biddingDocuments/${id}` },
-    { link: "Vendors List", path: `/VendorsList/${id}` },
+    { link: "Created Projects", path: "/projectList" },
+    { link: "Create New Project", path: "/ProjectCreationForm" },
+    {
+      link: "Approved Purchase Requisition List ",
+      path: "/ApprovedRequestList",
+    },
+    { link: "Bidding Documents", path: "/biddingDocuments" },
+    { link: "Vendors List", path: "/VendorsList" },
     { link: "Invites Bids", path: "/InvitesBids" },
-    
   ];
 
   const TECofficerOptions = [
@@ -109,7 +111,7 @@ const {id} =useParams();
               DepartmentOptions.map(({ link, path }) => (
                 <Link
                   to={path}
-                 offset={-100}
+                  offset={-100}
                   key={path}
                   className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >
@@ -131,7 +133,7 @@ const {id} =useParams();
               procOfficerOptions.map(({ link, path }) => (
                 <Link
                   to={path}
-                   offset={-100}
+                  offset={-100}
                   key={path}
                   className="block no-underline text-white hover:font-bold hover:font-medium cursor-pointer"
                 >

@@ -1,31 +1,78 @@
 // RequestList.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdSimCardDownload, MdPreview } from "react-icons/md";
 import { AiOutlineSend } from "react-icons/ai";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import Breadcrumb from "../../components/Breadcrumb";
-
-const RequestList = () => {
+import { useSnackbar } from "notistack";
+import { useAuth } from "../../context/AuthContext";
+const RequestList = ({
+  isAuthenticated,
+  handleSignOut,
+  username,
+  userId,
+  department, // Remove if not necessary, already using loggedInUser
+}) => {
+  const { loggedInUser } = useAuth(); // Use context to get logged-in user details
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
   const [requests, setRequests] = useState([]);
   const { id } = useParams();
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get("http://localhost:8000/procReqest/viewRequests")
-      .then((response) => {
-        setRequests(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching requests:", error);
-        setLoading(false);
-      });
-  }, []);
+    if (loggedInUser) {
+      setLoading(true);
+      axios
+        .get(
+          `http://localhost:8000/procReqest/viewRequestsByDepartment/${loggedInUser.id}`
+        )
+        .then((response) => {
+          setRequests(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching requests:", error);
+          setLoading(false);
+        });
+    }
+  }, [loggedInUser]);
+
+  // useEffect(() => {
+  //   const fetchRequests = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `http://localhost:8000/procReqest/viewRequestsByDepartment/${department}/${userId}`
+  //       );
+  //       setRequests(response.data);
+  //     } catch (error) {
+  //       console.log("Error fetching requests:", error);
+  //     }
+  //   };
+  //   fetchRequests();
+  // }, [department, userId]);
+
+  // const { id } = useParams();
+  // const { enqueueSnackbar } = useSnackbar();
+  // const [user, setUser] = useState({});
+
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `http://localhost:8000/user/preview-user/${userId}`
+  //       );
+  //       console.log("User Data:", response.data);
+  //       setUser(response.data);
+  //     } catch (error) {
+  //       console.log("Error fetching user:", error);
+  //     }
+  //   };
+
+  //   getUser();
+  // }, [userId]);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);

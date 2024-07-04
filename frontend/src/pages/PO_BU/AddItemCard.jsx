@@ -20,14 +20,13 @@ export const AddReqCard = ({ handleViewRequest }) => {
   const { projectId } = useParams();
 
   // const [projectId, setProjectId] = useState("");
-
   useEffect(() => {
     setLoading(true);
     axios
       .get("http://localhost:8000/procReqest/viewRequests")
       .then((response) => {
         const approvedRequests = response.data.filter(
-          (request) => request.status === "Approved"
+          (request) => request.status === "Approved" || request.status === "Bid Opening"
         );
         setRequests(approvedRequests);
         setLoading(false);
@@ -71,15 +70,24 @@ export const AddReqCard = ({ handleViewRequest }) => {
         `http://localhost:8000/procProject/addRequestsData/${projectId}`,
         {
           requestIds: selectedRequests,
-          items: [], // Include an empty items array
         }
       );
-
-      const newRequestData = response.data.newRequest;
-      setRequests([]);
+  
+      const updatedRequests = response.data.newRequest;
+  
+      // Update the requests state to reflect the status change
+      setRequests((prevRequests) =>
+        prevRequests.map((request) =>
+          selectedRequests.includes(request.requestId)
+            ? { ...request, status: "Bid Opening" }
+            : request
+        )
+      );
+  
+      // Clear selected requests after adding them to the project
+      setSelectedRequests([]);
       navigate("/ProjectCreationForm");
-      console.log("Selected requests added successfully", newRequestData);
-      // handleViewRequest();
+      console.log("Selected requests added successfully", updatedRequests);
     } catch (error) {
       console.error("Error adding requests:", error);
     }

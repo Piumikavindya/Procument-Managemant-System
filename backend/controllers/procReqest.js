@@ -1,6 +1,7 @@
 const procReqest = require("../Models/procReqest");
-const user = require("../Models/user");
+const User = require("../Models/user");
 const path = require("path");
+const Budget = require('../Models/budget');
 // const fs = require('fs').promises;
 
 const { PDFDocument, rgb } = require("pdf-lib");
@@ -117,6 +118,28 @@ exports.viewAllRequests = async (req, res) => {
     res.json(allRequests);
   } catch (error) {
     console.error("Error fetching all requests:", error);
+    // Handle errors and send an appropriate response
+    res.status(500).json({ error: error.message });
+  }
+};
+// View requests by department
+exports.viewRequestsByDepartment = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    // Fetch the logged-in user to get their department
+    const user = await User.findById(userId); // Corrected from findOne to findById
+    if (!user) {
+      return res.status(404).json({ status: "User not found" });
+    }
+
+    // Fetch requests where the department matches the logged-in user's department
+    const requests = await procReqest.find({ department: user.department });
+    console.log(requests);
+    
+    // Send the filtered list of requests as a response
+    res.json(requests);
+  } catch (error) {
+    console.error("Error fetching requests by department:", error);
     // Handle errors and send an appropriate response
     res.status(500).json({ error: error.message });
   }

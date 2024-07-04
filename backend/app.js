@@ -24,8 +24,8 @@ const PORT = process.env.PORT || 8000;
 const env = require('dotenv')
 const pdfRoute = require('./routes/pdfRoutes');
 const bidsRouter = require('./routes/SendVendorsMail');
-const paperAdvertisementRoute = require('./routes/paperAdvertisement');
 const budgetRouter = require('./routes/budget');
+
 const path = require('path')
 require('dotenv').config();
 env.config()
@@ -68,7 +68,6 @@ app.use(pdfRoute)
 app.use('/approvalReqest',approvalRoute);
 app.use('/send',sendMailRoute)
 app.use('/bids', bidsRouter);
-app.use('/paperAdd',paperAdvertisementRoute);
 app.use('/budget', budgetRouter);
 
 app.listen(PORT, () => {

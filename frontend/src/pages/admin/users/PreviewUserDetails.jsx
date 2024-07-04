@@ -129,7 +129,7 @@ const PreviewUserDetails = () => {
                           <Button
                             variant="outlined"
                             className="rounded-md bg-red-600 h-12 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline "
-                            onClick={handleClose}
+                            onClick={() => setOpen(false)}
                             ref={cancelButtonRef}
                           >
                             CLOSE

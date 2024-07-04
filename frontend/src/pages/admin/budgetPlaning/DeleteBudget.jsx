@@ -31,7 +31,7 @@ const DeleteBudget = () => {
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Budget deleted", { variant: "success" });
-        navigate(`/ManageBudget/${id}`);
+        navigate("/ManageBudget");
       })
       .catch((error) => {
         setLoading(false);
@@ -40,11 +40,7 @@ const DeleteBudget = () => {
       });
   };
 
-  const handleOpen = () => setOpen(!open); 
-  const handleCancel = () => {
-   setOpen(false);
-    navigate(`/ManageBudget/${id}`);
-  };
+  const handleOpen = () => setOpen(!open);
 
   return (
     <div>
@@ -118,7 +114,7 @@ const DeleteBudget = () => {
                     <button
                       type="submit"
                       className="rounded-md bg-red-600 h-12 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      onClick={handleCancel}
+                      onClick={() => setOpen(false)}
                       ref={cancelButtonRef}
                     >
                       No, Cancel

@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const LoginPage = ({ setIsAuthenticated }) => {
-  const [loggedInUser, setLoggedInUser] = useState(null);
-
+const LoginPage = () => {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
     role: "",
   });
 
+  const [errors, setErrors] = useState({});
+
   const navigate = useNavigate();
+  const { handleSignIn } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,32 +25,44 @@ const LoginPage = ({ setIsAuthenticated }) => {
     });
   };
 
-  const handleSignIn = async () => {
+  const validateFields = () => {
+    const newErrors = {};
+
+    if (!credentials.email) newErrors.email = "Email is required";
+    if (!credentials.password) newErrors.password = "Password is required";
+    if (!credentials.role || credentials.role === "role")
+      newErrors.role = "Role is required";
+
+    return newErrors;
+  };
+
+  const handleSignInClick = async () => {
+    const validationErrors = validateFields();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     try {
       const response = await axios.post("http://localhost:8000/user/signIn", {
         email: credentials.email,
         password: credentials.password,
         role: credentials.role,
-      
       });
-      console.log("User details:", response.data.user);
-      if (response.data.user) {
-        // Authentication successful
-        console.log("User Login is Successfully:", response.data.user);
-        // Update your state or localStorage with user details
-        setLoggedInUser(response.data.user);
 
-        // Update authentication state
-        setIsAuthenticated(true);
+      if (response.data.user) {
+        handleSignIn(response.data.user);
 
         // Redirect based on user role
         switch (response.data.user.role) {
           case "admin":
             navigate("/adminhome/" + response.data.user.id);
             break;
-            case "department":
-              navigate(`/department/${response.data.user.department}/${response.data.user.id}`);
-              break;
+          case "department":
+            navigate(
+              `/department/${response.data.user.department}/${response.data.user.id}`
+            );
+            break;
           case "procurement Officer":
             navigate("/PO_BuHome/" + response.data.user.id);
             break;
@@ -60,19 +75,20 @@ const LoginPage = ({ setIsAuthenticated }) => {
           case "approver":
             navigate("/approver/" + response.data.user.id);
             break;
-          // Add more roles as needed
           default:
             console.log("Invalid role");
         }
       } else {
-        // Authentication failed
-        console.log("Invalid email or password");
-        // Set an error state or show an error message to the user
+        toast.error("Invalid email or password. Please try again.");
       }
     } catch (error) {
-      // Handle errors, e.g., network issues or server errors
-      console.error("Sign in is failed:", error);
-      console.log("Axios response:", error.response);
+      console.error("Sign in failed:", error);
+      if (error.response) {
+        console.log("Axios response:", error.response.data);
+        toast.error("Sign in failed. Please try again.");
+      } else {
+        toast.error("Network error. Please try again.");
+      }
     }
   };
 
@@ -100,12 +116,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
         </div>
 
         <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-2xl">
-          <form
-            className="space-y-6"
-            action="#"
-            method="POST"
-            onSubmit={handleSignIn}
-          >
+          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
             <div>
               <label
                 htmlFor="role"
@@ -119,7 +130,9 @@ const LoginPage = ({ setIsAuthenticated }) => {
                   name="role"
                   value={credentials.role}
                   onChange={handleChange}
-                  className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6"
+                  className={`block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6 ${
+                    errors.role ? "ring-red-500" : ""
+                  }`}
                 >
                   <option value="role">Select your role</option>
                   <option value="admin">Admin</option>
@@ -130,6 +143,9 @@ const LoginPage = ({ setIsAuthenticated }) => {
                  
 
                 </select>
+                {errors.role && (
+                  <p className="text-red-500 text-sm">{errors.role}</p>
+                )}
               </div>
             </div>
 
@@ -147,8 +163,13 @@ const LoginPage = ({ setIsAuthenticated }) => {
                   value={credentials.email}
                   onChange={handleChange}
                   placeholder="Email"
-                  className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6"
+                  className={`block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6 ${
+                    errors.email ? "ring-red-500" : ""
+                  }`}
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email}</p>
+                )}
               </div>
             </div>
 
@@ -170,10 +191,16 @@ const LoginPage = ({ setIsAuthenticated }) => {
                   onChange={handleChange}
                   placeholder="Password"
                   required
-                  className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6"
+                  className={`block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-l sm:leading-6 ${
+                    errors.password ? "ring-red-500" : ""
+                  }`}
                 />
+                {errors.password && (
+                  <p className="text-red-500 text-sm">{errors.password}</p>
+                )}
               </div>
             </div>
+
             <div className="text-l">
               <a
                 href="#"
@@ -182,10 +209,11 @@ const LoginPage = ({ setIsAuthenticated }) => {
                 Forgot password?
               </a>
             </div>
+
             <div>
               <button
                 type="button"
-                onClick={handleSignIn}
+                onClick={handleSignInClick}
                 className="flex w-full justify-center rounded-md bg-blue-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
               >
                 Login
@@ -194,6 +222,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
           </form>
         </div>
       </div>
+      <ToastContainer className="mt-14" />
     </div>
   );
 };
