@@ -23,7 +23,7 @@ export default function AddUsers() {
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const [validationErrors, setValidationErrors] = useState({}); // State to store validation errors
-
+  
   const roles = [
     "admin",
     "procurement Officer",
@@ -117,8 +117,6 @@ export default function AddUsers() {
         setEmpNo("");
         setUsername("");
         setPassword("");
-        navigate(`/userList/${id}`);
-
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -131,7 +129,7 @@ export default function AddUsers() {
 
   return (
     <form onSubmit={handleSaveCreateUsers}>
-      <div className="space-y-10 ml-40 mr-40 mt-10">
+      <div className="space-y-12 ml-40 mr-40 mt-40">
         <Breadcrumb
           crumbs={[
             { label: "Home", link: `/adminhome/${id}` },

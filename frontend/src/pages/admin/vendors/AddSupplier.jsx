@@ -39,8 +39,7 @@ export default function AddSupplier() {
 
   const address = `${addressStreet}, ${addressCity}, ${addressProvince}`;
   const contactNumber = `${contactNumbers1}, ${contactNumbers2}`;
-  const { id } = useParams();
-  const navigate = useNavigate();
+
   const types = [
     "SoleImporter",
     "SoleDistributor",
@@ -138,7 +137,6 @@ export default function AddSupplier() {
         setFaxNumber2("");
         setTypesOFBusiness("");
         setClassOfAssets("");
-        navigate(`/allvendors/${id}`)
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -156,10 +154,10 @@ export default function AddSupplier() {
       <div className="space-y-12 ml-40 mr-40 mt-40">
         <Breadcrumb
           crumbs={[
-            { label: "Home", link: `/adminhome/${id}` },
-            { label: "Vendor Details", link: `/allvendors/${id}` },
+            { label: "Home", link: "/adminhome/:id" },
+            { label: "Vendor Details", link: "/allvendors" },
 
-            { label: "Add Vendor Details", link: `/addvendors/${id}` },
+            { label: "Add Vendor Details", link: "/addvendors" },
           ]}
           selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
         />
@@ -463,7 +461,7 @@ export default function AddSupplier() {
                   autoComplete="country-name"
                   className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6 ${typeofBusinessError ? 'border-red-500' : ''}`}
                 >
-                  <option value="">business Type</option>
+                 <option value="">business Type</option>
                   {types.map((type, index) => (
                     <option key={index} value={type}>
                       {type}
@@ -484,7 +482,7 @@ export default function AddSupplier() {
                 <h6>Class of Assets Supply </h6>
               </label>
               <div className="mt-2">
-                <select
+                <select        
                   id="country"
                   value={classOfAssets}
                   onChange={(e) => setClassOfAssets(e.target.value)}
@@ -509,15 +507,12 @@ export default function AddSupplier() {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6 mr-40 mb-10">
-      <Link to={`/allvendors/${id}`}>
-
         <button
           type="button"
           className="rounded-md  h-12 w-20 bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Cancel
         </button>
-        </Link>
         <button
           type="submit"
           className="rounded-md bg-blue-600  h-12 w-20 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
