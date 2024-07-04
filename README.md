@@ -27,3 +27,30 @@ Engineering. Basically, the PMS lets users effectively create, monitor, and hand
 - **Backend**: Node.js, Express.js, MongoDB
 - **Additional Tools**: Mailtrap (email sending), Postman (API testing), AWS
 - **Architecture**: MVC
+
+## Pages
+# Home Page
+
+![1](https://github.com/Piumikavindya/Procument-Managemant-System/assets/118907095/ea52b409-b91e-4023-868b-94f0373ea623)
+
+![2](https://github.com/Piumikavindya/Procument-Managemant-System/assets/118907095/be0a8c24-b654-4260-b45e-3b36932034c0)
+
+![3](https://github.com/Piumikavindya/Procument-Managemant-System/assets/118907095/59824300-751e-4676-afbd-e2c18512e76f)
+
+# Login Page
+
+![4](https://github.com/Piumikavindya/Procument-Managemant-System/assets/118907095/f8e91f6d-f059-4bcd-84c3-ddfd3cf45b1d)
+
+# Admin Pages
+
+![5](https://github.com/Piumikavindya/Procument-Managemant-System/assets/118907095/034a33f0-3d1d-412f-9c1f-d313892a5325)
+
+![6](https://github.com/Piumikavindya/Procument-Managemant-System/assets/118907095/d8ec5c25-707e-479c-aa9a-4f39a67ec6d3)
+
+
+
+
+
+
+
+
