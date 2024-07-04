@@ -60,7 +60,7 @@ import ContextWrapper from "./context/ContextWrapper.js";
 import ViewVendorDetails from "./pages/generalUsers/ViewVenderDetails.jsx";
 import ProjectList from "./pages/PO_BU/ProjectList.jsx";
 import { ViewShoppingPdf } from "./pages/PO_BU/ViewShoppingPdf.jsx";
-import ViewNoticePdf from "./pages/admin/notices/ViewNoticePdf.jsx";
+import ViewNoticePdf from "./pages/admin/notices/viewNoticePdf.jsx";
 import { ViewDirectPurchasingPdf } from "./pages/PO_BU/ViewDirectPurchasingPdf.jsx";
 import { ViewShippingPdf } from "./pages/PO_BU/ViewBidDocument.jsx";
 import DeleteItems from "./pages/admin/items/DeleteItems.jsx";

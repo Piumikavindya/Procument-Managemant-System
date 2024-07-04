@@ -24,6 +24,7 @@
     "file-saver": "^2.0.5",
     "html-pdf": "^3.0.1",
     "jsdom": "^24.0.0",
+    "jsonwebtoken": "^9.0.2",
     "mammoth": "^1.7.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.0",
