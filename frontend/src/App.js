@@ -23,7 +23,7 @@ import UploadNotice from "./pages/admin/notices/UploadNotice.jsx";
 import ViewNotice from "./pages/admin/notices/viewNoticePdf.jsx";
 import ManageNotices from "./pages/admin/notices/ManageNotices.jsx";
 import AddSupplier from "./pages/admin/vendors/AddSupplier.jsx";
-import AddItems from "./pages/admin/items/Additems.jsx";
+import AddItems from "./pages/admin/items/AddItems.jsx";
 import AddUsers from "./pages/admin/users/AddUsers.jsx";
 import UserList from "./pages/admin/users/UserList.jsx";
 import VendorDetails from "./pages/admin/vendors/VendorDetails.jsx";

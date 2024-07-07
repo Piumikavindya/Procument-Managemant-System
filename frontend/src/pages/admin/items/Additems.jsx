@@ -1,10 +1,6 @@
-// Additems
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Breadcrumb from "../../../components/Breadcrumb";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const assets = [
   "Current Assets",
@@ -20,30 +16,8 @@ export default function AddItems() {
   const [itemName, setItemName] = useState("");
   const [loading, setLoading] = useState(false);
 
-   // State variables for tracking required fields
-   const [AssetsClassError, setAssetsClassError] = useState(false);
-   const [AssetsSubClassError, setAssetsSubClassError] = useState(false);
-   const [itemNameError, setItemNameError] = useState(false);
-
-   // State variables for notification
-  const [notification, setNotification] = useState({ message: "", type: "" });
-
   function handleSaveItem(e) {
     e.preventDefault();
-
-    // Validate required fields
-    if (
-      !AssetsClass ||
-      !AssetsSubClass ||
-      !itemName 
-     
-    ) {
-      // Set error states for required fields
-      setAssetsClassError(!AssetsClass);
-      setAssetsSubClassError(!AssetsSubClass);
-      setItemNameError(!itemName);
-      return; // Exit function if any required field is empty
-    }
 
     const newItem = {
       AssetsClass,
@@ -55,8 +29,7 @@ export default function AddItems() {
       .post("http://localhost:8000/item/create", newItem)
 
       .then(() => {
-         // Show success toast notification
-        toast.success("Item successfully added!");
+        alert("item added");
         setLoading(false);
         setAssetsClass("");
         setAssetsSubClass("");
@@ -64,8 +37,6 @@ export default function AddItems() {
       })
       .catch((error) => {
         console.error("Error:", error);
-        setNotification({ message: "Failed to add item.", type: "error" });
-        setLoading(false);
       });
     console.log(newItem);
   }
@@ -104,7 +75,7 @@ export default function AddItems() {
                   value={assets}
               onChange={(e) => setAssetsClass(e.target.value)}
                   autoComplete="country-name"
-                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6 ${AssetsClassError ? 'border-red-500' : ''}`}
+                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  sm:text-sm sm:leading-6"
                 >
                   <option value="">Select Assets Class</option>
                   {assets.map((type, index) => (
@@ -113,9 +84,6 @@ export default function AddItems() {
                     </option>
                   ))}
                 </select>
-                {AssetsClassError && (
-                  <p className="text-red-500 text-xs mt-1">AssetsClass is required</p>
-                )}
               </div>
             </div>
 
@@ -135,11 +103,8 @@ export default function AddItems() {
                   onChange={(e) => setAssetsSubClass(e.target.value)}
                   autoComplete="family-name"
                   placeholder="Enter the  Assets Sub Class"
-                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6  ${AssetsClassError ? 'border-red-500' : ''}`}
+                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
-                {AssetsSubClassError && (
-                  <p className="text-red-500 text-xs mt-1">AssetsSubClass is required</p>
-                )}
               </div>
             </div>
 
@@ -159,11 +124,8 @@ export default function AddItems() {
                   onChange={(e) => setItemName(e.target.value)}
                   autoComplete="given-name"
                   placeholder="Enter the Item Name"
-                  className={`block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${AssetsClassError ? 'border-red-500' : ''}`}
+                  className="block w-full h-12 rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
-                 {itemNameError && (
-                  <p className="text-red-500 text-xs mt-1">ItemName is required</p>
-                )} 
               </div>
             </div>
           </div>
@@ -184,8 +146,6 @@ export default function AddItems() {
           Save
         </button>
       </div>
-     {/* ToastContainer to display toast notifications */}
-     <ToastContainer className="mt-14"/>
     </form>
   );
 }
