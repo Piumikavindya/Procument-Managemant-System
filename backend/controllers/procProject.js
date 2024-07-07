@@ -289,7 +289,7 @@ exports.createSmallProcurementPdf = async (req, res) => {
 
     // Add front page content
     const logoPath =
-      "E:/Procument-Managemant-System/backend/images/logo.jpg";
+      "D:/01_Praveenan/Procument-Managemant-System/backend/images/logo.jpg";
    
     doc.image(logoPath, 50, 25, { width: 80 });
 

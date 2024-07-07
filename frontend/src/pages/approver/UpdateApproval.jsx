@@ -6,6 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import ApprovalList from "./ApprovalList";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ApprovalForm() {
   const [open, setOpen] = useState(true);
@@ -57,13 +59,14 @@ export default function ApprovalForm() {
       .put(`http://localhost:8000/approvalReqest/updateStatus/${id}`, newStatus)
       .then(() => {
         setLoading(false);
-        alert("Status is Updated");
+         // Show success toast notification
+         toast.success("Purchase requisition successfully approved!");
         navigate("/ViewForApproval");
       })
       .catch((error) => {
         setLoading(false);
-        alert("Error updating status,Try again");
-
+        toast.error("Error to approve the Purchase requisition !");
+        
         console.error(error);
       });
   };
@@ -160,6 +163,8 @@ export default function ApprovalForm() {
           </div>
         </Dialog>
       </Transition.Root>
+      {/* ToastContainer to display toast notifications */}
+      <ToastContainer className="mt-16" />
     </div>
   );
 }
