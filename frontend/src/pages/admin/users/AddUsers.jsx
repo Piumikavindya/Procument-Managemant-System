@@ -1,15 +1,10 @@
-// AddUsers
-
-// AddUsers
-
 import React, { useState } from "react";
 import Breadcrumb from "../../../components/Breadcrumb";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-
+import { useAuth } from "../../../context/AuthContext";
 
 export default function AddUsers() {
   const [role, setRole] = useState("");
@@ -22,6 +17,8 @@ export default function AddUsers() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
+  const { userId } = useParams();
+  const { loggedInUser } = useAuth();
   const [validationErrors, setValidationErrors] = useState({}); // State to store validation errors
 
   const roles = [
@@ -132,7 +129,7 @@ export default function AddUsers() {
       <div className="space-y-12 ml-40 mr-40 mt-40">
         <Breadcrumb
           crumbs={[
-            { label: "Home", link: `/adminhome/${id}` },
+            { label: "Home", link: `/adminhome/${userId}` },
             { label: "User Details", link: "/userList" },
             { label: "Add User Details", link: "/addUsers" },
           ]}

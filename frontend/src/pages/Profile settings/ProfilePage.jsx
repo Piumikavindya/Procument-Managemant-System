@@ -57,7 +57,10 @@ const ProfilePage = () => {
       <div className="ml-12 mr-6">
         <Breadcrumb
           crumbs={[
-            { label: "Home", link: `/adminhome/${userId}` },
+            {
+              label: "Home",
+              link: `/Po_BuHome/${userId}`,
+            },
             { label: "Profile", link: "/Profile" },
           ]}
           selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
