@@ -1,19 +1,20 @@
 const router = require('express').Router();
-const { uploadnotice,viewNotice, downloadNotice, deleterNotice,viewPdf } = require('../controllers/noticeDoc');
+const { uploadNotice, viewNotice, downloadNotice, deleteNotice, viewPdf } = require('../controllers/noticeDoc');
 const uploads = require('../middlewares/multer');
 
-// Add user create route
-// Separate route for POST request to upload a file
-router.post("/uploadnotice", uploads.single('file'), (req, res) => {
-    console.log("Received a request to create a notice:", req.body);
-    uploadnotice(req, res);
-});
+// Route to upload a notice (POST request)
+router.post("/uploadnotice", uploads.single('file'), uploadNotice);
 
-// Separate route for GET request to view guidance
+// Route to view all notices (GET request)
 router.get('/view-notice', viewNotice);
 
-  router.get("/download/:id", downloadNotice);
-  router.delete("/delete/:id", deleterNotice);
-  router.get('/viewPdf/:id', viewPdf);
-  
-  module.exports = router;
+// Route to download a notice (GET request)
+router.get("/download/:id", downloadNotice);
+
+// Route to delete a notice (DELETE request)
+router.delete("/delete/:id", deleteNotice);
+
+// Route to view PDF of a notice (GET request)
+router.get('/viewPdf/:id', viewPdf);
+
+module.exports = router;
