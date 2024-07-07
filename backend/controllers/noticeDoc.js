@@ -1,13 +1,66 @@
-
-
-const Notice = require('../Models/noticeDoc');
-const asyncWrapper = require('../middlewares/asyncWrapper');
-const path = require("path");
 const fs = require('fs');
+const path = require('path');
+const { google } = require('googleapis');
+const Notice = require('../Models/noticeDoc');
+const { client_email, private_key } = require('../config'); // Adjust path as per your configuration
 
-// request from the frontend
+// Load Google API credentials
+const SCOPE = ['https://www.googleapis.com/auth/drive.file'];
 
-exports.uploadnotice = async (req, res) => {
+// Authorize Google API
+async function authorize() {
+    const jwtClient = new google.auth.JWT(
+        client_email,
+        null,
+        private_key,
+        SCOPE
+    );
+
+    await jwtClient.authorize();
+    return jwtClient;
+}
+
+// Upload file to Google Drive
+async function uploadFileToGoogleDrive(authClient, filePath, fileName) {
+    const drive = google.drive({ version: 'v3', auth: authClient });
+
+    const fileMetaData = {
+        name: fileName,
+        parents: ['18mkiYvR3XmOdQxiGSpZm9W_lcdHycEYs'] // Replace with your folder ID
+    };
+
+    const media = {
+        mimeType: 'application/pdf',
+        body: fs.createReadStream(filePath)
+    };
+
+    const response = await drive.files.create({
+        resource: fileMetaData,
+        media: media,
+        fields: 'id'
+    });
+
+    return response.data.id; // Return the file ID from Google Drive
+}
+
+// Delete file from Google Drive
+async function deleteFileFromGoogleDrive(authClient, fileId) {
+    const drive = google.drive({ version: 'v3', auth: authClient });
+
+    try {
+        await drive.files.delete({
+            fileId: fileId
+        });
+
+        console.log('File deleted successfully from Google Drive');
+    } catch (error) {
+        console.error('Error deleting file from Google Drive:', error);
+        throw error; // Propagate the error back
+    }
+}
+
+// Upload notice function
+exports.uploadNotice = async (req, res) => {
     try {
         const { username, name } = req.body;
 
@@ -18,157 +71,112 @@ exports.uploadnotice = async (req, res) => {
 
         const file = req.file.path;
 
-        // Log the file path to ensure it's correct
-        console.log('File path:', file);
+        // Extract file name
+        const fileNameWithTimestamp = path.basename(file);
+        const actualName = name || fileNameWithTimestamp.split('_').slice(1).join('_');
 
-          // Split the file path string using backslash as delimiter
-    const filePathParts = file.split("\\");
+        // Authorize and upload to Google Drive
+        const authClient = await authorize();
+        const googleDriveFileId = await uploadFileToGoogleDrive(authClient, file, actualName);
 
-    // Get the last part of the array, which is the file name
-    const fileNameWithTimestamp = filePathParts[filePathParts.length - 1];
-
-    // Split the file name using underscore as delimiter
-    const fileNameParts = fileNameWithTimestamp.split("_");
-
-    // Get the second part of the array, which is the actual file name
-    const actualName = fileNameParts.slice(1).join("_");
-
-    console.log("Actual File Name:", name);
-
-    // Rest of your code for creating and saving the notice
-    const newNotice = new Notice({ username, name: name ? name : actualName, file });
-
-
-        // Log the new notice object to ensure it's correct
-        console.log('New notice:', newNotice);
+        // Create a new notice with Google Drive file ID
+        const newNotice = new Notice({ username, name: actualName, file: googleDriveFileId });
 
         // Save the data in the database
         await newNotice.save();
 
-        console.log('Saved to the database');
-        res.json({ notice: newNotice, message: 'File successfully uploaded' });
+        res.json({ notice: newNotice, message: 'File successfully uploaded to Google Drive' });
 
     } catch (error) {
-        console.error('Error saving notice:', error);
+        console.error('Error uploading notice:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
-
-
-
-// get the all the guidance documents
+// View all notices
 exports.viewNotice = async (req, res) => {
     try {
-      const noticeItems = await Notice.find();
-      res.json({ notice: noticeItems });
+        const noticeItems = await Notice.find();
+        res.json({ notice: noticeItems });
     } catch (error) {
-      console.error('Error fetching notice:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error fetching notice:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-  };
+};
 
+// Download notice document
 exports.downloadNotice = async (req, res) => {
     try {
         const noticeId = req.params.id;
-
         const notice = await Notice.findById(noticeId);
 
         if (!notice) {
-            return res.status(404).json({ status: "notice not found" });
+            return res.status(404).json({ status: "Notice not found" });
         }
 
-        const file = notice.file;
-        const filepath = path.join(__dirname, `../${file}`);
-        
-        res.download(filepath);
-        // Note: Since res.download() will end the response, the following line won't be executed.
-        // You may want to remove the line below or handle it differently.
-        // res.status(200).json(guidance);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ status: "Error while downloading notice", error: err.message });
-    }
+        const authClient = await authorize();
+        await downloadFileFromGoogleDrive(authClient, notice.file, res);
 
+    } catch (error) {
+        console.error('Error downloading notice:', error);
+        res.status(500).json({ status: "Error while downloading notice", error: error.message });
+    }
 };
 
-
-
+// View PDF of notice document
 exports.viewPdf = async (req, res) => {
-  try {
-    const noticeId = req.params.id;
-
-    // Await the asynchronous call to find the guidance document
-    const notice = await Notice.findById(noticeId);
-
-    if (!notice) {
-      return res.status(404).json({ status: "guidance not found" });
-    }
-
-    const file = notice.file;
-    const pdfFilePath = path.join(__dirname, '..', file);
-
-    // Check if the file exists
-    if (!fs.existsSync(pdfFilePath)) {
-      return res.status(404).json({ error: "File not found" });
-    }
-
-    // Set the content type header
-    res.setHeader("Content-Type", "application/pdf");
-
-    // Stream the file to the response
-    const stream = fs.createReadStream(pdfFilePath);
-    stream.pipe(res);
-  } catch (error) {
-    console.error("Error viewing PDF:", error);
-    res.status(500).send("An error occurred while viewing the PDF");
-  }
-};
-
-
-
-
-// delete guidance
-exports.deleterNotice = async (req,res)=>{
-    let noticeId = req.params.id;
     try {
-        // Use await here to wait for the deletion to complete
+        const noticeId = req.params.id;
+        const notice = await Notice.findById(noticeId);
+
+        if (!notice) {
+            return res.status(404).json({ status: "Notice not found" });
+        }
+
+        const authClient = await authorize();
+        res.setHeader("Content-Type", "application/pdf");
+        await downloadFileFromGoogleDrive(authClient, notice.file, res);
+
+    } catch (error) {
+        console.error("Error viewing PDF:", error);
+        res.status(500).send("An error occurred while viewing the PDF");
+    }
+};
+
+// Delete notice document
+exports.deleteNotice = async (req, res) => {
+    try {
+        const noticeId = req.params.id;
+        const notice = await Notice.findById(noticeId);
+
+        if (!notice) {
+            return res.status(404).json({ status: "Notice not found" });
+        }
+
+        const authClient = await authorize();
+        await deleteFileFromGoogleDrive(authClient, notice.file);
+
         await Notice.findByIdAndDelete(noticeId);
-        res.status(200).send({ status: "notice deleted" });
-      } catch (err) {
-        // Use status 500 for server errors
-        res.status(500).send({ status: "Error with delete notice", error: err.message });
-      }
+
+        res.status(200).json({ status: "Notice deleted" });
+
+    } catch (error) {
+        console.error('Error deleting notice:', error);
+        res.status(500).json({ status: "Error with delete notice", error: error.message });
+    }
 };
 
+// Download file from Google Drive
+async function downloadFileFromGoogleDrive(authClient, fileId, res) {
+    const drive = google.drive({ version: 'v3', auth: authClient });
 
-exports.viewPdf = async (req, res) => {
-  try {
-    const noticeId = req.params.id;
+    const response = await drive.files.get(
+        { fileId: fileId, alt: 'media' },
+        { responseType: 'stream' }
+    );
 
-    // Await the asynchronous call to find the guidance document
-    const notice = await Notice.findById(noticeId);
-
-    if (!notice) {
-      return res.status(404).json({ status: "guidance not found" });
-    }
-
-    const file = notice.file;
-    const pdfFilePath = path.join(__dirname, '..', file);
-
-    // Check if the file exists
-    if (!fs.existsSync(pdfFilePath)) {
-      return res.status(404).json({ error: "File not found" });
-    }
-
-    // Set the content type header
-    res.setHeader("Content-Type", "application/pdf");
-
-    // Stream the file to the response
-    const stream = fs.createReadStream(pdfFilePath);
-    stream.pipe(res);
-  } catch (error) {
-    console.error("Error viewing PDF:", error);
-    res.status(500).send("An error occurred while viewing the PDF");
-  }
-};
+    response.data
+        .on('end', () => console.log('Download completed'))
+        .on('error', err => console.error('Error downloading file:', err))
+        .pipe(res);
+}
