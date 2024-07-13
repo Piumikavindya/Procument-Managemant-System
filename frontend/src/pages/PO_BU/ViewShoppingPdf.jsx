@@ -45,7 +45,7 @@ export function ViewShoppingPdf() {
 
   // Function to handle going back to the previous page
   const goBack = () => {
-    navigate("/ProjectCreationForm");
+    navigate("/projectList");
   };
 
   return (

@@ -79,6 +79,7 @@ import UserProfile from "./pages/Profile settings/UserProfile.jsx";
 import ManageBudget from "./pages/admin/budgetPlaning/ManageBudget.jsx";
 import DeleteBudget from "./pages/admin/budgetPlaning/DeleteBudget.jsx";
 import UpdateBudget from "./pages/admin/budgetPlaning/UpdateBudget.jsx";
+import PreviewVendor from "./pages/PO_BU/PreviewVondor.jsx";
 
 const App = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
@@ -244,6 +245,8 @@ const App = () => {
   <Route path="/DownloadBidDoc/:projectId/:biddingType" element={<DownloadBidDoc />} />
   <Route path="/InvitesBids" element={<InvitesBids />} />
   <Route path="/VendorsList" element={<VendorsList />} />
+  <Route path="/PreviewVendor/:id" element={<PreviewVendor />} />
+  
   <Route path="/PreviewSupplyerDetails/:id" element={<PreviewSupplyerDetails />} /> 
 
  

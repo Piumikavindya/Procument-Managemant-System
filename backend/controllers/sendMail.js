@@ -32,12 +32,12 @@ exports.sendMail = async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL,
       to: process.env.RES,
-      subject: "Request for Approval: Purchase Requisition",
+      subject: "Request is Approved: Purchase Requisition",
       html: `
             <p>Dear Sir/Madam,</p>
-            <p>We are submitting this purchase requisition form to request approval for the procurement of necessary items for the department. The items listed in the form are essential for continuing academic activities in the department. Your timely approval will enable us to proceed with the procurement process efficiently.</p>
-            <p><strong>Thank you</strong> for your attention to this matter.</p>
-            <p><strong>Best regards,</strong><br>department</p> `,
+            <p>This Requation form is Approved.</p>
+            <p><strong>Thank you</strong> You can start bidding Process</p>
+            <p><strong>Best regards,</strong><br>Approver</p> `,
       attachments: [
         {
           filename: "Purchase_Requisition.pdf",

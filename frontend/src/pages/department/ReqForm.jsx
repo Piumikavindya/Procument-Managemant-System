@@ -254,7 +254,6 @@ const ReqForm = ({ forms }) => {
       clearFormInputs();
     } catch (error) {
       console.error("Error:", error);
-      toast.success("Request created Successfully!");
     }
   };
 
@@ -262,11 +261,6 @@ const ReqForm = ({ forms }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validate fields before saving
-    if (!validateFields()) {
-      return;
-    }
 
     // Validate fields before saving
     if (!validateFields()) {
@@ -935,7 +929,6 @@ const ReqForm = ({ forms }) => {
                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-4 rounded inline-flex items-center"
                   type="submit"
                   onClick={(e) => {
-                    handleSubmit(e);
                     handleGeneratePDF();
                   }}
                 >

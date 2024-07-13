@@ -1,22 +1,25 @@
-// RequestList.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { MdSimCardDownload, MdPreview } from "react-icons/md";
-import { AiOutlineSend } from "react-icons/ai";
+import { MdSend } from "react-icons/md";
+import { FaDownload, FaCircleCheck } from "react-icons/fa";
+import { IconButton } from "@material-tailwind/react";
+import { CheckIcon, EyeIcon } from "@heroicons/react/24/solid";
+import { useAuth } from "../../context/AuthContext";
+import { Toast, Tooltip } from "flowbite-react";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import Breadcrumb from "../../components/Breadcrumb";
-import { useSnackbar } from "notistack";
-import { useAuth } from "../../context/AuthContext";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { ToastContainer } from "react-toastify";
+
 const RequestList = ({
   isAuthenticated,
   handleSignOut,
   username,
   userId,
-  department, // Remove if not necessary, already using loggedInUser
+  department,
 }) => {
-  const { loggedInUser } = useAuth(); // Use context to get logged-in user details
+  const { loggedInUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOption, setSearchOption] = useState("requestId");
@@ -40,40 +43,6 @@ const RequestList = ({
     }
   }, [loggedInUser]);
 
-  // useEffect(() => {
-  //   const fetchRequests = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `http://localhost:8000/procReqest/viewRequestsByDepartment/${department}/${userId}`
-  //       );
-  //       setRequests(response.data);
-  //     } catch (error) {
-  //       console.log("Error fetching requests:", error);
-  //     }
-  //   };
-  //   fetchRequests();
-  // }, [department, userId]);
-
-  // const { id } = useParams();
-  // const { enqueueSnackbar } = useSnackbar();
-  // const [user, setUser] = useState({});
-
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `http://localhost:8000/user/preview-user/${userId}`
-  //       );
-  //       console.log("User Data:", response.data);
-  //       setUser(response.data);
-  //     } catch (error) {
-  //       console.log("Error fetching user:", error);
-  //     }
-  //   };
-
-  //   getUser();
-  // }, [userId]);
-
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -93,6 +62,17 @@ const RequestList = ({
       searchValue.toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
+
+  const handleSendRequest = (requestId) => {
+    // Placeholder function to handle sending the request
+    // After sending successfully, update the request status
+    // For demonstration purposes, assume the request is successfully sent
+    // and update the state accordingly
+    const updatedRequests = requests.map((req) =>
+      req.requestId === requestId ? { ...req, sent: true } : req
+    );
+    setRequests(updatedRequests);
+  };
 
   return (
     <div className="p-4">
@@ -173,16 +153,43 @@ const RequestList = ({
                     </td>
                     <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
                       <div className="icon-link flex justify-center gap-x-4">
-                        <Link
-                          to={`/SendRequest/${request.requestId}/${request.sendTo}`}
-                        >
-                          <AiOutlineSend className="text-2xl text-green-600" />
-                        </Link>
+                        {request.sent ? (
+                          <Tooltip content="Sent">
+                            <IconButton variant="text">
+                              <CheckCircleIcon className="h-7 w-7  text-green-500" />
+                            </IconButton>
+                          </Tooltip>
+                        ) : (
+                          <>
+                            <Link
+                              onClick={() =>
+                                handleSendRequest(request.requestId)
+                              }
+                              to={`/SendRequest/${request.requestId}/${request.sendTo}`}
+                            >
+                              <Tooltip content="Send Request">
+                                <IconButton variant="text">
+                                  <MdSend className="h-6 w-6  text-purple-500" />
+                                </IconButton>
+                              </Tooltip>
+                            </Link>
+                          </>
+                        )}
+
                         <Link to={`/DownloadRequest/${request.requestId}`}>
-                          <MdSimCardDownload className="text-2xl text-green-600" />
+                          <Tooltip content="Download Request">
+                            <IconButton variant="text">
+                              <FaDownload className="h-6 w-6  text-red-500" />
+                            </IconButton>
+                          </Tooltip>
                         </Link>
+
                         <Link to={`/ViewFormRequest/${request.requestId}`}>
-                          <MdPreview className="text-2xl text-green-800" />
+                          <Tooltip content="View Request">
+                            <IconButton variant="text">
+                              <EyeIcon className="h-6 w-6  text-blue-500" />
+                            </IconButton>
+                          </Tooltip>
                         </Link>
                       </div>
                     </td>
@@ -192,6 +199,7 @@ const RequestList = ({
             </table>
           </div>
         </div>
+        <ToastContainer className="mt-20" autoClose={3000} />
       </div>
     </div>
   );

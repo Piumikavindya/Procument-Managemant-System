@@ -220,15 +220,6 @@ export default function ProjectList() {
                             </Tooltip>
                           </Link>
 
-                          <button
-                            onClick={() => handleDownloadClick(project._id)}
-                          >
-                            <Tooltip content="Download Project">
-                              <IconButton variant="text">
-                                <MdDownload className="h-6 w-6 text-blue-500" />
-                              </IconButton>
-                            </Tooltip>
-                          </button>
                           <Link to={`/deleteProject/${project.projectId}`}>
                             <Tooltip content="Delete Project">
                               <IconButton variant="text">

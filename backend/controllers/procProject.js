@@ -219,16 +219,18 @@ exports.viewProjectById = async (req, res) => {
 };
 
 exports.deleteProject = async (req, res) => {
-  let projectId = req.params.id;
+  let projectId = req.params.projectId;
 
   try {
-    await procProject.findByIdAndDelete(projectId);
+    const project = await procProject.findOneAndDelete({ projectId: projectId });
+    if (!project) {
+      return res.status(404).send({ status: "Project not found" });
+    }
     res.status(200).send({ status: "Project is deleted" });
   } catch (err) {
-    res.status(500).send({ status: "Error with delete request" });
+    res.status(500).send({ status: "Error with delete request", error: err.message });
   }
 };
-
 
 // Function to create PDF for "Shipping Method" bidding type
 
@@ -288,8 +290,7 @@ exports.createSmallProcurementPdf = async (req, res) => {
 
 
     // Add front page content
-    const logoPath =
-      "D:/01_Praveenan/Procument-Managemant-System/backend/images/logo.jpg";
+    const logoPath = path.join(__dirname, "..", "images", "logo.jpg");
    
     doc.image(logoPath, 50, 25, { width: 80 });
 

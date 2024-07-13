@@ -11,13 +11,14 @@ import { Button, Textarea } from "flowbite-react";
 import { useNavigate, useParams } from "react-router-dom";
 import ApprovalList from "./ApprovalList";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const SendApproval = () => {
   const [open, setOpen] = useState(true);
   const [emailSent, setEmailSent] = useState(false); // State to track email sending status
   const cancelButtonRef = useRef(null);
   const navigate = useNavigate();
-  const {requestId} = useParams();
+  const { requestId } = useParams();
   const handleOutsideClick = () => {
     setOpen(false);
     navigate("/ViewForApproval");
@@ -29,8 +30,17 @@ const SendApproval = () => {
     try {
       // Sending PDF via email
       await axios.post(`http://localhost:8000/send/sendMail/${requestId}`);
- alert("PDF sent successfully");
-      navigate("/ViewForApproval");
+      toast.success("Request is Successfully Sent!", {
+        className: "mt-10", // Apply Tailwind classes directly
+      });
+
+      // Delay the navigation to give time for the toast to display
+      setTimeout(() => {
+        navigate("/ViewForApproval");
+      }, 2000);
+
+      //  alert("PDF sent successfully");
+      //       navigate("/ViewForApproval");
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred. Please try again.");
@@ -81,7 +91,11 @@ const SendApproval = () => {
                     <div className="mt-3 text-left sm:mt-0 sm:ml-4">
                       <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                         <DialogHeader className="grid place-items-center">
-                          <Typography variant="h5" color="red" className="text-center">
+                          <Typography
+                            variant="h5"
+                            color="red"
+                            className="text-center"
+                          >
                             <h4>Approve Purchase Requisition</h4>
                           </Typography>
                         </DialogHeader>
@@ -94,21 +108,28 @@ const SendApproval = () => {
 
                           <Typography className="text-center font-normal">
                             <h3>
-                              Are you sure want to approve and send it to the finance officers?
+                              Are you sure want to approve and send it to the
+                              finance officers?
                             </h3>
                           </Typography>
 
-                          <Typography className="text-center font-normal" color="red">
+                          <Typography
+                            className="text-center font-normal"
+                            color="red"
+                          >
                             <h6>
-                              Note: Once you approve the request form and send it to the financial officers,
-                              it cannot be undone!!!
+                              Note: Once you approve the request form and send
+                              it to the financial officers, it cannot be
+                              undone!!!
                             </h6>
                           </Typography>
                         </DialogBody>
                         <DialogFooter className="space-x-6">
                           <button
                             type="submit"
-                            className={`rounded-md bg-green-500 h-12 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${emailSent ? 'cursor-not-allowed opacity-50' : ''}`}
+                            className={`rounded-md bg-green-500 h-12 w-30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
+                              emailSent ? "cursor-not-allowed opacity-50" : ""
+                            }`}
                             onClick={sendPDF}
                             disabled={emailSent} // Disable button if email has been sent
                           >

@@ -34,10 +34,10 @@ const InvitesBidsCard = ({ project, vendors, onClose, onSuccess }) => {
 
       .then((response) => {
         console.log("Invitations sent successfully:", response.data);
-        
+
         onSuccess(project.projectId);
+        navigate("/InvitesBids");
         onClose();
-        navigate("/InviteBids");
       })
       .catch((error) => {
         console.error("Error sending invitations:", error);
