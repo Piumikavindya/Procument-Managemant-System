@@ -52,7 +52,7 @@ const ApprovalList = () => {
       case "Rejected":
         return "bg-red-400 text-red-800";
       default:
-        return "bg-gray-500";
+        return "bg-blue-400 blue-800";
     }
   };
 
