@@ -1,11 +1,14 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { AiOutlineEdit, AiOutlineSend, AiOutlineDelete } from "react-icons/ai"; // Import icons for edit, send, and delete
-import { MdPreview } from "react-icons/md"; // Import icons for edit, send, and delete
+import { MdSend } from "react-icons/md"; // Import icons for send
+import { CheckCircleIcon } from "@heroicons/react/24/solid"; // Import CheckCircleIcon
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import Breadcrumb from "../../components/Breadcrumb";
+import { Tooltip } from "flowbite-react";
+import { IconButton } from "@material-tailwind/react";
+import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { ToastContainer } from "react-toastify";
 
 const ApprovalList = () => {
   const [loading, setLoading] = useState(false);
@@ -18,7 +21,12 @@ const ApprovalList = () => {
     axios
       .get("http://localhost:8000/procReqest/viewRequests")
       .then((response) => {
-        setRequests(response.data);
+        // Add isSent property to each request
+        const requestsWithIsSent = response.data.map((request) => ({
+          ...request,
+          isSent: false, // Initialize as false
+        }));
+        setRequests(requestsWithIsSent);
         setLoading(false);
       })
       .catch((error) => {
@@ -48,11 +56,30 @@ const ApprovalList = () => {
     }
   };
 
+  const handleSendRequest = (requestId) => {
+    axios
+      .post(`http://localhost:8000/sendApproval/${requestId}`)
+      .then((response) => {
+        setRequests((prevRequests) =>
+          prevRequests.map((request) =>
+            request.requestId === requestId
+              ? { ...request, isSent: true }
+              : request
+          )
+        );
+      })
+      .catch((error) => {
+        console.error("Error sending request:", error);
+      });
+  };
+
   const filteredRequests = requests.filter((request) => {
     const searchValue = request[searchOption];
-    return searchValue && searchValue.toLowerCase().includes(searchQuery.toLowerCase());
-});
-
+    return (
+      searchValue &&
+      searchValue.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
 
   return (
     <div className="p-4">
@@ -67,9 +94,9 @@ const ApprovalList = () => {
 
       <div className="reservation-list-container">
         <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
-          <div className="align-middle inline-block min-w-full  overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
+          <div className="align-middle inline-block min-w-full overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
             <table className="min-w-full">
-              <thead className="text-xs text-white uppercase bg-NeutralBlack   dark:text-gray-400">
+              <thead className="text-xs text-white uppercase bg-NeutralBlack dark:text-gray-400">
                 <tr>
                   <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-white tracking-wider">
                     Request ID
@@ -121,38 +148,71 @@ const ApprovalList = () => {
                         </div>
                       </div>
                     </td>
-                    <td className={`px-6 py-2 whitespace-no-wrap border-b border-gray-500`}>
-                      <button className={`py-1 px-2 rounded ${getStatusColor(request.status)}  text-sm`}>{request.status}</button>
+                    <td
+                      className={`px-6 py-2 whitespace-no-wrap border-b border-gray-500`}
+                    >
+                      <button
+                        className={`py-1 px-2 rounded ${getStatusColor(
+                          request.status
+                        )} text-sm`}
+                      >
+                        {request.status}
+                      </button>
                     </td>
-                    <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500 ">
-                    <div className="icon-link flex justify-center gap-x-6">
-
-                 
-                      {request.status === "Pending" && (
-                        <Link to={`/ApprovalForm/${request._id}`}>
-                          <AiOutlineEdit className="text-2xl text-blue-800" />
+                    <td className="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
+                      <div className="icon-link flex justify-center gap-x-6">
+                        {request.status === "Pending" && (
+                          <Link to={`/ApprovalForm/${request._id}`}>
+                            <Tooltip content="Approve Request">
+                              <IconButton variant="text">
+                                <PencilIcon className="h-6 w-6 text-orange-600" />
+                              </IconButton>
+                            </Tooltip>
+                          </Link>
+                        )}
+                        {request.status === "Approved" && (
+                          <>
+                            {request.isSent ? (
+                              <Tooltip content="Sent">
+                                <IconButton variant="text">
+                                  <CheckCircleIcon className="h-7 w-7 text-green-500" />
+                                </IconButton>
+                              </Tooltip>
+                            ) : (
+                              <Link to={`/SendApproval/${request.requestId}`}>
+                                <Tooltip content="Send Request">
+                                  <IconButton variant="text">
+                                    <MdSend className="h-6 w-6 text-purple-500" />
+                                  </IconButton>
+                                </Tooltip>
+                              </Link>
+                            )}
+                          </>
+                        )}
+                        {request.status === "Rejected" && (
+                          <Link to={`/DenyApproval/${request._id}`}>
+                            <Tooltip content="Delete Request">
+                              <IconButton variant="text">
+                                <TrashIcon className="h-6 w-6 text-red-500" />
+                              </IconButton>
+                            </Tooltip>
+                          </Link>
+                        )}
+                        <Link to={`/ViewForApproval/${request.requestId}`}>
+                          <Tooltip content="View Request">
+                            <IconButton variant="text">
+                              <EyeIcon className="h-6 w-6 text-blue-500" />
+                            </IconButton>
+                          </Tooltip>
                         </Link>
-                      )}
-                      {request.status === "Approved" && (
-                        <Link to={`/SendApproval/${request.requestId}`}>
-                          <AiOutlineSend className="text-2xl text-green-600" />
-                        </Link>
-                      )}
-                      {request.status === "Rejected" && (
-                        <Link to={`/DenyApproval/${request._id}`}>
-                          <AiOutlineDelete className="text-2xl text-red-600 " />
-                        </Link>
-                      )}
-                       <Link to={`/ViewForApproval/${request.requestId}`}>
-                          <MdPreview className="text-2xl text-blue-800" />
-                        </Link>
-                        </div>
+                      </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          <ToastContainer className="mt-20" autoClose={3000} />
         </div>
       </div>
     </div>

@@ -1,14 +1,11 @@
 import { Fragment, useRef, useState } from "react";
-import { Dialog,Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import ReqForm from "./ReqForm";
-
-
-
 
 const DeleteProcItem = () => {
   const [open, setOpen] = useState(true);
@@ -18,24 +15,22 @@ const DeleteProcItem = () => {
   const { requestId } = useParams();
   const { itemId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
- 
 
   useEffect(() => {
     handleDeleteItem();
   }, [requestId]);
 
-
   const handleDeleteItem = () => {
-
     setLoading(true);
     axios
-      .delete(`http://localhost:8000/procReqest/deleteProcItem/${requestId}/${itemId}`)
+      .delete(
+        `http://localhost:8000/procReqest/deleteProcItem/${requestId}/${itemId}`
+      )
       .then((response) => {
         setLoading(false);
-        
+
         enqueueSnackbar("Item deleted", { variant: "success" });
         navigate(`/reqform`);
-    
       })
       .catch((error) => {
         setLoading(false);
@@ -43,18 +38,17 @@ const DeleteProcItem = () => {
         console.log(error);
       });
   };
-  
+
   const handleOutsideClick = () => {
     setOpen(false);
     navigate(`/reqform`);
   };
 
-
   return (
     <div>
-  <ReqForm/>
+      <ReqForm />
       <Transition.Root show={open} as={Fragment}>
-      <Dialog
+        <Dialog
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
           initialFocus={cancelButtonRef}
@@ -123,7 +117,6 @@ const DeleteProcItem = () => {
                   >
                     Delete
                   </button>
-                 
                 </div>
               </div>
             </Transition.Child>

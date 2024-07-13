@@ -18,7 +18,7 @@ async function authorize() {
     );
 
     await jwtClient.authorize();
-    return jwtClient;
+    return jwtClient;ju                                            
 }
 
 // Upload file to Google Drive

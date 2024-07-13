@@ -5,9 +5,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { Button } from "flowbite-react";
-import VendorDetails from "./VendorDetails";
-
-
+import VendorsList from "./VendorsList";
 
 export default function PreviewVendor() {
   const [open, setOpen] = useState(true);
@@ -48,7 +46,7 @@ export default function PreviewVendor() {
 
   return (
     <div>
-      <VendorDetails />
+      <VendorsList />
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"

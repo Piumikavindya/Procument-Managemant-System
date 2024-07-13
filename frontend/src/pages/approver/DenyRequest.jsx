@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ApprovalList from "./ApprovalList";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import { toast } from "react-toastify";
 
 const DenyRequest = () => {
   const [open, setOpen] = useState(true);
@@ -29,12 +30,22 @@ const DenyRequest = () => {
       .delete(`http://localhost:8000/procReqest/deleteRequest/${requestId}`)
       .then(() => {
         setLoading(false);
-        alert("Request is deleted");
-        navigate("/ViewForApproval");
+        // Show success toast notification
+        toast.success("Request is Successfully deleted!", {
+          className: "mt-10", // Apply Tailwind classes directly
+        });
+
+        // Delay the navigation to give time for the toast to display
+        setTimeout(() => {
+          navigate("/ViewForApproval");
+        }, 1000); // 1 second delay
       })
       .catch((error) => {
         setLoading(false);
-        alert("Error deleting reuest. Try again");
+        toast.error("Error deleting Request. Try again!", {
+          className: "mt-10", // Apply Tailwind classes directly
+        });
+
         console.log(error);
       });
   };

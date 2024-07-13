@@ -199,7 +199,6 @@ export default function VendorsList() {
               >
                 <h6 className="mt-0">view all</h6>
               </Button>
-             
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -396,14 +395,13 @@ export default function VendorsList() {
                     </td>
 
                     <td className={classes}>
-                      <Link to={`/previewVendorDetails/${supplyer._id}`}>
+                      <Link to={`/PreviewVendor/${supplyer._id}`}>
                         <Tooltip content="View Vendor">
                           <IconButton variant="text">
                             <EyeIcon className="h-6 w-6 text-blue-500" />
                           </IconButton>
                         </Tooltip>
                       </Link>
-
                     </td>
                   </tr>
                 );

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Breadcrumb from "../../components/Breadcrumb";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import UserTypeNavbar from "../../components/UserTypeNavbar";
 import { Button, IconButton, Tooltip } from "@material-tailwind/react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import {
   EyeDropperIcon,
   EyeIcon,
@@ -14,7 +12,6 @@ import {
 } from "@heroicons/react/24/solid";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { AddReqCard } from "./AddItemCard";
-import { PlusIcon } from "@heroicons/react/20/solid";
 
 export default function ProjectCreationForm({ forms }) {
   const navigate = useNavigate();
@@ -25,6 +22,8 @@ export default function ProjectCreationForm({ forms }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [items, setItems] = useState({});
   const [projectId, setProjectId] = useState("");
+  const [quotationRequirement, setQuotationRequirement] = useState("");
+
   const [selectedRequests, setSelectedRequests] = "";
   const [formData, setFormData] = useState({
     projectId: "",
@@ -33,9 +32,11 @@ export default function ProjectCreationForm({ forms }) {
     biddingType: "",
     closingDate: "",
     closingTime: "",
+    quotationRequirement: "",
     appointTEC: [],
     appointBOCommite: [],
   });
+  const { id } = useParams();
   const [procurementRequests, setProcurementRequests] = useState([]);
   const [projectTitle, setProjectTitle] = useState("");
   const [biddingType, setBiddingType] = useState("");
@@ -52,7 +53,7 @@ export default function ProjectCreationForm({ forms }) {
       const savedFormData = JSON.parse(formDataFromStorage);
       setFormData(savedFormData);
       setProjectId(savedFormData.projectId);
-    } else {
+    } else if (!projectId) {
       handleGenerateProjectId();
     }
   }, []);
@@ -86,6 +87,7 @@ export default function ProjectCreationForm({ forms }) {
       closingTime,
       appointTEC,
       appointBOCommite,
+      quotationRequirement,
     };
     setLoading(true);
     try {
@@ -121,8 +123,7 @@ export default function ProjectCreationForm({ forms }) {
       clearFormInputs();
     } catch (error) {
       console.error("Error generating Shopping Method PDF:", error);
-      // Show success toast notification
-      toast.error("An error occurred. Please try again.!");
+      alert("An error occurred. Please try again.");
     }
   };
 
@@ -136,8 +137,7 @@ export default function ProjectCreationForm({ forms }) {
       clearFormInputs();
     } catch (error) {
       console.error("Error generating Direct Purchasing PDF:", error);
-      // Show success toast notification
-      toast.error("An error occurred. Please try again.");
+      alert("An error occurred. Please try again.");
     }
   };
 
@@ -153,6 +153,7 @@ export default function ProjectCreationForm({ forms }) {
       closingTime,
       appointTEC,
       appointBOCommite,
+      quotationRequirement,
     };
     const newProject = {
       projectId,
@@ -163,6 +164,7 @@ export default function ProjectCreationForm({ forms }) {
       closingTime,
       appointTEC,
       appointBOCommite,
+      quotationRequirement,
     };
 
     setLoading(true);
@@ -173,16 +175,15 @@ export default function ProjectCreationForm({ forms }) {
       );
       const updatedProject = response.data.updatedProject;
       console.log("Project created:", response.data);
-      // Show success toast notification
-      toast.success("Project created successfully!");
+
       setLoading(false);
 
       setFormData("");
       clearFormInputs();
       localStorage.removeItem("formData");
       console.log("Request submitted successfully", response.data);
-
-      navigateToViewProject();
+      navigate("/projectList");
+      // navigateToViewProject();
     } catch (error) {
       console.error("Error creating project:", error);
     } finally {
@@ -191,9 +192,10 @@ export default function ProjectCreationForm({ forms }) {
   };
 
   const navigateToViewProject = () => {
-    if (biddingType === "Shopping Method")
+    if (formData.biddingType === "Shopping Method")
       navigate(`/ViewShoppingPdf/${projectId}`);
-    else navigate(`/ViewDirectPurchasingPdf/${projectId}`);
+    else if (formData.biddingType === "Direct Purchasing");
+    navigate(`/ViewDirectPurchasingPdf/${projectId}`);
   };
 
   const clearFormInputs = () => {
@@ -203,6 +205,7 @@ export default function ProjectCreationForm({ forms }) {
       biddingType: "",
       closingDate: "",
       closingTime: "",
+      quotationRequirement: "",
       appointTEC: [],
       appointBOCommite: [],
     });
@@ -227,8 +230,8 @@ export default function ProjectCreationForm({ forms }) {
 
         <Breadcrumb
           crumbs={[
-            { label: "Home", link: "/PO_BuHome/:id" },
-            { label: "Procurement Project List", link: "/projectList" },
+            { label: "Home", link: `/PO_BuHome/${id}` },
+            { label: "Procurement Project List", link: `/projectList/${id}` },
 
             { label: "Project Form Creation", link: "/addUsers" },
           ]}
@@ -332,17 +335,15 @@ export default function ProjectCreationForm({ forms }) {
             </legend>
 
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <Button
-                onClick={handleAddRequestClick}
-                className="flex items-center gap-3 h-10 bg-NeutralBlack"
-                size="sm"
-                onclick="popuphandler(true)"
-              >
-                <PlusIcon strokeWidth={2} className="h-5 w-5 mt-1 mr-2" />
-                <Link class="text-white" style={{ textDecoration: "none" }}>
-                  <h6 className="mt-2">Add Requests</h6>
-                </Link>
-              </Button>
+              <button onClick={handleAddRequestClick} class="button">
+                <span className="c-main">
+                  <span className="c-ico">
+                    <span className="c-blur"></span>{" "}
+                    <span className="ico-text">+</span>
+                  </span>
+                  Add Requests
+                </span>
+              </button>
             </div>
 
             <div className="mt-6 space-y-6 sm:col-span-3">
@@ -585,8 +586,6 @@ export default function ProjectCreationForm({ forms }) {
           </button>
         )}
       </div>
-      {/* ToastContainer to display toast notifications */}
-      <ToastContainer className="mt-24" />
     </form>
   );
 }

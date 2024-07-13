@@ -134,7 +134,7 @@ exports.viewRequestsByDepartment = async (req, res) => {
 
     // Fetch requests where the department matches the logged-in user's department
     const requests = await procReqest.find({ department: user.department });
-    console.log(requests);
+    // console.log(requests);
     
     // Send the filtered list of requests as a response
     res.json(requests);
